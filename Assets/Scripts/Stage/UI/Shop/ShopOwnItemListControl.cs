@@ -12,7 +12,7 @@ public class ShopOwnItemListControl : MonoBehaviour
     List<GameObject> ownItemList = new();
     int ownListSize = 0;
 
-    IEnumerator renewOwnItemList;
+    public IEnumerator renewOwnItemList;
 
     // Start is called before the first frame update
     private void Awake()
@@ -32,14 +32,6 @@ public class ShopOwnItemListControl : MonoBehaviour
         {
             StartCoroutine(renewOwnItemList);
         }
-    }
-
-    private bool isBuy()
-    {
-        bool ret = false;
-
-
-        return ret;
     }
 
     public IEnumerator RenewOwnItemList(GameObject item)
@@ -74,10 +66,10 @@ public class ShopOwnItemListControl : MonoBehaviour
         {
             ownItemList.Add(item);
             int r = ownItemList.Count / 6;
-            int c = ownItemList.Count % 6;
+            int c = (ownItemList.Count - 1) % 6;
             GameObject itemRoom = ownItemListContent.transform.GetChild(r).GetChild(c).gameObject;
 
-            itemRoom.transform.GetChild(1).gameObject.GetComponent<Image>().sprite = item.GetComponent<SpriteRenderer>().sprite;
+            itemRoom.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = item.GetComponent<SpriteRenderer>().sprite;
             itemRoom.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "x1";
         }
     }

@@ -3,12 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using UnityEngine.EventSystems;
+using TMPro;
+
 
 public class ShopPurchaseButtonControl : MonoBehaviour
 {
+    private ShopOwnItemListControl ownItemListControl;
     private GameObject currentClickButton;
+
+    private void Awake()
+    {
+        // List -> ShopUI 로 거쳐 올라간 후 OwnItemList를 찾음
+        ownItemListControl = this.gameObject.transform.
+            parent.GetChild(4).gameObject.GetComponent<ShopOwnItemListControl>();
+    }
     public void OnClickItemPurchaseButton()
     {
         currentClickButton = EventSystem.current.currentSelectedGameObject;
@@ -117,6 +126,7 @@ public class ShopPurchaseButtonControl : MonoBehaviour
 
                 // 아이템 슬롯을 비활성화 한다.
                 currentClickButton.transform.parent.gameObject.SetActive(false);
+                ownItemListControl.renewOwnItemList = ownItemListControl.RenewOwnItemList(item.Item1);
             }
         }
     }

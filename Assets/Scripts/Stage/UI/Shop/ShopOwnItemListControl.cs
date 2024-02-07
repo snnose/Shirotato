@@ -9,8 +9,7 @@ public class ShopOwnItemListControl : MonoBehaviour
 {
     private GameObject ownItemListContent;
     // Item1 = 아이템, Item2 = 수량
-    List<GameObject> ownItemList = new();
-    int ownListSize = 0;
+    public List<GameObject> ownItemList = new();
 
     public IEnumerator renewOwnItemList;
 
@@ -46,7 +45,7 @@ public class ShopOwnItemListControl : MonoBehaviour
             for (int i = 0; i < ownItemList.Count; i++)
             {
                 // 있다면 수량 +1
-                if (ownItemList[i] == item)
+                if (ownItemList[i].name == item.name)
                 {
                     isOverlapItem = true;
                     // 해당 오브젝트의 텍스트를 변경하면 된다.
@@ -55,7 +54,8 @@ public class ShopOwnItemListControl : MonoBehaviour
                     GameObject itemRoom = ownItemListContent.transform.GetChild(r).GetChild(c).gameObject;
 
                     string tmp = itemRoom.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text;
-                    int num = tmp[1] + 1;
+                    // 아스키 코드를 이용해서 보유 아이템 개수 증가
+                    int num = tmp[1] - 47;
                     itemRoom.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "x" + num;
                 }
             }
@@ -65,12 +65,15 @@ public class ShopOwnItemListControl : MonoBehaviour
         if (!isOverlapItem)
         {
             ownItemList.Add(item);
-            int r = ownItemList.Count / 6;
+            int r = (ownItemList.Count - 1) / 6;
             int c = (ownItemList.Count - 1) % 6;
             GameObject itemRoom = ownItemListContent.transform.GetChild(r).GetChild(c).gameObject;
 
             itemRoom.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = item.GetComponent<SpriteRenderer>().sprite;
             itemRoom.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "x1";
         }
+
+        isOverlapItem = false;
+        yield return null;
     }
 }

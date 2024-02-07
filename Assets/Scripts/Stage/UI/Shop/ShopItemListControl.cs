@@ -81,6 +81,8 @@ public class ShopItemListControl : MonoBehaviour
             itemInfoText.text += "고정 대미지 " + itemInfo.FixedDMG + '\n';
         if (itemInfo.Critical != 0)
             itemInfoText.text += "치명타 " + itemInfo.Critical + "%\n";
+        if (itemInfo.Range != 0)
+            itemInfoText.text += "범위 " + itemInfo.Range + "%\n";
 
         // 방어 관련
         if (itemInfo.HP != 0)
@@ -98,5 +100,18 @@ public class ShopItemListControl : MonoBehaviour
             itemInfoText.text += "획득 범위 " + itemInfo.RootingRange + "%\n";
         if (itemInfo.Luck != 0)
             itemInfoText.text += "행운 " + itemInfo.Luck + '\n';
-    } 
+    }
+
+    public void SetItemListActive()
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            itemList[i].SetActive(true);
+        }
+    }
+
+    public void SetIsRenewInfo(bool ret)
+    {
+        this.isRenewItemInfo = ret;
+    }
 }

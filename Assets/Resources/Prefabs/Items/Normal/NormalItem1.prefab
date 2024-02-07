@@ -101,7 +101,7 @@ MonoBehaviour:
   ATKSpeed: 0
   FixedDMG: 0
   Critical: 0
-  Range: -6
+  Range: -2
   HP: 0
   Recovery: 0
   Armor: 0

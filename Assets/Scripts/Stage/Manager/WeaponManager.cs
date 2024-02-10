@@ -65,6 +65,11 @@ public class WeaponManager : MonoBehaviour
     // 무기 장착 함수
     public IEnumerator EquipWeapons()
     {
+        int i = 0;
+        while (i < currentWeaponList.Count)
+        {
+
+        }
         yield return null;
     }
 

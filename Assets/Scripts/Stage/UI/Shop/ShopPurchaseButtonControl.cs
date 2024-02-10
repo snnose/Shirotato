@@ -10,6 +10,7 @@ using TMPro;
 public class ShopPurchaseButtonControl : MonoBehaviour
 {
     private ShopOwnItemListControl ownItemListControl;
+    private ShopOwnWeaponListControl ownWeaponListControl;
     private GameObject currentClickButton;
 
     private void Awake()
@@ -17,6 +18,9 @@ public class ShopPurchaseButtonControl : MonoBehaviour
         // List -> ShopUI 로 거쳐 올라간 후 OwnItemList를 찾음
         ownItemListControl = this.gameObject.transform.
             parent.GetChild(4).gameObject.GetComponent<ShopOwnItemListControl>();
+        // List -> ShopUI로 거쳐 올라간 후 OwnWeaponList 찾음
+        ownWeaponListControl = this.gameObject.transform.
+            parent.GetChild(5).gameObject.GetComponent<ShopOwnWeaponListControl>();
     }
     public void OnClickItemPurchaseButton()
     {
@@ -75,11 +79,14 @@ public class ShopPurchaseButtonControl : MonoBehaviour
             if (currentWaffle > price)
             {
                 PlayerInfo.Instance.SetCurrentWaffle(currentWaffle - price);
-
-                WeaponManager.Instance.GetCurrentWeaponList().Add(item.Item1);
+                // 무기 슬롯이 꽉 찬 경우도 구현해야함.
 
                 // 슬롯 비활성화
                 currentClickButton.transform.parent.gameObject.SetActive(false);
+                // 보유 무기 리스트에 추가
+                WeaponManager.Instance.GetCurrentWeaponList().Add(item.Item1);
+                // 보유 무기 리스트 갱신
+                ownWeaponListControl.renewOwnWeaponList = ownWeaponListControl.RenewOwnWeaponList();
             }
         }
         // 아이템을 구매한 경우
@@ -126,6 +133,7 @@ public class ShopPurchaseButtonControl : MonoBehaviour
 
                 // 아이템 슬롯을 비활성화 한다.
                 currentClickButton.transform.parent.gameObject.SetActive(false);
+                // 보유 아이템 리스트 갱신
                 ownItemListControl.renewOwnItemList = ownItemListControl.RenewOwnItemList(item.Item1);
             }
         }

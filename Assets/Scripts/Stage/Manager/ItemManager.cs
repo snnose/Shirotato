@@ -100,7 +100,7 @@ public class ItemManager : MonoBehaviour
 
                     for (int j = 0; j < weaponList.Count; j++)
                     {
-                        if (weaponList[j].name + "(Clone)" == currentWeaponList[random].name)
+                        if (weaponList[j].name == currentWeaponList[random].name)
                         {
                             Tuple<GameObject, int, bool> tmp = new(weaponList[j], rarity, true);
                             shopItemList.Add(tmp);

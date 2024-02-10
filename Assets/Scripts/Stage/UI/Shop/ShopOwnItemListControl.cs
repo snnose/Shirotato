@@ -8,7 +8,7 @@ using TMPro;
 public class ShopOwnItemListControl : MonoBehaviour
 {
     private GameObject ownItemListContent;
-    // Item1 = 아이템, Item2 = 수량
+    // Item1 = 아이템
     public List<GameObject> ownItemList = new();
 
     public IEnumerator renewOwnItemList;

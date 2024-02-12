@@ -23,10 +23,11 @@ public class WeaponManager : MonoBehaviour
     private GameObject weapon;
 
     public List<GameObject> currentWeaponList = new();
-    private List<Vector2> weaponPos = new() { new Vector2(-2.0f, 0f), new Vector2(2.0f, 0f), };
+    private List<Vector2> weaponPos = new() { new Vector2(-2.0f, 0f), new Vector2(2.0f, 0f), new Vector2(-2.0f, 2.0f),
+                                              new Vector2(2.0f, -2.0f), new Vector2(-2.0f, -2.0f), new Vector2(2.0f, 2.0f)};
 
-    private IEnumerator equipWeapons;
-    private IEnumerator destroyWeapons;
+    public IEnumerator equipWeapons;
+    public IEnumerator destroyWeapons;
 
     private void Awake()
     {
@@ -43,8 +44,7 @@ public class WeaponManager : MonoBehaviour
     void Start()
     {
         currentWeaponList.Add(weapon);
-        GameObject copy = Instantiate(weapon, weaponPos[0], Quaternion.Euler(0f, -180f, 0f)) as GameObject;
-        copy.transform.SetParent(playerBox.transform, false);
+        equipWeapons = EquipWeapons();
     }
 
     // Update is called once per frame
@@ -53,35 +53,46 @@ public class WeaponManager : MonoBehaviour
         // 라운드 시작 시 무기 장착하고 끝날 때 무기 파괴?
         if (equipWeapons != null)
         {
-            StartCoroutine(EquipWeapons());
+            StartCoroutine(equipWeapons);
         }
 
         if (destroyWeapons != null)
         {
-            StartCoroutine(DestroyWeapons());
+            StartCoroutine(destroyWeapons);
         }
     }
 
     // 무기 장착 함수
     public IEnumerator EquipWeapons()
     {
-        int i = 0;
-        while (i < currentWeaponList.Count)
-        {
+        int repeat = currentWeaponList.Count;
+        int reversal = 0;
 
+        for (int i = 0; i < repeat; i++)
+        {
+            reversal = 1;
+            if (i % 2 == 1)
+                reversal = 0;
+            GameObject copy = Instantiate(currentWeaponList[i], weaponPos[i], Quaternion.Euler(0f, -180f * reversal, 0f)) as GameObject;
+            copy.transform.SetParent(playerBox.transform, false);
+            yield return null;
         }
+
+        Debug.Log("반복문 탈출");
+
         yield return null;
     }
 
     // 무기 파괴 함수
     public IEnumerator DestroyWeapons()
     {
-        yield return null;
-    }
+        int repeat = currentWeaponList.Count;
+        for (int i = 0; i < repeat; i++)
+        {
+            Destroy(playerBox.transform.GetChild(1).gameObject);
+        }
 
-    public IEnumerator GetEquipWeapons()
-    {
-        return this.equipWeapons;
+        yield return null;
     }
 
     public List<GameObject> GetCurrentWeaponList()

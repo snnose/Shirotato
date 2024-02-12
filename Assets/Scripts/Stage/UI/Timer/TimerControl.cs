@@ -5,7 +5,7 @@ using TMPro;
 
 public class TimerControl : MonoBehaviour
 {
-    private float remainTime = 0f;
+    private float remainTime = 3f;
     private bool isTicking = false;
 
     private void Awake()

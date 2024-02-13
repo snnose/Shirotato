@@ -50,6 +50,7 @@ public class MonsterControl : MonoBehaviour
         // 라운드 종료 시의 처리
         if (GameRoot.Instance.GetIsRoundClear())
         {
+            SpawnManager.Instance.GetCurrentMonsters().Remove(this.gameObject);
             Destroy(this.gameObject);
         }
     }

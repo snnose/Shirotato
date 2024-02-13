@@ -76,7 +76,7 @@ public class ShopPurchaseButtonControl : MonoBehaviour
             int weaponPrice = item.Item1.GetComponent<WeaponInfo>().price;
             int price = weaponPrice + currentRound + Mathf.FloorToInt(weaponPrice * currentRound / 10);
 
-            if (currentWaffle > price)
+            if (currentWaffle > price && WeaponManager.Instance.GetCurrentWeaponList().Count < 6)
             {
                 PlayerInfo.Instance.SetCurrentWaffle(currentWaffle - price);
                 // 무기 슬롯이 꽉 찬 경우도 구현해야함.

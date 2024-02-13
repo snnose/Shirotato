@@ -20,6 +20,7 @@ public class GameRoot : MonoBehaviour
     }
 
     // 플레이어 관련 필드
+    private GameObject playerBox;
     private GameObject player;
     private PlayerInfo playerInfo;
     private PlayerColideDetect playerCollideDetect;
@@ -30,15 +31,18 @@ public class GameRoot : MonoBehaviour
     public bool isPlayerImune = false;
 
     private IEnumerator calBeHitDamage; // 피격 시 대미지 계산 함수
-    private IEnumerator imune;
 
     // 라운드 관련 필드
     private bool isGameOver = false;
     private bool isRoundClear = false;
 
     private int currentRound = 1;
+
     // 상점 UI 관련 필드
     public GameObject shopUI;
+    public IEnumerator floatingShopUI;
+
+    // 라운드 정보 관련 필드
 
     private void Awake()
     {
@@ -47,14 +51,15 @@ public class GameRoot : MonoBehaviour
         else
             Destroy(this.gameObject);
 
+        playerBox = GameObject.FindGameObjectWithTag("GameController");
         player = GameObject.FindGameObjectWithTag("Player");
         playerInfo = player.GetComponent<PlayerInfo>();
         playerCollideDetect = player.GetComponent<PlayerColideDetect>();
 
         MaxHP = currentHP = playerInfo.GetHP();
 
-        imune = Imune();
         calBeHitDamage = CalBeHitDamage();
+        floatingShopUI = FloatingShopUI();
     }
     // Start is called before the first frame update
     void Start()
@@ -73,10 +78,13 @@ public class GameRoot : MonoBehaviour
         }
 
         // 라운드 클리어 시
-        if (isRoundClear)
+        if (isRoundClear && floatingShopUI != null)
         {
             // 상점 UI를 띄운다
-            StartCoroutine(FloatingShopUI());
+            StartCoroutine(floatingShopUI);
+            floatingShopUI = null;
+            // 인스턴스화된 무기들을 파괴한다
+            WeaponManager.Instance.destroyWeapons = WeaponManager.Instance.DestroyWeapons();
         }
     }
 
@@ -115,7 +123,7 @@ public class GameRoot : MonoBehaviour
         calBeHitDamage = CalBeHitDamage();
     }
 
-    IEnumerator FloatingShopUI()
+    public IEnumerator FloatingShopUI()
     {
         yield return new WaitForSecondsRealtime(3.0f);
         shopUI.SetActive(true);
@@ -142,6 +150,11 @@ public class GameRoot : MonoBehaviour
     public void SetCurrentRound(int currentRound)
     {
         this.currentRound = currentRound;
+    }
+
+    public GameObject GetPlayerBox()
+    {
+        return this.playerBox;
     }
 
     public int GetCurrentRound()

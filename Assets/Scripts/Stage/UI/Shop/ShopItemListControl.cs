@@ -8,7 +8,7 @@ public class ShopItemListControl : MonoBehaviour
 {
     public List<GameObject> itemList;
 
-    private bool isRenewItemInfo = false;
+    public bool isRenewItemInfo = false;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +18,11 @@ public class ShopItemListControl : MonoBehaviour
 
     // Update is called once per frame
     void LateUpdate()
+    {
+        RenewItemInfo();
+    }
+
+    public void RenewItemInfo()
     {
         // 상점 아이템 리스트가 갱신 됐다면
         if (ItemManager.Instance.GetIsRenewItem() && !isRenewItemInfo)

@@ -31,7 +31,7 @@ public class ItemManager : MonoBehaviour
     private List<GameObject> currentItemList = new();
 
     // 아이템 새로고침 시 true로 전환.
-    private bool isRenewItem = false;
+    public bool isRenewItem = false;
 
     private void Awake()
     {
@@ -60,7 +60,7 @@ public class ItemManager : MonoBehaviour
     }
 
     // 아이템 리스트 갱신 함수
-    void RenewItemList()
+    public void RenewItemList()
     {
         List<float> itemProbabilities = new();
 

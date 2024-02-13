@@ -10,7 +10,7 @@ public class TimerControl : MonoBehaviour
 
     private void Awake()
     {
-        
+        Initialize();
     }
 
     // Start is called before the first frame update
@@ -44,13 +44,25 @@ public class TimerControl : MonoBehaviour
         isTicking = false;
     }
 
+    public void SetRemainTime(float time)
+    {
+        this.remainTime = time;
+        if (remainTime >= 10f)
+            this.GetComponent<TextMeshProUGUI>().color = Color.black;
+    }
+
+    public void SetTimerText(string text)
+    {
+        this.GetComponent<TextMeshProUGUI>().text = text.ToString();
+    }
+
     IEnumerator StartTimer()
     {
-        remainTime--;
-        this.GetComponent<TextMeshProUGUI>().text = remainTime.ToString();
         isTicking = true;
 
         yield return new WaitForSeconds(1f);
+        remainTime--;
+        this.GetComponent<TextMeshProUGUI>().text = remainTime.ToString();
         isTicking = false;
     }
 }

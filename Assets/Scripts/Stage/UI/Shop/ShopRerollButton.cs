@@ -12,6 +12,13 @@ public class ShopRerollButton : MonoBehaviour
 
     TextMeshProUGUI priceText;
     ShopItemListControl shopItemListControl;
+
+    private void Awake()
+    {
+        priceText = this.gameObject.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
+        shopItemListControl = this.gameObject.transform.parent.GetChild(3).GetComponent<ShopItemListControl>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,14 +33,13 @@ public class ShopRerollButton : MonoBehaviour
 
     public void Initialize()
     {
-        shopItemListControl = this.gameObject.transform.parent.GetChild(3).GetComponent<ShopItemListControl>();
         currentRound = GameRoot.Instance.GetCurrentRound();
+        rerollCount = 1;
         rerollIncrease = Mathf.FloorToInt(currentRound / 2);
         if (rerollIncrease < 1)
             rerollIncrease = 1;
         rerollPrice = currentRound + rerollIncrease * rerollCount;
 
-        TextMeshProUGUI priceText = this.gameObject.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
         priceText.text = "√ ±‚»≠ - " + rerollPrice;
     }
 

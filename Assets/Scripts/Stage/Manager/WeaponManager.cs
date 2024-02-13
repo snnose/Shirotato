@@ -78,8 +78,6 @@ public class WeaponManager : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("π›∫ππÆ ≈ª√‚");
-
         yield return null;
     }
 
@@ -89,7 +87,7 @@ public class WeaponManager : MonoBehaviour
         int repeat = currentWeaponList.Count;
         for (int i = 0; i < repeat; i++)
         {
-            Destroy(playerBox.transform.GetChild(1).gameObject);
+            Destroy(playerBox.transform.GetChild(i + 1).gameObject);
         }
 
         yield return null;

@@ -7,14 +7,12 @@ public class CameraControl : MonoBehaviour
     public GameObject player;
     private Vector3 posDiff = Vector3.zero;
 
-    // Start is called before the first frame update
     void Start()
     {
         this.posDiff = this.transform.position - player.transform.position;
         posDiff.z = 0;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         Vector3 newPos =
@@ -22,7 +20,7 @@ public class CameraControl : MonoBehaviour
                         player.transform.position.y,
                           this.transform.position.z);
 
-        // 벽에 가까워질 때 카메라 보정
+        // 벽에 가까워질 때 벽 안쪽이 잘 보이도록 카메라 보정
         if (player.transform.position.x < -10)
             newPos.x = -10;
         if (player.transform.position.x > 10)

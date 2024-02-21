@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -51,7 +52,7 @@ public class ShopRerollButton : MonoBehaviour
             // 보유 와플 차감
             PlayerInfo.Instance.SetCurrentWaffle(PlayerInfo.Instance.GetCurrentWaffle() - rerollPrice);
             // 현재 아이템 리스트를 비운다
-            ItemManager.Instance.GetShopItemList().Clear();
+            ClearShopItemList();
             // 아이템 리스트 UI를 활성화하고 갱신
             shopItemListControl.SetItemListActive();
             // 갱신 트리거 false로 설정
@@ -65,5 +66,22 @@ public class ShopRerollButton : MonoBehaviour
             priceText = this.gameObject.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
             priceText.text = "초기화 - " + rerollPrice;
         }
+    }
+    
+    private void ClearShopItemList()
+    {
+        List<Tuple<GameObject, int, bool>> tmp = ItemManager.Instance.GetShopItemList();
+
+        for (int i = 0; i < 4; i++)
+        {
+            // 잠겨있는 항목이 아니라면
+            if (!ItemManager.Instance.GetIsLockItemList()[i])
+            {
+                // 해당 항목을 비운다.
+                tmp[i] = null;
+            }
+        }
+
+        ItemManager.Instance.SetShopItemList(tmp);
     }
 }

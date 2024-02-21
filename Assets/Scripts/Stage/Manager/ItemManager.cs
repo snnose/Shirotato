@@ -27,6 +27,8 @@ public class ItemManager : MonoBehaviour
 
     // item1 = 게임 오브젝트, item2 = 등급, item3 = 무기, 아이템 여부 (true = 무기)
     private List<Tuple<GameObject, int, bool>> shopItemList = new();
+    // 아이템 잠금 여부 리스트
+    private List<bool> isLockItemList = new();
     // 현재 보유 아이템 리스트
     private List<GameObject> currentItemList = new();
 
@@ -39,6 +41,13 @@ public class ItemManager : MonoBehaviour
             instance = this;
         else
             Destroy(this.gameObject);
+
+        for (int i = 0; i < 4; i++)
+        {
+            shopItemList.Add(null);
+            // 아이템 잠금 리스트에 false를 채워 넣는다.
+            isLockItemList.Add(false);
+        }
     }
 
     // Start is called before the first frame update
@@ -70,6 +79,10 @@ public class ItemManager : MonoBehaviour
         
         for (int i = 0; i < 4; i++)
         {
+            // 해당 아이템 칸이 잠겼다면 건너뛴다
+            if (isLockItemList[i])
+                continue;
+
             // 난수를 사용해 아이템 레어도를 결정한다.
             float itemRandom = UnityEngine.Random.Range(0.0f, 100.0f);
             int rarity = -1;
@@ -92,6 +105,7 @@ public class ItemManager : MonoBehaviour
             {
                 // 한번 더 난수를 사용해 같은 무기가 나오도록 보정
                 int weaponRan = UnityEngine.Random.Range(1, 100);
+                // 난수 값이 35이하일 때 같은 무기 보정 적용
                 if (weaponRan <= 35)
                 {
                     // 현재 갖고 있는 무기 중에서 하나를 골라 상점 리스트에 넣는다.
@@ -103,17 +117,18 @@ public class ItemManager : MonoBehaviour
                         if (weaponList[j].name == currentWeaponList[random].name)
                         {
                             Tuple<GameObject, int, bool> tmp = new(weaponList[j], rarity, true);
-                            shopItemList.Add(tmp);
+                            shopItemList[i] = tmp;
                             break;
                         }
                     }
                 }
+                // 난수 값이 36 이상일 때
                 else
                 {
                     // 무기 리스트 중에 하나를 골라 상점 리스트에 넣는다.
                     int random = UnityEngine.Random.Range(0, weaponList.Count);
                     Tuple<GameObject, int, bool> tmp = new(weaponList[random], rarity, true);
-                    shopItemList.Add(tmp);
+                    shopItemList[i] = tmp;
                 }
             }
             // 난수 값이 35 초과라면 아이템
@@ -126,22 +141,22 @@ public class ItemManager : MonoBehaviour
                     case 0:
                         random = UnityEngine.Random.Range(0, normalItemList.Count);
                         tmp = new(normalItemList[random], 0, false);
-                        shopItemList.Add(tmp);
+                        shopItemList[i] = tmp;
                         break;
                     case 1:
                         random = UnityEngine.Random.Range(0, rareItemList.Count);
                         tmp = new(rareItemList[random], 0, false);
-                        shopItemList.Add(tmp);
+                        shopItemList[i] = tmp;
                         break;
                     case 2:
                         random = UnityEngine.Random.Range(0, epicItemList.Count);
                         tmp = new(epicItemList[random], 0, false);
-                        shopItemList.Add(tmp);
+                        shopItemList[i] = tmp;
                         break;
                     case 3:
                         random = UnityEngine.Random.Range(0, legendItemList.Count);
                         tmp = new(legendItemList[random], 0, false);
-                        shopItemList.Add(tmp);
+                        shopItemList[i] = tmp;
                         break;
                     default:
                         break;
@@ -175,9 +190,24 @@ public class ItemManager : MonoBehaviour
         return tmp;
     }
 
+    public void SetShopItemList(List<Tuple<GameObject, int, bool>> shopItemList)
+    {
+        this.shopItemList = shopItemList;
+    }
+
     public void SetIsRenewItem(bool isRenewItem)
     {
         this.isRenewItem = isRenewItem;
+    }
+
+    public void SetIsLockItemList(List<bool> list)
+    {
+        this.isLockItemList = list;
+    }
+
+    public List<bool> GetIsLockItemList()
+    {
+        return this.isLockItemList;
     }
 
     public List<Tuple<GameObject, int, bool>> GetShopItemList()

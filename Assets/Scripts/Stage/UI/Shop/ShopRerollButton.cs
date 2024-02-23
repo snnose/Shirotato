@@ -59,8 +59,10 @@ public class ShopRerollButton : MonoBehaviour
             shopItemListControl.SetIsRenewInfo(false);
             ItemManager.Instance.SetIsRenewItem(false);
 
+            // 리롤 누적 횟수 증가
             rerollCount++;
 
+            // 리롤 비용 재조정
             rerollPrice = currentRound + rerollIncrease * rerollCount;
 
             priceText = this.gameObject.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();

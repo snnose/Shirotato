@@ -47,10 +47,11 @@ public class ShopOwnItemListControl : MonoBehaviour
                 // 있다면 수량 +1
                 if (ownItemList[i].name == item.name)
                 {
+                    // 중복 아이템 트리거 True
                     isOverlapItem = true;
-                    // 해당 오브젝트의 텍스트를 변경하면 된다.
-                    int r = i / 6;
-                    int c = i % 6;
+                    // 보유 아이템 UI의 위치를 찾는다
+                    int r = i / 6;  // 행
+                    int c = i % 6;  // 열
                     GameObject itemRoom = ownItemListContent.transform.GetChild(r).GetChild(c).gameObject;
 
                     string tmp = itemRoom.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text;
@@ -65,15 +66,18 @@ public class ShopOwnItemListControl : MonoBehaviour
         if (!isOverlapItem)
         {
             ownItemList.Add(item);
-            int r = (ownItemList.Count - 1) / 6;
-            int c = (ownItemList.Count - 1) % 6;
+            int r = (ownItemList.Count - 1) / 6;    // 0행 ~ n행
+            int c = (ownItemList.Count - 1) % 6;    // 0열 ~ 5열
             GameObject itemRoom = ownItemListContent.transform.GetChild(r).GetChild(c).gameObject;
 
+            // 보유 아이템 칸에 ItemInfo 스크립트 추가
+            itemRoom.AddComponent<ItemInfo>();
+            // 등록하려는 아이템의 정보를 입력한다.
+            itemRoom.GetComponent<ItemInfo>().SetItemInfo(item);
             itemRoom.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = item.GetComponent<SpriteRenderer>().sprite;
             itemRoom.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "x1";
         }
 
-        isOverlapItem = false;
         yield return null;
     }
 }

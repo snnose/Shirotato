@@ -5,6 +5,8 @@ using UnityEngine;
 public class ItemInfo : MonoBehaviour
 {
     // 공격 관련
+    public string itemName = "";
+
     public float DMGPercent = 0f;
     public float ATKSpeed = 0f;
     public float FixedDMG = 0f;
@@ -24,4 +26,26 @@ public class ItemInfo : MonoBehaviour
 
     // 가격
     public int price = 0;
+
+    public void SetItemInfo(GameObject item)
+    {
+        this.itemName = item.GetComponent<ItemInfo>().itemName;
+
+        this.DMGPercent = item.GetComponent<ItemInfo>().DMGPercent;
+        this.ATKSpeed = item.GetComponent<ItemInfo>().ATKSpeed;
+        this.FixedDMG = item.GetComponent<ItemInfo>().FixedDMG;
+        this.Critical = item.GetComponent<ItemInfo>().Critical;
+        this.Range = item.GetComponent<ItemInfo>().Range;
+
+        this.HP = item.GetComponent<ItemInfo>().HP;
+        this.Recovery = item.GetComponent<ItemInfo>().Recovery;
+        this.Armor = item.GetComponent<ItemInfo>().Armor;
+        this.Evasion = item.GetComponent<ItemInfo>().Evasion;
+
+        this.MovementSpeed = item.GetComponent<ItemInfo>().MovementSpeed;
+        this.RootingRange = item.GetComponent<ItemInfo>().RootingRange;
+        this.Luck = item.GetComponent<ItemInfo>().Luck;
+
+        this.price = item.GetComponent<ItemInfo>().price;
+    }
 }

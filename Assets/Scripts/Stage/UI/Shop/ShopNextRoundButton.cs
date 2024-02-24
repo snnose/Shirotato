@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,11 +38,14 @@ public class ShopNextRoundButton : MonoBehaviour
         // 상점 초기화
         ShopUIControl.Instance.GetShopItemListControl().SetItemListActive();
 
+        // 상점 제목 변경
+        ShopUIControl.Instance.GetShopTitleControl().SetTitleText(GameRoot.Instance.GetCurrentRound());
+
         // 아이템 리스트 UI 초기화
         ShopUIControl.Instance.GetShopItemListControl().SetIsRenewInfo(false);
-        
+
         // 아이템 리스트 초기화
-        ItemManager.Instance.GetShopItemList().Clear();
+        ClearShopItemList();
         ItemManager.Instance.SetIsRenewItem(false);
         
         ShopUIControl.Instance.GetShopRerollButton().Initialize(); // 리롤 비용 초기화
@@ -54,5 +58,22 @@ public class ShopNextRoundButton : MonoBehaviour
 
         // 타임스케일 정상화
         Time.timeScale = 1f;
+    }
+
+    private void ClearShopItemList()
+    {
+        List<Tuple<GameObject, int, bool>> tmp = ItemManager.Instance.GetShopItemList();
+
+        for (int i = 0; i < 4; i++)
+        {
+            // 잠겨있는 항목이 아니라면
+            if (!ItemManager.Instance.GetIsLockItemList()[i])
+            {
+                // 해당 항목을 비운다.
+                tmp[i] = null;
+            }
+        }
+
+        ItemManager.Instance.SetShopItemList(tmp);
     }
 }

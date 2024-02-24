@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94b2362cbbf86214ab13e6d3a7aeb66b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemName: NormalItem5
   DMGPercent: -2
   ATKSpeed: 10
   FixedDMG: 0

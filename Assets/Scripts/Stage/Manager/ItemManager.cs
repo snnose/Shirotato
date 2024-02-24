@@ -25,8 +25,8 @@ public class ItemManager : MonoBehaviour
 
     public List<GameObject> weaponList;
 
-    // item1 = 게임 오브젝트, item2 = 등급, item3 = 무기, 아이템 여부 (true = 무기)
-    private List<Tuple<GameObject, int, bool>> shopItemList = new();
+    // item1 = 게임 오브젝트
+    private List<GameObject> shopItemList = new();
     // 아이템 잠금 여부 리스트
     private List<bool> isLockItemList = new();
     // 현재 보유 아이템 리스트
@@ -116,7 +116,8 @@ public class ItemManager : MonoBehaviour
                     {
                         if (weaponList[j].name == currentWeaponList[random].name)
                         {
-                            Tuple<GameObject, int, bool> tmp = new(weaponList[j], rarity, true);
+                            GameObject tmp = weaponList[j];
+                            tmp.GetComponent<WeaponInfo>().grade = rarity;
                             shopItemList[i] = tmp;
                             break;
                         }
@@ -127,35 +128,35 @@ public class ItemManager : MonoBehaviour
                 {
                     // 무기 리스트 중에 하나를 골라 상점 리스트에 넣는다.
                     int random = UnityEngine.Random.Range(0, weaponList.Count);
-                    Tuple<GameObject, int, bool> tmp = new(weaponList[random], rarity, true);
+                    GameObject tmp = weaponList[random];
                     shopItemList[i] = tmp;
                 }
             }
             // 난수 값이 35 초과라면 아이템
             else
             {
-                Tuple<GameObject, int, bool> tmp;
+                GameObject tmp;
                 int random = 0;
                 switch (rarity)
                 {
                     case 0:
                         random = UnityEngine.Random.Range(0, normalItemList.Count);
-                        tmp = new(normalItemList[random], 0, false);
+                        tmp = normalItemList[random];
                         shopItemList[i] = tmp;
                         break;
                     case 1:
                         random = UnityEngine.Random.Range(0, rareItemList.Count);
-                        tmp = new(rareItemList[random], 0, false);
+                        tmp = rareItemList[random];
                         shopItemList[i] = tmp;
                         break;
                     case 2:
                         random = UnityEngine.Random.Range(0, epicItemList.Count);
-                        tmp = new(epicItemList[random], 0, false);
+                        tmp = epicItemList[random];
                         shopItemList[i] = tmp;
                         break;
                     case 3:
                         random = UnityEngine.Random.Range(0, legendItemList.Count);
-                        tmp = new(legendItemList[random], 0, false);
+                        tmp = legendItemList[random];
                         shopItemList[i] = tmp;
                         break;
                     default:
@@ -190,7 +191,7 @@ public class ItemManager : MonoBehaviour
         return tmp;
     }
 
-    public void SetShopItemList(List<Tuple<GameObject, int, bool>> shopItemList)
+    public void SetShopItemList(List<GameObject> shopItemList)
     {
         this.shopItemList = shopItemList;
     }
@@ -210,7 +211,7 @@ public class ItemManager : MonoBehaviour
         return this.isLockItemList;
     }
 
-    public List<Tuple<GameObject, int, bool>> GetShopItemList()
+    public List<GameObject> GetShopItemList()
     {
         return this.shopItemList;
     }

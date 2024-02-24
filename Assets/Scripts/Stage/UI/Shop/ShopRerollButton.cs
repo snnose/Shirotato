@@ -72,7 +72,7 @@ public class ShopRerollButton : MonoBehaviour
     
     private void ClearShopItemList()
     {
-        List<Tuple<GameObject, int, bool>> tmp = ItemManager.Instance.GetShopItemList();
+        List<GameObject> tmp = ItemManager.Instance.GetShopItemList();
 
         for (int i = 0; i < 4; i++)
         {

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ItemInfo : MonoBehaviour
 {
-    // 공격 관련
     public string itemName = "";
 
+    // 공격 관련
     public float DMGPercent = 0f;
     public float ATKSpeed = 0f;
     public float FixedDMG = 0f;

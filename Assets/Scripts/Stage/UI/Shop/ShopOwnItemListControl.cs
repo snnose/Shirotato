@@ -74,8 +74,14 @@ public class ShopOwnItemListControl : MonoBehaviour
             itemRoom.AddComponent<ItemInfo>();
             // 등록하려는 아이템의 정보를 입력한다.
             itemRoom.GetComponent<ItemInfo>().SetItemInfo(item);
-            itemRoom.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = item.GetComponent<SpriteRenderer>().sprite;
-            itemRoom.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "x1";
+            // 등록하려는 아이템의 등급 이미지를 넣는다.
+            itemRoom.transform.GetChild(0).gameObject.GetComponent<Image>().color =
+                item.transform.GetChild(0).GetComponent<SpriteRenderer>().color;
+            // 등록하려는 아이템의 이미지를 넣는다.
+            itemRoom.transform.GetChild(1).gameObject.GetComponent<Image>().sprite = 
+                item.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite;
+            // 등록하려는 아이템의 개수 입력
+            itemRoom.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = "x1";
         }
 
         yield return null;

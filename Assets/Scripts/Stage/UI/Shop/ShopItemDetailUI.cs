@@ -18,7 +18,6 @@ public class ShopItemDetailUI : MonoBehaviour
         }
     }
 
-    private GameObject detailUI;
     private GameObject itemImage;
     private GameObject itemName;
     private GameObject itemStatus;
@@ -34,7 +33,6 @@ public class ShopItemDetailUI : MonoBehaviour
         else
             Destroy(this.gameObject);
 
-        detailUI = this.gameObject;
         itemImage = this.gameObject.transform.GetChild(1).gameObject;
         itemName = this.gameObject.transform.GetChild(2).gameObject;
         itemStatus = this.gameObject.transform.GetChild(3).gameObject;
@@ -52,6 +50,11 @@ public class ShopItemDetailUI : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void SetItemImage(Image image)
+    {
+        this.image = image;
     }
     
     public void SetItemStatusText(ItemInfo itemInfo)

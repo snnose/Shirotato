@@ -9,6 +9,7 @@ public class ShopItemListControl : MonoBehaviour
     public List<GameObject> itemList;
 
     public bool isRenewItemInfo = false;
+    //private WeaponInfo weaponInfo;
 
     // Start is called before the first frame update
     void Start()
@@ -30,22 +31,36 @@ public class ShopItemListControl : MonoBehaviour
             // 각 슬롯에 아이템 정보를 기록한다.
             for (int i = 0; i < 4; i++)
             {
-                // 아이템 이미지 변경
-                itemList[i].transform.GetChild(1).GetComponent<Image>().sprite =
-                    ItemManager.Instance.GetShopItemList()[i].Item1.GetComponent<SpriteRenderer>().sprite;
-                // 아이템 이름 변경
-                itemList[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
-                    ItemManager.Instance.GetShopItemList()[i].Item1.name;
-
-                // 무기, 아이템에 따라 스텟 설명이 다르다.
+                GameObject currentThing = ItemManager.Instance.GetShopItemList()[i];
                 // 무기일 경우
-                if (ItemManager.Instance.GetShopItemList()[i].Item3)
+                if (currentThing.TryGetComponent<WeaponInfo>(out WeaponInfo weaponInfo))
                 {
+                    // 무기 등급 이미지 변경
+                    itemList[i].transform.GetChild(0).GetComponent<Image>().color =
+                        DecideGradeColor(weaponInfo.GetWeaponGrade());
+                    // 무기 이미지 변경
+                    itemList[i].transform.GetChild(1).GetComponent<Image>().sprite =
+                        currentThing.GetComponent<SpriteRenderer>().sprite;
+                    // 이름 텍스트 변경
+                    itemList[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
+                        weaponInfo.weaponName;
+
                     SetWeaponInfoText(i);
                 }
                 // 아이템일 경우
                 else
                 {
+                    // 아이템 등급 이미지 변경
+                    itemList[i].transform.GetChild(0).GetComponent<Image>().color =
+                    currentThing.transform.GetChild(0).GetComponent<SpriteRenderer>().color;
+
+                    // 아이템 이미지 변경
+                    itemList[i].transform.GetChild(1).GetComponent<Image>().sprite =
+                        currentThing.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite;
+                    // 아이템 이름 변경
+                    itemList[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
+                        currentThing.GetComponent<ItemInfo>().itemName;
+
                     SetItemInfoText(i);
                 }
             }
@@ -57,7 +72,7 @@ public class ShopItemListControl : MonoBehaviour
     void SetWeaponInfoText(int i)
     {
         TextMeshProUGUI weaponInfoText = itemList[i].transform.GetChild(3).GetComponent<TextMeshProUGUI>();
-        WeaponInfo weaponInfo = ItemManager.Instance.GetShopItemList()[i].Item1.GetComponent<WeaponInfo>();
+        WeaponInfo weaponInfo = ItemManager.Instance.GetShopItemList()[i].GetComponent<WeaponInfo>();
         weaponInfoText.text = "대미지 : " + weaponInfo.damage + '\n' +
                               "공격속도 : " + Mathf.Round(1 / weaponInfo.coolDown * 100) / 100 + "/s \n" +
                               "범위 : " + weaponInfo.range;
@@ -67,10 +82,11 @@ public class ShopItemListControl : MonoBehaviour
                             Mathf.FloorToInt(weaponInfo.price * GameRoot.Instance.GetCurrentRound() / 10)).ToString();
     }
 
+    // 아이템의 능력치와 가격 텍스트를 설정한다.
     void SetItemInfoText(int i)
     {
         TextMeshProUGUI itemInfoText = itemList[i].transform.GetChild(3).GetComponent<TextMeshProUGUI>();
-        ItemInfo itemInfo = ItemManager.Instance.GetShopItemList()[i].Item1.GetComponent<ItemInfo>();
+        ItemInfo itemInfo = ItemManager.Instance.GetShopItemList()[i].GetComponent<ItemInfo>();
         itemInfoText.text = "";
 
         TextMeshProUGUI itemPrice = itemList[i].transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>();
@@ -105,6 +121,32 @@ public class ShopItemListControl : MonoBehaviour
             itemInfoText.text += "획득 범위 " + itemInfo.RootingRange + "%\n";
         if (itemInfo.Luck != 0)
             itemInfoText.text += "행운 " + itemInfo.Luck + '\n';
+    }
+
+    // rank에 따라 랭크 색깔을 반환하는 함수 (흰, 파, 보, 주)
+    private Color DecideGradeColor(int grade)
+    {
+        Color color = Color.white;
+        switch (grade)
+        {
+            case 0:
+                color = Color.white;
+                break;
+            case 1:
+                color = new Color(120, 166, 214);
+                break;
+            case 2:
+                color = new Color(161, 120, 214);
+                break;
+            case 3:
+                color = new Color(233, 137, 76);
+                break;
+            default:
+                color = Color.black;
+                break;
+        }
+
+        return color;
     }
 
     public void SetItemListActive()

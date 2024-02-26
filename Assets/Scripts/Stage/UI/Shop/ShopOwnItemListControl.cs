@@ -53,11 +53,12 @@ public class ShopOwnItemListControl : MonoBehaviour
                     int r = i / 6;  // 행
                     int c = i % 6;  // 열
                     GameObject itemRoom = ownItemListContent.transform.GetChild(r).GetChild(c).gameObject;
+                    TextMeshProUGUI itemNumberText = itemRoom.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
 
-                    string tmp = itemRoom.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text;
+                    string tmp = itemNumberText.text;
                     // 아스키 코드를 이용해서 보유 아이템 개수 증가
                     int num = tmp[1] - 47;
-                    itemRoom.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "x" + num;
+                    itemNumberText.text = "x" + num;
                 }
             }
         }

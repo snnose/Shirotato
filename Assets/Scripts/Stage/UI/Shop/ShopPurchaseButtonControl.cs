@@ -81,6 +81,7 @@ public class ShopPurchaseButtonControl : MonoBehaviour
 
                 // 슬롯 비활성화
                 currentClickButton.transform.parent.gameObject.SetActive(false);
+                
                 // 보유 무기 리스트에 추가
                 WeaponManager.Instance.GetCurrentWeaponList().Add(item);
                 // 보유 무기 리스트 갱신

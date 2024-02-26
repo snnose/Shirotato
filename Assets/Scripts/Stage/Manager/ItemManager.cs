@@ -117,7 +117,7 @@ public class ItemManager : MonoBehaviour
                         if (weaponList[j].name == currentWeaponList[random].name)
                         {
                             GameObject tmp = weaponList[j];
-                            tmp.GetComponent<WeaponInfo>().grade = rarity;
+                            tmp.GetComponent<WeaponInfo>().SetWeaponGrade(rarity);
                             shopItemList[i] = tmp;
                             break;
                         }

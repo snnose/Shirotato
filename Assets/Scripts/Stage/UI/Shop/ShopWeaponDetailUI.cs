@@ -97,6 +97,7 @@ public class ShopWeaponDetailUI : MonoBehaviour
                 weaponList.RemoveAt(i);
                 weaponInfoList.RemoveAt(i);
                 // 재료로 소모된 무기 이후의 무기들의 번호를 차감한다 (ex 2번째 무기 소모되면 3번째 무기 -> 2번째 무기로 변경)
+                AdjustWeaponNum(i);
                 // ShopOwnItemListControl의 코루틴 호출로 UI를 갱신한다
                 ShopOwnWeaponListControl shopOwnWeaponListControl = ShopUIControl.Instance.GetShopOwnWeaponListControl();
                 shopOwnWeaponListControl.renewOwnWeaponList = shopOwnWeaponListControl.RenewOwnWeaponList();
@@ -125,6 +126,20 @@ public class ShopWeaponDetailUI : MonoBehaviour
         SetIsLockOn(false);
         // UI 비활성화
         this.gameObject.SetActive(false);
+    }
+
+    // i번째 무기 이후의 무기 번호를 조정하는 함수
+    private void AdjustWeaponNum(int start)
+    {
+        int count = WeaponManager.Instance.GetCurrentWeaponList().Count;
+        List<WeaponInfo> tmp = WeaponManager.Instance.GetCurrentWeaponInfoList();
+        if (start < count)
+        {
+            for (int i = start; i < count; i++)
+            {
+                tmp[i].SetWeaponNumber(tmp[i].GetWeaponNumber() - 1);
+            }
+        }
     }
 
     // UI 위치 설정

@@ -12,16 +12,20 @@ public class WeaponControl : MonoBehaviour
     private float range = 0f;
     private float coolDown = 0f;
 
+    public int weaponNumber = -1;
+
     public bool isCoolDown = false;
 
     private void Awake()
     {
-        weaponInfo = this.GetComponent<WeaponInfo>();
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        weaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[weaponNumber];
+
         damage = weaponInfo.damage;
         range = weaponInfo.range;
         coolDown = weaponInfo.coolDown;
@@ -116,5 +120,10 @@ public class WeaponControl : MonoBehaviour
         }
 
         return closetMonster;
+    }
+
+    public void SetWeaponNumber(int weaponNumber)
+    {
+        this.weaponNumber = weaponNumber;
     }
 }

@@ -8,12 +8,14 @@ public class ShopShowWeaponDetail : MonoBehaviour, IPointerEnterHandler, IPointe
 {
     // 현재 마우스를 올리고 있는 무기 칸
     private GameObject currentPointWeaponRoom;
-
+    // 현재 마우스를 올리고 있는 무기 칸의 번호
+    private int currentPointWeaponRoomNumber;
     //public ShopWeaponDetailUI shopWeaponDetailUI;
-    
+
     private void Awake()
     {
         //shopWeaponDetailUI = ShopWeaponDetailUI.Instance;
+        currentPointWeaponRoomNumber = -1;
     }
 
     // 마우스 포인터가 해당 무키 칸에 진입할 때 WeaponDetailUI 활성화
@@ -21,8 +23,15 @@ public class ShopShowWeaponDetail : MonoBehaviour, IPointerEnterHandler, IPointe
     {
         // 해당 무기 칸을 읽어온다.
         currentPointWeaponRoom = eventData.pointerCurrentRaycast.gameObject;
-        if (this.gameObject.transform.parent.gameObject.TryGetComponent<WeaponInfo>(out WeaponInfo weaponInfo))
+        // 해당 무기 칸이 몇 번째인지 찾는다.
+        currentPointWeaponRoomNumber = FindWeaponRoomNumber(currentPointWeaponRoom);
+
+        // 해당 무기 칸 번호에 해당하는 무기 정보가 있고, 버튼을 누르지 않은 상태라면
+        if (currentPointWeaponRoomNumber < WeaponManager.Instance.GetCurrentWeaponList().Count
+            && WeaponManager.Instance.GetCurrentWeaponInfoList()[currentPointWeaponRoomNumber] != null
+            && !ShopWeaponDetailUI.Instance.GetIsLockOn())
         {
+            // 무기의 상세 설명을 설정한다
             ChangeDetailUIElement(this.gameObject);
             // WeaponDetailUI 위치 변경
             Vector2 pos = CalWeaponDetailUIPos();
@@ -36,10 +45,12 @@ public class ShopShowWeaponDetail : MonoBehaviour, IPointerEnterHandler, IPointe
     public void OnPointerExit(PointerEventData eventData)
     {
         // 해당 무기 칸에 무기가 등록되어있고, 버튼을 누르지 않은 상태일 때 진입
-        if (this.gameObject.transform.parent.gameObject.TryGetComponent<WeaponInfo>(out WeaponInfo weaponInfo)
+        if (currentPointWeaponRoomNumber < WeaponManager.Instance.GetCurrentWeaponList().Count 
+            && WeaponManager.Instance.GetCurrentWeaponInfoList()[currentPointWeaponRoomNumber] != null
             && !ShopWeaponDetailUI.Instance.GetIsLockOn())
         {
             currentPointWeaponRoom = null;
+            currentPointWeaponRoomNumber = -1;
             // WeaponDetailUI 비활성화
             ShopWeaponDetailUI.Instance.GetWeaponDetailUI().SetActive(false);
         }
@@ -51,8 +62,7 @@ public class ShopShowWeaponDetail : MonoBehaviour, IPointerEnterHandler, IPointe
         ShopWeaponDetailUI.Instance.SetIsLockOn(true);
 
         // 현재 누른 무기 칸 번호를 기억한다.
-        int weaponRoomNum = FindWeaponRoomNumber(currentPointWeaponRoom);
-        ShopWeaponDetailUI.Instance.SetWeaponRoomNumber(weaponRoomNum);
+        ShopWeaponDetailUI.Instance.SetWeaponRoomNumber(currentPointWeaponRoomNumber);
     }
 
     private int FindWeaponRoomNumber(GameObject weaponRoom)
@@ -102,8 +112,8 @@ public class ShopShowWeaponDetail : MonoBehaviour, IPointerEnterHandler, IPointe
     // WeaponDetailUI의 이미지, 텍스트를 변경하는 함수
     private void ChangeDetailUIElement(GameObject weapon)
     {
-        // 부모 객체에서 WeaponInfo 스크립트를 참조
-        WeaponInfo weaponInfo = weapon.transform.parent.GetComponent<WeaponInfo>();
+        // WeaponInfo 스크립트를 참조
+        WeaponInfo weaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[currentPointWeaponRoomNumber];
         ShopWeaponDetailUI.Instance.SetWeaponImage(weapon.GetComponent<Image>());
         ShopWeaponDetailUI.Instance.SetWeaponNameText(weaponInfo);
         ShopWeaponDetailUI.Instance.SetWeaponStatusText(weaponInfo);

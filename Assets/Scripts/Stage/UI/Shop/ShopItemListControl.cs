@@ -32,9 +32,10 @@ public class ShopItemListControl : MonoBehaviour
             for (int i = 0; i < 4; i++)
             {
                 GameObject currentThing = ItemManager.Instance.GetShopItemList()[i];
-                // 무기일 경우
-                if (currentThing.TryGetComponent<WeaponInfo>(out WeaponInfo weaponInfo))
+                // 무기일 경우 (해당 칸에 무기 정보가 있으면 무기)
+                if (ItemManager.Instance.GetShopWeaponInfoList()[i] != null)
                 {
+                    WeaponInfo weaponInfo = ItemManager.Instance.GetShopWeaponInfoList()[i];
                     // 무기 등급 이미지 변경
                     itemList[i].transform.GetChild(0).GetComponent<Image>().color =
                         DecideGradeColor(weaponInfo.GetWeaponGrade());
@@ -72,12 +73,13 @@ public class ShopItemListControl : MonoBehaviour
     void SetWeaponInfoText(int i)
     {
         TextMeshProUGUI weaponInfoText = itemList[i].transform.GetChild(3).GetComponent<TextMeshProUGUI>();
-        WeaponInfo weaponInfo = ItemManager.Instance.GetShopItemList()[i].GetComponent<WeaponInfo>();
+        WeaponInfo weaponInfo = ItemManager.Instance.GetShopWeaponInfoList()[i];
         weaponInfoText.text = "대미지 : " + weaponInfo.damage + '\n' +
                               "공격속도 : " + Mathf.Round(1 / weaponInfo.coolDown * 100) / 100 + "/s \n" +
                               "범위 : " + weaponInfo.range;
 
         TextMeshProUGUI weaponPrice = itemList[i].transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>();
+        // 무기의 기본 가격 + 현재 라운드 + (무기의 기본 가격 * 현재 라운드) / 10
         weaponPrice.text = (weaponInfo.price + GameRoot.Instance.GetCurrentRound() +
                             Mathf.FloorToInt(weaponInfo.price * GameRoot.Instance.GetCurrentRound() / 10)).ToString();
     }

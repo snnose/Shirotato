@@ -73,6 +73,7 @@ public class ShopRerollButton : MonoBehaviour
     private void ClearShopItemList()
     {
         List<GameObject> tmp = ItemManager.Instance.GetShopItemList();
+        List<WeaponInfo> tmpInfo = ItemManager.Instance.GetShopWeaponInfoList();
 
         for (int i = 0; i < 4; i++)
         {
@@ -81,9 +82,11 @@ public class ShopRerollButton : MonoBehaviour
             {
                 // 해당 항목을 비운다.
                 tmp[i] = null;
+                tmpInfo[i] = null;
             }
         }
 
         ItemManager.Instance.SetShopItemList(tmp);
+        ItemManager.Instance.SetShopWeaponInfoList(tmpInfo);
     }
 }

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2563918189923623190}
   - component: {fileID: 3564075378476413590}
   - component: {fileID: 8634711352545389975}
-  - component: {fileID: 7461042739051662000}
   m_Layer: 0
   m_Name: Pistol
   m_TagString: Untagged
@@ -99,21 +98,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isCoolDown: 0
---- !u!114 &7461042739051662000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5270039100503737263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4802e449152359448cc53e36e877908, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponName: Pistol
-  grade: 0
-  damage: 10
-  range: 7
-  coolDown: 1.5
-  price: 15

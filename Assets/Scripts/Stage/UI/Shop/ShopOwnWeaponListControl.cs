@@ -34,6 +34,8 @@ public class ShopOwnWeaponListControl : MonoBehaviour
     {
         // 현재 소유 무기 목록을 가져온다.
         List<GameObject> currWeaponList = WeaponManager.Instance.GetCurrentWeaponList();
+        // 현재 소유 무기의 정보를 가져온다.
+        List<WeaponInfo> currWeaponInfoList = WeaponManager.Instance.GetCurrentWeaponInfoList();
 
         // UI 갱신
         int num = currWeaponList.Count;
@@ -49,17 +51,11 @@ public class ShopOwnWeaponListControl : MonoBehaviour
             {
                 // 무기 칸의 배경 이미지(등급)를 변경한다.
                 weaponRoom.transform.GetChild(0).gameObject.GetComponent<Image>().color =
-                    DecideGradeColor(currWeaponList[i].GetComponent<WeaponInfo>().GetWeaponGrade());
+                    DecideGradeColor(currWeaponInfoList[i].GetWeaponGrade());
+                //Debug.Log(i + "번 무기 등급 : " + currWeaponList[i].GetComponent<WeaponInfo>().GetWeaponGrade());
                 // 무기 칸의 이미지(무기)를 변경한다.
                 weaponRoom.transform.GetChild(1).gameObject.GetComponent<Image>().sprite =
                     currWeaponList[i].GetComponent<SpriteRenderer>().sprite;
-                
-                // 무기 칸에 해당 무기의 정보를 갖도록 한다.
-                if (!weaponRoom.TryGetComponent<WeaponInfo>(out WeaponInfo weaponInfo))
-                {
-                    weaponRoom.AddComponent<WeaponInfo>();
-                    weaponRoom.GetComponent<WeaponInfo>().SetWeaponStatus(currWeaponList[i]);
-                }
             }
             // 그 외는 빈칸으로 처리한다.
             else
@@ -70,11 +66,6 @@ public class ShopOwnWeaponListControl : MonoBehaviour
                 // 무기 칸의 이미지를 비운다.
                 weaponRoom.transform.GetChild(1).gameObject.GetComponent<Image>().sprite =
                     null;
-                // 무기의 정보가 남아있다면 삭제
-                if (weaponRoom.TryGetComponent<WeaponInfo>(out WeaponInfo weaponInfo))
-                {
-                    Destroy(weaponRoom.GetComponent<WeaponInfo>());
-                }
             }
         }
         

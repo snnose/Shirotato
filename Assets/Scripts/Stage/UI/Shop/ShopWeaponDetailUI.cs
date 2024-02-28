@@ -61,10 +61,12 @@ public class ShopWeaponDetailUI : MonoBehaviour
     {
         // 현재 무기 리스트를 탐색해 같은 등급이면서 같은 무기인 것을 찾는다.
         List<GameObject> weaponList = WeaponManager.Instance.GetCurrentWeaponList();
-        GameObject currWeapon = weaponList[currentWeaponRoomNumber];
-        WeaponInfo currWeaponInfo = currWeapon.GetComponent<WeaponInfo>();
+        List<WeaponInfo> weaponInfoList = WeaponManager.Instance.GetCurrentWeaponInfoList();
 
-        Debug.Log("결합 전 등급 : " + currWeaponInfo.GetWeaponGrade());
+        GameObject currWeapon = weaponList[currentWeaponRoomNumber];
+        WeaponInfo currWeaponInfo = weaponInfoList[currentWeaponRoomNumber];
+
+        //Debug.Log("결합 전 등급 : " + currWeaponInfo.GetWeaponGrade());
 
         // 무기 등급이 3이면 (전설이면) return
         if (currWeaponInfo.GetWeaponGrade() == 3)
@@ -79,7 +81,7 @@ public class ShopWeaponDetailUI : MonoBehaviour
                 continue;
 
             GameObject materialWeapon = weaponList[i];
-            WeaponInfo materialWeaponInfo = materialWeapon.GetComponent<WeaponInfo>();
+            WeaponInfo materialWeaponInfo = weaponInfoList[i];
 
             // 무기와 등급이 같다면 결합
             if (currWeaponInfo.weaponName == materialWeaponInfo.weaponName &&
@@ -88,10 +90,13 @@ public class ShopWeaponDetailUI : MonoBehaviour
                 // 현재 무기의 등급을 한 단계 상승시킨다
                 int currGrade = currWeaponInfo.GetWeaponGrade();
                 currWeaponInfo.SetWeaponGrade(currGrade + 1);
-                Debug.Log("결합 후 등급 : " + currWeaponInfo.GetWeaponGrade());
+
+                //Debug.Log("결합 후 등급 : " + currWeaponInfo.GetWeaponGrade());
 
                 // 재료 무기에 해당하는 칸을 비운다
                 weaponList.RemoveAt(i);
+                weaponInfoList.RemoveAt(i);
+                // 재료로 소모된 무기 이후의 무기들의 번호를 차감한다 (ex 2번째 무기 소모되면 3번째 무기 -> 2번째 무기로 변경)
                 // ShopOwnItemListControl의 코루틴 호출로 UI를 갱신한다
                 ShopOwnWeaponListControl shopOwnWeaponListControl = ShopUIControl.Instance.GetShopOwnWeaponListControl();
                 shopOwnWeaponListControl.renewOwnWeaponList = shopOwnWeaponListControl.RenewOwnWeaponList();

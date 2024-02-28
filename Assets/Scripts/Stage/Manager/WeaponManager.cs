@@ -23,6 +23,7 @@ public class WeaponManager : MonoBehaviour
     private GameObject weapon;
 
     public List<GameObject> currentWeaponList = new();
+    public List<WeaponInfo> currentWeaponInfoList = new();
     private List<Vector2> weaponPos = new() { new Vector2(-2.0f, 0f), new Vector2(2.0f, 0f), new Vector2(-2.0f, 2.0f),
                                               new Vector2(2.0f, -2.0f), new Vector2(-2.0f, -2.0f), new Vector2(2.0f, 2.0f)};
 
@@ -38,12 +39,15 @@ public class WeaponManager : MonoBehaviour
 
         playerBox = GameObject.FindGameObjectWithTag("GameController");
         weapon = Resources.Load<GameObject>("Prefabs/Pistol");
+
+        currentWeaponList.Add(weapon);
+        currentWeaponInfoList.Add(new WeaponInfo(weapon.name, 0));
+        currentWeaponList[0].GetComponent<WeaponControl>().SetWeaponNumber(currentWeaponInfoList[0].GetWeaponNumber());
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        currentWeaponList.Add(weapon);
         equipWeapons = EquipWeapons();
     }
 
@@ -96,5 +100,10 @@ public class WeaponManager : MonoBehaviour
     public List<GameObject> GetCurrentWeaponList()
     {
         return this.currentWeaponList;
+    }
+
+    public List<WeaponInfo> GetCurrentWeaponInfoList()
+    {
+        return this.currentWeaponInfoList;
     }
 }

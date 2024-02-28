@@ -27,10 +27,14 @@ public class ItemManager : MonoBehaviour
 
     // item1 = 게임 오브젝트
     private List<GameObject> shopItemList = new();
+    // 상점 리스트에 무기가 있을 때, 해당 무기의 정보를 저장하는 리스트
+    private List<WeaponInfo> shopWeaponInfoList = new();
     // 아이템 잠금 여부 리스트
     private List<bool> isLockItemList = new();
     // 현재 보유 아이템 리스트
     private List<GameObject> currentItemList = new();
+    // 현재 보유 무기 리스트
+    List<GameObject> currentWeaponList;
 
     // 아이템 새로고침 시 true로 전환.
     public bool isRenewItem = false;
@@ -45,6 +49,7 @@ public class ItemManager : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             shopItemList.Add(null);
+            shopWeaponInfoList.Add(null);
             // 아이템 잠금 리스트에 false를 채워 넣는다.
             isLockItemList.Add(false);
         }
@@ -103,13 +108,13 @@ public class ItemManager : MonoBehaviour
             // 난수 값이 35이하라면 무기
             if (ran <= 35)
             {
+                currentWeaponList = WeaponManager.Instance.GetCurrentWeaponList();
                 // 한번 더 난수를 사용해 같은 무기가 나오도록 보정
                 int weaponRan = UnityEngine.Random.Range(1, 100);
                 // 난수 값이 35이하일 때 같은 무기 보정 적용
                 if (weaponRan <= 35)
                 {
                     // 현재 갖고 있는 무기 중에서 하나를 골라 상점 리스트에 넣는다.
-                    List<GameObject> currentWeaponList = WeaponManager.Instance.GetCurrentWeaponList();
                     int random = UnityEngine.Random.Range(0, currentWeaponList.Count - 1);
 
                     for (int j = 0; j < weaponList.Count; j++)
@@ -117,8 +122,10 @@ public class ItemManager : MonoBehaviour
                         if (weaponList[j].name == currentWeaponList[random].name)
                         {
                             GameObject tmp = weaponList[j];
-                            tmp.GetComponent<WeaponInfo>().SetWeaponGrade(rarity);
-                            shopItemList[i] = tmp;
+                            WeaponInfo tmpInfo = new WeaponInfo(weaponList[j].name);
+                            shopItemList[i] = tmp;                            
+                            shopWeaponInfoList[i] = tmpInfo;
+
                             break;
                         }
                     }
@@ -129,7 +136,9 @@ public class ItemManager : MonoBehaviour
                     // 무기 리스트 중에 하나를 골라 상점 리스트에 넣는다.
                     int random = UnityEngine.Random.Range(0, weaponList.Count);
                     GameObject tmp = weaponList[random];
+                    WeaponInfo tmpInfo = new WeaponInfo(weaponList[random].name);
                     shopItemList[i] = tmp;
+                    shopWeaponInfoList[i] = tmpInfo;
                 }
             }
             // 난수 값이 35 초과라면 아이템
@@ -196,6 +205,11 @@ public class ItemManager : MonoBehaviour
         this.shopItemList = shopItemList;
     }
 
+    public void SetShopWeaponInfoList(List<WeaponInfo> weaponInfoList)
+    {
+        this.shopWeaponInfoList = weaponInfoList;
+    }
+
     public void SetIsRenewItem(bool isRenewItem)
     {
         this.isRenewItem = isRenewItem;
@@ -214,6 +228,11 @@ public class ItemManager : MonoBehaviour
     public List<GameObject> GetShopItemList()
     {
         return this.shopItemList;
+    }
+
+    public List<WeaponInfo> GetShopWeaponInfoList()
+    {
+        return this.shopWeaponInfoList;
     }
 
     public List<GameObject> GetCurrentItemList()

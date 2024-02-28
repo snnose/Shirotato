@@ -63,6 +63,7 @@ public class ShopNextRoundButton : MonoBehaviour
     private void ClearShopItemList()
     {
         List<GameObject> tmp = ItemManager.Instance.GetShopItemList();
+        List<WeaponInfo> tmpInfo = ItemManager.Instance.GetShopWeaponInfoList();
 
         for (int i = 0; i < 4; i++)
         {
@@ -71,6 +72,7 @@ public class ShopNextRoundButton : MonoBehaviour
             {
                 // 해당 항목을 비운다.
                 tmp[i] = null;
+                tmpInfo[i] = null;
             }
         }
 

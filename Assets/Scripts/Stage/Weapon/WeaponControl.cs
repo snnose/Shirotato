@@ -8,9 +8,6 @@ public class WeaponControl : MonoBehaviour
     private List<GameObject> Monsters;
 
     // Weapon info
-    private int damage = 0;
-    private float range = 0f;
-    private float coolDown = 0f;
 
     public int weaponNumber = -1;
 
@@ -25,10 +22,6 @@ public class WeaponControl : MonoBehaviour
     void Start()
     {
         weaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[weaponNumber];
-
-        damage = weaponInfo.damage;
-        range = weaponInfo.range;
-        coolDown = weaponInfo.coolDown;
     }
 
     // Update is called once per frame
@@ -91,6 +84,16 @@ public class WeaponControl : MonoBehaviour
         // 총알 생성
         GameObject bullet = Resources.Load<GameObject>("Prefabs/Bullet");
         GameObject copy = Instantiate(bullet, this.transform.position, this.transform.rotation);
+
+        // 무기의 대미지 계산
+        int damage = Mathf.FloorToInt(
+            (weaponInfo.damage + Mathf.FloorToInt(PlayerInfo.Instance.GetFixedDMG()))
+                                                * ((PlayerInfo.Instance.GetDMGPercent() + 100) / 100));
+
+        // 무기의 쿨타임 계산
+        float coolDown = weaponInfo.coolDown - 
+                       weaponInfo.coolDown * PlayerInfo.Instance.GetATKSpeed() / (100 + PlayerInfo.Instance.GetATKSpeed());
+
         copy.GetComponent<BulletControl>().SetDamage(damage);
 
         // 가까운 몬스터에게 발사
@@ -98,7 +101,7 @@ public class WeaponControl : MonoBehaviour
         copy.GetComponent<Rigidbody2D>().AddForce(direction.normalized * 50f, ForceMode2D.Impulse);
 
         isCoolDown = true;
-        yield return new WaitForSeconds(this.coolDown);
+        yield return new WaitForSeconds(weaponInfo.coolDown);
         isCoolDown = false;
     }
 
@@ -108,7 +111,9 @@ public class WeaponControl : MonoBehaviour
         GameObject closetMonster = null;
         float closetDistance = float.MaxValue;
 
-        foreach(GameObject monster in Monsters)
+        float range = Mathf.Floor(weaponInfo.range * ((PlayerInfo.Instance.GetRange() + 100) / 100) * 100) / 100;
+
+        foreach (GameObject monster in Monsters)
         {
             float dis = Vector2.Distance(this.transform.position, monster.transform.position);
 

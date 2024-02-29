@@ -35,11 +35,6 @@ public class WeaponInfo
             case "Pistol":
                 this.weaponName = weaponName;
                 this.weaponNumber = -1;
-                this.grade = 0;
-                this.damage = 10;
-                this.range = 7;
-                this.coolDown = 1.5f;
-                this.price = 15;
                 break;
             default:
                 break;
@@ -54,10 +49,10 @@ public class WeaponInfo
                 this.weaponName = weaponName;
                 this.weaponNumber = weaponNumber;
                 this.grade = 0;
-                this.damage = 10;
+                this.damage = 12;
                 this.range = 7;
-                this.coolDown = 1.5f;
-                this.price = 15;
+                this.coolDown = 1.2f;
+                this.price = 10;
                 break;
             default:
                 break;
@@ -84,15 +79,47 @@ public class WeaponInfo
         return this.grade;
     }
 
-    public void SetWeaponStatus(GameObject weapon)
+    // 무기 스탯을 등급에 따라 설정하는 함수
+    public void SetWeaponStatus(string weaponName, int weaponGrade)
     {
-        WeaponInfo weaponInfo = weapon.GetComponent<WeaponInfo>();
-
-        this.weaponName = weaponInfo.weaponName;
-        this.grade = weaponInfo.grade;
-        this.damage = weaponInfo.damage;
-        this.range = weaponInfo.range;
-        this.coolDown = weaponInfo.coolDown;
-        this.price = weaponInfo.price;
+        this.grade = weaponGrade;
+        switch (weaponName)
+        {
+            case "Pistol":
+                switch (weaponGrade)
+                {
+                    case 0:
+                        this.damage = 12;
+                        this.range = 7;
+                        this.coolDown = 1.2f;
+                        this.price = 10;
+                        break;
+                    case 1:
+                        this.damage = 20;
+                        this.range = 7;
+                        this.coolDown = 1.12f;
+                        this.price = 22;
+                        break;
+                    case 2:
+                        this.damage = 30;
+                        this.range = 7;
+                        this.coolDown = 1.03f;
+                        this.price = 45;
+                        break;
+                    case 3:
+                        this.damage = 50;
+                        this.range = 7;
+                        this.coolDown = 0.87f;
+                        this.price = 91;
+                        break;
+                    default:
+                        break;
+                }
+                    
+                break;
+                
+            default:
+                break;
+        }
     }
 }

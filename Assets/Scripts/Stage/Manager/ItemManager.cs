@@ -123,6 +123,7 @@ public class ItemManager : MonoBehaviour
                         {
                             GameObject tmp = weaponList[j];
                             WeaponInfo tmpInfo = new WeaponInfo(weaponList[j].name);
+                            tmpInfo.SetWeaponStatus(weaponList[j].name, rarity);
                             shopItemList[i] = tmp;                            
                             shopWeaponInfoList[i] = tmpInfo;
 
@@ -137,6 +138,7 @@ public class ItemManager : MonoBehaviour
                     int random = UnityEngine.Random.Range(0, weaponList.Count);
                     GameObject tmp = weaponList[random];
                     WeaponInfo tmpInfo = new WeaponInfo(weaponList[random].name);
+                    tmpInfo.SetWeaponStatus(weaponList[random].name, rarity);
                     shopItemList[i] = tmp;
                     shopWeaponInfoList[i] = tmpInfo;
                 }

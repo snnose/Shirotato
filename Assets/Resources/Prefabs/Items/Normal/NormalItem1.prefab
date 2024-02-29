@@ -56,7 +56,7 @@ MonoBehaviour:
   Recovery: 0
   Armor: 0
   Evasion: 0
-  MovementSpeed: 4
+  MovementSpeedPercent: 4
   RootingRange: 0
   Luck: 0
   price: 20

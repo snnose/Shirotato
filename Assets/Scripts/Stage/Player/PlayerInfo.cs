@@ -33,6 +33,7 @@ public class PlayerInfo : MonoBehaviour
 
     // 유틸 관련
     private float MovementSpeed = 10f;
+    private float MovementSpeedPercent = 0f;
     private float RootingRange = 1f;
     private float Luck = 0f;
 
@@ -94,6 +95,11 @@ public class PlayerInfo : MonoBehaviour
         this.MovementSpeed = movementSpeed;
     }
 
+    public void SetMovementSpeedPercent(float movementSpeedPercent)
+    {
+        this.MovementSpeedPercent = movementSpeedPercent;
+    }
+
     public void SetRootingRange(float rootingRange)
     {
         this.RootingRange = rootingRange;
@@ -152,6 +158,11 @@ public class PlayerInfo : MonoBehaviour
     public float GetMovementSpeed()
     {
         return this.MovementSpeed;
+    }
+
+    public float GetMovementSpeedPercent()
+    {
+        return this.MovementSpeedPercent;
     }
 
     public float GetRootingRange()

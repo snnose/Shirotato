@@ -20,7 +20,7 @@ public class ItemInfo : MonoBehaviour
     public int Evasion = 0;
 
     // 유틸 관련
-    public float MovementSpeed = 0f;
+    public float MovementSpeedPercent = 0f;
     public float RootingRange = 0f;
     public float Luck = 0f;
 
@@ -42,7 +42,7 @@ public class ItemInfo : MonoBehaviour
         this.Armor = item.GetComponent<ItemInfo>().Armor;
         this.Evasion = item.GetComponent<ItemInfo>().Evasion;
 
-        this.MovementSpeed = item.GetComponent<ItemInfo>().MovementSpeed;
+        this.MovementSpeedPercent = item.GetComponent<ItemInfo>().MovementSpeedPercent;
         this.RootingRange = item.GetComponent<ItemInfo>().RootingRange;
         this.Luck = item.GetComponent<ItemInfo>().Luck;
 

@@ -130,8 +130,8 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                 // 회피
                 PlayerInfo.Instance.SetEvasion(PlayerInfo.Instance.GetEvasion() + item.GetComponent<ItemInfo>().Evasion);
 
-                // 이동속도
-                PlayerInfo.Instance.SetMovementSpeed(PlayerInfo.Instance.GetMovementSpeed() + item.GetComponent<ItemInfo>().MovementSpeed);
+                // 이동속도 %
+                PlayerInfo.Instance.SetMovementSpeed(PlayerInfo.Instance.GetMovementSpeedPercent() + item.GetComponent<ItemInfo>().MovementSpeedPercent);
                 // 획득 범위
                 PlayerInfo.Instance.SetRootingRange(PlayerInfo.Instance.GetRootingRange() + item.GetComponent<ItemInfo>().RootingRange);
                 // 행운
@@ -142,6 +142,8 @@ public class ShopPurchaseButtonControl : MonoBehaviour
 
                 // 아이템 슬롯을 비활성화 한다.
                 currentClickButton.transform.parent.gameObject.SetActive(false);
+                // 상점 아이템 UI 갱신 (무기 정보 갱신)
+                ShopUIControl.Instance.GetShopItemListControl().SetIsRenewInfo(false);
                 // 보유 아이템 리스트 갱신
                 ownItemListControl.renewOwnItemList = ownItemListControl.RenewOwnItemList(item);
             }

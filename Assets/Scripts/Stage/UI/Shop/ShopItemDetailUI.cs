@@ -86,8 +86,8 @@ public class ShopItemDetailUI : MonoBehaviour
         if (itemInfo.Evasion != 0)
             itemStatusText.text += "회피 " + itemInfo.Evasion + "%\n";
         // 유틸 관련
-        if (itemInfo.MovementSpeed != 0)
-            itemStatusText.text += "이동속도 " + itemInfo.MovementSpeed + "%\n";
+        if (itemInfo.MovementSpeedPercent != 0)
+            itemStatusText.text += "이동속도 " + itemInfo.MovementSpeedPercent + "%\n";
         if (itemInfo.RootingRange != 0)
             itemStatusText.text += "획득 범위 " + itemInfo.RootingRange + "%\n";
         if (itemInfo.Luck != 0)

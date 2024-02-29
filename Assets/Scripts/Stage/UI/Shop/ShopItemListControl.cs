@@ -74,9 +74,17 @@ public class ShopItemListControl : MonoBehaviour
     {
         TextMeshProUGUI weaponInfoText = itemList[i].transform.GetChild(3).GetComponent<TextMeshProUGUI>();
         WeaponInfo weaponInfo = ItemManager.Instance.GetShopWeaponInfoList()[i];
-        weaponInfoText.text = "대미지 : " + weaponInfo.damage + '\n' +
-                              "공격속도 : " + Mathf.Round(1 / weaponInfo.coolDown * 100) / 100 + "/s \n" +
-                              "범위 : " + weaponInfo.range;
+        int damage = Mathf.FloorToInt(
+            (weaponInfo.damage + Mathf.FloorToInt(PlayerInfo.Instance.GetFixedDMG()))
+                                                * ((PlayerInfo.Instance.GetDMGPercent() + 100) / 100));
+
+        float coolDown = weaponInfo.coolDown - weaponInfo.coolDown * PlayerInfo.Instance.GetATKSpeed() / (100 + PlayerInfo.Instance.GetATKSpeed());
+        float atkSpeed = Mathf.Round(1 / coolDown * 100) / 100;
+        float range = Mathf.Floor(weaponInfo.range * ((PlayerInfo.Instance.GetRange() + 100) / 100) * 100) / 100;
+
+        weaponInfoText.text = "대미지 : " + damage + '\n' +
+                              "공격속도 : " + atkSpeed + "/s \n" +
+                              "범위 : " + range;
 
         TextMeshProUGUI weaponPrice = itemList[i].transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>();
         // 무기의 기본 가격 + 현재 라운드 + (무기의 기본 가격 * 현재 라운드) / 10
@@ -117,8 +125,8 @@ public class ShopItemListControl : MonoBehaviour
         if (itemInfo.Evasion != 0)
             itemInfoText.text += "회피 " + itemInfo.Evasion + "%\n";
         // 유틸 관련
-        if (itemInfo.MovementSpeed != 0)
-            itemInfoText.text += "이동속도 " + itemInfo.MovementSpeed + "%\n";
+        if (itemInfo.MovementSpeedPercent != 0)
+            itemInfoText.text += "이동속도 " + itemInfo.MovementSpeedPercent + "%\n";
         if (itemInfo.RootingRange != 0)
             itemInfoText.text += "획득 범위 " + itemInfo.RootingRange + "%\n";
         if (itemInfo.Luck != 0)
@@ -134,14 +142,20 @@ public class ShopItemListControl : MonoBehaviour
             case 0:
                 color = Color.white;
                 break;
+            // 파랑색
             case 1:
                 color = new Color(120, 166, 214);
+                ColorUtility.TryParseHtmlString("#78A6D6", out color);
                 break;
+            // 보라색
             case 2:
                 color = new Color(161, 120, 214);
+                ColorUtility.TryParseHtmlString("#A178D6", out color);
                 break;
+            // 주황색
             case 3:
                 color = new Color(233, 137, 76);
+                ColorUtility.TryParseHtmlString("#E9894C", out color);
                 break;
             default:
                 color = Color.black;

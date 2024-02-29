@@ -81,15 +81,20 @@ public class ShopOwnWeaponListControl : MonoBehaviour
             case 0:
                 color = Color.white;
                 break;
+            // 파랑색
             case 1:
                 color = new Color(120, 166, 214);
                 ColorUtility.TryParseHtmlString("#78A6D6", out color);
                 break;
+            // 보라색
             case 2:
                 color = new Color(161, 120, 214);
+                ColorUtility.TryParseHtmlString("#A178D6", out color);
                 break;
+            // 주황색
             case 3:
                 color = new Color(233, 137, 76);
+                ColorUtility.TryParseHtmlString("#E9894C", out color);
                 break;
             default:
                 color = Color.black;

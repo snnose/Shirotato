@@ -87,21 +87,24 @@ public class ShopWeaponDetailUI : MonoBehaviour
             if (currWeaponInfo.weaponName == materialWeaponInfo.weaponName &&
                 currWeaponInfo.GetWeaponGrade() == materialWeaponInfo.GetWeaponGrade())
             {
-                // 현재 무기의 등급을 한 단계 상승시킨다
+                // 현재 무기의 등급을 한 단계 상승시킨 능력치를 적용시킨다
                 int currGrade = currWeaponInfo.GetWeaponGrade();
-                currWeaponInfo.SetWeaponGrade(currGrade + 1);
-
-                //Debug.Log("결합 후 등급 : " + currWeaponInfo.GetWeaponGrade());
+                currWeaponInfo.SetWeaponStatus(currWeaponInfo.weaponName, currGrade + 1);
 
                 // 재료 무기에 해당하는 칸을 비운다
                 weaponList.RemoveAt(i);
                 weaponInfoList.RemoveAt(i);
+
                 // 재료로 소모된 무기 이후의 무기들의 번호를 차감한다 (ex 2번째 무기 소모되면 3번째 무기 -> 2번째 무기로 변경)
                 AdjustWeaponNum(i);
+  
                 // ShopOwnItemListControl의 코루틴 호출로 UI를 갱신한다
                 ShopOwnWeaponListControl shopOwnWeaponListControl = ShopUIControl.Instance.GetShopOwnWeaponListControl();
                 shopOwnWeaponListControl.renewOwnWeaponList = shopOwnWeaponListControl.RenewOwnWeaponList();
 
+                // WeaponDetailUI 비활성화
+                this.gameObject.SetActive(false);
+                isLockOn = false;
                 return;
             }
         }
@@ -162,10 +165,18 @@ public class ShopWeaponDetailUI : MonoBehaviour
 
     // 무기 스탯 설정
     public void SetWeaponStatusText(WeaponInfo weaponInfo)
-    {   
-        weaponStatusText.text = "대미지 : " + weaponInfo.damage + '\n' +
-                              "공격속도 : " + Mathf.Round(1 / weaponInfo.coolDown * 100) / 100 + "/s \n" +
-                              "범위 : " + weaponInfo.range;
+    {
+        int damage = Mathf.FloorToInt(
+            (weaponInfo.damage + Mathf.FloorToInt(PlayerInfo.Instance.GetFixedDMG())) 
+                                                * ((PlayerInfo.Instance.GetDMGPercent() + 100) / 100));
+
+        float coolDown = weaponInfo.coolDown - weaponInfo.coolDown * PlayerInfo.Instance.GetATKSpeed() / (100 + PlayerInfo.Instance.GetATKSpeed());
+        float atkSpeed = Mathf.Round(1 / coolDown * 100) / 100;
+        float range = Mathf.Floor(weaponInfo.range * ((PlayerInfo.Instance.GetRange() + 100) / 100) * 100) / 100;
+
+        weaponStatusText.text = "대미지 : " + damage + '\n' +
+                              "공격속도 : " + atkSpeed + "/s \n" +
+                              "범위 : " + range;
     }
 
     public void SetIsLockOn(bool ret)

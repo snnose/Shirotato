@@ -9,14 +9,28 @@ public class ShopNextRoundButton : MonoBehaviour
 {
     private TimerControl timerControl;
 
+    private TextMeshProUGUI buttonText;
+
+    IEnumerator setNextRoundButtonText = null;
+
     private void Awake()
     {
         timerControl = this.gameObject.transform.parent.parent.GetChild(2).gameObject.GetComponent<TimerControl>();
+        buttonText = this.gameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
     }
 
     void Start()
     {
 
+    }
+
+    private void Update()
+    {
+        if (GameRoot.Instance.GetIsRoundClear())
+            setNextRoundButtonText = SetNextRoundButtonText();
+
+        if (setNextRoundButtonText != null)
+            StartCoroutine(setNextRoundButtonText);
     }
 
     // 다음 라운드로 이동하는 버튼
@@ -77,5 +91,12 @@ public class ShopNextRoundButton : MonoBehaviour
         }
 
         ItemManager.Instance.SetShopItemList(tmp);
+    }
+
+    private IEnumerator SetNextRoundButtonText()
+    {
+        buttonText.text = "다음 라운드 (" + GameRoot.Instance.GetCurrentRound() + "라운드)";
+
+        yield return null;
     }
 }

@@ -86,7 +86,6 @@ public class ShopPurchaseButtonControl : MonoBehaviour
              
                 // 보유 와플 수 차감
                 PlayerInfo.Instance.SetCurrentWaffle(currentWaffle - price);
-                // 무기 슬롯이 꽉 찬 경우도 구현해야함.
 
                 // 슬롯 비활성화
                 currentClickButton.transform.parent.gameObject.SetActive(false);
@@ -94,9 +93,34 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                 // 보유 무기 리스트에 추가
                 WeaponManager.Instance.GetCurrentWeaponList().Add(item);
                 WeaponManager.Instance.GetCurrentWeaponInfoList().Add(weaponInfo);
-                // 보유 무기 리스트 갱신
-                ownWeaponListControl.renewOwnWeaponList = ownWeaponListControl.RenewOwnWeaponList();
             }
+            // 보유 와플이 가격보다 많고, 보유 무기 수가 6개라면
+            else if (currentWaffle > price && WeaponManager.Instance.GetCurrentWeaponList().Count == 6)
+            {
+                WeaponInfo mainWeaponInfo = null;
+                // 보유 무기 중 같은 등급의 같은 무기를 찾는다
+                for (int i = 0; i < WeaponManager.Instance.GetCurrentWeaponList().Count; i++)
+                {
+                    mainWeaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[i];
+                    // 찾았다면 탈출
+                    if (mainWeaponInfo.weaponName == weaponInfo.weaponName
+                        && mainWeaponInfo.GetWeaponGrade() == weaponInfo.GetWeaponGrade())
+                        break;
+                }
+
+                // 찾은 무기에 결합시킨다
+                if (mainWeaponInfo != null)
+                {
+                    mainWeaponInfo.SetWeaponStatus(mainWeaponInfo.weaponName, mainWeaponInfo.GetWeaponGrade() + 1);
+                    PlayerInfo.Instance.SetCurrentWaffle(currentWaffle - price);
+
+                    // 슬롯 비활성화
+                    currentClickButton.transform.parent.gameObject.SetActive(false);
+                }
+            }
+
+            // 보유 무기 리스트 갱신
+            ownWeaponListControl.renewOwnWeaponList = ownWeaponListControl.RenewOwnWeaponList();
         }
         // 아이템을 구매한 경우
         else

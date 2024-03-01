@@ -37,6 +37,7 @@ public class GameRoot : MonoBehaviour
     private bool isRoundClear = false;
 
     private int currentRound = 1;
+    private float remainTime;
 
     // 상점 UI 관련 필드
     public GameObject shopUI;
@@ -56,27 +57,20 @@ public class GameRoot : MonoBehaviour
         playerInfo = player.GetComponent<PlayerInfo>();
         playerCollideDetect = player.GetComponent<PlayerColideDetect>();
 
-        MaxHP = currentHP = playerInfo.GetHP();
+        MaxHP = playerInfo.GetHP();
+        currentHP = playerInfo.GetHP();
 
-        calBeHitDamage = CalBeHitDamage();
         floatingShopUI = FloatingShopUI();
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+        remainTime = 20f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // 플레이어가 몬스터와 충돌했다면 (무적이 아닐 시)
-        if (playerCollideDetect.GetAttackedMonster() != null && !isPlayerImune)
-        {
-            StartCoroutine(Imune());
-            StartCoroutine(calBeHitDamage);
-        }
-
         // 라운드 클리어 시
         if (isRoundClear && floatingShopUI != null)
         {
@@ -88,58 +82,15 @@ public class GameRoot : MonoBehaviour
         }
     }
 
-    // 피격 시 받는 대미지 계산
-    IEnumerator CalBeHitDamage()
-    {
-        // 충돌한 몬스터와 정보를 읽어온다
-        if (playerCollideDetect.GetAttackedMonster() != null)
-        {
-            GameObject monster = playerCollideDetect.GetAttackedMonster();
-            MonsterInfo monsterInfo = monster.GetComponent<MonsterInfo>();
-
-            // 받는 대미지를 계산 후 현재 체력을 차감한다
-            int behitDamage = Mathf.CeilToInt(monsterInfo.ATK *
-                                                            (1 - playerInfo.GetArmor() /
-                                                                            (playerInfo.GetArmor() + 10)));
-            currentHP = currentHP - behitDamage;
-            // 플레이어의 체력이 0 이하로 떨어지면 
-            if (currentHP <= 0)
-            {
-                currentHP = 0;
-                player.GetComponent<PlayerControl>().currState = PlayerControl.state.DEAD;
-            }
-
-            PrintText(behitDamage);
-        }
-
-        yield return null;
-    }
-
-    IEnumerator Imune()
-    {
-        isPlayerImune = true;
-        yield return new WaitForSeconds(0.5f);
-        isPlayerImune = false;
-        calBeHitDamage = CalBeHitDamage();
-    }
-
     public IEnumerator FloatingShopUI()
     {
         yield return new WaitForSecondsRealtime(3.0f);
         shopUI.SetActive(true);
     }
 
-    void PrintText(int damage)
+    public void SetCurrentHP(float currentHP)
     {
-        // 받은 대미지 텍스트 출력
-        GameObject damageText = Resources.Load<GameObject>("Prefabs/DamageText");
-        TextMeshPro damagePro = damageText.GetComponent<TextMeshPro>();
-        // 텍스트 및 색상 결정
-        damagePro.text = (-damage).ToString();
-        damagePro.color = Color.red;
-        GameObject copy = Instantiate(damageText);
-        Vector3 randomPos = new Vector3(Random.Range(-0.4f, 0.4f), Random.Range(0.4f, 0.6f), 0f);
-        copy.transform.position = player.transform.position + randomPos;
+        this.currentHP = currentHP;
     }
 
     public void SetIsRoundClear(bool isRoundClear)
@@ -150,6 +101,11 @@ public class GameRoot : MonoBehaviour
     public void SetCurrentRound(int currentRound)
     {
         this.currentRound = currentRound;
+    }
+
+    public void SetRemainTime(float remainTime)
+    {
+        this.remainTime = remainTime;
     }
 
     public GameObject GetPlayerBox()
@@ -165,6 +121,11 @@ public class GameRoot : MonoBehaviour
     public bool GetIsRoundClear()
     {
         return this.isRoundClear;
+    }
+
+    public float GetRemainTime()
+    {
+        return this.remainTime;
     }
 
     public float GetCurrentHP()

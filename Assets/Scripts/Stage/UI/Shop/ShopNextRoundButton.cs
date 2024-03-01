@@ -42,12 +42,14 @@ public class ShopNextRoundButton : MonoBehaviour
         GameRoot.Instance.floatingShopUI = GameRoot.Instance.FloatingShopUI();
 
         // 해당 라운드의 정보를 가져와 적용한다 (몬스터 정보, 제한 시간)
-        timerControl.SetRemainTime(3f);
+        GameRoot.Instance.SetRemainTime(3f);
         timerControl.SetTimerText(3f.ToString());
 
         // 플레이어의 상태 초기화
         GameObject playerBox = GameRoot.Instance.GetPlayerBox();
+        PlayerInfo playerInfo = playerBox.transform.GetChild(0).GetComponent<PlayerInfo>();
         playerBox.transform.position = new Vector2(0f, 0f);
+        playerInfo.SetMovementSpeed(playerInfo.GetMovementSpeed() * (100 + playerInfo.GetMovementSpeedPercent()) / 100);
 
         // 상점 초기화
         ShopUIControl.Instance.GetShopItemListControl().SetItemListActive();

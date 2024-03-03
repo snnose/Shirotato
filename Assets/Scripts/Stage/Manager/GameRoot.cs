@@ -61,11 +61,13 @@ public class GameRoot : MonoBehaviour
         currentHP = playerInfo.GetHP();
 
         floatingShopUI = FloatingShopUI();
+
+        remainTime = 20f;
     }
     // Start is called before the first frame update
     void Start()
     {
-        remainTime = 20f;
+        
     }
 
     // Update is called once per frame
@@ -84,7 +86,11 @@ public class GameRoot : MonoBehaviour
 
     public IEnumerator FloatingShopUI()
     {
-        yield return new WaitForSecondsRealtime(3.0f);
+        // 와플이 플레이어에게 끌려지도록 잠시 텀을 둔다
+        yield return new WaitForSeconds(3.0f);
+        // 이후 시간을 멈춘다
+        Time.timeScale = 0f;
+        //yield return new WaitForSecondsRealtime(1.0f);
         shopUI.SetActive(true);
     }
 

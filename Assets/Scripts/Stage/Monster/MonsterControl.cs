@@ -8,6 +8,7 @@ public class MonsterControl : MonoBehaviour
     private GameObject waffle;
 
     private Rigidbody2D monsterRb2D;
+    private Collider2D monsterCollider;
     private MonsterInfo monsterInfo;
 
     private float currentHP = 0;
@@ -17,6 +18,7 @@ public class MonsterControl : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         waffle = Resources.Load<GameObject>("Prefabs/Waffle");
         monsterRb2D = this.GetComponent<Rigidbody2D>();
+        monsterCollider = this.GetComponent<Collider2D>();
         monsterInfo = this.GetComponent<MonsterInfo>();
     }
     
@@ -53,6 +55,22 @@ public class MonsterControl : MonoBehaviour
             SpawnManager.Instance.GetCurrentMonsters().Remove(this.gameObject);
             Destroy(this.gameObject);
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject == GameObject.FindGameObjectWithTag("Player"))
+            this.monsterCollider.isTrigger = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //this.monsterCollider.isTrigger = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        //this.monsterCollider.isTrigger = false;
     }
 
     private void FollowingPlayer()

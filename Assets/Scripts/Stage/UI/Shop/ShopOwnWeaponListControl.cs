@@ -52,7 +52,8 @@ public class ShopOwnWeaponListControl : MonoBehaviour
                 // 무기 칸의 배경 이미지(등급)를 변경한다.
                 weaponRoom.transform.GetChild(0).gameObject.GetComponent<Image>().color =
                     DecideGradeColor(currWeaponInfoList[i].GetWeaponGrade());
-                Debug.Log(i + "번 무기 번호 : " + currWeaponInfoList[i].GetWeaponNumber());
+                //Debug.Log(i + "번 무기 번호 : " + currWeaponInfoList[i].GetWeaponNumber());
+
                 // 무기 칸의 이미지(무기)를 변경한다.
                 weaponRoom.transform.GetChild(1).gameObject.GetComponent<Image>().sprite =
                     currWeaponList[i].GetComponent<SpriteRenderer>().sprite;

@@ -36,13 +36,20 @@ public class PlayerInfo : MonoBehaviour
     private float MovementSpeedPercent = 0f;
     private float RootingRange = 1f;
     private float Luck = 0f;
+    private float expGain = 1.0f;
 
     // 재화 관련
     private int currentWaffle = 9999;
+    public int storedWaffle = 0;   // 라운드가 끝나 미처 먹지 못한 와플 개수
 
     public void SetCurrentWaffle(int currentWaffle)
     {
         this.currentWaffle = currentWaffle;
+    }
+
+    public void SetStoredWaffle(int storedWaffle)
+    {
+        this.storedWaffle = storedWaffle;
     }
 
     public void SetDMGPercent(float dmgPercent)
@@ -110,6 +117,11 @@ public class PlayerInfo : MonoBehaviour
         this.Luck = luck;
     }
 
+    public void SetExpGain(float expGain)
+    {
+        this.expGain = expGain;
+    }
+
     public float GetDMGPercent()
     {
         return this.DMGPercent;
@@ -175,9 +187,19 @@ public class PlayerInfo : MonoBehaviour
         return this.Luck;
     }
 
+    public int GetStoredWaffle()
+    {
+        return this.storedWaffle;
+    }
+
     public int GetCurrentWaffle()
     {
         return this.currentWaffle;
+    }
+
+    public float GetExpGain()
+    {
+        return this.expGain;
     }
 
     private void Awake()

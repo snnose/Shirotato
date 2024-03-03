@@ -59,11 +59,11 @@ public class SpawnManager : MonoBehaviour
         // 라운드가 끝나기 전까지 리스폰
         // while(!GameRoot.Instance.IsRoundEnded())
         // {
-        while (true)
+        while (!GameRoot.Instance.GetIsRoundClear())
         {
             float spawnPosX = Random.Range(-18, 18);
             float spawnPosY = Random.Range(-15, 15);
-            float spawnInterval = Random.Range(0.7f, 1.0f);
+            float spawnInterval = Random.Range(0.4f, 1.0f);
 
             Vector2 spawnLocation = new Vector2(spawnPosX, spawnPosY);
 

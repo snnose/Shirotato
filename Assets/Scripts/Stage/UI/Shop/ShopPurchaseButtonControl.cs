@@ -106,6 +106,10 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                     if (mainWeaponInfo.weaponName == weaponInfo.weaponName
                         && mainWeaponInfo.GetWeaponGrade() == weaponInfo.GetWeaponGrade())
                         break;
+
+                    // 못찾았다면 null 처리
+                    if (i == 5)
+                        mainWeaponInfo = null;
                 }
 
                 // 찾은 무기에 결합시킨다

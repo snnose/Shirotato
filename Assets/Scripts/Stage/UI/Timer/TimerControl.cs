@@ -5,7 +5,7 @@ using TMPro;
 
 public class TimerControl : MonoBehaviour
 {
-    private float remainTime = 3f;
+    private float remainTime;
     private bool isTicking = false;
 
     private void Awake()
@@ -16,24 +16,17 @@ public class TimerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        // 첫 게임 시작 시 타이머 텍스트 설정
+        remainTime = GameRoot.Instance.GetRemainTime();
+        this.GetComponent<TextMeshProUGUI>().text = remainTime.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // 매 초마다 타이머를 갱신한다
         if (!isTicking)
             StartCoroutine(StartTimer());
-
-        if (remainTime < 10f)
-            this.GetComponent<TextMeshProUGUI>().color = Color.red;
-
-        if (remainTime <= 0f)
-        {
-            GameRoot.Instance.SetIsRoundClear(true);
-            remainTime = 0f;
-            Time.timeScale = 0f;
-        }
     }
 
     private void Initialize()
@@ -44,13 +37,6 @@ public class TimerControl : MonoBehaviour
         isTicking = false;
     }
 
-    public void SetRemainTime(float time)
-    {
-        this.remainTime = time;
-        if (remainTime >= 10f)
-            this.GetComponent<TextMeshProUGUI>().color = Color.black;
-    }
-
     public void SetTimerText(string text)
     {
         this.GetComponent<TextMeshProUGUI>().text = text.ToString();
@@ -58,10 +44,24 @@ public class TimerControl : MonoBehaviour
 
     IEnumerator StartTimer()
     {
+        remainTime = GameRoot.Instance.GetRemainTime();
         isTicking = true;
 
         yield return new WaitForSeconds(1f);
         remainTime--;
+        GameRoot.Instance.SetRemainTime(remainTime);
+
+        if (remainTime < 10f)
+            this.GetComponent<TextMeshProUGUI>().color = Color.red;
+        else
+            this.GetComponent<TextMeshProUGUI>().color = Color.black;
+
+        if (remainTime <= 0f)
+        {
+            GameRoot.Instance.SetIsRoundClear(true);
+            remainTime = 0f;
+        }
+
         this.GetComponent<TextMeshProUGUI>().text = remainTime.ToString();
         isTicking = false;
     }

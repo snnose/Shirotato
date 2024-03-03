@@ -23,16 +23,21 @@ public class PlayerColideDetect : MonoBehaviour
     void Start()
     {
         calBeHitDamage = CalBeHitDamage();
-        playerInfo = this.gameObject.GetComponent<PlayerInfo>();
+        playerInfo = PlayerInfo.Instance;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // 근처에 몬스터가 있으면 충돌 무시 상태가 된다
+        DetectNearbyMonster();
+
         // 플레이어가 몬스터와 충돌했다면 (무적이 아닐 시)
         if (GetAttackedMonster() != null && !isPlayerImune)
         {
+            // 무적 상태가 되고
             StartCoroutine(Imune());
+            // 대미지를 받는다
             StartCoroutine(calBeHitDamage);
         }
     }
@@ -43,26 +48,28 @@ public class PlayerColideDetect : MonoBehaviour
         if (GetAttackedMonster() != null)
         {
             GameObject monster = GetAttackedMonster();
-            MonsterInfo monsterInfo = monster.GetComponent<MonsterInfo>();
-
-            // 받는 대미지를 계산 후 현재 체력을 차감한다
-            int behitDamage = Mathf.CeilToInt(monsterInfo.ATK *
-                                                            (1 - playerInfo.GetArmor() /
-                                                                            (playerInfo.GetArmor() + 10)));
-
-            float currentHP = GameRoot.Instance.GetCurrentHP();
-            currentHP -= behitDamage;
-            GameRoot.Instance.SetCurrentHP(currentHP);
-
-            // 플레이어의 체력이 0 이하로 떨어지면 
-            if (currentHP <= 0)
+            // 충돌한 오브젝트가 몹인 경우 대미지를 받는다.
+            if (monster.TryGetComponent<MonsterInfo>(out MonsterInfo monsterInfo))
             {
-                currentHP = 0;
-                // Player를 죽음 상태로 변경
-                this.gameObject.transform.parent.GetComponent<PlayerControl>().currState = PlayerControl.state.DEAD;
-            }
+                // 받는 대미지를 계산 후 현재 체력을 차감한다
+                int behitDamage = Mathf.CeilToInt(monsterInfo.ATK *
+                                                                (1 - playerInfo.GetArmor() /
+                                                                                (playerInfo.GetArmor() + 10)));
 
-            PrintText(behitDamage);
+                float currentHP = GameRoot.Instance.GetCurrentHP();
+                currentHP -= behitDamage;
+                GameRoot.Instance.SetCurrentHP(currentHP);
+
+                // 플레이어의 체력이 0 이하로 떨어지면 
+                if (currentHP <= 0)
+                {
+                    currentHP = 0;
+                    // Player를 죽음 상태로 변경
+                    this.gameObject.transform.parent.GetComponent<PlayerControl>().currState = PlayerControl.state.DEAD;
+                }
+
+                PrintText(behitDamage);
+            }
         }
 
         yield return null;
@@ -90,12 +97,39 @@ public class PlayerColideDetect : MonoBehaviour
         copy.transform.position = this.gameObject.transform.position + randomPos;
     }
 
+    // 근처에 몬스터를 인식하면 isTrigger = True
+    private void DetectNearbyMonster()
+    {
+        // 현재 존재하는 몬스터들을 받아온다
+        List<GameObject> Monsters = SpawnManager.Instance.GetCurrentMonsters();
+        
+        float closetDistance = float.MaxValue;
+        float range = 1.3f;
+
+        // 가장 가까이 있는 몬스터와의 거리를 측정한다
+        foreach (GameObject monster in Monsters)
+        {
+            float dis = Vector2.Distance(this.transform.position, monster.transform.position);
+
+            if (dis < range && dis < closetDistance)
+            {
+                closetDistance = dis;
+            }
+        }
+
+        // 가장 가까운 몬스터가 range 내라면 트리거 on, 아닐 경우 off
+        if (closetDistance < range)
+            playerCollider.isTrigger = true;
+        else
+            playerCollider.isTrigger = false;
+    }
+
     private void OnTriggerStay2D(Collider2D collider)
     {
         SetAttackedMonster(collider.gameObject);
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collider)
     {
         SetAttackedMonster(null);
     }

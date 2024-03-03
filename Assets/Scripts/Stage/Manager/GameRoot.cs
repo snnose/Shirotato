@@ -23,14 +23,9 @@ public class GameRoot : MonoBehaviour
     private GameObject playerBox;
     private GameObject player;
     private PlayerInfo playerInfo;
-    private PlayerColideDetect playerCollideDetect;
 
     private float MaxHP;
     private float currentHP;
-
-    public bool isPlayerImune = false;
-
-    private IEnumerator calBeHitDamage; // 피격 시 대미지 계산 함수
 
     // 라운드 관련 필드
     private bool isGameOver = false;
@@ -39,9 +34,18 @@ public class GameRoot : MonoBehaviour
     private int currentRound = 1;
     private float remainTime;
 
+    public IEnumerator stopRound = null;
+
     // 상점 UI 관련 필드
     public GameObject shopUI;
-    public IEnumerator floatingShopUI;
+    public IEnumerator floatingShopUI = null;
+
+    // 업그레이드 UI 관련 필드
+    public GameObject upgradeUI;
+    public IEnumerator floatingUpgradeUI = null;
+
+    private int levelUpCount = 3;
+    private bool isDuringUpgrade = false;
 
     // 라운드 정보 관련 필드
 
@@ -55,43 +59,94 @@ public class GameRoot : MonoBehaviour
         playerBox = GameObject.FindGameObjectWithTag("GameController");
         player = GameObject.FindGameObjectWithTag("Player");
         playerInfo = player.GetComponent<PlayerInfo>();
-        playerCollideDetect = player.GetComponent<PlayerColideDetect>();
 
         MaxHP = playerInfo.GetHP();
         currentHP = playerInfo.GetHP();
 
-        floatingShopUI = FloatingShopUI();
+        stopRound = StopRound();
 
-        remainTime = 20f;
+        //floatingShopUI = FloatingShopUI();
+
+        remainTime = 3f;
     }
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        // 라운드 클리어 시
-        if (isRoundClear && floatingShopUI != null)
+        if (isRoundClear
+            && stopRound != null)
         {
+            StartCoroutine(stopRound);
+            stopRound = null;
+        }
+        // 라운드 클리어 및 레벨업을 했다면
+        if (isRoundClear 
+            && levelUpCount > 0
+            && !isDuringUpgrade
+            && floatingUpgradeUI != null)
+        {
+            StartCoroutine(floatingUpgradeUI);
+            floatingUpgradeUI = null;
+        }
+
+        // 라운드 클리어 및 업그레이드 종료 시
+        if (isRoundClear 
+            && levelUpCount == 0
+            && !isDuringUpgrade
+            && floatingShopUI != null)
+        {
+            // 인스턴스화된 무기들을 파괴한다
+            WeaponManager.Instance.destroyWeapons = WeaponManager.Instance.DestroyWeapons();
             // 상점 UI를 띄운다
             StartCoroutine(floatingShopUI);
             floatingShopUI = null;
-            // 인스턴스화된 무기들을 파괴한다
-            WeaponManager.Instance.destroyWeapons = WeaponManager.Instance.DestroyWeapons();
         }
+    }
+
+    private IEnumerator Sleep(float time)
+    {
+        yield return new WaitForSeconds(time);
+    }
+
+    public IEnumerator StopRound()
+    {
+        // 와플이 플레이어에게 끌려지도록 잠시 텀을 둔다
+        yield return StartCoroutine(Sleep(3.0f));
+        // UI 출력 코루틴을 입력
+        floatingUpgradeUI = FloatingUpgradeUI();
+        floatingShopUI = FloatingShopUI();
+
+        yield return null;
     }
 
     public IEnumerator FloatingShopUI()
     {
-        // 와플이 플레이어에게 끌려지도록 잠시 텀을 둔다
-        yield return new WaitForSeconds(3.0f);
-        // 이후 시간을 멈춘다
-        Time.timeScale = 0f;
-        //yield return new WaitForSecondsRealtime(1.0f);
+        yield return StartCoroutine(Sleep(1.0f));
         shopUI.SetActive(true);
+
+        yield return null;
+    }
+
+    public IEnumerator FloatingUpgradeUI()
+    {
+        //yield return new WaitForSeconds(3.0f);
+
+        // 업그레이드 UI 활성화
+        upgradeUI.SetActive(true);
+        isDuringUpgrade = true;
+        // 현재 업그레이드 레벨을 1 상승
+        int currentUpgradeLevel = UpgradeManager.Instance.GetCurrentUpgradeLevel();
+        UpgradeManager.Instance.SetCurrentUpgradeLevel(currentUpgradeLevel++);
+        // 남은 업그레이드 카운트 감소
+        levelUpCount--;
+        yield return null;
+        // 업그레이드 리스트 갱신
+        UpgradeManager.Instance.renewUpgradeList = UpgradeManager.Instance.RenewUpgradeList();
+        yield return null;
     }
 
     public void SetCurrentHP(float currentHP)
@@ -112,6 +167,16 @@ public class GameRoot : MonoBehaviour
     public void SetRemainTime(float remainTime)
     {
         this.remainTime = remainTime;
+    }
+
+    public void SetLevelUpCount(int count)
+    {
+        this.levelUpCount = count;
+    }
+
+    public void SetIsDuringUpgrade(bool ret)
+    {
+        this.isDuringUpgrade = ret;
     }
 
     public GameObject GetPlayerBox()
@@ -142,5 +207,10 @@ public class GameRoot : MonoBehaviour
     public float GetMaxHP()
     {
         return this.MaxHP;
+    }
+
+    public int GetLevelUpCount()
+    {
+        return this.levelUpCount;
     }
 }

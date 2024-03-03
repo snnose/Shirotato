@@ -25,7 +25,8 @@ public class TimerControl : MonoBehaviour
     void Update()
     {
         // 매 초마다 타이머를 갱신한다
-        if (!isTicking)
+        if (!isTicking
+            && !GameRoot.Instance.GetIsRoundClear())
             StartCoroutine(StartTimer());
     }
 

@@ -183,22 +183,22 @@ public class ItemManager : MonoBehaviour
 
         int round = GameRoot.Instance.GetCurrentRound();
         // 전설 등급 확률 (최대 8%)
-        tmp[3] = (round - 7) / 4;
+        tmp[3] = (round - 7) / 4 * ((1 + PlayerInfo.Instance.GetLuck()) / 100);
         if (tmp[3] <= 0)
             tmp[3] = 0;
         else if (tmp[3] >= 8)
             tmp[3] = 8;
         // 에픽 등급 확률 (최대 25%)
-        tmp[2] = (1f - (tmp[3] * 0.01f)) * 2 * (round - 3) + tmp[3];
+        tmp[2] = (1f - (tmp[3] * 0.01f)) * 2 * (round - 3) * ((1 + PlayerInfo.Instance.GetLuck()) / 100) + tmp[3];
         if (tmp[2] <= 0)
             tmp[2] = 0;
         else if (tmp[2] >= (1f - (tmp[3] * 0.01f)) * 25 + tmp[3])
             tmp[2] = (1f - (tmp[3] * 0.01f)) * 25 + tmp[3];
         // 레어 등급 확률 (최대 60%)
-        tmp[1] = (1f - (tmp[3] * 0.01f) - (tmp[2] * 0.01f)) * 6 * round + tmp[2] + tmp[3];
+        tmp[1] = (1f - (tmp[3] * 0.01f) - (tmp[2] * 0.01f)) * 6 * round * ((1 + PlayerInfo.Instance.GetLuck()) / 100) + tmp[2] + tmp[3];
         if (tmp[1] >= (1f - (tmp[3] * 0.01f) - (tmp[2] * 0.01f)) * 60 + tmp[2] + tmp[3])
             tmp[1] = (1f - (tmp[3] * 0.01f) - (tmp[2] * 0.01f)) * 60 + tmp[2] + tmp[3];
-        
+
         return tmp;
     }
 

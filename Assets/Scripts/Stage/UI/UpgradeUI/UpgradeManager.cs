@@ -49,6 +49,7 @@ public class UpgradeManager : MonoBehaviour
             upgradeList.Add(tmp);
         }
 
+        this.transform.position = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
         this.gameObject.SetActive(false);
     }
 

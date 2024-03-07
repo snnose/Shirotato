@@ -59,6 +59,8 @@ public class ExpManager : MonoBehaviour
             // 요구 경험치를 갱신한다
             demandExp = calDemandExp(currentLevel);
             // 업그레이드 가능 횟수 + 1
+            int levelUpCount = GameRoot.Instance.GetLevelUpCount();
+            GameRoot.Instance.SetLevelUpCount(++levelUpCount);
         }
         yield return null;
     }

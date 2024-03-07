@@ -44,7 +44,7 @@ public class GameRoot : MonoBehaviour
     public GameObject upgradeUI;
     public IEnumerator floatingUpgradeUI = null;
 
-    private int levelUpCount = 3;
+    private int levelUpCount = 0;
     private bool isDuringUpgrade = false;
 
     // 라운드 정보 관련 필드
@@ -67,7 +67,7 @@ public class GameRoot : MonoBehaviour
 
         //floatingShopUI = FloatingShopUI();
 
-        remainTime = 3f;
+        remainTime = 20f;
     }
     // Start is called before the first frame update
     void Start()

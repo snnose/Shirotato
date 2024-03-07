@@ -45,6 +45,9 @@ public class ShopNextRoundButton : MonoBehaviour
         GameRoot.Instance.SetRemainTime(3f);
         timerControl.SetTimerText(3f.ToString());
 
+        // SpawnManager 초기화
+        SpawnManager.Instance.startSpawn = SpawnManager.Instance.StartSpawn(GameRoot.Instance.GetCurrentRound());
+
         // 플레이어의 상태 초기화
         GameObject playerBox = GameRoot.Instance.GetPlayerBox();
         PlayerInfo playerInfo = playerBox.transform.GetChild(0).GetComponent<PlayerInfo>();

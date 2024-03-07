@@ -11,9 +11,9 @@ public class WeaponInfo
     private int grade;
 
     public int damage;
-
     public float range;
     public float coolDown;
+    public int pierceCount;
 
     public int price;
 
@@ -26,6 +26,7 @@ public class WeaponInfo
         range = 0f;
         coolDown = 0f;
         price = 0;
+        pierceCount = 0;
     }
 
     public WeaponInfo(string weaponName)
@@ -52,6 +53,7 @@ public class WeaponInfo
                 this.damage = 12;
                 this.range = 7;
                 this.coolDown = 1.2f;
+                this.pierceCount = 1;
                 this.price = 10;
                 break;
             default:
@@ -92,24 +94,28 @@ public class WeaponInfo
                         this.damage = 12;
                         this.range = 7;
                         this.coolDown = 1.2f;
+                        this.pierceCount = 1;
                         this.price = 10;
                         break;
                     case 1:
                         this.damage = 20;
                         this.range = 7;
                         this.coolDown = 1.12f;
+                        this.pierceCount = 1;
                         this.price = 22;
                         break;
                     case 2:
                         this.damage = 30;
                         this.range = 7;
                         this.coolDown = 1.03f;
+                        this.pierceCount = 1;
                         this.price = 45;
                         break;
                     case 3:
                         this.damage = 50;
                         this.range = 7;
                         this.coolDown = 0.87f;
+                        this.pierceCount = 2;
                         this.price = 91;
                         break;
                     default:

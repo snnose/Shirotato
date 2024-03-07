@@ -94,7 +94,9 @@ public class WeaponControl : MonoBehaviour
         float coolDown = weaponInfo.coolDown - 
                        weaponInfo.coolDown * PlayerInfo.Instance.GetATKSpeed() / (100 + PlayerInfo.Instance.GetATKSpeed());
 
+        // 총알에 대미지와 관통 횟수 설정
         copy.GetComponent<BulletControl>().SetDamage(damage);
+        copy.GetComponent<BulletControl>().SetPierceCount(weaponInfo.pierceCount);
 
         // 가까운 몬스터에게 발사
         Vector2 direction = closetMonster.transform.position - copy.transform.position;

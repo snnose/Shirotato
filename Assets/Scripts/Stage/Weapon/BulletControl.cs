@@ -6,6 +6,7 @@ using TMPro;
 public class BulletControl : MonoBehaviour
 {
     private int damage = 0;
+    private int pierceCount = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -31,11 +32,34 @@ public class BulletControl : MonoBehaviour
             float hp = monsterControl.GetMonsterCurrentHP() - damage;
             monsterControl.SetMonsterCurrentHP(hp);
 
+            // 입힌 대미지 출력
             PrintText(hitedMonster.transform, damage);
 
+            // 관통 횟수가 1 이상이라면
+            if (pierceCount > 0)
+            {
+                // 횟수를 감소시키고 대미지를 절반으로 감소
+                this.pierceCount--;
+                this.damage /= 2;
+            }
+            // 관통 횟수가 0이면
+            else
+            {
+                Destroy(this.gameObject);
+            }
+        }
+
+        // 벽과 충돌하면 총알 파괴
+        if (collision.gameObject == GameObject.FindGameObjectWithTag("Wall"))
+        {
             Destroy(this.gameObject);
         }
-        else if (collision.gameObject == GameObject.FindGameObjectWithTag("Wall"))
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // 벽과 충돌하면 총알 파괴
+        if (collision.gameObject == GameObject.FindGameObjectWithTag("Wall"))
         {
             Destroy(this.gameObject);
         }
@@ -59,5 +83,10 @@ public class BulletControl : MonoBehaviour
     public void SetDamage(int damage)
     {
         this.damage = damage;
+    }
+
+    public void SetPierceCount(int count)
+    {
+        this.pierceCount = count;
     }
 }

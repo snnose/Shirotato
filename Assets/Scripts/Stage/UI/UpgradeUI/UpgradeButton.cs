@@ -70,7 +70,7 @@ public class UpgradeButton : MonoBehaviour
                 PlayerInfo.Instance.SetRecovery(PlayerInfo.Instance.GetRecovery() + 2 + rarity);
                 break;
             case 2:
-                PlayerInfo.Instance.SetDMGPercent(PlayerInfo.Instance.GetDMGPercent() + 5 * (1 + rarity));
+                PlayerInfo.Instance.SetDMGPercent(PlayerInfo.Instance.GetDMGPercent() + 2 + 3 * (1 + rarity));
                 break;
             case 3:
                 PlayerInfo.Instance.SetFixedDMG(PlayerInfo.Instance.GetFixedDMG() + (1 + rarity));
@@ -91,7 +91,7 @@ public class UpgradeButton : MonoBehaviour
                 PlayerInfo.Instance.SetArmor(PlayerInfo.Instance.GetArmor() + (1 + rarity));
                 break;
             case 9:
-                PlayerInfo.Instance.SetMovementSpeed(PlayerInfo.Instance.GetMovementSpeed() + 3 * (1 + rarity));
+                PlayerInfo.Instance.SetMovementSpeed(PlayerInfo.Instance.GetMovementSpeedPercent() + 3 * (1 + rarity));
                 break;
             case 10:
                 PlayerInfo.Instance.SetLuck(PlayerInfo.Instance.GetLuck() + 5 * (1 + rarity));

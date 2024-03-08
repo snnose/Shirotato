@@ -17,6 +17,7 @@ public class TextDestroy : MonoBehaviour
         
     }
 
+    // 텍스트가 0.5초에 걸쳐 투명해진 후 사라진다
     private IEnumerator DestroyText()
     {
         float startAlpha = this.GetComponent<TextMeshPro>().alpha;

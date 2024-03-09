@@ -54,7 +54,7 @@ public class WeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 라운드 시작 시 무기 장착하고 끝날 때 무기 파괴?
+        // 라운드 시작 시 무기 장착하고 끝날 때 무기 파괴
         if (equipWeapons != null)
         {
             StartCoroutine(equipWeapons);

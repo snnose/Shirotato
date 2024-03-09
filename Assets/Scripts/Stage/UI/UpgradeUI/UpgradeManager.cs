@@ -95,7 +95,7 @@ public class UpgradeManager : MonoBehaviour
                 {
                     // 다시 굴리고 재검사
                     upgradeRandom = UnityEngine.Random.Range(0, 11);
-                    j = 0;
+                    j = -1;
                     continue;
                 }
             }

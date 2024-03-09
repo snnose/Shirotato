@@ -52,7 +52,7 @@ public class PlayerColideDetect : MonoBehaviour
             if (monster.TryGetComponent<MonsterInfo>(out MonsterInfo monsterInfo))
             {
                 // 받는 대미지를 계산 후 현재 체력을 차감한다
-                int behitDamage = Mathf.CeilToInt(monsterInfo.ATK *
+                int behitDamage = Mathf.FloorToInt(monsterInfo.damage *
                                                                 (1 - playerInfo.GetArmor() /
                                                                                 (playerInfo.GetArmor() + 10)));
 

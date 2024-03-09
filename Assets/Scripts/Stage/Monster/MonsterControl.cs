@@ -7,6 +7,7 @@ public class MonsterControl : MonoBehaviour
     private GameObject player;
     private GameObject waffle;
     private GameObject milk;
+    private GameObject box;
 
     private Rigidbody2D monsterRb2D;
     private Collider2D monsterCollider;
@@ -17,8 +18,9 @@ public class MonsterControl : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        waffle = Resources.Load<GameObject>("Prefabs/Goods/Waffle");
-        milk = Resources.Load<GameObject>("Prefabs/Goods/Milk");
+        waffle = Resources.Load<GameObject>("Prefabs/Drops/Waffle");
+        milk = Resources.Load<GameObject>("Prefabs/Drops/Milk");
+        box = Resources.Load<GameObject>("Prefabs/Drops/Box");
         monsterRb2D = this.GetComponent<Rigidbody2D>();
         monsterCollider = this.GetComponent<Collider2D>();
         monsterInfo = this.GetComponent<MonsterInfo>();

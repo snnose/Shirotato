@@ -222,6 +222,26 @@ public class ItemManager : MonoBehaviour
         this.isLockItemList = list;
     }
 
+    public List<GameObject> GetNormalItemList()
+    {
+        return this.normalItemList;
+    }
+
+    public List<GameObject> GetRareItemList()
+    {
+        return this.rareItemList;
+    }
+
+    public List<GameObject> GetEpicItemList()
+    {
+        return this.epicItemList;
+    }
+
+    public List<GameObject> GetLegendItemList()
+    {
+        return this.legendItemList;
+    }
+
     public List<bool> GetIsLockItemList()
     {
         return this.isLockItemList;

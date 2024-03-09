@@ -44,8 +44,14 @@ public class GameRoot : MonoBehaviour
     public GameObject upgradeUI;
     public IEnumerator floatingUpgradeUI = null;
 
-    private int levelUpCount = 0;
+    private int levelUpCount = 1;
     private bool isDuringUpgrade = false;
+
+    // 아이템 습득 UI 관련 필드
+    public GameObject findItemUI;
+    public IEnumerator floatingFindItemUI = null;
+    private int boxCount = 0;
+    private bool isDuringFindItem = false;
 
     // 라운드 정보 관련 필드
 
@@ -67,7 +73,7 @@ public class GameRoot : MonoBehaviour
 
         //floatingShopUI = FloatingShopUI();
 
-        remainTime = 20f;
+        remainTime = 3f;
     }
     // Start is called before the first frame update
     void Start()
@@ -77,15 +83,29 @@ public class GameRoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 라운드가 끝나면 아이템 획득 UI-> 업그레이드 UI-> 상점 UI순으로 진행한다
         if (isRoundClear
             && stopRound != null)
         {
             StartCoroutine(stopRound);
             stopRound = null;
         }
-        // 라운드 클리어 및 레벨업을 했다면
+
+        // 박스를 드랍했다면
+        if (isRoundClear
+            && boxCount > 0
+            && !isDuringFindItem
+            && floatingFindItemUI != null)
+        {
+            StartCoroutine(floatingFindItemUI);
+            floatingFindItemUI = null;
+        }
+
+        // 레벨업을 했다면
         if (isRoundClear 
+            && boxCount == 0
             && levelUpCount > 0
+            && !isDuringFindItem
             && !isDuringUpgrade
             && floatingUpgradeUI != null)
         {
@@ -95,7 +115,9 @@ public class GameRoot : MonoBehaviour
 
         // 라운드 클리어 및 업그레이드 종료 시
         if (isRoundClear 
+            && boxCount == 0
             && levelUpCount == 0
+            && !isDuringFindItem
             && !isDuringUpgrade
             && floatingShopUI != null)
         {
@@ -103,6 +125,8 @@ public class GameRoot : MonoBehaviour
             WeaponManager.Instance.destroyWeapons = WeaponManager.Instance.DestroyWeapons();
             // 상점 UI를 띄운다
             StartCoroutine(floatingShopUI);
+            // 상점 UI 위치 조정
+            ShopUIControl.Instance.transform.position = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
             floatingShopUI = null;
         }
     }
@@ -116,7 +140,9 @@ public class GameRoot : MonoBehaviour
     {
         // 와플이 플레이어에게 끌려지도록 잠시 텀을 둔다
         yield return StartCoroutine(Sleep(3.0f));
+
         // UI 출력 코루틴을 입력
+        floatingFindItemUI = FloatingFindItemUI();
         floatingUpgradeUI = FloatingUpgradeUI();
         floatingShopUI = FloatingShopUI();
 
@@ -138,14 +164,29 @@ public class GameRoot : MonoBehaviour
         // 업그레이드 UI 활성화
         upgradeUI.SetActive(true);
         isDuringUpgrade = true;
+
         // 현재 업그레이드 레벨을 1 상승
         int currentUpgradeLevel = UpgradeManager.Instance.GetCurrentUpgradeLevel();
         UpgradeManager.Instance.SetCurrentUpgradeLevel(currentUpgradeLevel++);
+
         // 남은 업그레이드 카운트 감소
         levelUpCount--;
         yield return null;
+
         // 업그레이드 리스트 갱신
         UpgradeManager.Instance.renewUpgradeList = UpgradeManager.Instance.RenewUpgradeList();
+        yield return null;
+    }
+
+    public IEnumerator FloatingFindItemUI()
+    {
+        findItemUI.SetActive(true);
+        isDuringFindItem = true;
+
+        boxCount--;
+
+        // 발견 아이템 갱신
+        findItemUI.GetComponent<FindItemUI>().renewFindItem = findItemUI.GetComponent<FindItemUI>().RenewFindItem();
         yield return null;
     }
 
@@ -177,6 +218,16 @@ public class GameRoot : MonoBehaviour
     public void SetIsDuringUpgrade(bool ret)
     {
         this.isDuringUpgrade = ret;
+    }
+
+    public void SetBoxCount(int count)
+    {
+        this.boxCount = count;
+    }
+
+    public void SetIsDuringFindItem(bool ret)
+    {
+        this.isDuringFindItem = ret;
     }
 
     public GameObject GetPlayerBox()
@@ -212,5 +263,10 @@ public class GameRoot : MonoBehaviour
     public int GetLevelUpCount()
     {
         return this.levelUpCount;
+    }
+
+    public int GetBoxCount()
+    {
+        return this.boxCount;
     }
 }

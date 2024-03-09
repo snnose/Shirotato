@@ -6,18 +6,6 @@ using UnityEngine.UI;
 
 public class UpgradeButton : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnClickUpgradeButton()
     {
         float buttonPosX = this.gameObject.transform.position.x;
@@ -91,7 +79,7 @@ public class UpgradeButton : MonoBehaviour
                 PlayerInfo.Instance.SetArmor(PlayerInfo.Instance.GetArmor() + (1 + rarity));
                 break;
             case 9:
-                PlayerInfo.Instance.SetMovementSpeed(PlayerInfo.Instance.GetMovementSpeedPercent() + 3 * (1 + rarity));
+                PlayerInfo.Instance.SetMovementSpeedPercent(PlayerInfo.Instance.GetMovementSpeedPercent() + 3 * (1 + rarity));
                 break;
             case 10:
                 PlayerInfo.Instance.SetLuck(PlayerInfo.Instance.GetLuck() + 5 * (1 + rarity));

@@ -31,7 +31,7 @@ public class WaffleControl : MonoBehaviour
             // 보유 와플 개수 + 1
             PlayerInfo.Instance.SetCurrentWaffle(++currentWaffle);
             // 현재 경험치 + 1 * 경험치 배율
-            ExpManager.Instance.SetCurrentExp(currentExp + (1 * PlayerInfo.Instance.GetExpGain()));
+            ExpManager.Instance.SetCurrentExp(currentExp + (2 * PlayerInfo.Instance.GetExpGain()));
             // 레벨업 코루틴 실행 (경험치가 충족되면 레벨업)
             ExpManager.Instance.levelUp = (ExpManager.Instance.LevelUp());
 
@@ -58,14 +58,28 @@ public class WaffleControl : MonoBehaviour
         }
     }
 
-    // 라운드 종료 시 플레이어에게 끌려가는 함수
+    // 와플이 플레이어에게 끌려가는 함수
     private void AttractToPlayer()
     {
+        Vector2 playerPos = PlayerControl.Instance.GetPlayer().transform.position;
+
+        // 라운드 진행 중이라면
+        if (!GameRoot.Instance.GetIsRoundClear())
+        {
+            float range = 2.5f * (1 + (PlayerInfo.Instance.GetRootingRange() / 100));
+            float dis = Vector2.Distance(this.transform.position, playerPos);
+                
+            if (dis < range)
+            {
+                this.transform.position =
+                Vector2.Lerp(this.transform.position, playerPos, 0.02f);
+            }
+        }
+
         // 라운드가 종료 됐다면
         if (GameRoot.Instance.GetIsRoundClear())
         {
             // 플레이어 위치 조정 (보이는 것 보다 x값 -0.1f만큼 밀려있음)
-            Vector2 playerPos = PlayerControl.Instance.GetPlayer().transform.position;
             Vector2 newPos = new Vector2(playerPos.x - 0.1f, playerPos.y);
 
             // 와플이 플레이어에게 끌려간다

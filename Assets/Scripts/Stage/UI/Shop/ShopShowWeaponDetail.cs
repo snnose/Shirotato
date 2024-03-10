@@ -58,11 +58,15 @@ public class ShopShowWeaponDetail : MonoBehaviour, IPointerEnterHandler, IPointe
     // 해당 무기 칸을 클릭 시 WeaponDetailUI 활성화
     public void OnClickWeaponRoom()
     {
-        // WeaponDetailUI 고정
-        ShopWeaponDetailUI.Instance.SetIsLockOn(true);
+        if (currentPointWeaponRoomNumber < WeaponManager.Instance.GetCurrentWeaponList().Count
+            && !ShopWeaponDetailUI.Instance.GetIsLockOn())
+        {
+            // WeaponDetailUI 고정
+            ShopWeaponDetailUI.Instance.SetIsLockOn(true);
 
-        // 현재 누른 무기 칸 번호를 기억한다.
-        ShopWeaponDetailUI.Instance.SetWeaponRoomNumber(currentPointWeaponRoomNumber);
+            // 현재 누른 무기 칸 번호를 기억한다.
+            ShopWeaponDetailUI.Instance.SetWeaponRoomNumber(currentPointWeaponRoomNumber);
+        }
     }
 
     private int FindWeaponRoomNumber(GameObject weaponRoom)
@@ -117,6 +121,8 @@ public class ShopShowWeaponDetail : MonoBehaviour, IPointerEnterHandler, IPointe
         ShopWeaponDetailUI.Instance.SetWeaponImage(weapon.GetComponent<Image>());
         ShopWeaponDetailUI.Instance.SetWeaponNameText(weaponInfo);
         ShopWeaponDetailUI.Instance.SetWeaponStatusText(weaponInfo);
+        // WeaponDetailUI 판매 버튼 가격 설정
+        ShopWeaponDetailUI.Instance.SetWeaponSellButtonText(weaponInfo);
     }
 
     // WeaponDetailUI를 아이템 슬롯 위로 조정하는 함수

@@ -28,6 +28,7 @@ public class ShopWeaponDetailUI : MonoBehaviour
     private Image image;
     private TextMeshProUGUI weaponNameText;
     private TextMeshProUGUI weaponStatusText;
+    private TextMeshProUGUI weaponSellButtonText;
 
     // true일 때 취소 버튼을 누르기 전 까지 사라지지 않음.
     private bool isLockOn = false;
@@ -49,6 +50,7 @@ public class ShopWeaponDetailUI : MonoBehaviour
         image = weaponImage.GetComponent<Image>();
         weaponNameText = weaponName.GetComponent<TextMeshProUGUI>();
         weaponStatusText = weaponStatus.GetComponent<TextMeshProUGUI>();
+        weaponSellButtonText = sellButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
     }
 
     void Start()
@@ -110,6 +112,31 @@ public class ShopWeaponDetailUI : MonoBehaviour
         }
     }
 
+    private void SellWeapon()
+    {
+        List<GameObject> weaponList = WeaponManager.Instance.GetCurrentWeaponList();
+        List<WeaponInfo> weaponInfoList = WeaponManager.Instance.GetCurrentWeaponInfoList();
+
+        int sellPrice = Mathf.FloorToInt(weaponInfoList[currentWeaponRoomNumber].price * 0.25f);
+
+        PlayerInfo.Instance.SetCurrentWaffle(PlayerInfo.Instance.GetCurrentWaffle() + sellPrice);
+
+        // 판매한 무기의 칸을 비운다
+        weaponList.RemoveAt(currentWeaponRoomNumber);
+        weaponInfoList.RemoveAt(currentWeaponRoomNumber);
+
+        // 판매한 무기 이후의 무기들의 번호를 차감한다
+        AdjustWeaponNum(currentWeaponRoomNumber);
+
+        // ShopOwnItemListControl의 코루틴 호출로 UI를 갱신한다
+        ShopOwnWeaponListControl shopOwnWeaponListControl = ShopUIControl.Instance.GetShopOwnWeaponListControl();
+        shopOwnWeaponListControl.renewOwnWeaponList = shopOwnWeaponListControl.RenewOwnWeaponList();
+
+        // WeaponDetailUI 비활성화
+        this.gameObject.SetActive(false);
+        isLockOn = false;
+    }
+
     // 무기 결합 버튼
     public void OnClickWeaponCombinationButton()
     {
@@ -119,7 +146,7 @@ public class ShopWeaponDetailUI : MonoBehaviour
     // 판매 버튼
     public void OnClickSellButton()
     {
-
+        SellWeapon();
     }
 
     // UI 닫기 버튼
@@ -179,6 +206,12 @@ public class ShopWeaponDetailUI : MonoBehaviour
                               "범위 : " + range;
     }
 
+    public void SetWeaponSellButtonText(WeaponInfo weaponInfo)
+    {
+        this.weaponSellButtonText.text = "판매 (+" + Mathf.FloorToInt(weaponInfo.price * 0.25f) + ")";
+    }
+
+    // 보유 무기 칸을 눌렀다면 UI가 고정되도록 함
     public void SetIsLockOn(bool ret)
     {
         this.isLockOn = ret;

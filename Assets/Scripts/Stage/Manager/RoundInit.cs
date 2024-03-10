@@ -48,9 +48,12 @@ public class RoundInit : MonoBehaviour
         GameRoot.Instance.SetCurrentHP(PlayerInfo.Instance.GetHP());
         GameRoot.Instance.SetMaxHP(PlayerInfo.Instance.GetHP());
 
-        // 해당 라운드의 정보를 가져와 적용한다 (몬스터 정보, 제한 시간)
-        GameRoot.Instance.SetRemainTime(3f);
-        timerControl.SetTimerText(3f.ToString());
+        // 라운드 제한 시간 조정
+        float remainTime = 15f + GameRoot.Instance.GetCurrentRound() * 5f;
+        if (remainTime > 60f)
+            remainTime = 60f;
+        GameRoot.Instance.SetRemainTime(remainTime);
+        timerControl.SetTimerText(remainTime.ToString());
 
         // SpawnManager 초기화
         SpawnManager.Instance.startSpawn = SpawnManager.Instance.StartSpawn(GameRoot.Instance.GetCurrentRound());
@@ -88,10 +91,13 @@ public class RoundInit : MonoBehaviour
         GameRoot.Instance.shopUI.SetActive(false);
 
         // 무기 생성
-        WeaponManager.Instance.equipWeapons = WeaponManager.Instance.EquipWeapons();
+        if (WeaponManager.Instance.GetCurrentWeaponList().Count != 0)
+        {
+            WeaponManager.Instance.equipWeapons = WeaponManager.Instance.EquipWeapons();
+        }
 
         // 테스트 용 코드들
-        GameRoot.Instance.SetLevelUpCount(1);
+        GameRoot.Instance.SetLevelUpCount(0);
 
         // 타임스케일 정상화
         Time.timeScale = 1f;

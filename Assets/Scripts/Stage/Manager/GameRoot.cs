@@ -50,7 +50,7 @@ public class GameRoot : MonoBehaviour
     // 아이템 습득 UI 관련 필드
     public GameObject findItemUI;
     public IEnumerator floatingFindItemUI = null;
-    private int boxCount = 0;
+    private int boxCount = 1;
     private bool isDuringFindItem = false;
 
     // 라운드 정보 관련 필드

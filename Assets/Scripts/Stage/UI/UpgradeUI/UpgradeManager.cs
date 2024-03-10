@@ -45,9 +45,9 @@ public class UpgradeManager : MonoBehaviour
         else
             Destroy(this.gameObject);
 
-        upgradeListControl = this.gameObject.transform.GetChild(0).GetComponent<UpgradeListControl>();
-        rerollButton = this.transform.GetChild(2).GetComponent<Button>();
-        rerollText = this.transform.GetChild(2).GetChild(1).GetComponent<TextMeshProUGUI>();
+        upgradeListControl = this.gameObject.transform.GetChild(1).GetComponent<UpgradeListControl>();
+        rerollButton = this.transform.GetChild(3).GetComponent<Button>();
+        rerollText = this.transform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>();
     }
 
     // Start is called before the first frame update

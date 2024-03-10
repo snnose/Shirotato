@@ -23,13 +23,13 @@ public class FindItemUI : MonoBehaviour
 
     private void Awake()
     {
-        itemGrade = this.gameObject.transform.GetChild(0).GetChild(0).GetComponent<Image>();
-        itemImage = this.gameObject.transform.GetChild(0).GetChild(1).GetComponent<Image>();
-        itemName = this.gameObject.transform.GetChild(0).GetChild(2).GetComponent<TextMeshProUGUI>();
-        itemStatus = this.gameObject.transform.GetChild(0).GetChild(3).GetComponent<TextMeshProUGUI>();
-        useButton = this.gameObject.transform.GetChild(0).GetChild(4).GetComponent<Button>();
-        sellButton = this.gameObject.transform.GetChild(0).GetChild(5).GetComponent<Button>();
-        sellButtonText = this.gameObject.transform.GetChild(0).GetChild(5).GetChild(1).GetComponent<TextMeshProUGUI>();
+        itemGrade = this.gameObject.transform.GetChild(1).GetChild(0).GetComponent<Image>();
+        itemImage = this.gameObject.transform.GetChild(1).GetChild(1).GetComponent<Image>();
+        itemName = this.gameObject.transform.GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>();
+        itemStatus = this.gameObject.transform.GetChild(1).GetChild(3).GetComponent<TextMeshProUGUI>();
+        useButton = this.gameObject.transform.GetChild(1).GetChild(4).GetComponent<Button>();
+        sellButton = this.gameObject.transform.GetChild(1).GetChild(5).GetComponent<Button>();
+        sellButtonText = this.gameObject.transform.GetChild(1).GetChild(5).GetChild(1).GetComponent<TextMeshProUGUI>();
 
         item = null;
 
@@ -80,13 +80,20 @@ public class FindItemUI : MonoBehaviour
         // 잠깐동안 ShopUI 활성화
         ShopUIControl shopUIControl = ShopUIControl.Instance;
         shopUIControl.gameObject.SetActive(true);
+
         // 위치를 옮겨 화면에 보이지 않게 한다
         ShopUIControl.Instance.transform.position = new Vector2(-2000f, 0f);
+
         // 보유 아이템 리스트에 추가한다
         shopUIControl.transform.GetChild(4).GetComponent<ShopOwnItemListControl>().renewOwnItemList =
             shopUIControl.transform.GetChild(4).GetComponent<ShopOwnItemListControl>().RenewOwnItemList(item);
+
         // ShopUI 비활성화
         shopUIControl.gameObject.SetActive(false);
+
+        // Floating 장전
+        GameRoot.Instance.floatingFindItemUI = GameRoot.Instance.FloatingFindItemUI();
+
         // FindItemUI 비활성화
         this.gameObject.SetActive(false);
         GameRoot.Instance.SetIsDuringFindItem(false);
@@ -100,6 +107,9 @@ public class FindItemUI : MonoBehaviour
         // 보유 와플에 판매한 가격만큼 추가
         PlayerInfo.Instance.SetCurrentWaffle(PlayerInfo.Instance.GetCurrentWaffle() + sellPrice);
         StartCoroutine(RenewWaffleAmount.Instance.RenewCurrentWaffleAmount());
+
+        // Floating 장전
+        GameRoot.Instance.floatingFindItemUI = GameRoot.Instance.FloatingFindItemUI();
 
         // FindItemUI 비활성화
         this.gameObject.SetActive(false);

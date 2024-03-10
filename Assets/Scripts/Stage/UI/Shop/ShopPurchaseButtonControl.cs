@@ -159,7 +159,7 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                 PlayerInfo.Instance.SetEvasion(PlayerInfo.Instance.GetEvasion() + item.GetComponent<ItemInfo>().Evasion);
 
                 // ÀÌµ¿¼Óµµ %
-                PlayerInfo.Instance.SetMovementSpeed(PlayerInfo.Instance.GetMovementSpeedPercent() + item.GetComponent<ItemInfo>().MovementSpeedPercent);
+                PlayerInfo.Instance.SetMovementSpeedPercent(PlayerInfo.Instance.GetMovementSpeedPercent() + item.GetComponent<ItemInfo>().MovementSpeedPercent);
                 // È¹µæ ¹üÀ§
                 PlayerInfo.Instance.SetRootingRange(PlayerInfo.Instance.GetRootingRange() + item.GetComponent<ItemInfo>().RootingRange);
                 // Çà¿î

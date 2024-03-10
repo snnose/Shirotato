@@ -32,7 +32,7 @@ public class PlayerControl : MonoBehaviour
     public state currState = state.IDLE;
 
     // Field
-    public float movementSpeed = 10f;
+    private float movementSpeed = 10f;
 
     private void Awake()
     {
@@ -122,5 +122,10 @@ public class PlayerControl : MonoBehaviour
     public GameObject GetPlayer()
     {
         return this.gameObject;
+    }
+
+    public void SetMovementSpeed(float movementSpeed)
+    {
+        this.movementSpeed = movementSpeed;
     }
 }

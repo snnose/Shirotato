@@ -29,7 +29,7 @@ public class FindItemUI : MonoBehaviour
         itemStatus = this.gameObject.transform.GetChild(0).GetChild(3).GetComponent<TextMeshProUGUI>();
         useButton = this.gameObject.transform.GetChild(0).GetChild(4).GetComponent<Button>();
         sellButton = this.gameObject.transform.GetChild(0).GetChild(5).GetComponent<Button>();
-        sellButtonText = this.gameObject.transform.GetChild(0).GetChild(5).GetComponent<TextMeshProUGUI>();
+        sellButtonText = this.gameObject.transform.GetChild(0).GetChild(5).GetChild(1).GetComponent<TextMeshProUGUI>();
 
         item = null;
 
@@ -94,7 +94,16 @@ public class FindItemUI : MonoBehaviour
 
     private void OnClickSellButton()
     {
+        // 판매 가격은 아이템 가격의 25%
+        int sellPrice = Mathf.FloorToInt(item.GetComponent<ItemInfo>().price * 0.25f);
 
+        // 보유 와플에 판매한 가격만큼 추가
+        PlayerInfo.Instance.SetCurrentWaffle(PlayerInfo.Instance.GetCurrentWaffle() + sellPrice);
+        StartCoroutine(RenewWaffleAmount.Instance.RenewCurrentWaffleAmount());
+
+        // FindItemUI 비활성화
+        this.gameObject.SetActive(false);
+        GameRoot.Instance.SetIsDuringFindItem(false);
     }
 
     private void ApplyStatus()
@@ -409,5 +418,7 @@ public class FindItemUI : MonoBehaviour
         itemImage.sprite = item.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite;
         itemName.text = itemInfo.itemName;
         SetItemStatus(itemInfo);
+
+        sellButtonText.text = "판매 (+" + Mathf.FloorToInt(itemInfo.price * 0.25f).ToString() +")";
     }
 }

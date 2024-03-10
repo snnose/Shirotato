@@ -27,6 +27,7 @@ public class HPControl : MonoBehaviour
         HPText.text = currentHP.ToString() + " / " + MaxHP.ToString();
     }
 
+    // 현재 체력 비율에 따라 체력 막대 조정
     private void ChangeHPGageAmount(float amount)
     {
         HPBar.fillAmount = amount;

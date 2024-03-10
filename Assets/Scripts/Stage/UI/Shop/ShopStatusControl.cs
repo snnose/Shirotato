@@ -50,7 +50,7 @@ public class ShopStatusControl : MonoBehaviour
         // 방어력
         statInfo.transform.GetChild(8).GetChild(2).GetComponent<TextMeshProUGUI>().text =
             PlayerInfo.Instance.GetArmor().ToString();
-        // 이동속도
+        // 이동속도 %
         statInfo.transform.GetChild(9).GetChild(2).GetComponent<TextMeshProUGUI>().text =
             PlayerInfo.Instance.GetMovementSpeedPercent().ToString();
         // 행운

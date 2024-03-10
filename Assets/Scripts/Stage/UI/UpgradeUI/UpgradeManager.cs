@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class UpgradeManager : MonoBehaviour
 {
@@ -30,6 +32,12 @@ public class UpgradeManager : MonoBehaviour
     private int currentUpgradeLevel = 0;
     public IEnumerator renewUpgradeList;
 
+    // 버튼
+    private Button rerollButton;
+    private TextMeshProUGUI rerollText;
+    private int currentCost = 2;
+    int rerollCount = 0;
+
     private void Awake()
     {
         if (instance == null)
@@ -38,6 +46,8 @@ public class UpgradeManager : MonoBehaviour
             Destroy(this.gameObject);
 
         upgradeListControl = this.gameObject.transform.GetChild(0).GetComponent<UpgradeListControl>();
+        rerollButton = this.transform.GetChild(2).GetComponent<Button>();
+        rerollText = this.transform.GetChild(2).GetChild(1).GetComponent<TextMeshProUGUI>();
     }
 
     // Start is called before the first frame update
@@ -48,6 +58,9 @@ public class UpgradeManager : MonoBehaviour
             (int, int) tmp = (-1, -1);
             upgradeList.Add(tmp);
         }
+
+        rerollButton.onClick.AddListener(OnClickRerollButton);
+        rerollText.text = "초기화 -" + 2;
 
         this.transform.position = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
         this.gameObject.SetActive(false);
@@ -134,9 +147,59 @@ public class UpgradeManager : MonoBehaviour
         return tmp;
     }
 
+    private void OnClickRerollButton()
+    {
+        // 가진 와플이 요구 와플보다 많으면
+        if (PlayerInfo.Instance.GetCurrentWaffle() > currentCost)
+        {
+            rerollCount++;
+            renewUpgradeList = RenewUpgradeList();
+
+            // 보유 와플 소모
+            PlayerInfo.Instance.SetCurrentWaffle(PlayerInfo.Instance.GetCurrentWaffle() - currentCost);
+            StartCoroutine(RenewWaffleAmount.Instance.RenewCurrentWaffleAmount());
+
+            // 리롤 비용 조정
+            currentCost = CalCurrentCost();
+            // 텍스트 변경
+            SetTextToCurrentCost();
+        }
+    }
+
+    // 현재 리롤 비용을 계산하는 기능
+    private int CalCurrentCost()
+    {
+        int increaseCost = Mathf.FloorToInt(GameRoot.Instance.GetCurrentRound() * 0.5f);
+        if (increaseCost < 1)
+            increaseCost = 1;
+
+        increaseCost = increaseCost * (rerollCount + 1);
+
+        int currentCost = GameRoot.Instance.GetCurrentRound() + increaseCost;
+
+        return currentCost;
+    }
+
+    // 현재 요구하는 비용에 맞게 텍스트 변경
+    public void SetTextToCurrentCost()
+    {
+        rerollText.text = "초기화 -" + currentCost;
+    }
+
     public void SetCurrentUpgradeLevel(int level)
     {
         this.currentUpgradeLevel = level;
+    }
+
+    public void InitReroll()
+    {
+        this.rerollCount = 0;
+
+        int increaseCost = Mathf.FloorToInt((rerollCount + 1) * GameRoot.Instance.GetCurrentRound() * 0.5f);
+        if (increaseCost < 1)
+            increaseCost = 1;
+
+        this.currentCost = GameRoot.Instance.GetCurrentRound() + increaseCost;
     }
 
     public int GetCurrentUpgradeLevel()

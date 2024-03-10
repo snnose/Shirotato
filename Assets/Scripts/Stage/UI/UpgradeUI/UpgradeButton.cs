@@ -32,7 +32,8 @@ public class UpgradeButton : MonoBehaviour
 
         applyUpgrade(roomNumber);
 
-        // UpgradeUI 비활성화
+        // UpgradeUI 비활성화 및 화면 밖으로 이동
+        UpgradeManager.Instance.transform.position = new Vector2(Screen.width * (-1.0f), Screen.height * (-1.0f));
         UpgradeManager.Instance.gameObject.SetActive(false);
         // GameRoot의 levelUpCount 감소
         int levelUpCount = GameRoot.Instance.GetLevelUpCount();

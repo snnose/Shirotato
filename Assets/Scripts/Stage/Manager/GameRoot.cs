@@ -163,6 +163,7 @@ public class GameRoot : MonoBehaviour
 
         // 업그레이드 UI 활성화
         upgradeUI.SetActive(true);
+        upgradeUI.transform.position = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
         isDuringUpgrade = true;
 
         // 현재 업그레이드 레벨을 1 상승
@@ -193,6 +194,11 @@ public class GameRoot : MonoBehaviour
     public void SetCurrentHP(float currentHP)
     {
         this.currentHP = currentHP;
+    }
+
+    public void SetMaxHP(float MaxHP)
+    {
+        this.MaxHP = MaxHP;
     }
 
     public void SetIsRoundClear(bool isRoundClear)

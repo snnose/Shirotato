@@ -134,6 +134,11 @@ public class ShopItemDetailUI : MonoBehaviour
             tmpText += "행운 +" + itemInfo.Luck + '\n';
             plusCount++;
         }
+        if (itemInfo.ExpGain > 0)
+        {
+            tmpText += "경험치 획득 " + itemInfo.ExpGain + '\n';
+            plusCount++;
+        }
 
         // 공격 관련
         if (itemInfo.DMGPercent < 0)
@@ -198,6 +203,11 @@ public class ShopItemDetailUI : MonoBehaviour
         if (itemInfo.Luck < 0)
         {
             tmpText += "행운 " + itemInfo.Luck + '\n';
+            minusCount++;
+        }
+        if (itemInfo.ExpGain < 0)
+        {
+            tmpText += "경험치 획득 " + itemInfo.ExpGain + '\n';
             minusCount++;
         }
 

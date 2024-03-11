@@ -144,6 +144,8 @@ public class FindItemUI : MonoBehaviour
         PlayerInfo.Instance.SetRootingRange(PlayerInfo.Instance.GetRootingRange() + item.GetComponent<ItemInfo>().RootingRange);
         // 행운
         PlayerInfo.Instance.SetLuck(PlayerInfo.Instance.GetLuck() + item.GetComponent<ItemInfo>().Luck);
+        // 경험치 획득량
+        PlayerInfo.Instance.SetExpGain(PlayerInfo.Instance.GetExpGain() + item.GetComponent<ItemInfo>().ExpGain);
     }
 
     // 아이템 등급 설정 함수
@@ -325,6 +327,11 @@ public class FindItemUI : MonoBehaviour
             tmpText += "행운 +" + itemInfo.Luck + '\n';
             plusCount++;
         }
+        if (itemInfo.ExpGain > 0)
+        {
+            tmpText += "경험치 획득 " + itemInfo.ExpGain + '\n';
+            plusCount++;
+        }
 
         // 공격 관련
         if (itemInfo.DMGPercent < 0)
@@ -389,6 +396,11 @@ public class FindItemUI : MonoBehaviour
         if (itemInfo.Luck < 0)
         {
             tmpText += "행운 " + itemInfo.Luck + '\n';
+            minusCount++;
+        }
+        if (itemInfo.ExpGain < 0)
+        {
+            tmpText += "경험치 획득 " + itemInfo.ExpGain + '\n';
             minusCount++;
         }
 

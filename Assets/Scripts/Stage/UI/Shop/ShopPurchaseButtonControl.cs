@@ -164,6 +164,8 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                 PlayerInfo.Instance.SetRootingRange(PlayerInfo.Instance.GetRootingRange() + item.GetComponent<ItemInfo>().RootingRange);
                 // 행운
                 PlayerInfo.Instance.SetLuck(PlayerInfo.Instance.GetLuck() + item.GetComponent<ItemInfo>().Luck);
+                // 경험치 획득량
+                PlayerInfo.Instance.SetExpGain(PlayerInfo.Instance.GetExpGain() + item.GetComponent<ItemInfo>().ExpGain);
 
                 // 현재 보유 아이템 리스트에 추가한다.
                 ItemManager.Instance.GetCurrentItemList().Add(item);

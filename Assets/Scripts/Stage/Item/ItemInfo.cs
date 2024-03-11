@@ -23,6 +23,7 @@ public class ItemInfo : MonoBehaviour
     public float MovementSpeedPercent = 0f;
     public float RootingRange = 0f;
     public float Luck = 0f;
+    public float ExpGain = 0f;
 
     // АЁАн
     public int price = 0;

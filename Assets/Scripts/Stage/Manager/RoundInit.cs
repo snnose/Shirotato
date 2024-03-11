@@ -52,6 +52,7 @@ public class RoundInit : MonoBehaviour
         float remainTime = 15f + GameRoot.Instance.GetCurrentRound() * 5f;
         if (remainTime > 60f)
             remainTime = 60f;
+        timerControl.gameObject.SetActive(true);
         GameRoot.Instance.SetRemainTime(remainTime);
         timerControl.SetTimerText(remainTime.ToString());
 
@@ -62,7 +63,7 @@ public class RoundInit : MonoBehaviour
         GameObject playerBox = GameRoot.Instance.GetPlayerBox();
         PlayerInfo playerInfo = playerBox.transform.GetChild(0).GetComponent<PlayerInfo>();
         playerBox.transform.position = new Vector2(0f, 0f);
-        playerInfo.SetMovementSpeed(playerInfo.GetMovementSpeed() * (100 + playerInfo.GetMovementSpeedPercent()) / 100);
+        playerInfo.SetMovementSpeed(playerInfo.GetMovementSpeed() * (1 + playerInfo.GetMovementSpeedPercent() / 100));
         PlayerControl.Instance.SetMovementSpeed(PlayerInfo.Instance.GetMovementSpeed());
 
         // 업그레이드 초기화

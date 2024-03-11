@@ -28,6 +28,8 @@ public class GameRoot : MonoBehaviour
     private float currentHP;
 
     // 라운드 관련 필드
+    private TimerControl timerControl;
+
     private bool isGameOver = false;
     private bool isRoundClear = false;
 
@@ -69,9 +71,9 @@ public class GameRoot : MonoBehaviour
         MaxHP = playerInfo.GetHP();
         currentHP = playerInfo.GetHP();
 
-        stopRound = StopRound();
+        timerControl = GameObject.FindGameObjectWithTag("Timer").GetComponent<TimerControl>();
 
-        //floatingShopUI = FloatingShopUI();
+        stopRound = StopRound();
 
         remainTime = 3f;
     }
@@ -140,6 +142,9 @@ public class GameRoot : MonoBehaviour
     {
         // 와플이 플레이어에게 끌려지도록 잠시 텀을 둔다
         yield return StartCoroutine(Sleep(3.0f));
+
+        // 타이머 비활성화
+        timerControl.gameObject.SetActive(false);
 
         // UI 출력 코루틴을 입력
         floatingFindItemUI = FloatingFindItemUI();

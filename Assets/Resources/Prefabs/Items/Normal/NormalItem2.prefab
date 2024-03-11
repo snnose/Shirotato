@@ -49,17 +49,17 @@ MonoBehaviour:
   itemName: NormalItem2
   DMGPercent: 0
   ATKSpeed: 0
-  FixedDMG: 2
+  FixedDMG: 1
   Critical: 0
   Range: 0
   HP: -1
   Recovery: 0
   Armor: 0
   Evasion: 0
-  MovementSpeed: 0
+  MovementSpeedPercent: 0
   RootingRange: 0
   Luck: 0
-  price: 30
+  price: 25
 --- !u!1 &5049034545336642480
 GameObject:
   m_ObjectHideFlags: 0

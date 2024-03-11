@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 6619745433068761132}
   - component: {fileID: 8247606586256063065}
   m_Layer: 0
-  m_Name: RareItem1
+  m_Name: RareItem2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,21 +130,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94b2362cbbf86214ab13e6d3a7aeb66b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: RareItem1
+  itemName: RareItem2
   DMGPercent: 0
   ATKSpeed: 0
   FixedDMG: 0
   Critical: 0
   Range: 0
-  HP: -3
+  HP: 8
   Recovery: 0
-  Armor: 2
-  Evasion: 6
+  Armor: 0
+  Evasion: -4
   MovementSpeedPercent: 0
   RootingRange: 0
   Luck: 0
   ExpGain: 0
-  price: 45
+  price: 65
 --- !u!1 &4609542649919371229
 GameObject:
   m_ObjectHideFlags: 0

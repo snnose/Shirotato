@@ -5,6 +5,13 @@ using UnityEngine;
 public class ItemInfo : MonoBehaviour
 {
     public string itemName = "";
+    public int itemNumber = 0;
+
+    // 특수 능력 설명(텍스트)
+    // 긍정적 특수 능력
+    public string positiveSpecial;
+    // 부정적 특수 능력
+    public string negativeSpecial;
 
     // 공격 관련
     public float DMGPercent = 0f;

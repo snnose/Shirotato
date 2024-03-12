@@ -140,6 +140,13 @@ public class ShopItemDetailUI : MonoBehaviour
             plusCount++;
         }
 
+        // 긍정적 특수 효과
+        if (itemInfo.positiveSpecial != "")
+        {
+            tmpText += itemInfo.positiveSpecial + "\n";
+            plusCount++;
+        }
+
         // 공격 관련
         if (itemInfo.DMGPercent < 0)
         {
@@ -211,6 +218,13 @@ public class ShopItemDetailUI : MonoBehaviour
             minusCount++;
         }
 
+        // 부정적 특수 효과
+        if (itemInfo.negativeSpecial != "")
+        {
+            tmpText += itemInfo.negativeSpecial + "\n";
+            minusCount++;
+        }
+
         // 텍스트를 각 라인으로 나눈다
         string[] lines = tmpText.Split('\n');
         string finalText = ""; // 최종 텍스트
@@ -218,7 +232,18 @@ public class ShopItemDetailUI : MonoBehaviour
         // 능력치가 상승하면 텍스트를 초록색으로 변경
         for (int j = 0; j < plusCount; j++)
         {
-            string coloredLine = $"<color=#{ColorUtility.ToHtmlStringRGB(Color.green)}>{lines[j]}</color>";
+            string coloredLine = "";
+            // +와 숫자만 색을 변경한다
+            for (int k = 0; k < lines[j].Length; k++)
+            {
+                // #1FDE38 << 진한 초록색
+                if (lines[j][k] == '+' || lines[j][k] == '%')
+                    coloredLine += $"<color=#1FDE38>{lines[j][k]}</color>";
+                else if (lines[j][k] > 47 && lines[j][k] < 58)
+                    coloredLine += $"<color=#1FDE38>{lines[j][k]}</color>";
+                else
+                    coloredLine += lines[j][k];
+            }
 
             // 최종 텍스트에 추가
             finalText += coloredLine;
@@ -228,7 +253,18 @@ public class ShopItemDetailUI : MonoBehaviour
         // 능력치가 하락하면 텍스트를 빨간색으로 변경
         for (int j = plusCount; j < plusCount + minusCount; j++)
         {
-            string coloredLine = $"<color=#{ColorUtility.ToHtmlStringRGB(Color.red)}>{lines[j]}</color>";
+            string coloredLine = "";
+
+            // -와 숫자만 색을 변경한다
+            for (int k = 0; k < lines[j].Length; k++)
+            {
+                if (lines[j][k] == '-' || lines[j][k] == '%')
+                    coloredLine += $"<color=#{ColorUtility.ToHtmlStringRGB(Color.red)}>{lines[j][k]}</color>";
+                else if (lines[j][k] > 47 && lines[j][k] < 58)
+                    coloredLine += $"<color=#{ColorUtility.ToHtmlStringRGB(Color.red)}>{lines[j][k]}</color>";
+                else
+                    coloredLine += lines[j][k];
+            }
 
             // 최종 텍스트에 추가
             finalText += coloredLine;

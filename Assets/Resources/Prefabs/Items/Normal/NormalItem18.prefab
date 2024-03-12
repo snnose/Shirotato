@@ -131,6 +131,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: NormalItem18
+  itemNumber: 18
+  positiveSpecial: []
+  negativeSpecial: []
   DMGPercent: -3
   ATKSpeed: 0
   FixedDMG: 0
@@ -143,6 +146,7 @@ MonoBehaviour:
   MovementSpeedPercent: 0
   RootingRange: 0
   Luck: 0
+  ExpGain: 0
   price: 20
 --- !u!1 &8995487860562824329
 GameObject:

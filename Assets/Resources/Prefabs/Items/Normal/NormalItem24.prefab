@@ -214,7 +214,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94b2362cbbf86214ab13e6d3a7aeb66b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: NormalItem
+  itemName: NormalItem24
+  itemNumber: 24
+  positiveSpecial: []
+  negativeSpecial: []
   DMGPercent: -2
   ATKSpeed: 0
   FixedDMG: 0
@@ -227,4 +230,5 @@ MonoBehaviour:
   MovementSpeedPercent: 0
   RootingRange: 0
   Luck: 0
+  ExpGain: 0
   price: 10

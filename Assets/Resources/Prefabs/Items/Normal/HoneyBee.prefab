@@ -215,6 +215,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: "\uAFC0\uBC8C"
+  itemNumber: 29
+  positiveSpecial: []
+  negativeSpecial: []
   DMGPercent: 0
   ATKSpeed: 0
   FixedDMG: -1

@@ -46,7 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94b2362cbbf86214ab13e6d3a7aeb66b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: NormalItem
+  itemName: NormalItem27
+  itemNumber: 27
+  positiveSpecial: []
+  negativeSpecial: []
   DMGPercent: 0
   ATKSpeed: 0
   FixedDMG: 0

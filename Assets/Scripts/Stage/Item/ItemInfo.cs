@@ -21,8 +21,9 @@ public class ItemInfo : MonoBehaviour
     public float Range = 0f;
 
     // 방어 관련
-    public float HP = 0;
+    public float HP = 0f;
     public int Recovery = 0;
+    public float HPDrain = 0f;
     public int Armor = 0;
     public int Evasion = 0;
 
@@ -30,6 +31,7 @@ public class ItemInfo : MonoBehaviour
     public float MovementSpeedPercent = 0f;
     public float RootingRange = 0f;
     public float Luck = 0f;
+    public float Harvest = 0f;
     public float ExpGain = 0f;
 
     // 가격

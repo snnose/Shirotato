@@ -26,8 +26,9 @@ public class PlayerInfo : MonoBehaviour
     private float Range = 0f;
 
     // 방어 관련
-    private float HP = 10;
+    private float HP = 10f;
     private int Recovery = 0;
+    private float HPDrain = 0f;
     private int Armor = 0;
     private int Evasion = 0;
 
@@ -36,6 +37,7 @@ public class PlayerInfo : MonoBehaviour
     private float MovementSpeedPercent = 0f;
     private float RootingRange = 1f;
     private float Luck = 0f;
+    private float Harvest = 0f;
     private float expGain = 1.0f;
 
     // 재화 관련
@@ -87,6 +89,11 @@ public class PlayerInfo : MonoBehaviour
         this.Recovery = recovery;
     }
 
+    public void SetHPDrain(float hpDrain)
+    {
+        this.HPDrain = hpDrain;
+    }
+
     public void SetArmor(int armor)
     {
         this.Armor = armor;
@@ -115,6 +122,11 @@ public class PlayerInfo : MonoBehaviour
     public void SetLuck(float luck)
     {
         this.Luck = luck;
+    }
+
+    public void SetHarvest(float harvest)
+    {
+        this.Harvest = harvest;
     }
 
     public void SetExpGain(float expGain)
@@ -157,6 +169,11 @@ public class PlayerInfo : MonoBehaviour
         return this.Recovery;
     }
 
+    public float GetHPDrain()
+    {
+        return this.HPDrain;
+    }
+
     public int GetArmor()
     {
         return this.Armor;
@@ -187,6 +204,16 @@ public class PlayerInfo : MonoBehaviour
         return this.Luck;
     }
 
+    public float GetHarvest()
+    {
+        return this.Harvest;
+    }
+
+    public float GetExpGain()
+    {
+        return this.expGain;
+    }
+
     public int GetStoredWaffle()
     {
         return this.storedWaffle;
@@ -197,10 +224,7 @@ public class PlayerInfo : MonoBehaviour
         return this.currentWaffle;
     }
 
-    public float GetExpGain()
-    {
-        return this.expGain;
-    }
+    
 
     private void Awake()
     {

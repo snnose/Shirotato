@@ -59,31 +59,37 @@ public class UpgradeButton : MonoBehaviour
                 PlayerInfo.Instance.SetRecovery(PlayerInfo.Instance.GetRecovery() + 2 + rarity);
                 break;
             case 2:
-                PlayerInfo.Instance.SetDMGPercent(PlayerInfo.Instance.GetDMGPercent() + 2 + 3 * (1 + rarity));
+                PlayerInfo.Instance.SetHPDrain(PlayerInfo.Instance.GetHPDrain() + 1 + rarity);
                 break;
             case 3:
-                PlayerInfo.Instance.SetFixedDMG(PlayerInfo.Instance.GetFixedDMG() + (1 + rarity));
+                PlayerInfo.Instance.SetDMGPercent(PlayerInfo.Instance.GetDMGPercent() + 2 + 3 * (1 + rarity));
                 break;
             case 4:
-                PlayerInfo.Instance.SetATKSpeed(PlayerInfo.Instance.GetATKSpeed() + 5 * (1 + rarity));
+                PlayerInfo.Instance.SetFixedDMG(PlayerInfo.Instance.GetFixedDMG() + (1 + rarity));
                 break;
             case 5:
-                PlayerInfo.Instance.SetCritical(PlayerInfo.Instance.GetCritical() + 3 * (1 + rarity));
+                PlayerInfo.Instance.SetATKSpeed(PlayerInfo.Instance.GetATKSpeed() + 5 * (1 + rarity));
                 break;
             case 6:
-                PlayerInfo.Instance.SetRange(PlayerInfo.Instance.GetRange() + 3 * (1 + rarity));
+                PlayerInfo.Instance.SetCritical(PlayerInfo.Instance.GetCritical() + 3 * (1 + rarity));
                 break;
             case 7:
-                PlayerInfo.Instance.SetEvasion(PlayerInfo.Instance.GetEvasion() + 3 * (1 + rarity));
+                PlayerInfo.Instance.SetRange(PlayerInfo.Instance.GetRange() + 3 * (1 + rarity));
                 break;
             case 8:
-                PlayerInfo.Instance.SetArmor(PlayerInfo.Instance.GetArmor() + (1 + rarity));
+                PlayerInfo.Instance.SetEvasion(PlayerInfo.Instance.GetEvasion() + 3 * (1 + rarity));
                 break;
             case 9:
-                PlayerInfo.Instance.SetMovementSpeedPercent(PlayerInfo.Instance.GetMovementSpeedPercent() + 3 * (1 + rarity));
+                PlayerInfo.Instance.SetArmor(PlayerInfo.Instance.GetArmor() + (1 + rarity));
                 break;
             case 10:
+                PlayerInfo.Instance.SetMovementSpeedPercent(PlayerInfo.Instance.GetMovementSpeedPercent() + 3 * (1 + rarity));
+                break;
+            case 11:
                 PlayerInfo.Instance.SetLuck(PlayerInfo.Instance.GetLuck() + 5 * (1 + rarity));
+                break;
+            case 12:
+                PlayerInfo.Instance.SetHarvest(PlayerInfo.Instance.GetHarvest() + 5 + (3 * rarity));
                 break;
             default:
                 break;

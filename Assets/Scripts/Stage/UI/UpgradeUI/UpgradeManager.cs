@@ -98,8 +98,8 @@ public class UpgradeManager : MonoBehaviour
                 }
             }
 
-            // 0 ~ 10 사이의 값을 고른다
-            int upgradeRandom = UnityEngine.Random.Range(0, 11);
+            // 0 ~ 12 사이의 값을 고른다
+            int upgradeRandom = UnityEngine.Random.Range(0, 13);
             // 만약 중복된 업그레이드가 나왔다면
             for (int j = 0; j < upgradeList.Count; j++)
             {
@@ -107,7 +107,7 @@ public class UpgradeManager : MonoBehaviour
                 if (upgradeRandom == tmp)
                 {
                     // 다시 굴리고 재검사
-                    upgradeRandom = UnityEngine.Random.Range(0, 11);
+                    upgradeRandom = UnityEngine.Random.Range(0, 13);
                     j = -1;
                     continue;
                 }

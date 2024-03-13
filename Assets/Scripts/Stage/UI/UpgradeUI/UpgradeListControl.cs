@@ -96,48 +96,58 @@ public class UpgradeListControl : MonoBehaviour
                 break;
             case 2:
                 //upgradeImage = Resources.Load("");
+                upgradeName.text = "이";
+                upgradeStatus.text = "생명력 흡수% +" + (1 + rarity);
+                break;
+            case 3:
+                //upgradeImage = Resources.Load("");
                 upgradeName.text = "팔";
                 upgradeStatus.text = "대미지% +" + 5 * (1 + rarity);
                 break;
-            case 3:
+            case 4:
                 //upgradeImage = Resources.Load("");
                 upgradeName.text = "어깨";
                 upgradeStatus.text = "고정 대미지 +" + (1 + rarity);
                 break;
-            case 4:
+            case 5:
                 //upgradeImage = Resources.Load("");
                 upgradeName.text = "반사신경";
                 upgradeStatus.text = "공격속도% +" + 5 * (1 + rarity);
                 break;
-            case 5:
+            case 6:
                 //upgradeImage = Resources.Load("");
-                upgradeName.text = "손";
+                upgradeName.text = "손가락";
                 upgradeStatus.text = "치명타 확률 +" + 3 * (1 + rarity);
                 break;
-            case 6:
+            case 7:
                 //upgradeImage = Resources.Load("");
                 upgradeName.text = "눈";
                 upgradeStatus.text = "범위% +" + 3 * (1 + rarity);
                 break;
-            case 7:
+            case 8:
                 //upgradeImage = Resources.Load("");
                 upgradeName.text = "등";
                 upgradeStatus.text = "회피 확률 +" + 3 * (1 + rarity);
                 break;
-            case 8:
+            case 9:
                 //upgradeImage = Resources.Load("");
                 upgradeName.text = "흉부";
                 upgradeStatus.text = "방어력 +" + (1 + rarity);
                 break;
-            case 9:
+            case 10:
                 //upgradeImage = Resources.Load("");
                 upgradeName.text = "다리";
                 upgradeStatus.text = "이동속도% +" + 3 * (1 + rarity);
                 break;
-            case 10:
+            case 11:
                 //upgradeImage = Resources.Load("");
                 upgradeName.text = "귀";
-                upgradeStatus.text = "행운 +" + 5* (1 + rarity);
+                upgradeStatus.text = "행운 +" + 5 * (1 + rarity);
+                break;
+            case 12:
+                //upgradeImage = Resources.Load("");
+                upgradeName.text = "손";
+                upgradeStatus.text = "수확 +" + (5 + 3 * rarity);
                 break;
             default:
                 break;

@@ -146,6 +146,11 @@ public class ShopItemListControl : MonoBehaviour
             tmpText += "체력 회복 +" + itemInfo.Recovery + '\n';
             plusCount++;
         }
+        if (itemInfo.HPDrain > 0)
+        {
+            tmpText += "생명력 흡수% +" + itemInfo.HPDrain + '\n';
+            plusCount++;
+        }
         if (itemInfo.Armor > 0)
         {
             tmpText += "방어력 +" + itemInfo.Armor + '\n';
@@ -170,7 +175,12 @@ public class ShopItemListControl : MonoBehaviour
         }
         if (itemInfo.Luck > 0)
         {
-            tmpText += "행운 +" + itemInfo.Luck + '\n'; 
+            tmpText += "행운 +" + itemInfo.Luck + '\n';
+            plusCount++;
+        }
+        if (itemInfo.Harvest > 0)
+        {
+            tmpText += "수확 +" + itemInfo.Harvest + '\n';
             plusCount++;
         }
         if (itemInfo.ExpGain > 0)
@@ -199,7 +209,7 @@ public class ShopItemListControl : MonoBehaviour
         }
         if (itemInfo.FixedDMG < 0)
         {
-            tmpText += "고정 대미지 " + itemInfo.FixedDMG + '\n'; 
+            tmpText += "고정 대미지 " + itemInfo.FixedDMG + '\n';
             minusCount++;
         }
         if (itemInfo.Critical < 0)
@@ -222,6 +232,11 @@ public class ShopItemListControl : MonoBehaviour
         if (itemInfo.Recovery < 0)
         {
             tmpText += "체력 회복 " + itemInfo.Recovery + '\n';
+            minusCount++;
+        }
+        if (itemInfo.HPDrain < 0)
+        {
+            tmpText += "생명력 흡수% " + itemInfo.HPDrain + '\n';
             minusCount++;
         }
         if (itemInfo.Armor < 0)
@@ -248,7 +263,12 @@ public class ShopItemListControl : MonoBehaviour
         }
         if (itemInfo.Luck < 0)
         {
-            tmpText += "행운 " + itemInfo.Luck + '\n'; 
+            tmpText += "행운 " + itemInfo.Luck + '\n';
+            minusCount++;
+        }
+        if (itemInfo.Harvest < 0)
+        {
+            tmpText += "수확 " + itemInfo.Harvest + '\n';
             minusCount++;
         }
         if (itemInfo.ExpGain < 0)

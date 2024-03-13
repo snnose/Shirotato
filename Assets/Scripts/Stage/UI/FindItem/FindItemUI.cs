@@ -133,6 +133,8 @@ public class FindItemUI : MonoBehaviour
         PlayerInfo.Instance.SetHP(PlayerInfo.Instance.GetHP() + item.GetComponent<ItemInfo>().HP);
         // 회복력
         PlayerInfo.Instance.SetRecovery(PlayerInfo.Instance.GetRecovery() + item.GetComponent<ItemInfo>().Recovery);
+        // 생명력 흡수
+        PlayerInfo.Instance.SetHPDrain(PlayerInfo.Instance.GetHPDrain() + item.GetComponent<ItemInfo>().HPDrain);
         // 방어력
         PlayerInfo.Instance.SetArmor(PlayerInfo.Instance.GetArmor() + item.GetComponent<ItemInfo>().Armor);
         // 회피
@@ -144,6 +146,8 @@ public class FindItemUI : MonoBehaviour
         PlayerInfo.Instance.SetRootingRange(PlayerInfo.Instance.GetRootingRange() + item.GetComponent<ItemInfo>().RootingRange);
         // 행운
         PlayerInfo.Instance.SetLuck(PlayerInfo.Instance.GetLuck() + item.GetComponent<ItemInfo>().Luck);
+        // 수확
+        PlayerInfo.Instance.SetHarvest(PlayerInfo.Instance.GetHarvest() + item.GetComponent<ItemInfo>().Harvest);
         // 경험치 획득량
         PlayerInfo.Instance.SetExpGain(PlayerInfo.Instance.GetExpGain() + item.GetComponent<ItemInfo>().ExpGain);
     }
@@ -300,6 +304,11 @@ public class FindItemUI : MonoBehaviour
             tmpText += "체력 회복 +" + itemInfo.Recovery + '\n';
             plusCount++;
         }
+        if (itemInfo.HPDrain > 0)
+        {
+            tmpText += "생명력 흡수% +" + itemInfo.HPDrain + '\n';
+            plusCount++;
+        }
         if (itemInfo.Armor > 0)
         {
             tmpText += "방어력 +" + itemInfo.Armor + '\n';
@@ -325,6 +334,11 @@ public class FindItemUI : MonoBehaviour
         if (itemInfo.Luck > 0)
         {
             tmpText += "행운 +" + itemInfo.Luck + '\n';
+            plusCount++;
+        }
+        if (itemInfo.Harvest > 0)
+        {
+            tmpText += "수확 +" + itemInfo.Harvest + '\n';
             plusCount++;
         }
         if (itemInfo.ExpGain > 0)
@@ -378,6 +392,11 @@ public class FindItemUI : MonoBehaviour
             tmpText += "체력 회복 " + itemInfo.Recovery + '\n';
             minusCount++;
         }
+        if (itemInfo.HPDrain < 0)
+        {
+            tmpText += "생명력 흡수% " + itemInfo.HPDrain + '\n';
+            minusCount++;
+        }
         if (itemInfo.Armor < 0)
         {
             tmpText += "방어력 " + itemInfo.Armor + '\n';
@@ -403,6 +422,11 @@ public class FindItemUI : MonoBehaviour
         if (itemInfo.Luck < 0)
         {
             tmpText += "행운 " + itemInfo.Luck + '\n';
+            minusCount++;
+        }
+        if (itemInfo.Harvest < 0)
+        {
+            tmpText += "수확 " + itemInfo.Harvest + '\n';
             minusCount++;
         }
         if (itemInfo.ExpGain < 0)

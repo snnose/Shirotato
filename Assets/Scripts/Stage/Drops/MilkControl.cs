@@ -49,7 +49,10 @@ public class MilkControl : MonoBehaviour
 
         // 텍스트 및 색상 결정
         textPro.text = "+" + num.ToString();
-        textPro.color = Color.green;
+
+        Color color = Color.white;
+        ColorUtility.TryParseHtmlString("#1FDE38", out color);
+        textPro.color = color;
 
         GameObject copy = Instantiate(text);
         Vector3 randomPos = new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(0.4f, 0.6f), 0f);

@@ -47,9 +47,26 @@ public class PlayerColideDetect : MonoBehaviour
         // 충돌한 몬스터와 정보를 읽어온다
         if (GetAttackedMonster() != null)
         {
+            bool isEvade = false;
             GameObject monster = GetAttackedMonster();
-            // 충돌한 오브젝트가 몹인 경우 대미지를 받는다.
-            if (monster.TryGetComponent<MonsterInfo>(out MonsterInfo monsterInfo))
+
+            // 회피 시도를 한다
+            float random = Random.Range(0, 100f);
+            // 회피 상한은 60
+            int evadeNum = RealtimeInfoManager.Instance.GetEvasion();
+            if (evadeNum >= 60)
+                evadeNum = 60;
+
+            // 난수 값이 회피 수치보다 낮게 나왔다면 회피 성공
+            if (random < evadeNum)
+            {
+                isEvade = true;
+                PrintText(0);
+            }
+
+            // 충돌한 오브젝트가 몬스터이고, 회피 실패 시 대미지를 받는다.
+            if (monster.TryGetComponent<MonsterInfo>(out MonsterInfo monsterInfo)
+                && !isEvade)
             {
                 // 받는 대미지를 계산 후 현재 체력을 차감한다
                 int behitDamage = Mathf.FloorToInt(monsterInfo.damage *
@@ -68,7 +85,7 @@ public class PlayerColideDetect : MonoBehaviour
                     this.gameObject.transform.parent.GetComponent<PlayerControl>().currState = PlayerControl.state.DEAD;
                 }
 
-                PrintText(behitDamage);
+                PrintText(-behitDamage);
             }
         }
 
@@ -89,9 +106,18 @@ public class PlayerColideDetect : MonoBehaviour
         GameObject damageText = Resources.Load<GameObject>("Prefabs/DamageText");
         TextMeshPro damagePro = damageText.GetComponent<TextMeshPro>();
 
-        // 텍스트 및 색상 결정
-        damagePro.text = (-damage).ToString();
-        damagePro.color = Color.red;
+        if (damage == 0)
+        {
+            damagePro.text = "회피";
+            damagePro.color = Color.white;
+        }
+        else
+        {
+            // 텍스트 및 색상 결정
+            damagePro.text = damage.ToString();
+            damagePro.color = Color.red;
+        }
+
         GameObject copy = Instantiate(damageText);
         Vector3 randomPos = new Vector3(Random.Range(-0.4f, 0.4f), Random.Range(0.4f, 0.6f), 0f);
         copy.transform.position = this.gameObject.transform.position + randomPos;

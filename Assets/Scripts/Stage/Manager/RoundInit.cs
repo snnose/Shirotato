@@ -45,8 +45,11 @@ public class RoundInit : MonoBehaviour
         // GameRoot 초기화
         GameRoot.Instance.SetIsRoundClear(false);
         GameRoot.Instance.SetCurrentRound(GameRoot.Instance.GetCurrentRound() + 1);
+
+        // 실시간 스탯 관리자 초기화
         RealtimeInfoManager.Instance.SetCurrentHP(PlayerInfo.Instance.GetHP());
         RealtimeInfoManager.Instance.SetHP(PlayerInfo.Instance.GetHP());
+        StartCoroutine(RealtimeInfoManager.Instance.HPRecovery());
 
         // 라운드 제한 시간 조정
         float remainTime = 15f + GameRoot.Instance.GetCurrentRound() * 5f;

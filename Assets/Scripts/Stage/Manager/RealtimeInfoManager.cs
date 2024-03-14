@@ -79,6 +79,10 @@ public class RealtimeInfoManager : MonoBehaviour
         while (!GameRoot.Instance.GetIsRoundClear())
         {
             float coolDown = 10f;
+
+            if (this.Recovery == 0f)
+                yield return new WaitForSeconds(coolDown);
+
             // 회복 능력치가 0보다 클 때 (0이면 회복되지 않는다)
             if (this.Recovery > 0f)
             {

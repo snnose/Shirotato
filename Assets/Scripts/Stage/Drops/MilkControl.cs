@@ -25,15 +25,15 @@ public class MilkControl : MonoBehaviour
         if (collision.gameObject == PlayerControl.Instance.GetPlayer())
         {
             // 플레이어의 체력을 회복한다
-            float currentHP = GameRoot.Instance.GetCurrentHP();
-            float maxHP = GameRoot.Instance.GetMaxHP();
+            float currentHP = RealtimeInfoManager.Instance.GetCurrentHP();
+            float maxHP = RealtimeInfoManager.Instance.GetHP();
 
             currentHP += 3.0f;
             // 최대 체력을 초과하지 않는다
             if (currentHP >= maxHP)
                 currentHP = maxHP;
 
-            GameRoot.Instance.SetCurrentHP(currentHP);
+            RealtimeInfoManager.Instance.SetCurrentHP(currentHP);
 
             // 텍스트를 출력한다
             PrintText(collision.transform, 3);

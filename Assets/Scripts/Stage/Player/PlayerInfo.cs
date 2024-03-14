@@ -27,7 +27,7 @@ public class PlayerInfo : MonoBehaviour
 
     // 방어 관련
     private float HP = 10f;
-    private int Recovery = 0;
+    private int Recovery = 10;
     private float HPDrain = 0f;
     private int Armor = 0;
     private int Evasion = 0;

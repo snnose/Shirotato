@@ -24,9 +24,6 @@ public class GameRoot : MonoBehaviour
     private GameObject player;
     private PlayerInfo playerInfo;
 
-    private float MaxHP;
-    private float currentHP;
-
     // 라운드 관련 필드
     private TimerControl timerControl;
 
@@ -67,9 +64,6 @@ public class GameRoot : MonoBehaviour
         playerBox = GameObject.FindGameObjectWithTag("GameController");
         player = GameObject.FindGameObjectWithTag("Player");
         playerInfo = player.GetComponent<PlayerInfo>();
-
-        MaxHP = playerInfo.GetHP();
-        currentHP = playerInfo.GetHP();
 
         timerControl = GameObject.FindGameObjectWithTag("Timer").GetComponent<TimerControl>();
 
@@ -196,16 +190,6 @@ public class GameRoot : MonoBehaviour
         yield return null;
     }
 
-    public void SetCurrentHP(float currentHP)
-    {
-        this.currentHP = currentHP;
-    }
-
-    public void SetMaxHP(float MaxHP)
-    {
-        this.MaxHP = MaxHP;
-    }
-
     public void SetIsRoundClear(bool isRoundClear)
     {
         this.isRoundClear = isRoundClear;
@@ -260,17 +244,6 @@ public class GameRoot : MonoBehaviour
     {
         return this.remainTime;
     }
-
-    public float GetCurrentHP()
-    {
-        return this.currentHP;
-    }
-
-    public float GetMaxHP()
-    {
-        return this.MaxHP;
-    }
-
     public int GetLevelUpCount()
     {
         return this.levelUpCount;

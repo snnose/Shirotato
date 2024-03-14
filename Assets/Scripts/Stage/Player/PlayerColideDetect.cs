@@ -56,9 +56,9 @@ public class PlayerColideDetect : MonoBehaviour
                                                                 (1 - playerInfo.GetArmor() /
                                                                                 (playerInfo.GetArmor() + 10)));
 
-                float currentHP = GameRoot.Instance.GetCurrentHP();
+                float currentHP = RealtimeInfoManager.Instance.GetCurrentHP();
                 currentHP -= behitDamage;
-                GameRoot.Instance.SetCurrentHP(currentHP);
+                RealtimeInfoManager.Instance.SetCurrentHP(currentHP);
 
                 // 플레이어의 체력이 0 이하로 떨어지면 
                 if (currentHP <= 0)

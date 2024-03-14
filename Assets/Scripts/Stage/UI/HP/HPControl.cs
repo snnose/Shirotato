@@ -18,8 +18,8 @@ public class HPControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SetHPText(GameRoot.Instance.GetCurrentHP(), GameRoot.Instance.GetMaxHP());
-        ChangeHPGageAmount(GameRoot.Instance.GetCurrentHP() / GameRoot.Instance.GetMaxHP());
+        SetHPText(RealtimeInfoManager.Instance.GetCurrentHP(), RealtimeInfoManager.Instance.GetHP());
+        ChangeHPGageAmount(RealtimeInfoManager.Instance.GetCurrentHP() / RealtimeInfoManager.Instance.GetHP());
     }
 
     private void SetHPText(float currentHP, float MaxHP)

@@ -58,8 +58,8 @@ public class ExpManager : MonoBehaviour
             currentLevel++;
             // 플레이어의 체력을 1 상승시킨다.
             PlayerInfo.Instance.SetHP(PlayerInfo.Instance.GetHP() + 1);
-            GameRoot.Instance.SetCurrentHP(GameRoot.Instance.GetCurrentHP() + 1);
-            GameRoot.Instance.SetMaxHP(GameRoot.Instance.GetMaxHP() + 1);
+            RealtimeInfoManager.Instance.SetCurrentHP(RealtimeInfoManager.Instance.GetCurrentHP() + 1);
+            RealtimeInfoManager.Instance.SetHP(RealtimeInfoManager.Instance.GetHP() + 1);
             // 요구 경험치를 갱신한다
             demandExp = calDemandExp(currentLevel);
             // 업그레이드 가능 횟수 + 1

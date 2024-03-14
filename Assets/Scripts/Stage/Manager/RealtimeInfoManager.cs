@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 // 라운드 진행 중 실제로 적용되는 플레이어의 스탯
 public class RealtimeInfoManager : MonoBehaviour
@@ -52,24 +53,24 @@ public class RealtimeInfoManager : MonoBehaviour
             instance = this;
         else
             Destroy(this.gameObject);
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
         SetAllStatus(PlayerInfo.Instance);
-        //currentHP = HP;
-        hpRecovery = HPRecovery();
+        currentHP = HP;
+        StartCoroutine(HPRecovery());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (hpRecovery != null)
-            StartCoroutine(hpRecovery);
-
         if (GameRoot.Instance.GetIsRoundClear())
-            StopCoroutine(hpRecovery);
+        {
+            StopCoroutine(HPRecovery());
+        }
     }
 
     // 플레이어가 Recovery 능력치에 비례해 회복한다
@@ -85,12 +86,13 @@ public class RealtimeInfoManager : MonoBehaviour
                 coolDown = 10f / Recovery;
                 yield return new WaitForSeconds(coolDown);
 
-                this.currentHP += 1;
-                // HP 회복 텍스트 출력
-
                 // 최대 체력 이상으로 회복할 수 없다
-                if (this.currentHP >= this.HP)
-                    this.currentHP = this.HP;
+                if (this.currentHP < this.HP)
+                {
+                    this.currentHP += 1;
+                    // HP 회복 텍스트 출력
+                    PrintText(1);
+                }
                 yield return null;
             }
 
@@ -103,13 +105,39 @@ public class RealtimeInfoManager : MonoBehaviour
 
                 this.currentHP -= 1;
                 // HP 감소 텍스트 출력
-
+                PrintText(-1);
                 if (this.currentHP <= 0)
                     this.currentHP = 0;
 
                 yield return null;
             }
         }
+    }
+
+    void PrintText(int num)
+    {
+        // 받은 대미지 텍스트 출력
+        GameObject damageText = Resources.Load<GameObject>("Prefabs/DamageText");
+        TextMeshPro damagePro = damageText.GetComponent<TextMeshPro>();
+
+        Color color = Color.white;
+
+        // 텍스트 및 색상 결정
+        if (num > 0)
+        {
+            damagePro.text = "+" + num;
+            ColorUtility.TryParseHtmlString("#1FDE38", out color);
+        }
+        else
+        {
+            damagePro.text = num.ToString();
+            color = Color.red;
+        }
+
+        damagePro.color = color;
+        GameObject copy = Instantiate(damageText);
+        Vector3 randomPos = new Vector3(Random.Range(-0.4f, 0.4f), Random.Range(0.4f, 0.6f), 0f);
+        copy.transform.position = PlayerControl.Instance.gameObject.transform.position + randomPos;
     }
 
     public void SetCurrentHP(float currentHP)

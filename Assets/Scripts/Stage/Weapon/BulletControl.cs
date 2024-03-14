@@ -22,6 +22,13 @@ public class BulletControl : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // 벽과 충돌하면 총알 파괴
+        if (collision.gameObject.TryGetComponent<WallControl>(out WallControl wall))
+        {
+            Debug.Log("충돌");
+            Destroy(this.gameObject);
+        }
+
         //collision.gameObject == GameObject.FindGameObjectWithTag("Monster")
         // 몬스터에 충돌했을 경우
         if (SpawnManager.Instance.GetCurrentMonsters().Contains(collision.gameObject))
@@ -47,21 +54,6 @@ public class BulletControl : MonoBehaviour
             {
                 Destroy(this.gameObject);
             }
-        }
-
-        // 벽과 충돌하면 총알 파괴
-        if (collision.gameObject == GameObject.FindGameObjectWithTag("Wall"))
-        {
-            Destroy(this.gameObject);
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // 벽과 충돌하면 총알 파괴
-        if (collision.gameObject == GameObject.FindGameObjectWithTag("Wall"))
-        {
-            Destroy(this.gameObject);
         }
     }
 

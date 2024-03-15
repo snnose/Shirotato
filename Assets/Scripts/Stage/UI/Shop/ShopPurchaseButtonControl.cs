@@ -171,8 +171,24 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                 // 경험치 획득량
                 PlayerInfo.Instance.SetExpGain(PlayerInfo.Instance.GetExpGain() + item.GetComponent<ItemInfo>().ExpGain);
 
-                // 현재 보유 아이템 리스트에 추가한다.
-                ItemManager.Instance.GetCurrentItemList().Add(item);
+                // 구매한 아이템을 기억한다.
+                switch (item.GetComponent<ItemInfo>().rarity)
+                {
+                    case 0:
+                        ItemManager.Instance.GetOwnNormalItemList()[item.GetComponent<ItemInfo>().itemNumber]++;
+                        break;
+                    case 1:
+                        ItemManager.Instance.GetOwnRareItemList()[item.GetComponent<ItemInfo>().itemNumber]++;
+                        break;
+                    case 2:
+                        ItemManager.Instance.GetOwnEpicItemList()[item.GetComponent<ItemInfo>().itemNumber]++;
+                        break;
+                    case 3:
+                        ItemManager.Instance.GetOwnLegendItemList()[item.GetComponent<ItemInfo>().itemNumber]++;
+                        break;
+                    default:
+                        break;
+                }
 
                 // 아이템 슬롯을 비활성화 한다.
                 currentClickButton.transform.parent.gameObject.SetActive(false);

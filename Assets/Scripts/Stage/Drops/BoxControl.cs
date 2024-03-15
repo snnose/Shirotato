@@ -25,10 +25,26 @@ public class BoxControl : MonoBehaviour
             int boxCount = GameRoot.Instance.GetBoxCount();
             GameRoot.Instance.SetBoxCount(++boxCount);
 
+            // 아이템 보유 시 효과 발동
+            if (ItemManager.Instance.GetOwnNormalItemList()[37] > 0)
+            {
+                // 상자 습득 시 15 * 아이템 개수 만큼 와플 획득
+                ActivateNormalItem37();
+            }
+
             // 화면 우상단에 UI 플로팅
 
             Destroy(this.gameObject);
         }
+    }
+
+    private void ActivateNormalItem37()
+    {
+        int currentWaffle = PlayerInfo.Instance.GetCurrentWaffle();
+        currentWaffle += 15 * ItemManager.Instance.GetOwnNormalItemList()[37];
+        PlayerInfo.Instance.SetCurrentWaffle(currentWaffle);
+
+        RenewWaffleAmount.Instance.renewCurrentWaffleAmount = RenewWaffleAmount.Instance.RenewCurrentWaffleAmount();
     }
 
     private void AttractToPlayer()

@@ -88,8 +88,11 @@ public class ShopItemListControl : MonoBehaviour
 
         TextMeshProUGUI weaponPrice = itemList[i].transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>();
         // 무기의 기본 가격 + 현재 라운드 + (무기의 기본 가격 * 현재 라운드) / 10
-        weaponPrice.text = (weaponInfo.price + GameRoot.Instance.GetCurrentRound() +
-                            Mathf.FloorToInt(weaponInfo.price * GameRoot.Instance.GetCurrentRound() / 10)).ToString();
+        int price = Mathf.FloorToInt(weaponInfo.price + GameRoot.Instance.GetCurrentRound() +
+                                    (weaponInfo.price * GameRoot.Instance.GetCurrentRound() / 10) *
+                                    (1f - 0.05f * ItemManager.Instance.GetOwnNormalItemList()[39]));
+
+        weaponPrice.text = price.ToString();
     }
 
     // 아이템의 능력치와 가격 텍스트를 설정한다.
@@ -100,8 +103,9 @@ public class ShopItemListControl : MonoBehaviour
         itemInfoText.text = "";
 
         TextMeshProUGUI itemPrice = itemList[i].transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>();
-        itemPrice.text = (itemInfo.price + GameRoot.Instance.GetCurrentRound() +
-                            Mathf.FloorToInt(itemInfo.price * GameRoot.Instance.GetCurrentRound() / 10)).ToString();
+        itemPrice.text = Mathf.FloorToInt(itemInfo.price + GameRoot.Instance.GetCurrentRound() +
+                                         (itemInfo.price * GameRoot.Instance.GetCurrentRound() / 10) *
+                                         (1f - 0.05f * ItemManager.Instance.GetOwnNormalItemList()[39])).ToString();
 
         // 아이템 스텟 정보를 모두 담는다
         string tmpText = "";
@@ -148,7 +152,7 @@ public class ShopItemListControl : MonoBehaviour
         }
         if (itemInfo.HPDrain > 0)
         {
-            tmpText += "생명력 흡수% +" + itemInfo.HPDrain + '\n';
+            tmpText += "생명력 흡수 +" + itemInfo.HPDrain + "%\n";
             plusCount++;
         }
         if (itemInfo.Armor > 0)
@@ -185,7 +189,7 @@ public class ShopItemListControl : MonoBehaviour
         }
         if (itemInfo.ExpGain > 0)
         {
-            tmpText += "경험치 획득 " + itemInfo.ExpGain + '\n';
+            tmpText += "경험치 획득 " + itemInfo.ExpGain + "%\n";
             plusCount++;
         }
 
@@ -236,7 +240,7 @@ public class ShopItemListControl : MonoBehaviour
         }
         if (itemInfo.HPDrain < 0)
         {
-            tmpText += "생명력 흡수% " + itemInfo.HPDrain + '\n';
+            tmpText += "생명력 흡수 " + itemInfo.HPDrain + "%\n";
             minusCount++;
         }
         if (itemInfo.Armor < 0)
@@ -273,7 +277,7 @@ public class ShopItemListControl : MonoBehaviour
         }
         if (itemInfo.ExpGain < 0)
         {
-            tmpText += "경험치 획득 " + itemInfo.ExpGain + '\n';
+            tmpText += "경험치 획득 " + itemInfo.ExpGain + "%\n";
             minusCount++;
         }
 

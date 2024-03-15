@@ -76,7 +76,11 @@ public class ShopPurchaseButtonControl : MonoBehaviour
             WeaponInfo weaponInfo = ItemManager.Instance.GetShopWeaponInfoList()[currentNumber];
 
             int weaponPrice = weaponInfo.price;
-            int price = weaponPrice + currentRound + Mathf.FloorToInt(weaponPrice * currentRound / 10);
+            // (원가 + 현재 라운드 + (원가 * 현재 라운드 / 10)) * 아이템 할인 배율
+            int price = 
+                Mathf.FloorToInt(weaponPrice + currentRound + 
+                                (weaponPrice * currentRound / 10) *
+                                (1f - 0.05f * ItemManager.Instance.GetOwnNormalItemList()[39]));
 
             // 보유 와플이 가격보다 많고 보유 무기 수가 6개 미만이라면
             if (currentWaffle > price && WeaponManager.Instance.GetCurrentWeaponList().Count < 6)
@@ -130,8 +134,10 @@ public class ShopPurchaseButtonControl : MonoBehaviour
         else
         {
             int itemPrice = item.GetComponent<ItemInfo>().price;
-
-            int price = itemPrice + currentRound + Mathf.FloorToInt(itemPrice * currentRound / 10);
+            // (원가 + 현재 라운드 + (원가 * 현재 라운드 / 10)) * 아이템 할인 배율
+            int price = Mathf.FloorToInt(itemPrice + currentRound + 
+                                        (itemPrice * currentRound / 10) *
+                                        (1f - 0.05f * ItemManager.Instance.GetOwnNormalItemList()[39]));
 
             // 보유 와플이 아이템 가격보다 높을 때 구매
             if (currentWaffle > price)

@@ -68,7 +68,7 @@ public class SpawnManager : MonoBehaviour
         switch(currentRound)
         {
             case 1:
-                spawnSandwich = SpawnSandwich(1.0f, 2.0f);
+                spawnSandwich = SpawnSandwich(1.0f, ActivateNormalItem40(2.0f));
                 StartCoroutine(spawnSandwich);
                 break;
             case 2:
@@ -191,8 +191,8 @@ public class SpawnManager : MonoBehaviour
                 for (int i = 0; i < monsterCount; i++)
                 {
                     // 각 개체가 한 곳에 스폰되지 않도록 조정해준다
-                    float posX = Random.Range(-1.0f, 1.0f);
-                    float posY = Random.Range(-1.0f, 1.0f);
+                    float posX = Random.Range(-2.0f, 2.0f);
+                    float posY = Random.Range(-2.0f, 2.0f);
                     spawnLocation.x += posX; spawnLocation.y += posY;
 
                     spawnMonster = SpawnMonster(monsterPrefabs[0], spawnLocation);
@@ -205,6 +205,19 @@ public class SpawnManager : MonoBehaviour
         }
 
         yield return null;
+    }
+
+    private float ActivateNormalItem40(float spawnInterval)
+    {
+        float tmp = spawnInterval;
+        int itemCount = ItemManager.Instance.GetOwnNormalItemList()[40];
+
+        if (itemCount > 0)
+        {
+            tmp -= spawnInterval * (5f * itemCount / (100f + 5f * itemCount));
+        }
+
+        return tmp;
     }
 
     public List<GameObject> GetCurrentMonsters()

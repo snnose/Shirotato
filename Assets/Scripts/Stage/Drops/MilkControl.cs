@@ -27,7 +27,8 @@ public class MilkControl : MonoBehaviour
             // 플레이어의 체력을 회복한다
             float currentHP = RealtimeInfoManager.Instance.GetCurrentHP();
             float maxHP = RealtimeInfoManager.Instance.GetHP();
-            float healing = 3.0f - (1.0f * ItemManager.Instance.GetOwnNormalItemList()[34]);
+            float healing = 3.0f - (1.0f * ItemManager.Instance.GetOwnNormalItemList()[34])
+                                 + (1.0f * ItemManager.Instance.GetOwnNormalItemList()[41]);
             currentHP += healing;
             // 최대 체력을 초과하지 않는다
             if (currentHP >= maxHP)

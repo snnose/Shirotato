@@ -65,6 +65,9 @@ public class ExpManager : MonoBehaviour
             // 업그레이드 가능 횟수 + 1
             int levelUpCount = GameRoot.Instance.GetLevelUpCount();
             GameRoot.Instance.SetLevelUpCount(++levelUpCount);
+
+            // 한 번에 많은 경험치를 얻을 경우를 대비해 코루틴 장전
+            levelUp = LevelUp();
         }
         yield return null;
     }

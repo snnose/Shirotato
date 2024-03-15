@@ -134,6 +134,19 @@ public class GameRoot : MonoBehaviour
 
     public IEnumerator StopRound()
     {
+        // 수확 능력치에 비례해 경험치와 와플 획득
+        // 경험치 획득 처리
+        float currExp = ExpManager.Instance.GetCurrentExp();
+        currExp += RealtimeInfoManager.Instance.GetHarvest();
+        ExpManager.Instance.SetCurrentExp(currExp);
+        ExpManager.Instance.levelUp = ExpManager.Instance.LevelUp();
+        // 와플 획득 처리
+        int currWaffle = playerInfo.GetCurrentWaffle();
+        currWaffle += Mathf.FloorToInt(RealtimeInfoManager.Instance.GetHarvest());
+        playerInfo.SetCurrentWaffle(currWaffle);
+        // 수확은 매 라운드 종료 시 5% 씩 증가한다
+        playerInfo.SetHarvest(playerInfo.GetHarvest() * 1.05f);
+
         // 와플이 플레이어에게 끌려지도록 잠시 텀을 둔다
         yield return StartCoroutine(Sleep(3.0f));
 

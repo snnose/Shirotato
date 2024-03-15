@@ -25,6 +25,11 @@ public class ItemManager : MonoBehaviour
 
     public List<GameObject> weaponList;
 
+    private List<int> ownNormalItemList = new();
+    private List<int> ownRareItemList = new();
+    private List<int> ownEpicItemList = new();
+    private List<int> ownLegendItemList = new();
+
     // item1 = 게임 오브젝트
     private List<GameObject> shopItemList = new();
     // 상점 리스트에 무기가 있을 때, 해당 무기의 정보를 저장하는 리스트
@@ -53,12 +58,17 @@ public class ItemManager : MonoBehaviour
             // 아이템 잠금 리스트에 false를 채워 넣는다.
             isLockItemList.Add(false);
         }
+
+        for (int i = 0; i < 36; i++)
+        {
+            ownNormalItemList.Add(0);
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        ownNormalItemList[35] = 4;
     }
 
     // Update is called once per frame
@@ -222,24 +232,24 @@ public class ItemManager : MonoBehaviour
         this.isLockItemList = list;
     }
 
-    public List<GameObject> GetNormalItemList()
+    public void SetOwnNormalItemList(List<int> list)
     {
-        return this.normalItemList;
+        this.ownNormalItemList = list;
     }
 
-    public List<GameObject> GetRareItemList()
+    public void SetOwnRareItemList(List<int> list)
     {
-        return this.rareItemList;
+        this.ownRareItemList = list;
     }
 
-    public List<GameObject> GetEpicItemList()
+    public void SetOwnEpicItemList(List<int> list)
     {
-        return this.epicItemList;
+        this.ownEpicItemList = list;
     }
 
-    public List<GameObject> GetLegendItemList()
+    public void SetOwnLegendItemList(List<int> list)
     {
-        return this.legendItemList;
+        this.ownLegendItemList = list;
     }
 
     public List<bool> GetIsLockItemList()
@@ -260,6 +270,26 @@ public class ItemManager : MonoBehaviour
     public List<GameObject> GetCurrentItemList()
     {
         return this.currentItemList;
+    }
+
+    public List<int> GetOwnNormalItemList()
+    {
+        return this.ownNormalItemList;
+    }
+
+    public List<int> GetOwnRareItemList()
+    {
+        return this.ownRareItemList;
+    }
+
+    public List<int> GetOwnEpicItemList()
+    {
+        return this.ownEpicItemList;
+    }
+
+    public List<int> GetOwnLegendItemList()
+    {
+        return this.ownLegendItemList;
     }
 
     public bool GetIsRenewItem()

@@ -69,24 +69,28 @@ public class WaffleControl : MonoBehaviour
 
     private void ActivateNormalItem35()
     {
-        // 난수를 돌려 효과 발생 여부를 체크
-        float random = Random.Range(0f, 100f);
-
-        // 랜덤한 적에게 행운의 25%만큼의 대미지를 가한다.
-        if (random < 25f * ItemManager.Instance.GetOwnNormalItemList()[35])
+        // 아이템 보유 개수만큼 반복한다
+        for (int i = 0; i < ItemManager.Instance.GetOwnNormalItemList()[35]; i++)
         {
-            // 대미지 계산
-            int damage = Mathf.FloorToInt(RealtimeInfoManager.Instance.GetLuck() * 0.25f);
-            if (damage <= 0)
-                damage = 1;
+            // 난수를 돌려 효과 발생 여부를 체크
+            float random = Random.Range(0f, 100f);
 
-            // 현재 스폰된 적 중에서 하나를 골라 대미지를 입힌다
-            int ran = Random.Range(0, SpawnManager.Instance.GetCurrentMonsters().Count);
-            MonsterInfo monsterInfo = SpawnManager.Instance.GetCurrentMonsters()[ran].GetComponent<MonsterInfo>();
-            monsterInfo.SetMonsterHP(monsterInfo.GetMonsterHP() - damage);
+            // 랜덤한 적에게 행운의 25%만큼의 대미지를 가한다.
+            if (random < 25f)
+            {
+                // 대미지 계산
+                int damage = Mathf.FloorToInt(RealtimeInfoManager.Instance.GetLuck() * 0.25f);
+                if (damage <= 0)
+                    damage = 1;
 
-            // 텍스트 출력
-            PrintText(monsterInfo.transform, damage);
+                // 현재 스폰된 적 중에서 하나를 골라 대미지를 입힌다
+                int ran = Random.Range(0, SpawnManager.Instance.GetCurrentMonsters().Count);
+                MonsterInfo monsterInfo = SpawnManager.Instance.GetCurrentMonsters()[ran].GetComponent<MonsterInfo>();
+                monsterInfo.SetMonsterHP(monsterInfo.GetMonsterHP() - damage);
+
+                // 텍스트 출력
+                PrintText(monsterInfo.transform, damage);
+            }
         }
     }
 

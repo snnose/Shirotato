@@ -10,15 +10,11 @@ public class WaffleControl : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
+    { 
         rootingRange = RealtimeInfoManager.Instance.GetRootingRange();
-
-        float random = Random.Range(0f, 100f);
-
-        // NormalItem36 보유 시 와플 드랍 시 확률에 따라 플레이어에게 바로 끌려온다
-        if (random < 20f * ItemManager.Instance.GetOwnNormalItemList()[36])
+        if (ItemManager.Instance.GetOwnNormalItemList()[36] > 0)
         {
-            isAttractImmediatly = true;
+            ActivateNormalItem36();
         }
     }
 
@@ -64,6 +60,11 @@ public class WaffleControl : MonoBehaviour
             {
                 ActivateNormalItem35();
             }
+            // NormalItem38 보유 시 아이템 효과 발생
+            if (ItemManager.Instance.GetOwnNormalItemList()[38] > 0)
+            {
+                ActivateNormalItem38();
+            }
 
             // Waffle UI 갱신
             RenewWaffleAmount.Instance.renewCurrentWaffleAmount = RenewWaffleAmount.Instance.RenewCurrentWaffleAmount();
@@ -103,8 +104,37 @@ public class WaffleControl : MonoBehaviour
                 monsterInfo.SetMonsterHP(monsterInfo.GetMonsterHP() - damage);
 
                 // 텍스트 출력
-                PrintText(monsterInfo.transform, damage);
+                PrintText(monsterInfo.transform, damage, Color.white);
             }
+        }
+    }
+
+    private void ActivateNormalItem36()
+    {
+        float random = Random.Range(0f, 100f);
+
+        // NormalItem36 보유 시 와플 드랍 시 확률에 따라 플레이어에게 바로 끌려온다
+        if (random < 20f * ItemManager.Instance.GetOwnNormalItemList()[36])
+        {
+            isAttractImmediatly = true;
+        }
+    }
+
+    private void ActivateNormalItem38()
+    {
+        float random = Random.Range(0f, 100f);
+
+        // Normaltem38 보유 시, 와플 드랍 시 확률에 따라 플레이어의 체력 1 회복
+        if (random < 8f * ItemManager.Instance.GetOwnNormalItemList()[38])
+        {
+            float currentHP = RealtimeInfoManager.Instance.GetCurrentHP();
+            if (currentHP < RealtimeInfoManager.Instance.GetHP())
+            {
+                currentHP += 1;
+                RealtimeInfoManager.Instance.SetCurrentHP(currentHP);
+            }
+
+            PrintHealingText(PlayerControl.Instance.transform, 1);
         }
     }
 
@@ -137,7 +167,25 @@ public class WaffleControl : MonoBehaviour
         }
     }
 
-    void PrintText(Transform transform, int num)
+    void PrintHealingText(Transform transform, int num)
+    {
+        // 대미지 텍스트 출력
+        GameObject text = Resources.Load<GameObject>("Prefabs/DamageText");
+        TextMeshPro textPro = text.GetComponent<TextMeshPro>();
+
+        // 텍스트 및 색상 결정
+        textPro.text = "+" + num.ToString();
+
+        Color color = Color.white;
+        ColorUtility.TryParseHtmlString("#1FDE38", out color);
+        textPro.color = color;
+
+        GameObject copy = Instantiate(text);
+        Vector3 randomPos = new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(0.4f, 0.6f), 0f);
+        copy.transform.position = transform.position + randomPos;
+    }
+
+    void PrintText(Transform transform, int num, Color color)
     {
         // 대미지 텍스트 출력
         GameObject text = Resources.Load<GameObject>("Prefabs/DamageText");
@@ -145,8 +193,6 @@ public class WaffleControl : MonoBehaviour
 
         // 텍스트 및 색상 결정
         textPro.text = num.ToString();
-
-        Color color = Color.white;
         textPro.color = color;
 
         GameObject copy = Instantiate(text);

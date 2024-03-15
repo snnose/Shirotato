@@ -5,10 +5,21 @@ using TMPro;
 
 public class WaffleControl : MonoBehaviour
 {
+    bool isAttractImmediatly = false;
+    float rootingRange;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        rootingRange = RealtimeInfoManager.Instance.GetRootingRange();
+
+        float random = Random.Range(0f, 100f);
+
+        // NormalItem36 보유 시 와플 드랍 시 확률에 따라 플레이어에게 바로 끌려온다
+        if (random < 20f * ItemManager.Instance.GetOwnNormalItemList()[36])
+        {
+            isAttractImmediatly = true;
+        }
     }
 
     // Update is called once per frame
@@ -16,7 +27,10 @@ public class WaffleControl : MonoBehaviour
     {
         // 라운도가 종료되면 플레이어에게 끌려 가 사라진다.
         // 대신 이렇게 획득한 와플은 다음 라운드에 와플을 습득 시 추가 와플을 얻도록 한다.
-        AttractToPlayer();
+        if (isAttractImmediatly)
+            AttractToPlayer(100f);
+        else
+            AttractToPlayer(2.5f * (1 + (rootingRange / 100)));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -95,14 +109,13 @@ public class WaffleControl : MonoBehaviour
     }
 
     // 와플이 플레이어에게 끌려가는 함수
-    private void AttractToPlayer()
+    private void AttractToPlayer(float range)
     {
         Vector2 playerPos = PlayerControl.Instance.GetPlayer().transform.position;
 
         // 라운드 진행 중이라면
         if (!GameRoot.Instance.GetIsRoundClear())
         {
-            float range = 2.5f * (1 + (PlayerInfo.Instance.GetRootingRange() / 100));
             float dis = Vector2.Distance(this.transform.position, playerPos);
                 
             if (dis < range)

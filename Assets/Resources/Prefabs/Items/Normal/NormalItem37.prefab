@@ -50,7 +50,7 @@ MonoBehaviour:
   itemNumber: 37
   rarity: 0
   positiveSpecial: "\uC0C1\uC790 \uD68D\uB4DD \uC2DC \uC640\uD50C +15"
-  negativeSpecial: 
+  negativeSpecial: "\uBCF4\uC720 \uC81C\uD55C (3)"
   DMGPercent: 0
   ATKSpeed: 0
   FixedDMG: 0

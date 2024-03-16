@@ -135,7 +135,7 @@ MonoBehaviour:
   rarity: 0
   positiveSpecial: "\uC640\uD50C \uD68D\uB4DD \uC2DC +8% \uD655\uB960\uB85C HP 1
     \uD68C\uBCF5"
-  negativeSpecial: 
+  negativeSpecial: "\uBCF4\uC720 \uC81C\uD55C (13)"
   DMGPercent: 0
   ATKSpeed: 0
   FixedDMG: -1

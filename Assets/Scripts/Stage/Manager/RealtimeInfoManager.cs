@@ -61,6 +61,7 @@ public class RealtimeInfoManager : MonoBehaviour
     {
         SetAllStatus(PlayerInfo.Instance);
         currentHP = HP;
+        //Harvest = 100f;
         StartCoroutine(HPRecovery());
     }
 
@@ -167,6 +168,8 @@ public class RealtimeInfoManager : MonoBehaviour
         this.RootingRange = playerInfo.GetRootingRange();
         this.Luck = playerInfo.GetLuck();
         this.expGain = playerInfo.GetExpGain();
+
+        this.currentHP = this.HP;
     }
 
     public void SetDMGPercent(float dmgPercent)

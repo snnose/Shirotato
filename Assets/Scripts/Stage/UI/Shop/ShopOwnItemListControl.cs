@@ -59,6 +59,8 @@ public class ShopOwnItemListControl : MonoBehaviour
                     // 아스키 코드를 이용해서 보유 아이템 개수 증가
                     int num = tmp[1] - 47;
                     itemNumberText.text = "x" + num;
+
+                    break;
                 }
             }
         }

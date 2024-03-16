@@ -43,13 +43,13 @@ public class GameRoot : MonoBehaviour
     public GameObject upgradeUI;
     public IEnumerator floatingUpgradeUI = null;
 
-    private int levelUpCount = 1;
+    private int levelUpCount = 0;
     private bool isDuringUpgrade = false;
 
     // 아이템 습득 UI 관련 필드
     public GameObject findItemUI;
     public IEnumerator floatingFindItemUI = null;
-    private int boxCount = 1;
+    private int boxCount = 0;
     private bool isDuringFindItem = false;
 
     // 라운드 정보 관련 필드
@@ -69,7 +69,7 @@ public class GameRoot : MonoBehaviour
 
         stopRound = StopRound();
 
-        remainTime = 3f;
+        remainTime = 20f;
     }
     // Start is called before the first frame update
     void Start()

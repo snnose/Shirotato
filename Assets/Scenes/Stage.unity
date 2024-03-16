@@ -2630,6 +2630,7 @@ GameObject:
   - component: {fileID: 106601990}
   - component: {fileID: 106601989}
   - component: {fileID: 106601991}
+  - component: {fileID: 106601992}
   m_Layer: 0
   m_Name: DownWall
   m_TagString: Wall
@@ -2749,6 +2750,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 38.399998, y: 4.62}
   m_EdgeRadius: 0
+--- !u!114 &106601992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106601988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3998cbbd614dc64bafed474a2431ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &139551494
 GameObject:
   m_ObjectHideFlags: 0
@@ -8414,6 +8427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: RareItem
   itemNumber: 0
+  rarity: 0
   positiveSpecial: 
   negativeSpecial: 
   DMGPercent: 0
@@ -15191,13 +15205,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   normalItemList:
-  - {fileID: 1578963245358696202, guid: d2fdece61b2115a47889d53264f39f32, type: 3}
-  - {fileID: 4787089137561710556, guid: 3be29ef3c34c8284186c9f5d3c9091c8, type: 3}
-  - {fileID: 5873596923079949130, guid: fffee92e69e030347a9440b768890dd3, type: 3}
-  - {fileID: 1741379407444536631, guid: 25a6d8129bef6f0418f9e2dcee98274a, type: 3}
-  - {fileID: 8703542099016387488, guid: b4d21e30674ce84449b3bd774090df0e, type: 3}
-  rareItemList:
-  - {fileID: 175147149476864794, guid: 2c259c109c69be04690fff0c94a4ae89, type: 3}
+  - {fileID: 3727097839855322118, guid: d2fdece61b2115a47889d53264f39f32, type: 3}
+  - {fileID: 3507210239805135497, guid: 3be29ef3c34c8284186c9f5d3c9091c8, type: 3}
+  - {fileID: 8459085613027300121, guid: fffee92e69e030347a9440b768890dd3, type: 3}
+  - {fileID: 5577115713758717366, guid: 25a6d8129bef6f0418f9e2dcee98274a, type: 3}
+  - {fileID: 4175736391351107022, guid: b4d21e30674ce84449b3bd774090df0e, type: 3}
+  - {fileID: 7895531836624585783, guid: f1e547f30af2b35409e62343b408e991, type: 3}
+  - {fileID: 3372163647214561624, guid: cadd8d930911f0148b371bcd0df7ab51, type: 3}
+  - {fileID: 3291915093217394000, guid: 87df9acdc33ff464eaaff8daa94d9566, type: 3}
+  - {fileID: 7566492664202980476, guid: 5e66641627d2aac45921b1281d7e8ab4, type: 3}
+  - {fileID: 3061208068583596685, guid: ff78315fe12ae6d4588cbcd7260644ad, type: 3}
+  - {fileID: 3312676490254222475, guid: eabd1d93268d2bb48b3668a16e106381, type: 3}
+  - {fileID: 141961391679542871, guid: 16e322c2a55302c49a5b0b6d5be18752, type: 3}
+  - {fileID: 100020666355077742, guid: 8fff30e911a9ea34aa2deb0318228aef, type: 3}
+  - {fileID: 4131850984581683419, guid: bd57d122d45c9444e9220ec49d000871, type: 3}
+  - {fileID: 3907110084974339845, guid: 86b79baea1cd37a43bcc6c3d46166b48, type: 3}
+  - {fileID: 7140509254821337729, guid: 6bfc8ddf45488064c9635b4f6afeb85b, type: 3}
+  - {fileID: 891377303170831679, guid: 5897c22a73fbd2949b8e31e1e02e5041, type: 3}
+  - {fileID: 4573559987430954334, guid: e2c3a38cf4698604d8eac8d2f08e322e, type: 3}
+  - {fileID: 5489694759307344259, guid: 2b5614305fb66c942a49f6a407eb3c4b, type: 3}
+  - {fileID: 6796965674406843652, guid: ce05fca179a7240468aa2ef998c3523c, type: 3}
+  - {fileID: 2944304973790642524, guid: e3ed4cfccfb314c44a79d6f5bb92d9a9, type: 3}
+  - {fileID: 3268785426637974988, guid: 0939aeec0cf933541b911232577d4cb8, type: 3}
+  - {fileID: 5651031878554092117, guid: 71efd3162236ba34b85efa9251ccc7ef, type: 3}
+  - {fileID: 4696608474851386712, guid: d877f383e68cf3443847625137685d74, type: 3}
+  - {fileID: 7376759979225527061, guid: d85a164e3f5118b4383030584caf4753, type: 3}
+  - {fileID: 383606052115103477, guid: ea005810833d1ea439b28ebf181abab5, type: 3}
+  - {fileID: 7895056508905491327, guid: 42de06679015b8544811c5f478dd974f, type: 3}
+  - {fileID: 716608711329040408, guid: d4897f1ecb29e10488c5b83464fc351e, type: 3}
+  - {fileID: 1639571377495545395, guid: 2fd17c8cb61ec4d42acc83287925aa11, type: 3}
+  - {fileID: 5786479764249231892, guid: c5a24acc1badd484bba9eb71473af810, type: 3}
+  - {fileID: 8225669166472111424, guid: 6a348294c7e8d41449002354508b27d3, type: 3}
+  - {fileID: 7206406427238730665, guid: d417dfdc564fc41478da360c3a7529c9, type: 3}
+  - {fileID: 7303819793291154263, guid: 64d09e91c83799b46a2e292b9a94c501, type: 3}
+  - {fileID: 465765392760451799, guid: d67f9194b4de12b4d844ebd4c09050b1, type: 3}
+  - {fileID: 2952611795197797977, guid: e8c56256699a8354ea892be94db4e332, type: 3}
+  - {fileID: 6835991021670524501, guid: 5f8e5f75c2b4e594e96d5338b94a9c3b, type: 3}
+  - {fileID: 997980385373421122, guid: c38de549c45771e40b68e4f629cb4ab6, type: 3}
+  - {fileID: 3422614122937452815, guid: 401e97d35423184428d6d9d93bc8dc2c, type: 3}
+  - {fileID: 8912521714129643193, guid: 4cbf5dc393c879949b18111cb3111e0d, type: 3}
+  - {fileID: 477555544114621020, guid: 0d08ab1c2a551a94ea9477ac837cdbb4, type: 3}
+  - {fileID: 1695085682900636494, guid: 165f6509cf1d4d04e8af48955525ae0d, type: 3}
+  - {fileID: 189517036605342806, guid: ea7089a2179ffa440b6d869bbd1fa422, type: 3}
+  - {fileID: 3654452048928546340, guid: 53b18fe5bbbea8e429dfa1714d403c18, type: 3}
+  - {fileID: 1502412812209150627, guid: ee84c85a8395726489585574f6f9f4f8, type: 3}
+  - {fileID: 4822448353252112331, guid: 43f01ba374b186947ba943d88f36264e, type: 3}
+  rareItemList: []
   epicItemList: []
   legendItemList: []
   weaponList:
@@ -20606,6 +20659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: EpicItem
   itemNumber: 0
+  rarity: 0
   positiveSpecial: 
   negativeSpecial: 
   DMGPercent: 0
@@ -24719,6 +24773,7 @@ GameObject:
   - component: {fileID: 1295405841}
   - component: {fileID: 1295405842}
   - component: {fileID: 1295405843}
+  - component: {fileID: 1295405844}
   m_Layer: 0
   m_Name: RightWall
   m_TagString: Wall
@@ -24838,6 +24893,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 38.399998, y: 5}
   m_EdgeRadius: 0
+--- !u!114 &1295405844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295405840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3998cbbd614dc64bafed474a2431ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1297676824
 GameObject:
   m_ObjectHideFlags: 0
@@ -25192,6 +25259,7 @@ GameObject:
   - component: {fileID: 1303491495}
   - component: {fileID: 1303491496}
   - component: {fileID: 1303491497}
+  - component: {fileID: 1303491498}
   m_Layer: 0
   m_Name: UpWall
   m_TagString: Wall
@@ -25311,6 +25379,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 38.399998, y: 4.62}
   m_EdgeRadius: 0
+--- !u!114 &1303491498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303491494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3998cbbd614dc64bafed474a2431ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1304257816
 GameObject:
   m_ObjectHideFlags: 0
@@ -26378,6 +26458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: 
   itemNumber: 0
+  rarity: 0
   positiveSpecial: 
   negativeSpecial: 
   DMGPercent: 0
@@ -36561,8 +36642,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94b2362cbbf86214ab13e6d3a7aeb66b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: NormalItem
   itemNumber: 0
+  rarity: 0
   positiveSpecial: 
   negativeSpecial: 
   DMGPercent: 0
@@ -42741,6 +42823,7 @@ GameObject:
   - component: {fileID: 2101738024}
   - component: {fileID: 2101738025}
   - component: {fileID: 2101738026}
+  - component: {fileID: 2101738027}
   m_Layer: 0
   m_Name: LeftWall
   m_TagString: Wall
@@ -42860,6 +42943,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 38.399998, y: 5}
   m_EdgeRadius: 0
+--- !u!114 &2101738027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101738023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3998cbbd614dc64bafed474a2431ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2111956812
 GameObject:
   m_ObjectHideFlags: 0

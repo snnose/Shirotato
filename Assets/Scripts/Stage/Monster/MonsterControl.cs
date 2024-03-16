@@ -94,7 +94,7 @@ public class MonsterControl : MonoBehaviour
             // 상자 드랍 확률까지 고려한다
             if (lootRandom <= monsterInfo.GetMonsterLootDropRate() * (1f + (PlayerInfo.Instance.GetLuck() / 100)))
             {
-                //GameObject copy = Instantiate(box, dropPos, Quaternion.identity);
+                GameObject copy = Instantiate(box, dropPos, Quaternion.identity);
             }
             // 상자가 드랍되지 않으면 우유를 드랍
             else

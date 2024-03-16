@@ -50,6 +50,12 @@ public class RoundInit : MonoBehaviour
         RealtimeInfoManager.Instance.SetCurrentHP(PlayerInfo.Instance.GetHP());
         RealtimeInfoManager.Instance.SetHP(PlayerInfo.Instance.GetHP());
         StartCoroutine(RealtimeInfoManager.Instance.HPRecovery());
+        // NormalItem45를 샀다면 HP 1로 시작
+        if (ItemManager.Instance.GetOwnNormalItemList()[45] > 0)
+        {
+            RealtimeInfoManager.Instance.SetCurrentHP(1);
+            ItemManager.Instance.GetOwnNormalItemList()[45] = 0;
+        }
 
         // 라운드 제한 시간 조정
         float remainTime = 15f + GameRoot.Instance.GetCurrentRound() * 5f;

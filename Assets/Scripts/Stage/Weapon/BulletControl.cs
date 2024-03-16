@@ -26,7 +26,7 @@ public class BulletControl : MonoBehaviour
         // 벽과 충돌하면 총알 파괴
         if (collision.gameObject.TryGetComponent<WallControl>(out WallControl wall))
         {
-            Debug.Log("충돌");
+            //Debug.Log("충돌");
             Destroy(this.gameObject);
         }
 
@@ -36,6 +36,8 @@ public class BulletControl : MonoBehaviour
         {
             GameObject hitedMonster = collision.gameObject;
             MonsterControl monsterControl = hitedMonster.GetComponent<MonsterControl>();
+
+            float monsterHP = monsterControl.GetMonsterCurrentHP();
 
             // 치명타 적용
             float random = Random.Range(0f, 100f);
@@ -59,11 +61,14 @@ public class BulletControl : MonoBehaviour
                 finalDamage *= 1.5f;
             }
 
-            float hp = monsterControl.GetMonsterCurrentHP() - finalDamage;
-            monsterControl.SetMonsterCurrentHP(hp);
+            // NormalItem42 보유 시 효과 발동
+            ActivateNormalItem42(monsterControl);
+
+            monsterHP -= finalDamage;
+            monsterControl.SetMonsterCurrentHP(monsterHP);
 
             // 입힌 대미지 출력
-            PrintText(hitedMonster.transform, finalDamage, isCritical);
+            PrintText(hitedMonster.transform.position, finalDamage, isCritical);
 
             // 관통 횟수가 1 이상이라면
             if (pierceCount > 0)
@@ -80,7 +85,30 @@ public class BulletControl : MonoBehaviour
         }
     }
 
-    void PrintText(Transform transform, float damage, bool isCritical)
+    void ActivateNormalItem42(MonsterControl monsterControl)
+    {
+        float monsterHP = monsterControl.GetMonsterCurrentHP();
+
+        if (ItemManager.Instance.GetOwnNormalItemList()[42] > 0)
+        {
+            float random = Random.Range(0f, 100f);
+
+            if (random < 25f * ItemManager.Instance.GetOwnNormalItemList()[42])
+            {
+                // 대미지 * (2 + 고정 대미지 50%)
+                float additionalDamage =
+                    (1f + (RealtimeInfoManager.Instance.GetDMGPercent() / 100)) * 
+                    (2f + 0.5f * RealtimeInfoManager.Instance.GetFixedDMG());
+
+                monsterHP -= additionalDamage;
+                monsterControl.SetMonsterCurrentHP(monsterHP);
+
+                PrintText(monsterControl.transform.position + new Vector3(0f, 0.75f, 0f) , additionalDamage, false);
+            }
+        }
+    }
+
+    void PrintText(Vector3 position, float damage, bool isCritical)
     {
         // 대미지 텍스트 출력
         GameObject textObject = Resources.Load<GameObject>("Prefabs/DamageText");
@@ -97,7 +125,7 @@ public class BulletControl : MonoBehaviour
 
         GameObject copy = Instantiate(textObject);
         Vector3 randomPos = new Vector3(Random.Range(-0.4f, 0.4f), Random.Range(0.4f, 0.6f), 0f);
-        copy.transform.position = transform.position + randomPos;
+        copy.transform.position = position + randomPos;
     }
 
     void PrintText(Transform transform, int num)

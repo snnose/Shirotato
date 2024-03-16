@@ -59,19 +59,17 @@ public class ItemManager : MonoBehaviour
             isLockItemList.Add(false);
         }
 
-        for (int i = 0; i < 36; i++)
+        for (int i = 0; i < 50; i++)
         {
             ownNormalItemList.Add(0);
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        ownNormalItemList[35] = 4;
+        //ownNormalItemList[42] = 4;
     }
 
-    // Update is called once per frame
     void Update()
     {
         // 아이템 리스트 갱신이 안됐다면
@@ -161,7 +159,7 @@ public class ItemManager : MonoBehaviour
                 switch (rarity)
                 {
                     case 0:
-                        random = UnityEngine.Random.Range(0, normalItemList.Count);
+                        random = CheckIsOwnLimit(rarity, UnityEngine.Random.Range(0, normalItemList.Count));
                         tmp = normalItemList[random];
                         shopItemList[i] = tmp;
                         break;
@@ -186,6 +184,59 @@ public class ItemManager : MonoBehaviour
             }
         }
     }
+
+    // 보유 제한을 초과하는 아이템은 뽑지 않도록 조정하는 함수
+    int CheckIsOwnLimit(int rarity, int itemNumber)
+    {
+        bool isLimit = false;
+        int tmp = itemNumber;
+
+        while (true)
+        {
+            switch (rarity)
+            {
+                case 0:
+                    // 아이템 리스트와 보유 아이템 리스트의 번호가 다르기 때문에 주의
+                    if (tmp == 35 && ownNormalItemList[36] == 5)
+                        isLimit = true;
+                    if (tmp == 36 && ownNormalItemList[37] == 3)
+                        isLimit = true;
+                    if (tmp == 37 && ownNormalItemList[38] == 13)
+                        isLimit = true;
+                    if (tmp == 38 && ownNormalItemList[39] == 5)
+                        isLimit = true;
+                    if (tmp == 39 && ownNormalItemList[40] == 10)
+                        isLimit = true;
+                    if (tmp == 41 && ownNormalItemList[42] == 4)
+                        isLimit = true;
+
+                    // 현재 아이템이 보유 제한이라면 다른 아이템으로 변경한다
+                    if (isLimit)
+                    {
+                        tmp = UnityEngine.Random.Range(0, normalItemList.Count);
+
+                        isLimit = false;
+                        continue;
+                    }
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    break;
+            }
+
+            // 보유 제한에 걸리는 아이템이 아니라면 탈출
+            if (!isLimit)
+                break;
+        }
+
+        return tmp;
+    }
+
     // 아이템 레어도 결정 함수
     List<float> SetItemProbability()
     {

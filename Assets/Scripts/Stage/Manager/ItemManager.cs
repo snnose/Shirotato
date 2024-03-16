@@ -67,7 +67,7 @@ public class ItemManager : MonoBehaviour
 
     void Start()
     {
-        //ownNormalItemList[42] = 4;
+        ownNormalItemList[43] = 1;
     }
 
     void Update()
@@ -208,6 +208,10 @@ public class ItemManager : MonoBehaviour
                     if (tmp == 39 && ownNormalItemList[40] == 10)
                         isLimit = true;
                     if (tmp == 41 && ownNormalItemList[42] == 4)
+                        isLimit = true;
+                    if (tmp == 42 && ownNormalItemList[43] == 1)
+                        isLimit = true;
+                    if (tmp == 43 && ownNormalItemList[44] == 1)
                         isLimit = true;
 
                     // 현재 아이템이 보유 제한이라면 다른 아이템으로 변경한다

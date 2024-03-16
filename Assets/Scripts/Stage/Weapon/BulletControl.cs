@@ -63,7 +63,11 @@ public class BulletControl : MonoBehaviour
             }
 
             // NormalItem42 보유 시 효과 발동
+            // 공격한 적에게 확률에 따라 추가 대미지를 입힌다
             ActivateNormalItem42(monsterControl);
+            // NormalItem44 보유 시 효과 발동
+            // 공격한 적의 속도를 -10% 감소 시킨다
+            ActivateNormalItem44(collision.GetComponent<MonsterInfo>());
 
             monsterHP -= finalDamage;
             monsterControl.SetMonsterCurrentHP(monsterHP);
@@ -117,6 +121,15 @@ public class BulletControl : MonoBehaviour
         {
             this.pierceCount += 1;
             this.pierceDamage -= 0.2f;
+        }
+    }
+
+    void ActivateNormalItem44(MonsterInfo monsterInfo)
+    {
+        if (ItemManager.Instance.GetOwnNormalItemList()[44] > 0)
+        {
+            float monsterSpeed = monsterInfo.GetMonsterMovementSpeed();
+            monsterInfo.SetMonsterMovementSpeed(monsterSpeed * 0.9f);
         }
     }
 

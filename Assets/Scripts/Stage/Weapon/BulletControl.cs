@@ -7,12 +7,13 @@ public class BulletControl : MonoBehaviour
 {
     private int damage = 0;
     private int pierceCount = 0;
+    private float pierceDamage = 0.5f;
     private bool isCritical = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        ActivateNormalItem43();
     }
 
     // Update is called once per frame
@@ -75,7 +76,9 @@ public class BulletControl : MonoBehaviour
             {
                 // 횟수를 감소시키고 대미지를 절반으로 감소
                 this.pierceCount--;
-                this.damage /= 2;
+                this.damage = Mathf.FloorToInt(this.damage * pierceDamage);
+                if (this.damage <= 0)
+                    this.damage = 1;
             }
             // 관통 횟수가 0이면
             else
@@ -105,6 +108,15 @@ public class BulletControl : MonoBehaviour
 
                 PrintText(monsterControl.transform.position + new Vector3(0f, 0.75f, 0f) , additionalDamage, false);
             }
+        }
+    }
+
+    void ActivateNormalItem43()
+    {
+        if (ItemManager.Instance.GetOwnNormalItemList()[43] > 0)
+        {
+            this.pierceCount += 1;
+            this.pierceDamage -= 0.2f;
         }
     }
 

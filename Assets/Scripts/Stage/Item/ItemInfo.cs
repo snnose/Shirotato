@@ -41,6 +41,11 @@ public class ItemInfo : MonoBehaviour
     public void SetItemInfo(GameObject item)
     {
         this.itemName = item.GetComponent<ItemInfo>().itemName;
+        this.itemNumber = item.GetComponent<ItemInfo>().itemNumber;
+        this.rarity = item.GetComponent<ItemInfo>().rarity;
+
+        this.positiveSpecial = item.GetComponent<ItemInfo>().positiveSpecial;
+        this.negativeSpecial = item.GetComponent<ItemInfo>().negativeSpecial;
 
         this.DMGPercent = item.GetComponent<ItemInfo>().DMGPercent;
         this.ATKSpeed = item.GetComponent<ItemInfo>().ATKSpeed;
@@ -56,6 +61,8 @@ public class ItemInfo : MonoBehaviour
         this.MovementSpeedPercent = item.GetComponent<ItemInfo>().MovementSpeedPercent;
         this.RootingRange = item.GetComponent<ItemInfo>().RootingRange;
         this.Luck = item.GetComponent<ItemInfo>().Luck;
+        this.Harvest = item.GetComponent<ItemInfo>().Harvest;
+        this.ExpGain = item.GetComponent<ItemInfo>().ExpGain;
 
         this.price = item.GetComponent<ItemInfo>().price;
     }

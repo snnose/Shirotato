@@ -62,12 +62,13 @@ public class ItemManager : MonoBehaviour
         for (int i = 0; i < 50; i++)
         {
             ownNormalItemList.Add(0);
+            ownRareItemList.Add(0);
         }
     }
 
     void Start()
     {
-        ownNormalItemList[43] = 1;
+        //ownRareItemList[36] = 5;
     }
 
     void Update()
@@ -224,6 +225,38 @@ public class ItemManager : MonoBehaviour
                     }
                     break;
                 case 1:
+                    // 미구현
+                    if (tmp == 24 && ownRareItemList[25] == 0)
+                        isLimit = true;
+                    // 미구현 22
+                    if (tmp == 25 && ownRareItemList[26] == 0)
+                        isLimit = true;
+                    if (tmp == 27 && ownRareItemList[28] == 3)
+                        isLimit = true;
+                    if (tmp == 28 && ownRareItemList[29] == 20)
+                        isLimit = true;
+                    if (tmp == 29 && ownRareItemList[30] == 1)
+                        isLimit = true;
+                    if (tmp == 31 && ownRareItemList[32] == 1)
+                        isLimit = true;
+                    if (tmp == 32 && ownRareItemList[33] == 1)
+                        isLimit = true;
+                    if (tmp == 33 && ownRareItemList[34] == 1)
+                        isLimit = true;
+                    if (tmp == 34 && ownRareItemList[35] == 4)
+                        isLimit = true;
+                    if (tmp == 35 && ownRareItemList[36] == 5)
+                        isLimit = true;
+                    if (tmp == 36 && ownRareItemList[37] == 1)
+                        isLimit = true;
+
+                    if (isLimit)
+                    {
+                        tmp = UnityEngine.Random.Range(0, rareItemList.Count);
+
+                        isLimit = false;
+                        continue;
+                    }
                     break;
                 case 2:
                     break;
@@ -245,22 +278,25 @@ public class ItemManager : MonoBehaviour
     List<float> SetItemProbability()
     {
         List<float> tmp = new List<float>(new float[] { 100, 0, 0, 0 });
+        float luck = PlayerInfo.Instance.GetLuck();
+        if (luck <= 0)
+            luck = 0;
 
         int round = GameRoot.Instance.GetCurrentRound();
         // 전설 등급 확률 (최대 8%)
-        tmp[3] = (round - 7) / 4 * ((1 + PlayerInfo.Instance.GetLuck()) / 100);
+        tmp[3] = (round - 7) / 4 * (1 + luck / 100);
         if (tmp[3] <= 0)
             tmp[3] = 0;
         else if (tmp[3] >= 8)
             tmp[3] = 8;
         // 에픽 등급 확률 (최대 25%)
-        tmp[2] = (1f - (tmp[3] * 0.01f)) * 2 * (round - 3) * ((1 + PlayerInfo.Instance.GetLuck()) / 100) + tmp[3];
+        tmp[2] = (1f - (tmp[3] * 0.01f)) * 2 * (round - 3) * (1 + luck / 100) + tmp[3];
         if (tmp[2] <= 0)
             tmp[2] = 0;
         else if (tmp[2] >= (1f - (tmp[3] * 0.01f)) * 25 + tmp[3])
             tmp[2] = (1f - (tmp[3] * 0.01f)) * 25 + tmp[3];
         // 레어 등급 확률 (최대 60%)
-        tmp[1] = (1f - (tmp[3] * 0.01f) - (tmp[2] * 0.01f)) * 6 * round * ((1 + PlayerInfo.Instance.GetLuck()) / 100) + tmp[2] + tmp[3];
+        tmp[1] = (1f - (tmp[3] * 0.01f) - (tmp[2] * 0.01f)) * 6 * round * (1 + luck / 100) + tmp[2] + tmp[3];
         if (tmp[1] >= (1f - (tmp[3] * 0.01f) - (tmp[2] * 0.01f)) * 60 + tmp[2] + tmp[3])
             tmp[1] = (1f - (tmp[3] * 0.01f) - (tmp[2] * 0.01f)) * 60 + tmp[2] + tmp[3];
 

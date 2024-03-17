@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class MonsterControl : MonoBehaviour
 {
@@ -40,6 +41,8 @@ public class MonsterControl : MonoBehaviour
         {
             // 현재 생존 몬스터 리스트에서 삭제
             SpawnManager.Instance.GetCurrentMonsters().Remove(this.gameObject);
+            // RareItem27 보유 시 효과 발동
+            ActivateRareItem27();
             Drop();
         }
 
@@ -103,6 +106,54 @@ public class MonsterControl : MonoBehaviour
             }
         }
         Destroy(this.gameObject);
+    }
+
+    void ActivateRareItem27()
+    {
+        int count = ItemManager.Instance.GetOwnRareItemList()[27];
+
+        // RareItem27을 보유했다면
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                int random = Random.Range(0, 101);
+                // 25% 확률로 아이템 효과가 발동한다
+                if (random < 25f)
+                {
+                    // 랜덤한 적 선정
+                    random = Random.Range(0, SpawnManager.Instance.GetCurrentMonsters().Count);
+                    GameObject monster = SpawnManager.Instance.GetCurrentMonsters()[random];
+
+                    // 행운의 25% 만큼 대미지를 가한다
+                    float monsterHP = monster.GetComponent<MonsterInfo>().GetMonsterHP();
+                    int damage = Mathf.FloorToInt(RealtimeInfoManager.Instance.GetLuck() * 0.25f);
+                    if (damage <= 0)
+                        damage = 1;
+
+                    monsterHP -= damage;
+                    monster.GetComponent<MonsterInfo>().SetMonsterHP(monsterHP);
+
+                    // 텍스트 출력
+                    PrintText(monster.transform, Color.white, damage);
+                }
+            }
+        }
+    }
+
+    public void PrintText(Transform transform, Color color, int num)
+    {
+        // 텍스트 출력
+        GameObject textObject = Resources.Load<GameObject>("Prefabs/DamageText");
+        TextMeshPro tmPro = textObject.GetComponent<TextMeshPro>();
+
+        // 텍스트 및 색상 결정
+        tmPro.text = num.ToString();
+        tmPro.color = color;
+
+        GameObject copy = Instantiate(textObject);
+        Vector3 randomPos = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(0.4f, 0.6f), 0f);
+        copy.transform.position = transform.position + randomPos;
     }
 
     public void SetMonsterCurrentHP(float hp)

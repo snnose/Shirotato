@@ -41,6 +41,8 @@ public class WaffleControl : MonoBehaviour
         {
             // 보유 와플 개수 + 1
             PlayerInfo.Instance.SetCurrentWaffle(++currentWaffle);
+            // RareItem29 보유 시 확률에 따라 추가 와플 획득
+            ActivateRareItem29(currentWaffle);
             // 현재 경험치 + 1 * 경험치 배율
             ExpManager.Instance.SetCurrentExp(currentExp + (2 * PlayerInfo.Instance.GetExpGain()));
             // 레벨업 코루틴 실행 (경험치가 충족되면 레벨업)
@@ -135,6 +137,17 @@ public class WaffleControl : MonoBehaviour
             }
 
             PrintHealingText(PlayerControl.Instance.transform, 1);
+        }
+    }
+
+    private void ActivateRareItem29(int currentWaffle)
+    {
+        float random = Random.Range(0f, 100f);
+
+        // RareItem29 보유 시, 와플 획득 시 확률에 따라 2배로 획득
+        if (random < 5f * ItemManager.Instance.GetOwnRareItemList()[29])
+        {
+            PlayerInfo.Instance.SetCurrentWaffle(++currentWaffle);
         }
     }
 

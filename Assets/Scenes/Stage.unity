@@ -8427,7 +8427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: RareItem
   itemNumber: 0
-  rarity: 0
+  rarity: 1
   positiveSpecial: 
   negativeSpecial: 
   DMGPercent: 0
@@ -15250,7 +15250,9 @@ MonoBehaviour:
   - {fileID: 3654452048928546340, guid: 53b18fe5bbbea8e429dfa1714d403c18, type: 3}
   - {fileID: 1502412812209150627, guid: ee84c85a8395726489585574f6f9f4f8, type: 3}
   - {fileID: 4822448353252112331, guid: 43f01ba374b186947ba943d88f36264e, type: 3}
-  rareItemList: []
+  - {fileID: 3703207420160742614, guid: 5604fd94e6278434a95240f89df2ac05, type: 3}
+  rareItemList:
+  - {fileID: 7863439398141839372, guid: 2c259c109c69be04690fff0c94a4ae89, type: 3}
   epicItemList: []
   legendItemList: []
   weaponList:
@@ -20659,7 +20661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: EpicItem
   itemNumber: 0
-  rarity: 0
+  rarity: 2
   positiveSpecial: 
   negativeSpecial: 
   DMGPercent: 0
@@ -26458,7 +26460,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: 
   itemNumber: 0
-  rarity: 0
+  rarity: 3
   positiveSpecial: 
   negativeSpecial: 
   DMGPercent: 0
@@ -43866,6 +43868,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2147288076}
   m_CullTransparentMesh: 1
+--- !u!1001 &5059764952466429714
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4209565088118108796, guid: 998f888a1192da148a94e4e455049f4d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209565088118108796, guid: 998f888a1192da148a94e4e455049f4d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209565088118108796, guid: 998f888a1192da148a94e4e455049f4d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209565088118108796, guid: 998f888a1192da148a94e4e455049f4d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209565088118108796, guid: 998f888a1192da148a94e4e455049f4d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209565088118108796, guid: 998f888a1192da148a94e4e455049f4d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209565088118108796, guid: 998f888a1192da148a94e4e455049f4d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209565088118108796, guid: 998f888a1192da148a94e4e455049f4d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209565088118108796, guid: 998f888a1192da148a94e4e455049f4d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209565088118108796, guid: 998f888a1192da148a94e4e455049f4d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8565546984986824858, guid: 998f888a1192da148a94e4e455049f4d, type: 3}
+      propertyPath: m_Name
+      value: RareItem37
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 998f888a1192da148a94e4e455049f4d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -43883,3 +43942,4 @@ SceneRoots:
   - {fileID: 378156035}
   - {fileID: 1099786633}
   - {fileID: 1318858029}
+  - {fileID: 5059764952466429714}

@@ -60,6 +60,9 @@ public class PlayerColideDetect : MonoBehaviour
             // 난수 값이 회피 수치보다 낮게 나왔다면 회피 성공
             if (random < evadeNum)
             {
+                // RareItem33 보유 시 아이템 효과 발동
+                // 회피 성공 시 반격 대미지를 입힌다
+                ActivateRareItem33(monster.GetComponent<MonsterControl>());
                 isEvade = true;
                 PrintText(0);
             }
@@ -148,6 +151,20 @@ public class PlayerColideDetect : MonoBehaviour
             playerCollider.isTrigger = true;
         else
             playerCollider.isTrigger = false;
+    }
+
+    void ActivateRareItem33(MonsterControl monsterControl)
+    {
+        if (ItemManager.Instance.GetOwnRareItemList()[33] > 0)
+        {
+            int counterDamage = Mathf.FloorToInt((1 + RealtimeInfoManager.Instance.GetDMGPercent() / 100) * 
+                                                 (1 + RealtimeInfoManager.Instance.GetFixedDMG() * 6f));
+
+            Debug.Log("반격 대미지 : " + counterDamage);
+
+            monsterControl.PrintText(monsterControl.transform, Color.cyan, counterDamage);
+            monsterControl.SetMonsterCurrentHP(monsterControl.GetMonsterCurrentHP() - counterDamage);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collider)

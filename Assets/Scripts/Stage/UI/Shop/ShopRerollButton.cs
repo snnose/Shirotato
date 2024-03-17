@@ -10,6 +10,7 @@ public class ShopRerollButton : MonoBehaviour
     int rerollCount = 1;
     int currentRound;
     int rerollPrice; int rerollIncrease;
+    int freeRerollCount = 0;
 
     TextMeshProUGUI priceText;
     ShopItemListControl shopItemListControl;
@@ -42,10 +43,22 @@ public class ShopRerollButton : MonoBehaviour
         rerollPrice = currentRound + rerollIncrease * rerollCount;
 
         priceText.text = "초기화 - " + rerollPrice;
+
+        if (ItemManager.Instance.GetOwnRareItemList()[28] > 0)
+        {
+            freeRerollCount = ItemManager.Instance.GetOwnRareItemList()[28];
+            priceText.text = "초기화 - 0";
+        }
     }
 
     public void OnClickRerollButton()
     {
+        if (freeRerollCount > 0)
+        {
+            ActivateRareItem28();
+            return;
+        }
+
         // 보유 와플이 리롤 요구량보다 많으면 리롤
         if (PlayerInfo.Instance.GetCurrentWaffle() > rerollPrice)
         {
@@ -65,7 +78,6 @@ public class ShopRerollButton : MonoBehaviour
             // 리롤 비용 재조정
             rerollPrice = currentRound + rerollIncrease * rerollCount;
 
-            priceText = this.gameObject.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
             priceText.text = "초기화 - " + rerollPrice;
         }
     }
@@ -88,5 +100,29 @@ public class ShopRerollButton : MonoBehaviour
 
         ItemManager.Instance.SetShopItemList(tmp);
         ItemManager.Instance.SetShopWeaponInfoList(tmpInfo);
+    }
+
+    void ActivateRareItem28()
+    {
+        // 현재 아이템 리스트를 비운다
+        ClearShopItemList();
+        // 아이템 리스트 UI를 활성화하고 갱신
+        shopItemListControl.SetItemListActive();
+        // 갱신 트리거 false로 설정
+        shopItemListControl.SetIsRenewInfo(false);
+        ItemManager.Instance.SetIsRenewItem(false);
+
+        // 무료 리롤 횟수 감소
+        freeRerollCount--;
+
+        // 그 다음 비용을 알려주는 텍스트를 설정
+        if (freeRerollCount > 0)
+        {
+            priceText.text = "초기화 - 0";
+        }
+        else
+        {
+            priceText.text = "초기화 - " + rerollPrice;
+        }
     }
 }

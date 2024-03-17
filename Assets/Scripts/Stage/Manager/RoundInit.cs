@@ -100,14 +100,15 @@ public class RoundInit : MonoBehaviour
         // 상점UI 비활성화
         GameRoot.Instance.shopUI.SetActive(false);
 
+        // 아이템 효과 발동
+        // RareItem30 보유 시 보유 재료의 20% 추가 획득
+        ActivateRareItem30();
+
         // 무기 생성
         if (WeaponManager.Instance.GetCurrentWeaponList().Count != 0)
         {
             WeaponManager.Instance.equipWeapons = WeaponManager.Instance.EquipWeapons();
         }
-
-        // 테스트 용 코드들
-        GameRoot.Instance.SetLevelUpCount(0);
 
         // 타임스케일 정상화
         Time.timeScale = 1f;
@@ -132,5 +133,14 @@ public class RoundInit : MonoBehaviour
         }
 
         ItemManager.Instance.SetShopItemList(tmp);
+    }
+
+    private void ActivateRareItem30()
+    {
+        if (ItemManager.Instance.GetOwnRareItemList()[30] > 0)
+        {
+            int currentWaffle = PlayerInfo.Instance.GetCurrentWaffle();
+            PlayerInfo.Instance.SetCurrentWaffle(Mathf.FloorToInt(currentWaffle * 1.2f));
+        }
     }
 }

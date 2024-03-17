@@ -501,6 +501,20 @@ public class FindItemUI : MonoBehaviour
         itemName.text = itemInfo.itemName;
         SetItemStatus(itemInfo);
 
-        sellButtonText.text = "판매 (+" + Mathf.FloorToInt(itemInfo.price * 0.25f).ToString() +")";
+        // RareItem32를 보유했다면 원가의 60%
+        // 보유하지 않았다면 원가의 25%를 얻는다
+        int sellPrice = ActivateRareItem32(itemInfo.price);
+
+        sellButtonText.text = "판매 (+" + sellPrice.ToString() +")";
+    }
+
+    int ActivateRareItem32(int itemPrice)
+    {
+        if (ItemManager.Instance.GetOwnRareItemList()[32] > 0)
+        {
+            return Mathf.FloorToInt(itemPrice * 0.6f);
+        }
+
+        return Mathf.FloorToInt(itemPrice * 0.25f);
     }
 }

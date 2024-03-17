@@ -61,7 +61,6 @@ public class RealtimeInfoManager : MonoBehaviour
     {
         SetAllStatus(PlayerInfo.Instance);
         currentHP = HP;
-        //Harvest = 100f;
         StartCoroutine(HPRecovery());
     }
 

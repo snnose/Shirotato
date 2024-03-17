@@ -87,12 +87,12 @@ public class WeaponControl : MonoBehaviour
 
         // 무기의 대미지 계산
         int damage = Mathf.FloorToInt(
-            (weaponInfo.damage + Mathf.FloorToInt(PlayerInfo.Instance.GetFixedDMG()))
-                                                * ((PlayerInfo.Instance.GetDMGPercent() + 100) / 100));
+            (weaponInfo.damage + Mathf.FloorToInt(RealtimeInfoManager.Instance.GetFixedDMG()))
+                                                * ((RealtimeInfoManager.Instance.GetDMGPercent() + 100) / 100));
 
         // 무기의 쿨타임 계산
         float coolDown = weaponInfo.coolDown - 
-                       weaponInfo.coolDown * PlayerInfo.Instance.GetATKSpeed() / (100 + PlayerInfo.Instance.GetATKSpeed());
+                       weaponInfo.coolDown * RealtimeInfoManager.Instance.GetATKSpeed() / (100 + RealtimeInfoManager.Instance.GetATKSpeed());
 
         // 총알에 대미지와 관통 횟수 설정
         copy.GetComponent<BulletControl>().SetDamage(damage);
@@ -113,7 +113,7 @@ public class WeaponControl : MonoBehaviour
         GameObject closetMonster = null;
         float closetDistance = float.MaxValue;
 
-        float range = Mathf.Floor(weaponInfo.range * ((PlayerInfo.Instance.GetRange() + 100) / 100) * 100) / 100;
+        float range = Mathf.Floor(weaponInfo.range * ((RealtimeInfoManager.Instance.GetRange() + 100) / 100) * 100) / 100;
 
         foreach (GameObject monster in Monsters)
         {

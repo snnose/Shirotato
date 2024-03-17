@@ -68,7 +68,11 @@ public class SpawnManager : MonoBehaviour
         switch(currentRound)
         {
             case 1:
-                spawnSandwich = SpawnSandwich(1.0f, ActivateNormalItem40(2.0f));
+                float sandWichSpawnInterval = 2.0f;
+                // 아이템 적용
+                sandWichSpawnInterval = ActivateNormalItem40(sandWichSpawnInterval);
+                sandWichSpawnInterval = ActivateRareItem34(sandWichSpawnInterval);
+                spawnSandwich = SpawnSandwich(1.0f, 2.0f);
                 StartCoroutine(spawnSandwich);
                 break;
             case 2:
@@ -129,7 +133,7 @@ public class SpawnManager : MonoBehaviour
             case "Sandwich":
                 monsterInfo.SetMonsterHP(3f + 2f * GameRoot.Instance.GetCurrentRound());
                 monsterInfo.SetMonsterDamage(1f + 0.6f * GameRoot.Instance.GetCurrentRound());
-                monsterInfo.SetMonsterMovementSpeed(Random.Range(4.4f, 6.6f));
+                monsterInfo.SetMonsterMovementSpeed(ActivateRareItem34(Random.Range(4.4f, 6.6f)));
                 monsterInfo.SetMonsterWaffleDropCount(1);
                 monsterInfo.SetMonsterConsumableDropRate(0.01f);
                 monsterInfo.SetMonsterLootDropRate(0.01f);
@@ -215,6 +219,31 @@ public class SpawnManager : MonoBehaviour
         if (itemCount > 0)
         {
             tmp -= spawnInterval * (5f * itemCount / (100f + 5f * itemCount));
+        }
+
+        return tmp;
+    }
+
+    // RareItem34 보유 시 적 속도 -5%
+    private float ActivateRareItem34(float monsterSpeed)
+    {
+        float tmp = monsterSpeed;
+        if (ItemManager.Instance.GetOwnRareItemList()[40] > 0)
+        {
+            tmp *= 0.95f;
+        }
+
+        return tmp;
+    }
+
+    private float ActivateRareItem37(float spawnInterval)
+    {
+        float tmp = spawnInterval;
+        int itemCount = ItemManager.Instance.GetOwnRareItemList()[37];
+
+        if (itemCount > 0)
+        {
+            tmp += spawnInterval * (5f * itemCount / (100f + 5f * itemCount));
         }
 
         return tmp;

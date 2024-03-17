@@ -14,6 +14,7 @@ public class BulletControl : MonoBehaviour
     void Start()
     {
         ActivateNormalItem43();
+        ActivateRareItem31();
     }
 
     // Update is called once per frame
@@ -57,9 +58,10 @@ public class BulletControl : MonoBehaviour
             }
 
             float finalDamage = damage;
+            // 치명타라면 대미지가 2배 증가한다
             if (isCritical)
             {
-                finalDamage *= 1.5f;
+                finalDamage *= 2.0f;
             }
 
             // NormalItem42 보유 시 효과 발동
@@ -71,6 +73,12 @@ public class BulletControl : MonoBehaviour
 
             monsterHP -= finalDamage;
             monsterControl.SetMonsterCurrentHP(monsterHP);
+            // 크리티컬로 적 처치 시
+            if (isCritical && monsterHP <= 0)
+            {
+                // RareItem36 보유 시 효과 발동
+                ActivateRareItem36();
+            }
 
             // 입힌 대미지 출력
             PrintText(hitedMonster.transform.position, finalDamage, isCritical);
@@ -133,6 +141,35 @@ public class BulletControl : MonoBehaviour
         }
     }
 
+    void ActivateRareItem31()
+    {
+        if (ItemManager.Instance.GetOwnRareItemList()[31] > 0)
+        {
+            this.pierceDamage += 0.15f;
+        }
+    }
+
+    // 크리티컬로 적 처치 시 확률에 따라 HP 1 회복
+    void ActivateRareItem36()
+    {
+        if (ItemManager.Instance.GetOwnRareItemList()[36] > 0)
+        {
+            float random = Random.Range(0f, 100f);
+            if (random < 20 * ItemManager.Instance.GetOwnRareItemList()[36])
+            {
+                float playerCurrentHP = RealtimeInfoManager.Instance.GetCurrentHP();
+
+                playerCurrentHP++;
+                if (playerCurrentHP >= RealtimeInfoManager.Instance.GetHP())
+                    playerCurrentHP = RealtimeInfoManager.Instance.GetHP();
+
+                RealtimeInfoManager.Instance.SetCurrentHP(playerCurrentHP);
+
+                PrintText(PlayerControl.Instance.transform, 1);
+            }
+        }
+    }
+
     void PrintText(Vector3 position, float damage, bool isCritical)
     {
         // 대미지 텍스트 출력
@@ -153,14 +190,15 @@ public class BulletControl : MonoBehaviour
         copy.transform.position = position + randomPos;
     }
 
+    // 초록색 텍스트 출력
     void PrintText(Transform transform, int num)
     {
-        // 대미지 텍스트 출력
+        // 텍스트 출력
         GameObject textObject = Resources.Load<GameObject>("Prefabs/DamageText");
         TextMeshPro tmPro = textObject.GetComponent<TextMeshPro>();
 
         // 텍스트 및 색상 결정
-        tmPro.text = num.ToString();
+        tmPro.text = "+" + num.ToString();
         Color color = Color.white;
         ColorUtility.TryParseHtmlString("#1FDE38", out color);
         tmPro.color = color;

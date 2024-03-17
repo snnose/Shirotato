@@ -24,11 +24,16 @@ public class MilkControl : MonoBehaviour
         // 플레이어와 맞닿을 경우
         if (collision.gameObject == PlayerControl.Instance.GetPlayer())
         {
+            // RareItem35가 있다면 아이템 효과 발동
+            ActivateRareItem35();
+
             // 플레이어의 체력을 회복한다
             float currentHP = RealtimeInfoManager.Instance.GetCurrentHP();
             float maxHP = RealtimeInfoManager.Instance.GetHP();
+            // 우유에 영향을 주는 아이템이 있다면 회복량이 변동된다. (기본 3)
             float healing = 3.0f - (1.0f * ItemManager.Instance.GetOwnNormalItemList()[34])
-                                 + (1.0f * ItemManager.Instance.GetOwnNormalItemList()[41]);
+                                 + (1.0f * ItemManager.Instance.GetOwnNormalItemList()[41])
+                                 + (1.0f * ItemManager.Instance.GetOwnNormalItemList()[46]);
             currentHP += healing;
             // 최대 체력을 초과하지 않는다
             if (currentHP >= maxHP)
@@ -39,6 +44,25 @@ public class MilkControl : MonoBehaviour
             // 텍스트를 출력한다
             PrintText(collision.transform, int.Parse(healing.ToString()));
             Destroy(this.gameObject);
+        }
+    }
+
+    void ActivateRareItem35()
+    {
+        if (ItemManager.Instance.GetOwnRareItemList()[35] > 0)
+        {
+            float random = Random.Range(0f, 100f);
+
+            // 아이템 개수 * 25% 확률로 (15 + 최대 체력 150%) 대미지를 입힌다
+            if (random < 25f * ItemManager.Instance.GetOwnRareItemList()[35])
+            {
+                random = Random.Range(0, SpawnManager.Instance.GetCurrentMonsters().Count);
+                MonsterControl monster = SpawnManager.Instance.GetCurrentMonsters()[Mathf.FloorToInt(random)].GetComponent<MonsterControl>();
+
+                int damage = 15 + Mathf.FloorToInt(RealtimeInfoManager.Instance.GetHP() * 1.5f);
+                monster.PrintText(monster.transform, Color.cyan, damage);
+                monster.SetMonsterCurrentHP(monster.GetMonsterCurrentHP() - damage);
+            }
         }
     }
 

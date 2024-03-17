@@ -117,8 +117,7 @@ public class ShopWeaponDetailUI : MonoBehaviour
         List<GameObject> weaponList = WeaponManager.Instance.GetCurrentWeaponList();
         List<WeaponInfo> weaponInfoList = WeaponManager.Instance.GetCurrentWeaponInfoList();
 
-        int sellPrice = Mathf.FloorToInt(weaponInfoList[currentWeaponRoomNumber].price * 0.25f);
-
+        int sellPrice = ActivateRareItem32(weaponInfoList[currentWeaponRoomNumber].price);
         PlayerInfo.Instance.SetCurrentWaffle(PlayerInfo.Instance.GetCurrentWaffle() + sellPrice);
 
         // 판매한 무기의 칸을 비운다
@@ -172,6 +171,16 @@ public class ShopWeaponDetailUI : MonoBehaviour
         }
     }
 
+    int ActivateRareItem32(int itemPrice)
+    {
+        if (ItemManager.Instance.GetOwnRareItemList()[32] > 0)
+        {
+            return Mathf.FloorToInt(itemPrice * 0.6f);
+        }
+
+        return Mathf.FloorToInt(itemPrice * 0.25f);
+    }
+
     // UI 위치 설정
     public void SetUIPosition(Vector2 pos)
     {
@@ -208,7 +217,10 @@ public class ShopWeaponDetailUI : MonoBehaviour
 
     public void SetWeaponSellButtonText(WeaponInfo weaponInfo)
     {
-        this.weaponSellButtonText.text = "판매 (+" + Mathf.FloorToInt(weaponInfo.price * 0.25f) + ")";
+        // RareItem32를 보유하면 무기 가격의 60%, 아니라면 25%
+        int sellPrice = ActivateRareItem32(weaponInfo.price);
+
+        this.weaponSellButtonText.text = "판매 (+" + sellPrice + ")";
     }
 
     // 보유 무기 칸을 눌렀다면 UI가 고정되도록 함

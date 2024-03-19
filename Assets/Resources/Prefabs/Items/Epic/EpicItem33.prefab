@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &229865261697022742
+--- !u!1 &2045474434980239172
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,37 +8,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1782979477341498137}
-  - component: {fileID: 5935530970312397614}
+  - component: {fileID: 6216665653681820300}
+  - component: {fileID: 872491009531632323}
   m_Layer: 0
-  m_Name: ItemGrade
+  m_Name: ItemImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1782979477341498137
+--- !u!4 &6216665653681820300
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 229865261697022742}
+  m_GameObject: {fileID: 2045474434980239172}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6261126436619110291}
+  m_Father: {fileID: 774465373731038532}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &5935530970312397614
+--- !u!212 &872491009531632323
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 229865261697022742}
+  m_GameObject: {fileID: 2045474434980239172}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &477555544114621020
+--- !u!1 &2995608965967603055
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,67 +92,66 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6261126436619110291}
-  - component: {fileID: 4516669929221576797}
+  - component: {fileID: 774465373731038532}
+  - component: {fileID: 5325709896755183264}
   m_Layer: 0
-  m_Name: NormalItem40
+  m_Name: EpicItem33
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6261126436619110291
+--- !u!4 &774465373731038532
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 477555544114621020}
+  m_GameObject: {fileID: 2995608965967603055}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 100, y: 1, z: 0}
+  m_LocalPosition: {x: 100, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1782979477341498137}
-  - {fileID: 2998895566262621214}
+  - {fileID: 358149986321544002}
+  - {fileID: 6216665653681820300}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4516669929221576797
+--- !u!114 &5325709896755183264
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 477555544114621020}
+  m_GameObject: {fileID: 2995608965967603055}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94b2362cbbf86214ab13e6d3a7aeb66b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: NormalItem40
-  itemNumber: 40
-  rarity: 0
-  positiveSpecial: 
-  negativeSpecial: "\uC801 \uB4F1\uC7A5 \uBE48\uB3C4 +5%                 \uBCF4\uC720
-    \uC81C\uD55C (10)"
-  DMGPercent: 5
+  itemName: EpicItem33
+  itemNumber: 33
+  rarity: 2
+  positiveSpecial: "\uC11C \uC788\uC744 \uB54C \uACF5\uACA9\uC18D\uB3C4 +40%"
+  negativeSpecial: 
+  DMGPercent: 0
   ATKSpeed: 0
   FixedDMG: 0
   Critical: 0
   Range: 0
-  HP: 2
+  HP: 0
   Recovery: 0
   HPDrain: 0
   Armor: 0
   Evasion: 0
-  MovementSpeedPercent: 0
+  MovementSpeedPercent: -10
   RootingRange: 0
   Luck: 0
   Harvest: 0
   ExpGain: 0
-  price: 30
---- !u!1 &6181836891915381477
+  price: 60
+--- !u!1 &6715053205620492727
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -160,37 +159,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2998895566262621214}
-  - component: {fileID: 8539146714848312006}
+  - component: {fileID: 358149986321544002}
+  - component: {fileID: 1090991354791677113}
   m_Layer: 0
-  m_Name: ItemImage
+  m_Name: ItemGrade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2998895566262621214
+--- !u!4 &358149986321544002
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6181836891915381477}
+  m_GameObject: {fileID: 6715053205620492727}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6261126436619110291}
+  m_Father: {fileID: 774465373731038532}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &8539146714848312006
+--- !u!212 &1090991354791677113
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6181836891915381477}
+  m_GameObject: {fileID: 6715053205620492727}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -226,7 +225,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6318232, g: 0.47058824, b: 0.8392157, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

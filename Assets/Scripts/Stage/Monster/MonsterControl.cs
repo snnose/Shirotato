@@ -43,6 +43,9 @@ public class MonsterControl : MonoBehaviour
             SpawnManager.Instance.GetCurrentMonsters().Remove(this.gameObject);
             // RareItem27 보유 시 효과 발동
             ActivateRareItem27();
+            // EpicItem18 보유 시 효과 발동
+            ActivateEpicItem18();
+            // 와플, 소모품, 상자 드랍 처리
             Drop();
         }
 
@@ -108,6 +111,7 @@ public class MonsterControl : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+    // 몬스터 처치 시 확률에 따라 행운에 비례한 대미지를 입히는 아이템 기능
     void ActivateRareItem27()
     {
         int count = ItemManager.Instance.GetOwnRareItemList()[27];
@@ -139,6 +143,45 @@ public class MonsterControl : MonoBehaviour
                 }
             }
         }
+    }
+
+    // 적 처치 시 랜덤한 방향으로 (1 + 고정 대미지 100%) 대미지를 입히는 투사체 발사
+    private void ActivateEpicItem18()
+    {
+        int count = ItemManager.Instance.GetOwnEpicItemList()[18];
+
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                // 아이템 개수 만큼 투사체를 발사한다
+                FireEpicItem18Bullet();
+            }
+        }
+    }
+
+    void FireEpicItem18Bullet()
+    {
+        // 총알 생성
+        GameObject bullet = Resources.Load<GameObject>("Prefabs/Bullet");
+        GameObject copy = Instantiate(bullet, this.transform.position, this.transform.rotation);
+
+        // 아이템 대미지 계산
+        // (1 + 대미지%) * (1 + 고정 대미지 100%)
+        int damage = Mathf.FloorToInt((1 + RealtimeInfoManager.Instance.GetDMGPercent() / 100) *
+                                              (1 + RealtimeInfoManager.Instance.GetFixedDMG()));
+
+        // 총알에 대미지와 관통 횟수 설정
+        copy.GetComponent<BulletControl>().SetDamage(damage);
+        copy.GetComponent<BulletControl>().SetPierceCount(0);
+
+        // 랜덤 방향으로 발사
+        Vector2 direction = new Vector2(Random.Range(0f, 1f), Random.Range(0f, 1f));
+        copy.GetComponent<Rigidbody2D>().AddForce(direction.normalized * 50f, ForceMode2D.Impulse);
+        // 발사된 방향으로 총알이 향하도록 회전값 조정
+        copy.transform.rotation = Quaternion.Euler(copy.transform.rotation.x, 
+                                                   copy.transform.rotation.y, 
+                                                   Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
     }
 
     public void PrintText(Transform transform, Color color, int num)

@@ -74,8 +74,12 @@ public class FindItemUI : MonoBehaviour
     // 사용 버튼을 누를 경우 보유 아이템에 추가
     private void OnClickUseButton()
     {
+        // EpicItem29 비활성화
+        PlayerInfo.Instance.InActivateEpicItem29();
         // 해당 아이템의 능력치 적용
         ApplyStatus();
+        // EpicItem29 활성화
+        PlayerInfo.Instance.ActivateEpicItem29();
 
         // 잠깐동안 ShopUI 활성화
         ShopUIControl shopUIControl = ShopUIControl.Instance;

@@ -63,12 +63,13 @@ public class ItemManager : MonoBehaviour
         {
             ownNormalItemList.Add(0);
             ownRareItemList.Add(0);
+            ownEpicItemList.Add(0);
         }
     }
 
     void Start()
     {
-        //ownRareItemList[36] = 5;
+        ownEpicItemList[23] = 1;
     }
 
     void Update()
@@ -259,6 +260,34 @@ public class ItemManager : MonoBehaviour
                     }
                     break;
                 case 2:
+                    if (tmp == 15 && ownEpicItemList[16] == 1)
+                        isLimit = true;
+                    if (tmp == 22 && ownEpicItemList[23] == 1)
+                        isLimit = true;
+                    if (tmp == 23 && ownEpicItemList[24] == 1)
+                        isLimit = true;
+                    if (tmp == 25 && ownEpicItemList[26] == 1)
+                        isLimit = true;
+                    if (tmp == 26 && ownEpicItemList[27] == 3)
+                        isLimit = true;
+                    if (tmp == 27 && ownEpicItemList[28] == 5)
+                        isLimit = true;
+                    if (tmp == 28 && ownEpicItemList[29] == 1)
+                        isLimit = true;
+                    if (tmp == 29 && ownEpicItemList[30] == 1)
+                        isLimit = true;
+                    if (tmp == 30 && ownEpicItemList[31] == 1)
+                        isLimit = true;
+                    if (tmp == 35 && ownEpicItemList[36] == 1)
+                        isLimit = true;
+
+                    if (isLimit)
+                    {
+                        tmp = UnityEngine.Random.Range(0, epicItemList.Count);
+
+                        isLimit = false;
+                        continue;
+                    }
                     break;
                 case 3:
                     break;

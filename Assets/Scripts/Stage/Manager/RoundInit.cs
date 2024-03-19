@@ -47,9 +47,13 @@ public class RoundInit : MonoBehaviour
         GameRoot.Instance.SetCurrentRound(GameRoot.Instance.GetCurrentRound() + 1);
 
         // 실시간 스탯 관리자 초기화
-        RealtimeInfoManager.Instance.SetCurrentHP(PlayerInfo.Instance.GetHP());
+        // EpicItem30 보유 시 최대 체력의 50%로 라운드 시작
+        RealtimeInfoManager.Instance.SetCurrentHP(ActivateEpicItem30(PlayerInfo.Instance.GetHP()));
         RealtimeInfoManager.Instance.SetHP(PlayerInfo.Instance.GetHP());
         StartCoroutine(RealtimeInfoManager.Instance.HPRecovery());
+        StartCoroutine(RealtimeInfoManager.Instance.ActivateEpicItem21());
+        StartCoroutine(RealtimeInfoManager.Instance.ActivateEpicItem36());
+
         // NormalItem45를 샀다면 HP 1로 시작
         if (ItemManager.Instance.GetOwnNormalItemList()[45] > 0)
         {
@@ -74,6 +78,10 @@ public class RoundInit : MonoBehaviour
         playerBox.transform.position = new Vector2(0f, 0f);
         playerInfo.SetMovementSpeed(playerInfo.GetMovementSpeed() * (1 + playerInfo.GetMovementSpeedPercent() / 100));
         PlayerControl.Instance.SetMovementSpeed(PlayerInfo.Instance.GetMovementSpeed());
+        // 서거나 움직일 때 능력치 변동이 있는 아이템 코루틴 장전
+        PlayerControl.Instance.activateEpicItem20 = PlayerControl.Instance.ActivateEpicItem20();
+        PlayerControl.Instance.activateEpicItem22 = PlayerControl.Instance.ActivateEpicItem22();
+        PlayerControl.Instance.activateEpicItem33 = PlayerControl.Instance.ActivateEpicItem33();
 
         // 업그레이드 초기화
         // 잠시 업그레이드 매니저 활성화
@@ -142,5 +150,17 @@ public class RoundInit : MonoBehaviour
             int currentWaffle = PlayerInfo.Instance.GetCurrentWaffle();
             PlayerInfo.Instance.SetCurrentWaffle(Mathf.FloorToInt(currentWaffle * 1.2f));
         }
+    }
+
+    private float ActivateEpicItem30(float currentHP)
+    {
+        float tmp = currentHP;
+
+        if (ItemManager.Instance.GetOwnEpicItemList()[30] > 0)
+        {
+            tmp /= 2;
+        }
+
+        return tmp;
     }
 }

@@ -44,8 +44,13 @@ public class RealtimeInfoManager : MonoBehaviour
     // 라운드 중 관리할 스탯
     private float currentHP = 1f;
 
+    // 아이템 관련
+    private float cappedHP = 999f;
+    private float cappedMovementSpeedPercent = 999f;
+
     // 코루틴
-    public IEnumerator hpRecovery;
+    //public IEnumerator hpRecovery;
+    //public IEnumerator activateEpicItem21;
 
     private void Awake()
     {
@@ -62,14 +67,24 @@ public class RealtimeInfoManager : MonoBehaviour
         SetAllStatus(PlayerInfo.Instance);
         currentHP = HP;
         StartCoroutine(HPRecovery());
+        StartCoroutine(ActivateEpicItem21());
+        StartCoroutine(ActivateEpicItem36());
     }
 
     // Update is called once per frame
     void Update()
     {
+        // 라운드 진행 중 처리
+        if (!GameRoot.Instance.GetIsRoundClear())
+        {
+            ActivateEpicItem23();
+        }
+        // 라운드 종료 후 처리
         if (GameRoot.Instance.GetIsRoundClear())
         {
             StopCoroutine(HPRecovery());
+            StopCoroutine(ActivateEpicItem21());
+            StopCoroutine(ActivateEpicItem36());
         }
     }
 
@@ -116,6 +131,48 @@ public class RealtimeInfoManager : MonoBehaviour
                 yield return null;
             }
         }
+    }
+
+    // EpicItem21 보유 시 효과 발동
+    public IEnumerator ActivateEpicItem21()
+    {
+        int count = ItemManager.Instance.GetOwnEpicItemList()[21];
+
+        // 매 초마다 EpicItem21 보유 개수 만큼 대미지를 입는다
+        while (count > 0 && !GameRoot.Instance.GetIsRoundClear())
+        {
+            yield return new WaitForSeconds(1f);
+
+            this.currentHP -= count;
+            // HP 감소 텍스트 출력
+            PrintText(-count);
+            if (this.currentHP <= 0)
+                this.currentHP = 0;
+        }
+        yield return null;
+    }
+
+    // EpicItem23 보유 시 효과 발동
+    private void ActivateEpicItem23()
+    {
+        // 살아있는 적 한 마리 당 공격속도 +1%
+        if (ItemManager.Instance.GetOwnEpicItemList()[23] > 0)
+        {
+            float additionalATKSpeed = SpawnManager.Instance.GetCurrentMonsters().Count;
+            this.ATKSpeed = PlayerInfo.Instance.GetATKSpeed() + additionalATKSpeed;
+        }
+    }
+
+    public IEnumerator ActivateEpicItem36()
+    {
+        // 5초마다 대미지% +5%
+         if (ItemManager.Instance.GetOwnEpicItemList()[36] > 0)
+        {
+            yield return new WaitForSeconds(5.0f);
+            this.DMGPercent += 5f;
+        }
+
+        yield return null;
     }
 
     void PrintText(int num)
@@ -196,9 +253,17 @@ public class RealtimeInfoManager : MonoBehaviour
         this.Range = range;
     }
 
+    public void SetCappedHP(float cappedHP)
+    {
+        this.cappedHP = cappedHP;
+    }
+
     public void SetHP(float HP)
     {
         this.HP = HP;
+
+        if (this.HP > cappedHP)
+            this.HP = cappedHP;
     }
 
     public void SetRecovery(int recovery)
@@ -224,6 +289,14 @@ public class RealtimeInfoManager : MonoBehaviour
     public void SetMovementSpeed(float movementSpeed)
     {
         this.MovementSpeed = movementSpeed;
+    }
+
+    public void SetCappedMovementSpeedPercent(float cappedMovementSpeedPercent)
+    {
+        this.cappedMovementSpeedPercent = cappedMovementSpeedPercent;
+        // 최대 제한 치보다 값이 커질 수 없음
+        if (this.MovementSpeedPercent > this.cappedMovementSpeedPercent)
+            this.MovementSpeedPercent = this.cappedMovementSpeedPercent;
     }
 
     public void SetMovementSpeedPercent(float movementSpeedPercent)

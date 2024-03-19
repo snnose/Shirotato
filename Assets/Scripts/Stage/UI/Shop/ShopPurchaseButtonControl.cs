@@ -129,6 +129,8 @@ public class ShopPurchaseButtonControl : MonoBehaviour
 
             // 보유 무기 리스트 갱신
             ownWeaponListControl.renewOwnWeaponList = ownWeaponListControl.RenewOwnWeaponList();
+            // EpicItem25 효과 발동
+            PlayerInfo.Instance.ActivateEpicItem25();
         }
         // 아이템을 구매한 경우
         else
@@ -142,6 +144,9 @@ public class ShopPurchaseButtonControl : MonoBehaviour
             // 보유 와플이 아이템 가격보다 높을 때 구매
             if (currentWaffle > price)
             {
+                // EpicItem29 비활성화
+                PlayerInfo.Instance.InActivateEpicItem29();
+
                 PlayerInfo.Instance.SetCurrentWaffle(currentWaffle - price);
 
                 // 대미지%
@@ -187,6 +192,13 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                         ItemManager.Instance.GetOwnRareItemList()[item.GetComponent<ItemInfo>().itemNumber]++;
                         break;
                     case 2:
+                        // 특정 아이템 구매 시 작동
+                        // EpicItem26 구매 시 구매 시점의 최대 체력 이상으로 체력이 상승하지 않음
+                        if (item.GetComponent<ItemInfo>().itemNumber == 26)
+                            PlayerInfo.Instance.ActivateEpicItem26(PlayerInfo.Instance.GetHP());
+                        // EpicItem31 구매 시 구매 시점의 이동 속도% 이상으로 이동 속도%가 상승하지 않음
+                        if (item.GetComponent<ItemInfo>().itemNumber == 31)
+                            PlayerInfo.Instance.ActivateEpicItem31(PlayerInfo.Instance.GetMovementSpeedPercent());
                         ItemManager.Instance.GetOwnEpicItemList()[item.GetComponent<ItemInfo>().itemNumber]++;
                         break;
                     case 3:
@@ -195,6 +207,9 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                     default:
                         break;
                 }
+
+                // EpicItem29 활성화
+                PlayerInfo.Instance.ActivateEpicItem29();
 
                 // 아이템 슬롯을 비활성화 한다.
                 currentClickButton.transform.parent.gameObject.SetActive(false);

@@ -63,8 +63,11 @@ public class PlayerColideDetect : MonoBehaviour
                 // RareItem33 보유 시 아이템 효과 발동
                 // 회피 성공 시 반격 대미지를 입힌다
                 ActivateRareItem33(monster.GetComponent<MonsterControl>());
+                // EpicItem16 보유 시 아이템 효과 발동
+                // 회피 성공 시 50% 확률로 체력 5를 회복한다
+                ActivateEpicItem16();
                 isEvade = true;
-                PrintText(0);
+                PrintText(0, Color.white);
             }
 
             // 충돌한 오브젝트가 몬스터이고, 회피 실패 시 대미지를 받는다.
@@ -74,7 +77,7 @@ public class PlayerColideDetect : MonoBehaviour
                 // 받는 대미지를 계산 후 현재 체력을 차감한다
                 int behitDamage = Mathf.FloorToInt(monsterInfo.damage *
                                                                 (1 - playerInfo.GetArmor() /
-                                                                                (playerInfo.GetArmor() + 10)));
+                                                                                (Mathf.Abs(playerInfo.GetArmor()) + 10)));
 
                 float currentHP = RealtimeInfoManager.Instance.GetCurrentHP();
                 currentHP -= behitDamage;
@@ -88,7 +91,10 @@ public class PlayerColideDetect : MonoBehaviour
                     this.gameObject.transform.parent.GetComponent<PlayerControl>().currState = PlayerControl.state.DEAD;
                 }
 
-                PrintText(-behitDamage);
+                // 아이템 효과 적용
+                ActivateEpicItem34();
+
+                PrintText(-behitDamage, Color.red);
             }
         }
 
@@ -103,25 +109,25 @@ public class PlayerColideDetect : MonoBehaviour
         calBeHitDamage = CalBeHitDamage();
     }
 
-    void PrintText(int damage)
+    void PrintText(int num, Color color)
     {
         // 받은 대미지 텍스트 출력
-        GameObject damageText = Resources.Load<GameObject>("Prefabs/DamageText");
-        TextMeshPro damagePro = damageText.GetComponent<TextMeshPro>();
+        GameObject text = Resources.Load<GameObject>("Prefabs/DamageText");
+        TextMeshPro pro = text.GetComponent<TextMeshPro>();
 
-        if (damage == 0)
+        if (num == 0)
         {
-            damagePro.text = "회피";
-            damagePro.color = Color.white;
+            pro.text = "회피";
         }
         else
         {
             // 텍스트 및 색상 결정
-            damagePro.text = damage.ToString();
-            damagePro.color = Color.red;
+            pro.text = num.ToString();
         }
 
-        GameObject copy = Instantiate(damageText);
+        pro.color = color;
+
+        GameObject copy = Instantiate(text);
         Vector3 randomPos = new Vector3(Random.Range(-0.4f, 0.4f), Random.Range(0.4f, 0.6f), 0f);
         copy.transform.position = this.gameObject.transform.position + randomPos;
     }
@@ -164,6 +170,41 @@ public class PlayerColideDetect : MonoBehaviour
 
             monsterControl.PrintText(monsterControl.transform, Color.cyan, counterDamage);
             monsterControl.SetMonsterCurrentHP(monsterControl.GetMonsterCurrentHP() - counterDamage);
+        }
+    }
+
+    // EpicItem16 보유 중, 회피 성공 시 50% 확률로 체력 5 회복
+    void ActivateEpicItem16()
+    {
+        if (ItemManager.Instance.GetOwnEpicItemList()[16] > 0)
+        {
+            float random = Random.Range(0f, 100f);
+            if (random < 50f)
+            {
+                float playerCurrentHP = RealtimeInfoManager.Instance.GetCurrentHP();
+
+                playerCurrentHP += 5f;
+                if (playerCurrentHP >= RealtimeInfoManager.Instance.GetHP())
+                    playerCurrentHP = RealtimeInfoManager.Instance.GetHP();
+
+                RealtimeInfoManager.Instance.SetCurrentHP(playerCurrentHP);
+
+                Color color = Color.white;
+                ColorUtility.TryParseHtmlString("#1FDE38", out color);
+                PrintText(5, color);
+            }
+        }
+    }
+
+    // EpicItem34 보유 중, 피격 시 해당 라운드 대미지% -2%
+    void ActivateEpicItem34()
+    {
+        int count = ItemManager.Instance.GetOwnEpicItemList()[34];
+
+        if (count > 0)
+        {
+            float DMGPercent = RealtimeInfoManager.Instance.GetDMGPercent() - 2f;
+            RealtimeInfoManager.Instance.SetDMGPercent(DMGPercent);
         }
     }
 

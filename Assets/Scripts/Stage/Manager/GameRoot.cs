@@ -69,7 +69,7 @@ public class GameRoot : MonoBehaviour
 
         stopRound = StopRound();
 
-        remainTime = 20f;
+        remainTime = 2f;
     }
     // Start is called before the first frame update
     void Start()
@@ -137,6 +137,9 @@ public class GameRoot : MonoBehaviour
         // 수확 능력치에 비례해 경험치와 와플 획득
         Harvest();
 
+        // EpicItem35 보유 시 효과 발동
+        ActivateEpicItem35();
+
         // 와플이 플레이어에게 끌려지도록 잠시 텀을 둔다
         yield return StartCoroutine(Sleep(3.0f));
 
@@ -157,12 +160,37 @@ public class GameRoot : MonoBehaviour
         currExp += RealtimeInfoManager.Instance.GetHarvest();
         ExpManager.Instance.SetCurrentExp(currExp);
         ExpManager.Instance.levelUp = ExpManager.Instance.LevelUp();
+
         // 와플 획득 처리
         int currWaffle = playerInfo.GetCurrentWaffle();
         currWaffle += Mathf.FloorToInt(RealtimeInfoManager.Instance.GetHarvest());
         playerInfo.SetCurrentWaffle(currWaffle);
+
         // 수확은 매 라운드 종료 시 5% 씩 증가한다
-        playerInfo.SetHarvest(playerInfo.GetHarvest() * 1.05f);
+        // EpicItem24 보유 시 8%p가 추가로 증가한다 (13% 증가)
+        float harvestIncrease = 1.05f + ActivateEpicItem24();
+        playerInfo.SetHarvest(Mathf.FloorToInt(playerInfo.GetHarvest() * harvestIncrease));
+    }
+
+    private float ActivateEpicItem24()
+    {
+        float tmp = 0f;
+
+        if (ItemManager.Instance.GetOwnEpicItemList()[24] > 0)
+            tmp = 0.08f;
+
+        return tmp;
+    }
+
+    private void ActivateEpicItem35()
+    {
+        int itemCount = ItemManager.Instance.GetOwnEpicItemList()[35];
+
+        if (itemCount > 0)
+        {
+            float dmgPercent = playerInfo.GetDMGPercent() + 3f * itemCount;
+            playerInfo.SetDMGPercent(dmgPercent);
+        }
     }
 
     public IEnumerator FloatingShopUI()

@@ -90,7 +90,8 @@ public class WeaponControl : MonoBehaviour
             (weaponInfo.damage + Mathf.FloorToInt(RealtimeInfoManager.Instance.GetFixedDMG()))
                                                 * ((RealtimeInfoManager.Instance.GetDMGPercent() + 100) / 100));
 
-        // 무기의 쿨타임 계산
+        // 무기의 쿨타임 계산 (롤의 스킬 가속과 같은 공식)
+        // 무기 기본 쿨타임 - (기본 쿨타임 * (공격속도 / (100 + 공격속도)))
         float coolDown = weaponInfo.coolDown - 
                        weaponInfo.coolDown * RealtimeInfoManager.Instance.GetATKSpeed() / (100 + RealtimeInfoManager.Instance.GetATKSpeed());
 

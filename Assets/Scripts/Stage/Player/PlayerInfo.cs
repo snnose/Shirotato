@@ -44,6 +44,81 @@ public class PlayerInfo : MonoBehaviour
     private int currentWaffle = 9999;
     public int storedWaffle = 0;   // 라운드가 끝나 미처 먹지 못한 와플 개수
 
+    // 아이템 관련
+    private float cappedHP = 999f;
+    private float cappedMovementSpeedPercent = 999f;
+    
+
+    // EpicItem25 보유 시 아이템 기능
+    public void ActivateEpicItem25()
+    {
+        int count = ItemManager.Instance.GetOwnEpicItemList()[25];
+
+        // 보유한 노말 등급 아이템 개당 회복력 +1
+        // 보유한 전설 등급 아이템 개당 회복력 -2
+        // 상점에서 아이템 구매 시 마다 호출
+        if (count > 0)
+        {
+            int normalItemCount = 0;
+            int legendItemCount = 0;
+
+            for (int i = 0; i < 50; i++)
+            {
+                normalItemCount += ItemManager.Instance.GetOwnNormalItemList()[i];
+            }
+
+            for (int i = 0; i < 50; i++)
+            {
+                legendItemCount += ItemManager.Instance.GetOwnLegendItemList()[i];
+            }
+
+            this.Recovery += normalItemCount * count;
+            this.Recovery -= 2 * legendItemCount * count;
+        }
+    }
+
+    // EpicItem26 보유 시 효과 발동
+    public void ActivateEpicItem26(float cappedHP)
+    {
+        // EpicItem26 구매 시 구매 시점의 최대 체력 이상으로 상승하지 않음
+        if (ItemManager.Instance.GetOwnEpicItemList()[26] > 0)
+        {
+            this.cappedHP = cappedHP;
+            RealtimeInfoManager.Instance.SetCappedHP(this.cappedHP);
+        }
+    }
+
+    public void ActivateEpicItem29()
+    {
+        // EpicItem29 보유 시 이동속도% 만큼 대미지% 상승
+        if (ItemManager.Instance.GetOwnEpicItemList()[29] > 0)
+        {
+            float finalDamagePercent = this.DMGPercent + this.MovementSpeedPercent;
+            this.DMGPercent = finalDamagePercent;
+        }
+    }
+
+    // EpicItem29를 적용시키지 않은 원래의 대미지%를 돌려받음
+    public void InActivateEpicItem29()
+    {
+        if (ItemManager.Instance.GetOwnEpicItemList()[29] > 0)
+        {
+            float originDamagePercent = this.DMGPercent - this.MovementSpeedPercent;
+            this.DMGPercent = originDamagePercent;
+        }
+    }
+
+    // EpicItem31 보유 시 효과 발동
+    public void ActivateEpicItem31(float cappedMovementSpeedPercent)
+    {
+        // EpicItem31 구매 시 구매 시점의 최대 체력 이상으로 상승하지 않음
+        if (ItemManager.Instance.GetOwnEpicItemList()[31] > 0)
+        {
+            this.cappedMovementSpeedPercent = cappedMovementSpeedPercent;
+            RealtimeInfoManager.Instance.SetCappedMovementSpeedPercent(this.cappedMovementSpeedPercent);
+        }
+    }
+
     public void SetCurrentWaffle(int currentWaffle)
     {
         this.currentWaffle = currentWaffle;
@@ -82,6 +157,9 @@ public class PlayerInfo : MonoBehaviour
     public void SetHP(float HP)
     {
         this.HP = HP;
+        // 최대 제한 치보다 값이 커질 수 없음
+        if (this.HP > cappedHP)
+            this.HP = cappedHP;
     }
 
     public void SetRecovery(int recovery)
@@ -112,6 +190,9 @@ public class PlayerInfo : MonoBehaviour
     public void SetMovementSpeedPercent(float movementSpeedPercent)
     {
         this.MovementSpeedPercent = movementSpeedPercent;
+        // 최대 제한 치보다 값이 커질 수 없음
+        if (this.MovementSpeedPercent > this.cappedMovementSpeedPercent)
+            this.MovementSpeedPercent = this.cappedMovementSpeedPercent;
     }
 
     public void SetRootingRange(float rootingRange)

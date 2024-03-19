@@ -30,7 +30,11 @@ public class UpgradeButton : MonoBehaviour
                 break;
         }
 
-        applyUpgrade(roomNumber);
+        // EpicItem29 비활성화
+        PlayerInfo.Instance.InActivateEpicItem29();
+        ApplyUpgrade(roomNumber);
+        // EpicItem29 활성화
+        PlayerInfo.Instance.ActivateEpicItem29();
 
         // UpgradeUI 비활성화 및 화면 밖으로 이동
         UpgradeManager.Instance.transform.position = new Vector2(Screen.width * (-1.0f), Screen.height * (-1.0f));
@@ -45,7 +49,7 @@ public class UpgradeButton : MonoBehaviour
     }
 
     // 해당 업그레이드 칸에 맞는 능력치를 상승시켜 적용한다
-    private void applyUpgrade(int roomNumber)
+    private void ApplyUpgrade(int roomNumber)
     {
         (int, int) upgradeInfo = UpgradeManager.Instance.GetUpgradeList()[roomNumber];
         int rarity = upgradeInfo.Item2;

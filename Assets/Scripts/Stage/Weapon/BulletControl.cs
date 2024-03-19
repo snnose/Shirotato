@@ -13,8 +13,12 @@ public class BulletControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // 보유 시 관통 횟수 +1, 관통 대미지 - 20%
         ActivateNormalItem43();
+        // 보유 시 관통 대미지 +15%
         ActivateRareItem31();
+        // 보유 시 관통 횟수 +1
+        ActivateEpicItem19();
     }
 
     // Update is called once per frame
@@ -58,6 +62,8 @@ public class BulletControl : MonoBehaviour
             }
 
             float finalDamage = damage;
+            // EpicItem32 보유 시, 공격을 맞은 적이 보스나 엘리트라면 +25% 추가 대미지
+            finalDamage = ActivateEpicItem32(finalDamage, collision.GetComponent<MonsterInfo>());
             // 치명타라면 대미지가 2배 증가한다
             if (isCritical)
             {
@@ -78,6 +84,8 @@ public class BulletControl : MonoBehaviour
             {
                 // RareItem36 보유 시 효과 발동
                 ActivateRareItem36();
+                // EpicItem27 보유 시 효과 발동
+                ActivateEpicItem27(collision.GetComponent<MonsterInfo>());
             }
 
             // 입힌 대미지 출력
@@ -168,6 +176,43 @@ public class BulletControl : MonoBehaviour
                 PrintText(PlayerControl.Instance.transform, 1);
             }
         }
+    }
+
+    void ActivateEpicItem19()
+    {
+        if (ItemManager.Instance.GetOwnEpicItemList()[19] > 0)
+        {
+            this.pierceCount += 1;
+        }
+    }
+
+    // 크리티컬로 적 처치 시 와플 1개 추가 드랍
+    void ActivateEpicItem27(MonsterInfo monsterInfo)
+    {
+        int count = ItemManager.Instance.GetOwnEpicItemList()[27];
+
+        if (count > 0)
+        {
+            float random = Random.Range(0f, 100f);
+            if (random < 33f * count)
+            {
+                int waffleDropCount = monsterInfo.GetWaffleDropCount();
+                monsterInfo.SetMonsterWaffleDropCount(waffleDropCount);
+            }
+        }
+    }
+
+    float ActivateEpicItem32(float damage, MonsterInfo monsterInfo)
+    {
+        float tmp = damage;
+        int count = ItemManager.Instance.GetOwnEpicItemList()[32];
+
+        if (count > 0)
+        {
+            tmp = Mathf.FloorToInt(damage * 1.25f * count);
+        }
+
+        return tmp;
     }
 
     void PrintText(Vector3 position, float damage, bool isCritical)

@@ -34,6 +34,14 @@ public class PlayerControl : MonoBehaviour
     // Field
     private float movementSpeed = 10f;
 
+    public IEnumerator activateEpicItem20;
+    public IEnumerator activateEpicItem22;
+    public IEnumerator activateEpicItem33;
+
+    private IEnumerator inActivateEpicItem20;
+    private IEnumerator inActivateEpicItem22;
+    private IEnumerator inActivateEpicItem33;
+
     private void Awake()
     {
         if (instance == null)
@@ -50,7 +58,9 @@ public class PlayerControl : MonoBehaviour
     }
     void Start()
     {
-        
+        activateEpicItem20 = ActivateEpicItem20();
+        activateEpicItem22 = ActivateEpicItem22();
+        activateEpicItem33 = ActivateEpicItem33();
     }
 
     // Update is called once per frame
@@ -65,6 +75,7 @@ public class PlayerControl : MonoBehaviour
             Stop();
     }
 
+    // 플레이어를 이동 상태로 전환
     private void Moving()
     {
         Vector2 movement;
@@ -106,8 +117,31 @@ public class PlayerControl : MonoBehaviour
             currState = state.MOVE;
             playerAnimator.SetBool("IsMove", true);
         }
+
+        // 아이템 효과 처리
+        // 서 있을 때
+        // 방어도 +8
+        if (currState == state.IDLE && activateEpicItem20 != null)
+            StartCoroutine(activateEpicItem20);
+        // 회피 +20%
+        if (currState == state.IDLE && activateEpicItem22 != null)
+            StartCoroutine(activateEpicItem22);
+        // 공격속도 +40%
+        if (currState == state.IDLE && activateEpicItem33 != null)
+            StartCoroutine(activateEpicItem33);
+        // 움직일 때
+        // 방어도 -8 (서 있을 때 오른 능력치만큼 차감)
+        if (currState == state.MOVE && inActivateEpicItem20 != null)
+            StartCoroutine(inActivateEpicItem20);
+        // 회피 -20% (서 있을 때 오른 능력치만큼 차감)
+        if (currState == state.MOVE && inActivateEpicItem22 != null)
+            StartCoroutine(inActivateEpicItem22);
+        // 공격속도 -40% (서 있을 때 오른 능력치만큼 차감)
+        if (currState == state.MOVE && inActivateEpicItem33 != null)
+            StartCoroutine(inActivateEpicItem33);
     }
 
+    // 플레이어를 대기 상태로 전환
     private void Stop()
     {
         Vector2 movement = new Vector2(0f, 0f);
@@ -122,6 +156,97 @@ public class PlayerControl : MonoBehaviour
     public GameObject GetPlayer()
     {
         return this.gameObject;
+    }
+
+    // EpicItem20 보유 시, 서 있을 때 방어도 +8
+    public IEnumerator ActivateEpicItem20()
+    {
+        int count = ItemManager.Instance.GetOwnEpicItemList()[20];
+
+        if (count > 0)
+        {
+            int armor = RealtimeInfoManager.Instance.GetArmor() + (8 * count);
+            RealtimeInfoManager.Instance.SetArmor(armor);
+        }
+
+        inActivateEpicItem20 = InActivateEpicItem20();
+
+        yield return null;
+    }
+
+    public IEnumerator ActivateEpicItem22()
+    {
+        int count = ItemManager.Instance.GetOwnEpicItemList()[22];
+
+        if (count > 0)
+        {
+            int evasion = RealtimeInfoManager.Instance.GetEvasion() + (20 * count);
+            RealtimeInfoManager.Instance.SetEvasion(evasion);
+        }
+
+        inActivateEpicItem22 = InActivateEpicItem22();
+
+        yield return null;
+    }
+
+    public IEnumerator ActivateEpicItem33()
+    {
+        int count = ItemManager.Instance.GetOwnEpicItemList()[33];
+
+        if (count > 0)
+        {
+            float ATKSpeed = RealtimeInfoManager.Instance.GetATKSpeed() + (40 * count);
+            RealtimeInfoManager.Instance.SetATKSpeed(ATKSpeed);
+        }
+
+        inActivateEpicItem33 = InActivateEpicItem33();
+
+        yield return null;
+    }
+
+    IEnumerator InActivateEpicItem20()
+    {
+        int count = ItemManager.Instance.GetOwnEpicItemList()[20];
+
+        if (count > 0)
+        {
+            int armor = RealtimeInfoManager.Instance.GetArmor() - (8 * count);
+            RealtimeInfoManager.Instance.SetArmor(armor);
+        }
+
+        activateEpicItem20 = ActivateEpicItem20();
+
+        yield return null;
+    }
+
+    IEnumerator InActivateEpicItem22()
+    {
+        int count = ItemManager.Instance.GetOwnEpicItemList()[22];
+
+        if (count > 0)
+        {
+            int evasion = RealtimeInfoManager.Instance.GetEvasion() - (20 * count);
+            RealtimeInfoManager.Instance.SetEvasion(evasion);
+        }
+
+        activateEpicItem22 = ActivateEpicItem22();
+
+        yield return null;
+    }
+
+    IEnumerator InActivateEpicItem33()
+    {
+        int count = ItemManager.Instance.GetOwnEpicItemList()[33];
+
+        if (count > 0)
+        {
+            float ATKSpeed = RealtimeInfoManager.Instance.GetATKSpeed() - (40 * count);
+            RealtimeInfoManager.Instance.SetATKSpeed(ATKSpeed);
+        }
+
+        activateEpicItem33 = ActivateEpicItem33();
+
+        yield return null;
     }
 
     public void SetMovementSpeed(float movementSpeed)

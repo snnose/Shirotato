@@ -74,12 +74,32 @@ public class FindItemUI : MonoBehaviour
     // 사용 버튼을 누를 경우 보유 아이템에 추가
     private void OnClickUseButton()
     {
+        // 특정 스탯에 비례해서 스탯이 오르는 아이템들 처리
         // EpicItem29 비활성화
         PlayerInfo.Instance.InActivateEpicItem29();
+        // LegendItem16 비활성화
+        PlayerInfo.Instance.InActivateLegendItem16();
+        // LegendItem17 비활성화
+        PlayerInfo.Instance.InActivateLegendItem17();
+        // LegendItem22 비활성화
+        PlayerInfo.Instance.InActivateLegendItem22();
+        // LegendItem23 비활성화
+        PlayerInfo.Instance.InActivateLegendItem23();
+
         // 해당 아이템의 능력치 적용
         ApplyStatus();
+
+        // 특정 스탯에 비례해서 스탯이 오르는 아이템들 처리
         // EpicItem29 활성화
         PlayerInfo.Instance.ActivateEpicItem29();
+        // LegendItem16 활성화
+        PlayerInfo.Instance.ActivateLegendItem16();
+        // LegendItem17 활성화
+        PlayerInfo.Instance.ActivateLegendItem17();
+        // LegendItem22 활성화
+        PlayerInfo.Instance.ActivateLegendItem22();
+        // LegendItem23 활성화
+        PlayerInfo.Instance.ActivateLegendItem23();
 
         // 잠깐동안 ShopUI 활성화
         ShopUIControl shopUIControl = ShopUIControl.Instance;
@@ -288,7 +308,7 @@ public class FindItemUI : MonoBehaviour
         }
         if (itemInfo.Critical > 0)
         {
-            tmpText += "치명타 +" + itemInfo.Critical + "%\n";
+            tmpText += "치명타 확률+" + itemInfo.Critical + "%\n";
             plusCount++;
         }
         if (itemInfo.Range > 0)
@@ -305,7 +325,7 @@ public class FindItemUI : MonoBehaviour
         }
         if (itemInfo.Recovery > 0)
         {
-            tmpText += "체력 회복 +" + itemInfo.Recovery + '\n';
+            tmpText += "회복력 +" + itemInfo.Recovery + '\n';
             plusCount++;
         }
         if (itemInfo.HPDrain > 0)
@@ -320,7 +340,7 @@ public class FindItemUI : MonoBehaviour
         }
         if (itemInfo.Evasion > 0)
         {
-            tmpText += "회피 +" + itemInfo.Evasion + "%\n";
+            tmpText += "회피 확률+" + itemInfo.Evasion + "%\n";
             plusCount++;
         }
 
@@ -376,7 +396,7 @@ public class FindItemUI : MonoBehaviour
         }
         if (itemInfo.Critical < 0)
         {
-            tmpText += "치명타 " + itemInfo.Critical + "%\n";
+            tmpText += "치명타 확률" + itemInfo.Critical + "%\n";
             minusCount++;
         }
         if (itemInfo.Range < 0)
@@ -393,7 +413,7 @@ public class FindItemUI : MonoBehaviour
         }
         if (itemInfo.Recovery < 0)
         {
-            tmpText += "체력 회복 " + itemInfo.Recovery + '\n';
+            tmpText += "회복력 " + itemInfo.Recovery + '\n';
             minusCount++;
         }
         if (itemInfo.HPDrain < 0)
@@ -408,7 +428,7 @@ public class FindItemUI : MonoBehaviour
         }
         if (itemInfo.Evasion < 0)
         {
-            tmpText += "회피 " + itemInfo.Evasion + "%\n";
+            tmpText += "회피 확률 " + itemInfo.Evasion + "%\n";
             minusCount++;
         }
 

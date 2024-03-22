@@ -136,7 +136,7 @@ public class SpawnManager : MonoBehaviour
                 monsterInfo.SetMonsterDamage(1f + 0.6f * GameRoot.Instance.GetCurrentRound());
                 monsterInfo.SetMonsterMovementSpeed(Random.Range(4.4f, 6.6f));
                 monsterInfo.SetMonsterWaffleDropCount(1);
-                monsterInfo.SetMonsterConsumableDropRate(0.01f);
+                monsterInfo.SetMonsterConsumableDropRate(1.00f);
                 monsterInfo.SetMonsterLootDropRate(0.01f);
                 break;
             default:

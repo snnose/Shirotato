@@ -69,7 +69,7 @@ public class GameRoot : MonoBehaviour
 
         stopRound = StopRound();
 
-        remainTime = 2f;
+        remainTime = 20f;
     }
     // Start is called before the first frame update
     void Start()
@@ -139,6 +139,8 @@ public class GameRoot : MonoBehaviour
 
         // EpicItem35 보유 시 효과 발동
         ActivateEpicItem35();
+        // LegendItem21 보유 시 효과 발동
+        ActivateLegendItem21();
 
         // 와플이 플레이어에게 끌려지도록 잠시 텀을 둔다
         yield return StartCoroutine(Sleep(3.0f));
@@ -182,6 +184,7 @@ public class GameRoot : MonoBehaviour
         return tmp;
     }
 
+    // EpicItem35 보유 시 라운드 종료마다 대미지% +3%
     private void ActivateEpicItem35()
     {
         int itemCount = ItemManager.Instance.GetOwnEpicItemList()[35];
@@ -193,11 +196,53 @@ public class GameRoot : MonoBehaviour
         }
     }
 
+    // LegendItem15 보유 시, 상점 입장 때 랜덤 무기 업그레이드. 업그레이드 할 무기 없으면 방어력 +2
+    private void ActivateLegendItem15()
+    {
+        if (ItemManager.Instance.GetOwnLegendItemList()[15] > 0)
+        {
+            // 보유 무기 중 하나를 선택해 등급을 상승시킨다.
+            int random = Random.Range(0, WeaponManager.Instance.GetCurrentWeaponInfoList().Count);
+            WeaponInfo selectedWeaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[random];
+
+            // 선택된 무기의 등급을 한 단계 상승시킨 능력치를 적용시킨다
+            int currGrade = selectedWeaponInfo.GetWeaponGrade();
+            // 선택된 무기가 전설 등급이면 방어력 +2
+            if (currGrade == 3)
+                PlayerInfo.Instance.SetArmor(PlayerInfo.Instance.GetArmor() + 2);
+            else
+                selectedWeaponInfo.SetWeaponStatus(selectedWeaponInfo.weaponName, currGrade + 1);
+
+            // ShopOwnItemListControl의 코루틴 호출로 UI를 갱신한다
+            ShopOwnWeaponListControl shopOwnWeaponListControl = ShopUIControl.Instance.GetShopOwnWeaponListControl();
+            shopOwnWeaponListControl.renewOwnWeaponList = shopOwnWeaponListControl.RenewOwnWeaponList();
+        }
+    }
+
+    private void ActivateLegendItem21()
+    {
+        int itemCount = ItemManager.Instance.GetOwnLegendItemList()[21];
+
+        if (itemCount > 0)
+        {
+            float HP = PlayerInfo.Instance.GetHP() + 3f * itemCount;
+            int recovery = PlayerInfo.Instance.GetRecovery() + 1 * itemCount;
+            float HPDrain = PlayerInfo.Instance.GetHPDrain() + 1f * itemCount;
+
+            PlayerInfo.Instance.SetHP(HP);
+            PlayerInfo.Instance.SetRecovery(recovery);
+            PlayerInfo.Instance.SetHPDrain(HPDrain);
+        }
+    }
+
     public IEnumerator FloatingShopUI()
     {
         yield return StartCoroutine(Sleep(1.0f));
         shopUI.SetActive(true);
 
+        // LegendItem15 보유 시 해당 아이템 효과 발동
+        // 상점 입장 때 랜덤 무기 업그레이드. 무기 없으면 방어력 +2
+        ActivateLegendItem15();
         yield return null;
     }
 

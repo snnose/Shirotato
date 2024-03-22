@@ -7,6 +7,7 @@ public class BulletControl : MonoBehaviour
 {
     private int damage = 0;
     private int pierceCount = 0;
+    private int bounceCount = 0;
     private float pierceDamage = 0.5f;
     private bool isCritical = false;
 
@@ -19,6 +20,8 @@ public class BulletControl : MonoBehaviour
         ActivateRareItem31();
         // 보유 시 관통 횟수 +1
         ActivateEpicItem19();
+        // 보유 시 탄성 횟수 +1
+        ActivateLegendItem26();
     }
 
     // Update is called once per frame
@@ -68,6 +71,7 @@ public class BulletControl : MonoBehaviour
             if (isCritical)
             {
                 finalDamage *= 2.0f;
+                finalDamage = ActivateLegendItem20(finalDamage, monsterControl);
             }
 
             // NormalItem42 보유 시 효과 발동
@@ -213,6 +217,33 @@ public class BulletControl : MonoBehaviour
         }
 
         return tmp;
+    }
+
+    // 크리티컬 발생 시 대상의 현재 체력 10% 추가 대미지 (보스나 엘리트는 1%)
+    float ActivateLegendItem20(float damage, MonsterControl monsterControl)
+    {
+        float tmp = damage;
+
+        if (ItemManager.Instance.GetOwnLegendItemList()[20] > 0)
+        {
+            float monsterCurrentHP = monsterControl.GetMonsterCurrentHP();
+
+            // 몬스터 타입에 따라 추가 대미지가 변동되도록 조정해야함
+            tmp += 0.1f * monsterCurrentHP;
+        }
+
+        return tmp;
+    }
+
+    // 투사체 탄성 횟수 +1
+    void ActivateLegendItem26()
+    {
+        int itemCount = ItemManager.Instance.GetOwnLegendItemList()[26];
+
+        if (itemCount > 0)
+        {
+            this.bounceCount += itemCount;
+        }
     }
 
     void PrintText(Vector3 position, float damage, bool isCritical)

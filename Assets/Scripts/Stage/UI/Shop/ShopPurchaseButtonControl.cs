@@ -73,6 +73,12 @@ public class ShopPurchaseButtonControl : MonoBehaviour
         // 무기를 구매한 경우
         if (ItemManager.Instance.GetShopWeaponInfoList()[currentNumber] != null)
         {
+            // LegendItem19 비활성화
+            // 원래의 공격속도로 돌려놓는다
+            WeaponManager.Instance.InActivateLegendItem19();
+            // LegendItem28 비활성화
+            // 원래의 공격속도로 돌려놓는다
+            WeaponManager.Instance.InActivateLegendItem28();
             WeaponInfo weaponInfo = ItemManager.Instance.GetShopWeaponInfoList()[currentNumber];
 
             int weaponPrice = weaponInfo.price;
@@ -127,10 +133,15 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                 }
             }
 
+            // LegendItem19 활성화
+            // 각기 다른 무기가 있을 때마다 공격속도 -3%
+            WeaponManager.Instance.ActivateLegendItem19();
+            // LegendItem28 활성화
+            // 각기 다른 무기가 있을 때마다 공격속도 +3%
+            WeaponManager.Instance.ActivateLegendItem28();
+
             // 보유 무기 리스트 갱신
             ownWeaponListControl.renewOwnWeaponList = ownWeaponListControl.RenewOwnWeaponList();
-            // EpicItem25 효과 발동
-            PlayerInfo.Instance.ActivateEpicItem25();
         }
         // 아이템을 구매한 경우
         else
@@ -144,8 +155,17 @@ public class ShopPurchaseButtonControl : MonoBehaviour
             // 보유 와플이 아이템 가격보다 높을 때 구매
             if (currentWaffle > price)
             {
+                // 특정 스탯에 비례해서 스탯이 오르는 아이템들 처리
                 // EpicItem29 비활성화
                 PlayerInfo.Instance.InActivateEpicItem29();
+                // LegendItem16 비활성화
+                PlayerInfo.Instance.InActivateLegendItem16();
+                // LegendItem17 비활성화
+                PlayerInfo.Instance.InActivateLegendItem17();
+                // LegendItem22 비활성화
+                PlayerInfo.Instance.InActivateLegendItem22();
+                // LegendItem23 비활성화
+                PlayerInfo.Instance.InActivateLegendItem23();
 
                 PlayerInfo.Instance.SetCurrentWaffle(currentWaffle - price);
 
@@ -202,14 +222,34 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                         ItemManager.Instance.GetOwnEpicItemList()[item.GetComponent<ItemInfo>().itemNumber]++;
                         break;
                     case 3:
+                        // 특정 아이템 구매시 작동
+                        // LegendItem19 구매 시 해당 아이템 활성화 (각기 다른 무기 보유할 때마다 공격속도 -3%)
+                        if (item.GetComponent<ItemInfo>().itemNumber == 19)
+                            WeaponManager.Instance.ActivateLegendItem19();
+                        // LegendItem28 구매 시 해당 아이템 활성화 (각기 다른 무기 보유할 때마다 공격속도 +6%)
+                        if (item.GetComponent<ItemInfo>().itemNumber == 28)
+                            WeaponManager.Instance.ActivateLegendItem28();
                         ItemManager.Instance.GetOwnLegendItemList()[item.GetComponent<ItemInfo>().itemNumber]++;
                         break;
                     default:
                         break;
                 }
 
+                // 아이템 처리
+                // EpicItem25 효과 발동
+                PlayerInfo.Instance.ActivateEpicItem25();
+
+                // 특정 스탯에 비례해서 스탯이 오르는 아이템들 처리
                 // EpicItem29 활성화
                 PlayerInfo.Instance.ActivateEpicItem29();
+                // LegendItem16 활성화
+                PlayerInfo.Instance.ActivateLegendItem16();
+                // LegendItem17 활성화
+                PlayerInfo.Instance.ActivateLegendItem17();
+                // LegendItem22 활성화
+                PlayerInfo.Instance.ActivateLegendItem22();
+                // LegendItem23 활성화
+                PlayerInfo.Instance.ActivateLegendItem23();
 
                 // 아이템 슬롯을 비활성화 한다.
                 currentClickButton.transform.parent.gameObject.SetActive(false);

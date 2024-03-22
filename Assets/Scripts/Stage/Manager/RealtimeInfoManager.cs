@@ -47,10 +47,13 @@ public class RealtimeInfoManager : MonoBehaviour
     // 아이템 관련
     private float cappedHP = 999f;
     private float cappedMovementSpeedPercent = 999f;
+    public int legendItem18Stack = 0;
 
     // 코루틴
     //public IEnumerator hpRecovery;
-    //public IEnumerator activateEpicItem21;
+    public IEnumerator activateLegendItem25 = null;
+
+    private IEnumerator inActivateLegendItem25 = null;
 
     private void Awake()
     {
@@ -67,8 +70,10 @@ public class RealtimeInfoManager : MonoBehaviour
         SetAllStatus(PlayerInfo.Instance);
         currentHP = HP;
         StartCoroutine(HPRecovery());
-        StartCoroutine(ActivateEpicItem21());
+        StartCoroutine(Bleeding());
         StartCoroutine(ActivateEpicItem36());
+        StartCoroutine(ActivateLegendItem24());
+        activateLegendItem25 = ActivateLegendItem25();
     }
 
     // Update is called once per frame
@@ -78,13 +83,32 @@ public class RealtimeInfoManager : MonoBehaviour
         if (!GameRoot.Instance.GetIsRoundClear())
         {
             ActivateEpicItem23();
+
+            // 현재 체력이 최대 체력의 절반 이하라면 LegendItem25 효과 발동
+            if (activateLegendItem25 != null &&
+                currentHP <= HP / 2)
+            {
+                StartCoroutine(activateLegendItem25);
+            }
+            
+            // 현재 체력이 최대 체력의 절반보다 높다면 LegendItem25 효과 미발동
+            if (inActivateLegendItem25 != null)
+            {
+                StartCoroutine(inActivateLegendItem25);
+            }
+
         }
         // 라운드 종료 후 처리
         if (GameRoot.Instance.GetIsRoundClear())
         {
+            // 회복 및 출혈 코루틴 종료
             StopCoroutine(HPRecovery());
-            StopCoroutine(ActivateEpicItem21());
+            StopCoroutine(Bleeding());
+            // 아이템 효과 코루틴 종료
             StopCoroutine(ActivateEpicItem36());
+            StopCoroutine(ActivateLegendItem24());
+            // LegendItem18 스택 초기화
+            RealtimeInfoManager.Instance.legendItem18Stack = 0;
         }
     }
 
@@ -133,12 +157,13 @@ public class RealtimeInfoManager : MonoBehaviour
         }
     }
 
-    // EpicItem21 보유 시 효과 발동
-    public IEnumerator ActivateEpicItem21()
+    // 매 초 대미지를 입는 아이템 보유 시 발동
+    // EpicItem21, LegendItem16 보유 시 효과 발동
+    public IEnumerator Bleeding()
     {
-        int count = ItemManager.Instance.GetOwnEpicItemList()[21];
+        int count = ItemManager.Instance.GetOwnEpicItemList()[21] + ItemManager.Instance.GetOwnLegendItemList()[16];
 
-        // 매 초마다 EpicItem21 보유 개수 만큼 대미지를 입는다
+        // 매 초마다 EpicItem21, LegendItem16 보유 개수 만큼 대미지를 입는다
         while (count > 0 && !GameRoot.Instance.GetIsRoundClear())
         {
             yield return new WaitForSeconds(1f);
@@ -166,12 +191,45 @@ public class RealtimeInfoManager : MonoBehaviour
     public IEnumerator ActivateEpicItem36()
     {
         // 5초마다 대미지% +5%
-         if (ItemManager.Instance.GetOwnEpicItemList()[36] > 0)
+        if (ItemManager.Instance.GetOwnEpicItemList()[36] > 0)
         {
             yield return new WaitForSeconds(5.0f);
             this.DMGPercent += 5f;
         }
 
+        yield return null;
+    }
+
+    public IEnumerator ActivateLegendItem24()
+    {
+        int itemCount = ItemManager.Instance.GetOwnLegendItemList()[24];
+        // 5초마다 회복력 +2
+        if (itemCount > 0)
+        {
+            yield return new WaitForSeconds(5.0f);
+            this.Recovery += 2 * itemCount;
+        }
+
+        yield return null;
+    }
+
+    public IEnumerator ActivateLegendItem25()
+    {
+        if (ItemManager.Instance.GetOwnLegendItemList()[25] > 0)
+        {
+            this.Recovery *= 2;
+            inActivateLegendItem25 = InActivateLegendItem25();
+        }
+        yield return null;
+    }
+
+    private IEnumerator InActivateLegendItem25()
+    {
+        if (ItemManager.Instance.GetOwnLegendItemList()[25] > 0)
+        {
+            this.Recovery /= 2;
+            activateLegendItem25 = ActivateLegendItem25();
+        }
         yield return null;
     }
 

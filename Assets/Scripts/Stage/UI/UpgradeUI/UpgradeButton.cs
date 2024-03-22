@@ -29,12 +29,31 @@ public class UpgradeButton : MonoBehaviour
             default:
                 break;
         }
-
+        // 특정 스탯에 비례해서 스탯이 오르는 아이템들 처리
         // EpicItem29 비활성화
         PlayerInfo.Instance.InActivateEpicItem29();
+        // LegendItem16 비활성화
+        PlayerInfo.Instance.InActivateLegendItem16();
+        // LegendItem17 비활성화
+        PlayerInfo.Instance.InActivateLegendItem17();
+        // LegendItem22 비활성화
+        PlayerInfo.Instance.InActivateLegendItem22();
+        // LegendItem23 비활성화
+        PlayerInfo.Instance.InActivateLegendItem23();
+
         ApplyUpgrade(roomNumber);
+
+        // 특정 스탯에 비례해서 스탯이 오르는 아이템들 처리
         // EpicItem29 활성화
         PlayerInfo.Instance.ActivateEpicItem29();
+        // LegendItem16 활성화
+        PlayerInfo.Instance.ActivateLegendItem16();
+        // LegendItem17 활성화
+        PlayerInfo.Instance.ActivateLegendItem17();
+        // LegendItem22 활성화
+        PlayerInfo.Instance.ActivateLegendItem22();
+        // LegendItem23 활성화
+        PlayerInfo.Instance.ActivateLegendItem23();
 
         // UpgradeUI 비활성화 및 화면 밖으로 이동
         UpgradeManager.Instance.transform.position = new Vector2(Screen.width * (-1.0f), Screen.height * (-1.0f));

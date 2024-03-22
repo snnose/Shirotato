@@ -87,7 +87,7 @@ public class ShopItemDetailUI : MonoBehaviour
         }
         if (itemInfo.Critical > 0)
         {
-            tmpText += "치명타 +" + itemInfo.Critical + "%\n";
+            tmpText += "치명타 확률 +" + itemInfo.Critical + "%\n";
             plusCount++;
         }
         if (itemInfo.Range > 0)
@@ -104,7 +104,7 @@ public class ShopItemDetailUI : MonoBehaviour
         }
         if (itemInfo.Recovery > 0)
         {
-            tmpText += "체력 회복 +" + itemInfo.Recovery + '\n';
+            tmpText += "회복력 +" + itemInfo.Recovery + '\n';
             plusCount++;
         }
         if (itemInfo.HPDrain > 0)
@@ -119,7 +119,7 @@ public class ShopItemDetailUI : MonoBehaviour
         }
         if (itemInfo.Evasion > 0)
         {
-            tmpText += "회피 +" + itemInfo.Evasion + "%\n";
+            tmpText += "회피 확률 +" + itemInfo.Evasion + "%\n";
             plusCount++;
         }
 
@@ -175,7 +175,7 @@ public class ShopItemDetailUI : MonoBehaviour
         }
         if (itemInfo.Critical < 0)
         {
-            tmpText += "치명타 " + itemInfo.Critical + "%\n";
+            tmpText += "치명타 확률 " + itemInfo.Critical + "%\n";
             minusCount++;
         }
         if (itemInfo.Range < 0)
@@ -192,7 +192,7 @@ public class ShopItemDetailUI : MonoBehaviour
         }
         if (itemInfo.Recovery < 0)
         {
-            tmpText += "체력 회복 " + itemInfo.Recovery + '\n';
+            tmpText += "회복력 " + itemInfo.Recovery + '\n';
             minusCount++;
         }
         if (itemInfo.HPDrain < 0)
@@ -207,7 +207,7 @@ public class ShopItemDetailUI : MonoBehaviour
         }
         if (itemInfo.Evasion < 0)
         {
-            tmpText += "회피 " + itemInfo.Evasion + "%\n";
+            tmpText += "회피 확률 " + itemInfo.Evasion + "%\n";
             minusCount++;
         }
 

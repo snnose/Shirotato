@@ -114,6 +114,11 @@ public class ShopWeaponDetailUI : MonoBehaviour
 
     private void SellWeapon()
     {
+        // LegendItem19, LegendItem28 비활성화
+        // 원래의 공격속도로 돌려놓는다
+        WeaponManager.Instance.InActivateLegendItem19();
+        WeaponManager.Instance.InActivateLegendItem28();
+
         List<GameObject> weaponList = WeaponManager.Instance.GetCurrentWeaponList();
         List<WeaponInfo> weaponInfoList = WeaponManager.Instance.GetCurrentWeaponInfoList();
 
@@ -134,6 +139,11 @@ public class ShopWeaponDetailUI : MonoBehaviour
         // WeaponDetailUI 비활성화
         this.gameObject.SetActive(false);
         isLockOn = false;
+
+        // LegendItem19, LegendItem28 활성화
+        // 각기 다른 무기가 있을 때마다 공격속도 -3%
+        WeaponManager.Instance.ActivateLegendItem19();
+        WeaponManager.Instance.ActivateLegendItem28();
     }
 
     // 무기 결합 버튼

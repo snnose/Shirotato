@@ -12,8 +12,9 @@ public class WeaponInfo
 
     public int damage;
     public float range;
-    public float coolDown;
-    public int pierceCount;
+    public float coolDown = 0f;
+    public int pierceCount = 0;
+    private int bounceCount = 0;
 
     public int price;
 

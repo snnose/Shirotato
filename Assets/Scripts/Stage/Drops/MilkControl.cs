@@ -16,7 +16,9 @@ public class MilkControl : MonoBehaviour
     {
         // 라운드 종료 시 사라진다
         if (GameRoot.Instance.GetIsRoundClear())
+        {
             Destroy(this.gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -30,6 +32,15 @@ public class MilkControl : MonoBehaviour
             // 플레이어의 체력을 회복한다
             float currentHP = RealtimeInfoManager.Instance.GetCurrentHP();
             float maxHP = RealtimeInfoManager.Instance.GetHP();
+
+            // 현재 체력이 최대 체력과 같으면 LegendItem18 효과 발동 (최대 10번)
+            if (currentHP == maxHP &&
+                RealtimeInfoManager.Instance.legendItem18Stack <= 10)
+            {
+                ActivateLegendItem18();
+                currentHP++; maxHP++;
+            }
+
             // 우유에 영향을 주는 아이템이 있다면 회복량이 변동된다. (기본 3)
             float healing = 3.0f - (1.0f * ItemManager.Instance.GetOwnNormalItemList()[34])
                                  + (1.0f * ItemManager.Instance.GetOwnNormalItemList()[41])
@@ -63,6 +74,20 @@ public class MilkControl : MonoBehaviour
                 monster.PrintText(monster.transform, Color.cyan, damage);
                 monster.SetMonsterCurrentHP(monster.GetMonsterCurrentHP() - damage);
             }
+        }
+    }
+
+    // LegendItem18 효과 발동
+    // 최대 체력인 상태에서 우유 획득 시 최대 체력 +1 (라운드마다 최대 10)
+    void ActivateLegendItem18()
+    {
+        if (ItemManager.Instance.GetOwnLegendItemList()[18] > 0)
+        {
+            float maxHP = PlayerInfo.Instance.GetHP() + 1f;
+            PlayerInfo.Instance.SetHP(maxHP);
+            RealtimeInfoManager.Instance.SetHP(maxHP);
+            RealtimeInfoManager.Instance.SetCurrentHP(maxHP);
+            RealtimeInfoManager.Instance.legendItem18Stack++;
         }
     }
 

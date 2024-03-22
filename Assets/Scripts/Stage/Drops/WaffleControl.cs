@@ -12,10 +12,9 @@ public class WaffleControl : MonoBehaviour
     void Start()
     { 
         rootingRange = RealtimeInfoManager.Instance.GetRootingRange();
-        if (ItemManager.Instance.GetOwnNormalItemList()[36] > 0)
-        {
-            ActivateNormalItem36();
-        }
+        
+        ActivateNormalItem36();
+        ActivateLegendItem27();
     }
 
     // Update is called once per frame
@@ -113,12 +112,15 @@ public class WaffleControl : MonoBehaviour
 
     private void ActivateNormalItem36()
     {
-        float random = Random.Range(0f, 100f);
-
-        // NormalItem36 보유 시 와플 드랍 시 확률에 따라 플레이어에게 바로 끌려온다
-        if (random < 20f * ItemManager.Instance.GetOwnNormalItemList()[36])
+        if (ItemManager.Instance.GetOwnNormalItemList()[36] > 0)
         {
-            isAttractImmediatly = true;
+            float random = Random.Range(0f, 100f);
+
+            // NormalItem36 보유 시 와플 드랍 시 확률에 따라 플레이어에게 바로 끌려온다
+            if (random < 20f * ItemManager.Instance.GetOwnNormalItemList()[36])
+            {
+                isAttractImmediatly = true;
+            }
         }
     }
 
@@ -150,6 +152,16 @@ public class WaffleControl : MonoBehaviour
             PlayerInfo.Instance.SetCurrentWaffle(++currentWaffle);
         }
     }
+
+    // LegendItem27 보유 시 와플이 드랍되는 즉시 플레이어에게 끌려온다
+    private void ActivateLegendItem27()
+    {
+        if (ItemManager.Instance.GetOwnLegendItemList()[27] > 0)
+        {
+            isAttractImmediatly = true;
+        }
+    }
+
 
     // 와플이 플레이어에게 끌려가는 함수
     private void AttractToPlayer(float range)

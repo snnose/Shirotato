@@ -45,14 +45,18 @@ public class RoundInit : MonoBehaviour
         // GameRoot 초기화
         GameRoot.Instance.SetIsRoundClear(false);
         GameRoot.Instance.SetCurrentRound(GameRoot.Instance.GetCurrentRound() + 1);
+        // 코루틴 재장전
+        GameRoot.Instance.stopRound = GameRoot.Instance.StopRound();
 
         // 실시간 스탯 관리자 초기화
         // EpicItem30 보유 시 최대 체력의 50%로 라운드 시작
         RealtimeInfoManager.Instance.SetCurrentHP(ActivateEpicItem30(PlayerInfo.Instance.GetHP()));
         RealtimeInfoManager.Instance.SetHP(PlayerInfo.Instance.GetHP());
         StartCoroutine(RealtimeInfoManager.Instance.HPRecovery());
-        StartCoroutine(RealtimeInfoManager.Instance.ActivateEpicItem21());
+        StartCoroutine(RealtimeInfoManager.Instance.Bleeding());
         StartCoroutine(RealtimeInfoManager.Instance.ActivateEpicItem36());
+        StartCoroutine(RealtimeInfoManager.Instance.ActivateLegendItem24());
+        RealtimeInfoManager.Instance.activateLegendItem25 = RealtimeInfoManager.Instance.ActivateLegendItem25();
 
         // NormalItem45를 샀다면 HP 1로 시작
         if (ItemManager.Instance.GetOwnNormalItemList()[45] > 0)
@@ -65,6 +69,8 @@ public class RoundInit : MonoBehaviour
         float remainTime = 15f + GameRoot.Instance.GetCurrentRound() * 5f;
         if (remainTime > 60f)
             remainTime = 60f;
+        // 임시 제한 시간 설정
+        remainTime = 2f;
         timerControl.gameObject.SetActive(true);
         GameRoot.Instance.SetRemainTime(remainTime);
         timerControl.SetTimerText(remainTime.ToString());

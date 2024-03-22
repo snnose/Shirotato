@@ -64,12 +64,13 @@ public class ItemManager : MonoBehaviour
             ownNormalItemList.Add(0);
             ownRareItemList.Add(0);
             ownEpicItemList.Add(0);
+            ownLegendItemList.Add(0);
         }
     }
 
     void Start()
     {
-        ownEpicItemList[23] = 1;
+        //ownLegendItemList[18] = 1;
     }
 
     void Update()
@@ -290,6 +291,33 @@ public class ItemManager : MonoBehaviour
                     }
                     break;
                 case 3:
+                    if (tmp == 14 && ownLegendItemList[15] == 1)
+                        isLimit = true;
+                    if (tmp == 15 && ownLegendItemList[16] == 1)
+                        isLimit = true;
+                    if (tmp == 16 && ownLegendItemList[17] == 1)
+                        isLimit = true;
+                    if (tmp == 17 && ownLegendItemList[18] == 1)
+                        isLimit = true;
+                    if (tmp == 19 && ownLegendItemList[20] == 1)
+                        isLimit = true;
+                    if (tmp == 21 && ownLegendItemList[22] == 1)
+                        isLimit = true;
+                    if (tmp == 22 && ownLegendItemList[23] == 1)
+                        isLimit = true;
+                    if (tmp == 24 && ownLegendItemList[25] == 1)
+                        isLimit = true;
+                    // 탄성 기능 미구현으로 아이템 미등장
+                    if (tmp == 25 && ownLegendItemList[26] == 0)
+                        isLimit = true;
+
+                    if (isLimit)
+                    {
+                        tmp = UnityEngine.Random.Range(0, legendItemList.Count);
+
+                        isLimit = false;
+                        continue;
+                    }
                     break;
                 default:
                     break;

@@ -98,6 +98,57 @@ public class PlayerInfo : MonoBehaviour
         }
     }
 
+    // EpicItem31 보유 시 효과 발동
+    public void ActivateEpicItem31(float cappedMovementSpeedPercent)
+    {
+        // EpicItem31 구매 시 구매 시점의 최대 체력 이상으로 상승하지 않음
+        if (ItemManager.Instance.GetOwnEpicItemList()[31] > 0)
+        {
+            this.cappedMovementSpeedPercent = cappedMovementSpeedPercent;
+            RealtimeInfoManager.Instance.SetCappedMovementSpeedPercent(this.cappedMovementSpeedPercent);
+        }
+    }
+
+    public void ActivateLegendItem16()
+    {
+        // LegendItem16 보유 시 생명력 흡수 1% 당 대미지% +2% 상승
+        if (ItemManager.Instance.GetOwnLegendItemList()[16] > 0)
+        {
+            float finalDamagePercent = this.DMGPercent + this.HPDrain * 2f;
+            this.DMGPercent = finalDamagePercent;
+        }
+    }
+
+    public void ActivateLegendItem17()
+    {
+        // LegendItem17 보유 시 이동속도% -1% 당 회복력 +2 상승
+        if (ItemManager.Instance.GetOwnLegendItemList()[16] > 0)
+        {
+            float finalRecovery = this.Recovery - this.MovementSpeedPercent * 2f;
+            this.Recovery = Mathf.FloorToInt(finalRecovery);
+        }
+    }
+
+    public void ActivateLegendItem22()
+    {
+        // LegendItem22 보유 시 치명타 확률 +1%당 행운 +2 상승
+        if (ItemManager.Instance.GetOwnLegendItemList()[22] > 0)
+        {
+            float finalLuck = this.Luck + this.Critical * 2f;
+            this.Luck = finalLuck;
+        }    
+    }
+
+    public void ActivateLegendItem23()
+    {
+        // LegendItem23 보유 시 회피 +1%당 공격속도 +2% 상승
+        if (ItemManager.Instance.GetOwnLegendItemList()[23] > 0)
+        {
+            float finalATKSpeed = this.ATKSpeed + this.Evasion * 2f;
+            this.ATKSpeed = finalATKSpeed;
+        }
+    }
+
     // EpicItem29를 적용시키지 않은 원래의 대미지%를 돌려받음
     public void InActivateEpicItem29()
     {
@@ -108,14 +159,43 @@ public class PlayerInfo : MonoBehaviour
         }
     }
 
-    // EpicItem31 보유 시 효과 발동
-    public void ActivateEpicItem31(float cappedMovementSpeedPercent)
+    // LegendItem16을 적용시키지 않은 원래의 대미지% 돌려받음
+    public void InActivateLegendItem16()
     {
-        // EpicItem31 구매 시 구매 시점의 최대 체력 이상으로 상승하지 않음
-        if (ItemManager.Instance.GetOwnEpicItemList()[31] > 0)
+        if (ItemManager.Instance.GetOwnLegendItemList()[16] > 0)
         {
-            this.cappedMovementSpeedPercent = cappedMovementSpeedPercent;
-            RealtimeInfoManager.Instance.SetCappedMovementSpeedPercent(this.cappedMovementSpeedPercent);
+            float originDamagePercent = this.DMGPercent - this.HPDrain * 2f;
+            this.DMGPercent = originDamagePercent;
+        }
+    }
+
+    // LegendItem17을 적용시키지 않은 원래의 회복력 돌려받음
+    public void InActivateLegendItem17()
+    {
+        if (ItemManager.Instance.GetOwnLegendItemList()[16] > 0)
+        {
+            float originRecovery = this.Recovery + this.MovementSpeedPercent * 2f;
+            this.Recovery = Mathf.FloorToInt(originRecovery);
+        }
+    }
+
+    // LegendItem22를 적용시키지 않은 원래의 행운 돌려받음
+    public void InActivateLegendItem22()
+    {
+        if (ItemManager.Instance.GetOwnLegendItemList()[22] > 0)
+        {
+            float originLuck = this.Luck - this.Critical * 2f;
+            this.Luck = originLuck;
+        }
+    }
+
+    // LegendItem23를 적용시키지 않은 원래의 행운 돌려받음
+    public void InActivateLegendItem23()
+    {
+        if (ItemManager.Instance.GetOwnLegendItemList()[23] > 0)
+        {
+            float originATKSpeed = this.ATKSpeed - this.Evasion * 2f;
+            this.ATKSpeed = originATKSpeed;
         }
     }
 

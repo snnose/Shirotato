@@ -42,7 +42,7 @@ public class WeaponControl : MonoBehaviour
                 // 무기가 쿨타임이 아니라면 사격한다
                 if (!isCoolDown)
                 {
-                    //StartCoroutine(Attack(closetMonster));
+                    StartCoroutine(Attack(closetMonster));
                 }
             }
         }
@@ -81,7 +81,7 @@ public class WeaponControl : MonoBehaviour
     IEnumerator Attack(GameObject closetMonster)
     {
         // 총알 생성
-        GameObject bullet = Resources.Load<GameObject>("Prefabs/Bullet");
+        GameObject bullet = Resources.Load<GameObject>("Prefabs/Weapons/Bullet");
         GameObject copy = Instantiate(bullet, this.transform.position, this.transform.rotation);
 
         // 무기의 대미지 계산

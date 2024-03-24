@@ -38,7 +38,7 @@ public class WeaponManager : MonoBehaviour
             Destroy(this.gameObject);
 
         playerBox = GameObject.FindGameObjectWithTag("GameController");
-        weapon = Resources.Load<GameObject>("Prefabs/Pistol");
+        weapon = Resources.Load<GameObject>("Prefabs/Weapons/Pistol");
 
         currentWeaponList.Add(weapon);
         currentWeaponInfoList.Add(new WeaponInfo(weapon.name, 0));

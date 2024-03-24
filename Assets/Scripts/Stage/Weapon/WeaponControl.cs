@@ -42,8 +42,7 @@ public class WeaponControl : MonoBehaviour
                 // 무기가 쿨타임이 아니라면 사격한다
                 if (!isCoolDown)
                 {
-                    //Debug.Log("진입");
-                    StartCoroutine(Attack(closetMonster));
+                    //StartCoroutine(Attack(closetMonster));
                 }
             }
         }

@@ -34,8 +34,6 @@ public class MonsterControl : MonoBehaviour
 
     void Update()
     {
-        FollowingPlayer();
-
         // 몬스터가 죽을 때의 처리
         if (currentHP <= 0)
         {
@@ -61,17 +59,6 @@ public class MonsterControl : MonoBehaviour
     {
         if (collision.gameObject == GameObject.FindGameObjectWithTag("Player"))
             this.monsterCollider.isTrigger = true;
-    }
-
-    private void FollowingPlayer()
-    {
-        Vector2 playerPos = player.transform.position;
-        Vector2 monsterPos = this.transform.position;
-
-        Vector2 movement = playerPos - monsterPos;
-        movement.Normalize();
-
-        monsterRb2D.velocity = movement * monsterInfo.GetMonsterMovementSpeed();
     }
 
     // 몬스터 사망 시 드랍 처리를 한다

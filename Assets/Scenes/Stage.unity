@@ -34097,6 +34097,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterPrefabs:
   - {fileID: 6786713539144530600, guid: 24499318fb5babf4aac3de3edd41d9fe, type: 3}
+  - {fileID: 3093095284088891910, guid: 3d4724e942a7bba4ba9cd7967dbf589e, type: 3}
+  - {fileID: 57570352505355961, guid: 92fedb9b561f18b4c959c3119e51e293, type: 3}
   currentMonsters: []
 --- !u!4 &1503860139
 Transform:

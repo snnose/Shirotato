@@ -43,7 +43,7 @@ public class WaffleControl : MonoBehaviour
             // RareItem29 보유 시 확률에 따라 추가 와플 획득
             ActivateRareItem29(currentWaffle);
             // 현재 경험치 + 1 * 경험치 배율
-            ExpManager.Instance.SetCurrentExp(currentExp + (2 * PlayerInfo.Instance.GetExpGain()));
+            ExpManager.Instance.SetCurrentExp(currentExp + (1 * PlayerInfo.Instance.GetExpGain()));
             // 레벨업 코루틴 실행 (경험치가 충족되면 레벨업)
             ExpManager.Instance.levelUp = (ExpManager.Instance.LevelUp());
 

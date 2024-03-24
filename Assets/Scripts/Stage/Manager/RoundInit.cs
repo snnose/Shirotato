@@ -70,7 +70,7 @@ public class RoundInit : MonoBehaviour
         if (remainTime > 60f)
             remainTime = 60f;
         // 임시 제한 시간 설정
-        remainTime = 2f;
+        //remainTime = 2f;
         timerControl.gameObject.SetActive(true);
         GameRoot.Instance.SetRemainTime(remainTime);
         timerControl.SetTimerText(remainTime.ToString());

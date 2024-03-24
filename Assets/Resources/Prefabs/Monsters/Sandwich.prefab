@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8477236963242222952}
   - component: {fileID: 6599849086746767939}
   - component: {fileID: 4527236846090091835}
+  - component: {fileID: -1658817562356674479}
   m_Layer: 0
   m_Name: Sandwich
   m_TagString: Monster
@@ -231,6 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0361d7058a29e7f44bac59b75e1689f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 
   monsterNumber: 0
   HP: 0
   damage: 0
@@ -238,3 +240,15 @@ MonoBehaviour:
   waffleDropCount: 0
   consumableDropRate: 0
   lootDropRate: 0
+--- !u!114 &-1658817562356674479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6786713539144530600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eb8682a61756894aba3a131b36984c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

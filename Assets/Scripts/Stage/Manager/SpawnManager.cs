@@ -18,6 +18,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+    // 0 = 샌드위치, 1 = 수박
     public GameObject[] monsterPrefabs;
     private GameObject warningSign;
     private GameObject copy;
@@ -30,7 +31,9 @@ public class SpawnManager : MonoBehaviour
     private IEnumerator spawnMonster;
 
     // 코루틴 함수
-    IEnumerator spawnSandwich; // 1 ~ 2 round
+    IEnumerator spawnSandwich; // 1 ~ round
+    IEnumerator spawnWatermelon;
+    IEnumerator spawnSalad; // 4 ~
 
     private void Awake()
     {
@@ -65,18 +68,55 @@ public class SpawnManager : MonoBehaviour
     // 라운드 시작 시 해당 라운드의 몬스터 테이블을 불러와 스폰한다
     public IEnumerator StartSpawn(int currentRound)
     {
-        switch(currentRound)
+        float sandwichSpawnInterval;
+        float watermelonSpawnInterval;
+
+        switch (currentRound)
         {
+            // 1라운드
             case 1:
-                float sandWichSpawnInterval = 2.0f;
+                
+                sandwichSpawnInterval = 3.0f;
+                /*
                 // 아이템 적용
-                sandWichSpawnInterval = ActivateNormalItem40(sandWichSpawnInterval);
-                sandWichSpawnInterval = ActivateRareItem37(sandWichSpawnInterval);
-                sandWichSpawnInterval = ActivateEpicItem28(sandWichSpawnInterval);
-                spawnSandwich = SpawnSandwich(1.0f, 2.0f);
+                sandwichSpawnInterval = ActivateItemRelatedtSpawnInterval(sandwichSpawnInterval);
+                spawnSandwich = SpawnSandwich(1.0f, sandwichSpawnInterval, 3);
                 StartCoroutine(spawnSandwich);
+                */
+                spawnSalad = SpawnSalad(1.0f, sandwichSpawnInterval, 3);
+                StartCoroutine(spawnSalad);
                 break;
+            // 2라운드
             case 2:
+                sandwichSpawnInterval = 6.0f;
+                watermelonSpawnInterval = 3.0f;
+
+                sandwichSpawnInterval = ActivateItemRelatedtSpawnInterval(sandwichSpawnInterval);
+                watermelonSpawnInterval = ActivateItemRelatedtSpawnInterval(watermelonSpawnInterval);
+
+                spawnSandwich = SpawnSandwich(9.0f, sandwichSpawnInterval, 4);
+                spawnWatermelon = SpawnWatermelon(1.0f, watermelonSpawnInterval, 2);
+
+                StartCoroutine(spawnSandwich);
+                StartCoroutine(spawnWatermelon);
+                break;
+            // 3라운드
+            case 3:
+                sandwichSpawnInterval = 4.0f;
+                watermelonSpawnInterval = 7.0f;
+
+                sandwichSpawnInterval = ActivateItemRelatedtSpawnInterval(sandwichSpawnInterval);
+                watermelonSpawnInterval = ActivateItemRelatedtSpawnInterval(watermelonSpawnInterval);
+
+                spawnSandwich = SpawnSandwich(1.0f, sandwichSpawnInterval, 5);
+                spawnWatermelon = SpawnWatermelon(9.0f, watermelonSpawnInterval, 2);
+
+                StartCoroutine(spawnSandwich);
+                StartCoroutine(spawnWatermelon);
+                break;
+            // 4라운드
+            case 4:
+
                 break;
             default:
                 break;
@@ -129,15 +169,33 @@ public class SpawnManager : MonoBehaviour
     // 몬스터의 스탯을 설정하는 함수
     private void SetMonsterStatus(MonsterInfo monsterInfo, string monsterName)
     {
+        int currentRound = GameRoot.Instance.GetCurrentRound();
+
         switch (monsterName)
         {
             case "Sandwich":
-                monsterInfo.SetMonsterHP(3f + 2f * GameRoot.Instance.GetCurrentRound());
-                monsterInfo.SetMonsterDamage(1f + 0.6f * GameRoot.Instance.GetCurrentRound());
+                monsterInfo.SetMonsterHP(3f + 2f * currentRound);
+                monsterInfo.SetMonsterDamage(1f + 0.6f * currentRound);
                 monsterInfo.SetMonsterMovementSpeed(Random.Range(4.4f, 6.6f));
                 monsterInfo.SetMonsterWaffleDropCount(1);
-                monsterInfo.SetMonsterConsumableDropRate(1.00f);
+                monsterInfo.SetMonsterConsumableDropRate(0.01f);
                 monsterInfo.SetMonsterLootDropRate(0.01f);
+                break;
+            case "Watermelon":
+                monsterInfo.SetMonsterHP(1f + 1f * currentRound);
+                monsterInfo.SetMonsterDamage(1f + 0.6f * currentRound);
+                monsterInfo.SetMonsterMovementSpeed(7.6f);
+                monsterInfo.SetMonsterWaffleDropCount(1);
+                monsterInfo.SetMonsterConsumableDropRate(0.02f);
+                monsterInfo.SetMonsterLootDropRate(0.03f);
+                break;
+            case "Salad":
+                monsterInfo.SetMonsterHP(8f + 1f * currentRound);
+                monsterInfo.SetMonsterDamage(1f + 0.6f * currentRound);
+                monsterInfo.SetMonsterMovementSpeed(3.8f);
+                monsterInfo.SetMonsterWaffleDropCount(1);
+                monsterInfo.SetMonsterConsumableDropRate(0.03f);
+                monsterInfo.SetMonsterLootDropRate(0.1f);
                 break;
             default:
                 break;
@@ -164,7 +222,7 @@ public class SpawnManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator SpawnSandwich(float waitToStartTime, float spawnInterval)
+    private IEnumerator SpawnSandwich(float waitToStartTime, float spawnInterval, int monsterCount)
     {
         yield return new WaitForSeconds(waitToStartTime);
 
@@ -172,7 +230,7 @@ public class SpawnManager : MonoBehaviour
         while (!GameRoot.Instance.GetIsRoundClear())
         {
             bool spawnType = ChooseSpawnType();
-            int monsterCount = Random.Range(3, 6);  // 5라운드 단위마다 최소, 최대 + 1씩 할까?
+            monsterCount = monsterCount + Random.Range(0, 3);  // 5라운드 단위마다 최소, 최대 + 1씩 할까?
             
             // 산개 스폰
             if (spawnType)
@@ -210,6 +268,94 @@ public class SpawnManager : MonoBehaviour
         }
 
         yield return null;
+    }
+
+    private IEnumerator SpawnWatermelon(float waitToStartTime, float spawnInterval, int monsterCount)
+    {
+        yield return new WaitForSeconds(waitToStartTime);
+
+        // 라운드 종료까지 반복
+        while (!GameRoot.Instance.GetIsRoundClear())
+        {
+            bool spawnType = ChooseSpawnType();
+            monsterCount = monsterCount + Random.Range(0, 3);  // 5라운드 단위마다 최소, 최대 + 1씩 할까?
+
+            // 산개 스폰
+            if (spawnType)
+            {
+                // 몬스터 마릿수 만큼 랜덤 장소에 스폰
+                for (int i = 0; i < monsterCount; i++)
+                {
+                    Vector2 spawnLocation = SetSpawnPos();
+
+                    // 몬스터 스폰
+                    spawnMonster = SpawnMonster(monsterPrefabs[1], spawnLocation);
+                    StartCoroutine(spawnMonster);
+                    yield return null;
+                }
+            }
+            // 뭉침 스폰
+            if (!spawnType)
+            {
+                // 스폰되는 장소를 특정한 후
+                Vector2 spawnLocation = SetSpawnPos();
+                for (int i = 0; i < monsterCount; i++)
+                {
+                    // 각 개체가 한 곳에 스폰되지 않도록 조정해준다
+                    float posX = Random.Range(-2.0f, 2.0f);
+                    float posY = Random.Range(-2.0f, 2.0f);
+                    spawnLocation.x += posX; spawnLocation.y += posY;
+
+                    spawnMonster = SpawnMonster(monsterPrefabs[1], spawnLocation);
+                    StartCoroutine(spawnMonster);
+                    yield return null;
+                }
+            }
+
+            yield return new WaitForSeconds(spawnInterval);
+        }
+
+        yield return null;
+    }
+
+    private IEnumerator SpawnSalad(float waitToStartTime, float spawnInterval, int monsterCount)
+    {
+        yield return new WaitForSeconds(waitToStartTime);
+
+        // 라운드 종료까지 반복
+        while (!GameRoot.Instance.GetIsRoundClear())
+        {
+            bool spawnType = true;
+
+            // 산개 스폰
+            if (spawnType)
+            {
+                // 몬스터 마릿수 만큼 랜덤 장소에 스폰
+                for (int i = 0; i < monsterCount; i++)
+                {
+                    Vector2 spawnLocation = SetSpawnPos();
+
+                    // 몬스터 스폰
+                    spawnMonster = SpawnMonster(monsterPrefabs[2], spawnLocation);
+                    StartCoroutine(spawnMonster);
+                    yield return null;
+                }
+            }
+
+            yield return new WaitForSeconds(spawnInterval);
+        }
+
+        yield return null;
+    }
+
+    private float ActivateItemRelatedtSpawnInterval(float spawnInterval)
+    {
+        float tmp = spawnInterval;
+        tmp = ActivateNormalItem40(tmp);
+        tmp = ActivateRareItem37(tmp);
+        tmp = ActivateEpicItem28(tmp);
+
+        return tmp;
     }
 
     // NormalItem40 보유 시 적 출현 빈도 +5%

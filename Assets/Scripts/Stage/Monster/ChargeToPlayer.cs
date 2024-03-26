@@ -4,15 +4,73 @@ using UnityEngine;
 
 public class ChargeToPlayer : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private Rigidbody2D monsterRb2D;
+    ChasePlayer chasePlayer;
+
+    bool isCoolDown = true;
+
+    IEnumerator charging;  
+
     void Start()
     {
-        
+        chasePlayer = this.GetComponent<ChasePlayer>();
+        monsterRb2D = this.GetComponent<Rigidbody2D>();
+        // 스폰 시 돌진은 쿨타임
+        StartCoroutine(CoolDown());
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (!isCoolDown)
+            StartCoroutine(Charging());
+    }
+
+    IEnumerator CoolDown()
+    {
+        // 쿨타임은 2.5초 ~ 3.5초 사이
+        float coolDown = Random.Range(2.5f, 3.5f);
+        yield return new WaitForSeconds(coolDown);
+
+        isCoolDown = false;
+    }
+
+    IEnumerator StartCharge()
+    {
+        yield return StartCoroutine(Charging());
+    }
+
+    IEnumerator Charging()
+    {
+        Vector2 playerPos = PlayerControl.Instance.transform.position;
+        Vector2 monsterPos = this.transform.position;
+
+        float distance = Vector2.Distance(playerPos, monsterPos);
+        Vector2 chargeVector = playerPos - monsterPos;
+
+        if (distance <= 7f)
+        {
+            isCoolDown = true;
+
+            // 플레이어 추격을 멈춘다
+            chasePlayer.StopChasing();
+            monsterRb2D.velocity = new Vector2(0, 0);
+            // 0.5초 동안 서서히 빨개지면서 대기한 후 시전한다
+            yield return new WaitForSeconds(0.75f);
+
+            // 0.5초 동안 돌진
+            monsterRb2D.AddForce(chargeVector.normalized * 25f, ForceMode2D.Impulse);
+
+            yield return new WaitForSeconds(0.5f);
+            chasePlayer.StartChasing();
+
+            // 쿨타임을 돌린다
+            // 쿨타임은 2.5초 ~ 3.5초 사이
+            float coolDown = Random.Range(2.5f, 3.5f);
+
+            yield return new WaitForSeconds(coolDown);
+
+            isCoolDown = false;
+        }
+        yield return null;
     }
 }

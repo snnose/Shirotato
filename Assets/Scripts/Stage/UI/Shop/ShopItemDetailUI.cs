@@ -146,7 +146,7 @@ public class ShopItemDetailUI : MonoBehaviour
         }
         if (itemInfo.ExpGain > 0)
         {
-            tmpText += "경험치 획득 " + itemInfo.ExpGain + '\n';
+            tmpText += "경험치 획득 +" + itemInfo.ExpGain + "%\n";
             plusCount++;
         }
 
@@ -234,7 +234,7 @@ public class ShopItemDetailUI : MonoBehaviour
         }
         if (itemInfo.ExpGain < 0)
         {
-            tmpText += "경험치 획득 " + itemInfo.ExpGain + '\n';
+            tmpText += "경험치 획득 " + itemInfo.ExpGain + "%\n";
             minusCount++;
         }
 
@@ -257,7 +257,7 @@ public class ShopItemDetailUI : MonoBehaviour
             for (int k = 0; k < lines[j].Length; k++)
             {
                 // #1FDE38 << 진한 초록색
-                if (lines[j][k] == '+' || lines[j][k] == '%')
+                if (lines[j][k] == '+' || lines[j][k] == '%' || lines[j][k] == '.')
                     coloredLine += $"<color=#1FDE38>{lines[j][k]}</color>";
                 else if (lines[j][k] > 47 && lines[j][k] < 58)
                     coloredLine += $"<color=#1FDE38>{lines[j][k]}</color>";
@@ -278,7 +278,7 @@ public class ShopItemDetailUI : MonoBehaviour
             // -와 숫자만 색을 변경한다
             for (int k = 0; k < lines[j].Length; k++)
             {
-                if (lines[j][k] == '-' || lines[j][k] == '%')
+                if (lines[j][k] == '-' || lines[j][k] == '%' || lines[j][k] == '.')
                     coloredLine += $"<color=#{ColorUtility.ToHtmlStringRGB(Color.red)}>{lines[j][k]}</color>";
                 else if (lines[j][k] > 47 && lines[j][k] < 58)
                     coloredLine += $"<color=#{ColorUtility.ToHtmlStringRGB(Color.red)}>{lines[j][k]}</color>";

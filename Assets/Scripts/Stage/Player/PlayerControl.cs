@@ -85,7 +85,8 @@ public class PlayerControl : MonoBehaviour
 
         movement.Normalize();
 
-        movementSpeed = RealtimeInfoManager.Instance.GetMovementSpeed();
+        movementSpeed = RealtimeInfoManager.Instance.GetMovementSpeed() * 
+                            (1 + RealtimeInfoManager.Instance.GetMovementSpeedPercent() / 100);
         playerRb2D.velocity = movement * movementSpeed;
 
         // 움직이지 않는 경우

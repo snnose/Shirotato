@@ -59,7 +59,7 @@ public class BoxControl : MonoBehaviour
 
             // 와플이 플레이어에게 끌려간다
             this.transform.position =
-                Vector2.Lerp(this.transform.position, playerPos, 0.008f);
+                Vector2.Lerp(this.transform.position, playerPos, 0.01f);
         }
     }
 }

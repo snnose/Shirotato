@@ -43,6 +43,11 @@ public class MonsterControl : MonoBehaviour
             ActivateRareItem27();
             // EpicItem18 보유 시 효과 발동
             ActivateEpicItem18();
+            // TofuLarge가 죽은 경우 TofuSmall 3마리 스폰
+            if (this.TryGetComponent<SpawnTofuSmall>(out SpawnTofuSmall spawnTofuSmall))
+            {
+                StartCoroutine(SpawnManager.Instance.StartSpawnTofuSmall(this.transform.position));
+            }
             // 와플, 소모품, 상자 드랍 처리
             Drop();
         }
@@ -64,16 +69,17 @@ public class MonsterControl : MonoBehaviour
     // 몬스터 사망 시 드랍 처리를 한다
     private void Drop()
     {
-        // 드랍되는 오브젝트 위치에 랜덤성 부여
-        float RandomX = Random.Range(-0.1f, 0.1f);
-        float RandomY = Random.Range(-0.1f, 0.1f);
-
-        Vector2 dropPos = this.transform.position + new Vector3(RandomX, RandomY);
+        Vector2 dropPos;
 
         // 해당 몬스터의 재료 드랍 수 만큼 와플 드랍
         int dropWaffleCount = monsterInfo.GetWaffleDropCount();
         for (int i = 0; i < dropWaffleCount; i++)
         {
+            // 드랍되는 오브젝트 위치에 랜덤성 부여
+            float RandomX = Random.Range(-0.5f, 0.5f);
+            float RandomY = Random.Range(-0.5f, 0.5f);
+
+            dropPos = this.transform.position + new Vector3(RandomX, RandomY);
             GameObject copy = Instantiate(waffle, dropPos, Quaternion.identity);
         }
 
@@ -84,6 +90,7 @@ public class MonsterControl : MonoBehaviour
         // 플레이어의 행운이 적용된 몬스터의 드랍 확률보다 난수가 낮으면 드랍
         if (consumableRandom <= monsterInfo.GetMonsterConsumableDropRate() * (1f + (PlayerInfo.Instance.GetLuck() / 100)))
         {
+            dropPos = this.transform.position + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
             // 상자 드랍 확률까지 고려한다
             if (lootRandom <= monsterInfo.GetMonsterLootDropRate() * (1f + (PlayerInfo.Instance.GetLuck() / 100)))
             {
@@ -150,7 +157,7 @@ public class MonsterControl : MonoBehaviour
     void FireEpicItem18Bullet()
     {
         // 총알 생성
-        GameObject bullet = Resources.Load<GameObject>("Prefabs/Bullet");
+        GameObject bullet = Resources.Load<GameObject>("Prefabs/Weapons/Bullet");
         GameObject copy = Instantiate(bullet, this.transform.position, this.transform.rotation);
 
         // 아이템 대미지 계산

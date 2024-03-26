@@ -40,8 +40,8 @@ public class PlayerInfo : MonoBehaviour
     private float Harvest = 0f;
     private float expGain = 1.0f;
 
-    // 재화 관련
-    private int currentWaffle = 9999;
+    // 재화 관련 (시작 와플 30)
+    private int currentWaffle = 9930;
     public int storedWaffle = 0;   // 라운드가 끝나 미처 먹지 못한 와플 개수
 
     // 아이템 관련

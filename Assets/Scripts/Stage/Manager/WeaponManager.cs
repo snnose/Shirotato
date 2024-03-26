@@ -24,8 +24,8 @@ public class WeaponManager : MonoBehaviour
 
     public List<GameObject> currentWeaponList = new();
     public List<WeaponInfo> currentWeaponInfoList = new();
-    private List<Vector2> weaponPos = new() { new Vector2(-2.0f, 0f), new Vector2(2.0f, 0f), new Vector2(-2.0f, 2.0f),
-                                              new Vector2(2.0f, -2.0f), new Vector2(-2.0f, -2.0f), new Vector2(2.0f, 2.0f)};
+    private List<Vector2> weaponPos = new() { new Vector2(-1.8f, 0f), new Vector2(1.8f, 0f), new Vector2(-1.35f, 1.35f),
+                                              new Vector2(1.35f, -1.35f), new Vector2(-1.35f, -1.35f), new Vector2(1.35f, 1.35f)};
 
     public IEnumerator equipWeapons;
     public IEnumerator destroyWeapons;
@@ -40,9 +40,15 @@ public class WeaponManager : MonoBehaviour
         playerBox = GameObject.FindGameObjectWithTag("GameController");
         weapon = Resources.Load<GameObject>("Prefabs/Weapons/Pistol");
 
+        // 임시 무기 착용
         currentWeaponList.Add(weapon);
         currentWeaponInfoList.Add(new WeaponInfo(weapon.name, 0));
         currentWeaponList[0].GetComponent<WeaponControl>().SetWeaponNumber(currentWeaponInfoList[0].GetWeaponNumber());
+    
+        currentWeaponList.Add(weapon);
+        currentWeaponInfoList.Add(new WeaponInfo(weapon.name, 1));
+        currentWeaponList[1].GetComponent<WeaponControl>().SetWeaponNumber(currentWeaponInfoList[1].GetWeaponNumber());
+        
     }
 
     // Start is called before the first frame update
@@ -77,7 +83,9 @@ public class WeaponManager : MonoBehaviour
             reversal = 1;
             if (i % 2 == 1)
                 reversal = 0;
+            currentWeaponList[i].GetComponent<WeaponControl>().SetWeaponNumber(currentWeaponInfoList[i].GetWeaponNumber());
             GameObject copy = Instantiate(currentWeaponList[i], weaponPos[i], Quaternion.Euler(0f, -180f * reversal, 0f)) as GameObject;
+
             copy.transform.SetParent(playerBox.transform, false);
             yield return null;
         }

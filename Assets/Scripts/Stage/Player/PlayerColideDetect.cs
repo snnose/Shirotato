@@ -48,7 +48,14 @@ public class PlayerColideDetect : MonoBehaviour
         if (GetAttackedMonster() != null)
         {
             bool isEvade = false;
-            GameObject monster = GetAttackedMonster();
+            GameObject collision = GetAttackedMonster();
+
+            // monster가 감자라면 예외처리
+            if (collision.name == "Potatoes")
+            {
+                StopCoroutine(calBeHitDamage);
+                calBeHitDamage = CalBeHitDamage();
+            }
 
             // 회피 시도를 한다
             float random = Random.Range(0, 100f);
@@ -62,7 +69,7 @@ public class PlayerColideDetect : MonoBehaviour
             {
                 // RareItem33 보유 시 아이템 효과 발동
                 // 회피 성공 시 반격 대미지를 입힌다
-                ActivateRareItem33(monster.GetComponent<MonsterControl>());
+                ActivateRareItem33(collision.GetComponent<MonsterControl>());
                 // EpicItem16 보유 시 아이템 효과 발동
                 // 회피 성공 시 50% 확률로 체력 5를 회복한다
                 ActivateEpicItem16();
@@ -71,7 +78,7 @@ public class PlayerColideDetect : MonoBehaviour
             }
 
             // 충돌한 오브젝트가 몬스터이고, 회피 실패 시 대미지를 받는다.
-            if (monster.TryGetComponent<MonsterInfo>(out MonsterInfo monsterInfo)
+            if (collision.TryGetComponent<MonsterInfo>(out MonsterInfo monsterInfo)
                 && !isEvade)
             {
                 // 받는 대미지를 계산 후 현재 체력을 차감한다
@@ -96,6 +103,35 @@ public class PlayerColideDetect : MonoBehaviour
 
                 PrintText(-behitDamage, Color.red);
             }
+
+            // 충돌한 오브젝트가 투사체인 경우
+            if (collision.TryGetComponent<ProjectileControl>(out ProjectileControl projectileControl)
+                && !isEvade)
+            {
+                // 받는 대미지를 계산 후 현재 체력을 차감한다
+                int behitDamage = Mathf.FloorToInt(projectileControl.GetProjectileDamage() *
+                                                                (1 - playerInfo.GetArmor() /
+                                                                                (Mathf.Abs(playerInfo.GetArmor()) + 10)));
+
+                float currentHP = RealtimeInfoManager.Instance.GetCurrentHP();
+                currentHP -= behitDamage;
+                RealtimeInfoManager.Instance.SetCurrentHP(currentHP);
+
+                // 플레이어의 체력이 0 이하로 떨어지면 
+                if (currentHP <= 0)
+                {
+                    currentHP = 0;
+                    // Player를 죽음 상태로 변경
+                    this.gameObject.transform.parent.GetComponent<PlayerControl>().currState = PlayerControl.state.DEAD;
+                }
+
+                // 아이템 효과 적용
+                ActivateEpicItem34();
+
+                PrintText(-behitDamage, Color.red);
+
+                Destroy(collision);
+            }
         }
 
         yield return null;
@@ -104,7 +140,7 @@ public class PlayerColideDetect : MonoBehaviour
     IEnumerator Imune()
     {
         isPlayerImune = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.0f);
         isPlayerImune = false;
         calBeHitDamage = CalBeHitDamage();
     }

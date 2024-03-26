@@ -48,6 +48,11 @@ public class TimerControl : MonoBehaviour
         remainTime = GameRoot.Instance.GetRemainTime();
         isTicking = true;
 
+        if (remainTime < 10f)
+            this.GetComponent<TextMeshProUGUI>().color = Color.red;
+        else
+            this.GetComponent<TextMeshProUGUI>().color = Color.black;
+
         yield return new WaitForSeconds(1f);
         remainTime--;
         GameRoot.Instance.SetRemainTime(remainTime);

@@ -100,7 +100,7 @@ public class WeaponControl : MonoBehaviour
 
         // 가까운 몬스터에게 발사
         Vector2 direction = closetMonster.transform.position - copy.transform.position;
-        copy.GetComponent<Rigidbody2D>().AddForce(direction.normalized * 50f, ForceMode2D.Impulse);
+        copy.GetComponent<Rigidbody2D>().AddForce(direction.normalized * 65f, ForceMode2D.Impulse);
 
         isCoolDown = true;
         yield return new WaitForSeconds(weaponInfo.coolDown);

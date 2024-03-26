@@ -69,7 +69,7 @@ public class GameRoot : MonoBehaviour
 
         stopRound = StopRound();
 
-        remainTime = 20f;
+        remainTime = 2f;
     }
     // Start is called before the first frame update
     void Start()
@@ -136,19 +136,21 @@ public class GameRoot : MonoBehaviour
     {
         // 수확 능력치에 비례해 경험치와 와플 획득
         Harvest();
-
         // EpicItem35 보유 시 효과 발동
         ActivateEpicItem35();
         // LegendItem21 보유 시 효과 발동
         ActivateLegendItem21();
 
         // 와플이 플레이어에게 끌려지도록 잠시 텀을 둔다
-        yield return StartCoroutine(Sleep(3.0f));
-
+        //yield return StartCoroutine(Sleep(3.0f));
+        Debug.Log("start wait 3 sec");
+        yield return new WaitForSeconds(3.0f);
+        Debug.Log("end wait 3 sec");
         // 타이머 비활성화
         timerControl.gameObject.SetActive(false);
 
         // UI 출력 코루틴을 입력
+        Debug.Log("코루틴 장전");
         floatingFindItemUI = FloatingFindItemUI();
         floatingUpgradeUI = FloatingUpgradeUI();
         floatingShopUI = FloatingShopUI();
@@ -159,19 +161,20 @@ public class GameRoot : MonoBehaviour
     private void Harvest()
     {
         float currExp = ExpManager.Instance.GetCurrentExp();
-        currExp += RealtimeInfoManager.Instance.GetHarvest();
+        currExp += playerInfo.GetHarvest();
         ExpManager.Instance.SetCurrentExp(currExp);
         ExpManager.Instance.levelUp = ExpManager.Instance.LevelUp();
 
         // 와플 획득 처리
         int currWaffle = playerInfo.GetCurrentWaffle();
-        currWaffle += Mathf.FloorToInt(RealtimeInfoManager.Instance.GetHarvest());
+        currWaffle += Mathf.FloorToInt(playerInfo.GetHarvest());
         playerInfo.SetCurrentWaffle(currWaffle);
+        RenewWaffleAmount.Instance.renewCurrentWaffleAmount = RenewWaffleAmount.Instance.RenewCurrentWaffleAmount();
 
         // 수확은 매 라운드 종료 시 5% 씩 증가한다
         // EpicItem24 보유 시 8%p가 추가로 증가한다 (13% 증가)
         float harvestIncrease = 1.05f + ActivateEpicItem24();
-        playerInfo.SetHarvest(Mathf.FloorToInt(playerInfo.GetHarvest() * harvestIncrease));
+        playerInfo.SetHarvest(Mathf.CeilToInt(playerInfo.GetHarvest() * harvestIncrease));
     }
 
     private float ActivateEpicItem24()
@@ -256,8 +259,8 @@ public class GameRoot : MonoBehaviour
         isDuringUpgrade = true;
 
         // 현재 업그레이드 레벨을 1 상승
-        int currentUpgradeLevel = UpgradeManager.Instance.GetCurrentUpgradeLevel();
-        UpgradeManager.Instance.SetCurrentUpgradeLevel(currentUpgradeLevel++);
+        int currentUpgradeLevel = UpgradeManager.Instance.GetCurrentUpgradeLevel() + 1;
+        UpgradeManager.Instance.SetCurrentUpgradeLevel(currentUpgradeLevel);
 
         // 남은 업그레이드 카운트 감소
         levelUpCount--;

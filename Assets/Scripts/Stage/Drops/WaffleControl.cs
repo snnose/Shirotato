@@ -20,12 +20,12 @@ public class WaffleControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 라운도가 종료되면 플레이어에게 끌려 가 사라진다.
+        // 라운드가 종료되면 플레이어에게 끌려 가 사라진다.
         // 대신 이렇게 획득한 와플은 다음 라운드에 와플을 습득 시 추가 와플을 얻도록 한다.
         if (isAttractImmediatly)
             AttractToPlayer(100f);
         else
-            AttractToPlayer(2.5f * (1 + (rootingRange / 100)));
+            AttractToPlayer(4.0f * (1 + (rootingRange / 100)));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -43,7 +43,7 @@ public class WaffleControl : MonoBehaviour
             // RareItem29 보유 시 확률에 따라 추가 와플 획득
             ActivateRareItem29(currentWaffle);
             // 현재 경험치 + 1 * 경험치 배율
-            ExpManager.Instance.SetCurrentExp(currentExp + (1 * PlayerInfo.Instance.GetExpGain()));
+            ExpManager.Instance.SetCurrentExp(currentExp + (1 * (1 + PlayerInfo.Instance.GetExpGain() / 100)));
             // 레벨업 코루틴 실행 (경험치가 충족되면 레벨업)
             ExpManager.Instance.levelUp = (ExpManager.Instance.LevelUp());
 
@@ -176,7 +176,7 @@ public class WaffleControl : MonoBehaviour
             if (dis < range)
             {
                 this.transform.position =
-                Vector2.Lerp(this.transform.position, playerPos, 0.02f);
+                Vector2.Lerp(this.transform.position, playerPos, 0.1f);
             }
         }
 
@@ -188,7 +188,7 @@ public class WaffleControl : MonoBehaviour
 
             // 와플이 플레이어에게 끌려간다
             this.transform.position =
-                Vector2.Lerp(this.transform.position, playerPos, 0.005f);
+                Vector2.Lerp(this.transform.position, playerPos, 0.1f);
         }
     }
 

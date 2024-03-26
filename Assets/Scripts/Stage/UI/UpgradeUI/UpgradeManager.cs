@@ -98,6 +98,8 @@ public class UpgradeManager : MonoBehaviour
                 }
             }
 
+            Debug.Log("업그레이드 레어도 : " + rarity);
+
             // 0 ~ 12 사이의 값을 고른다
             int upgradeRandom = UnityEngine.Random.Range(0, 13);
             // 만약 중복된 업그레이드가 나왔다면

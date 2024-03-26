@@ -74,7 +74,7 @@ public class ExpManager : MonoBehaviour
 
     private float calDemandExp(int currentLevel)
     {
-        return 1.54f * (currentLevel + 4) * (currentLevel + 4); 
+        return 1f * (currentLevel + 4) * (currentLevel + 4); 
     }
 
     public void SetCurrentExp(float currentExp)

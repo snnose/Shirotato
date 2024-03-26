@@ -116,8 +116,8 @@ public class ItemManager : MonoBehaviour
             // 무기, 아이템을 확률에 따라 정한다.
             int ran = UnityEngine.Random.Range(1, 100);
             
-            // 난수 값이 35이하라면 무기
-            if (ran <= 35)
+            // 난수 값이 30이하라면 무기
+            if (ran <= 30)
             {
                 currentWeaponList = WeaponManager.Instance.GetCurrentWeaponList();
                 // 한번 더 난수를 사용해 같은 무기가 나오도록 보정
@@ -154,7 +154,7 @@ public class ItemManager : MonoBehaviour
                     shopWeaponInfoList[i] = tmpInfo;
                 }
             }
-            // 난수 값이 35 초과라면 아이템
+            // 난수 값이 30 초과라면 아이템
             else
             {
                 GameObject tmp;
@@ -167,17 +167,17 @@ public class ItemManager : MonoBehaviour
                         shopItemList[i] = tmp;
                         break;
                     case 1:
-                        random = UnityEngine.Random.Range(0, rareItemList.Count);
+                        random = CheckIsOwnLimit(rarity, UnityEngine.Random.Range(0, rareItemList.Count));
                         tmp = rareItemList[random];
                         shopItemList[i] = tmp;
                         break;
                     case 2:
-                        random = UnityEngine.Random.Range(0, epicItemList.Count);
+                        random = CheckIsOwnLimit(rarity, UnityEngine.Random.Range(0, epicItemList.Count));
                         tmp = epicItemList[random];
                         shopItemList[i] = tmp;
                         break;
                     case 3:
-                        random = UnityEngine.Random.Range(0, legendItemList.Count);
+                        random = CheckIsOwnLimit(rarity, UnityEngine.Random.Range(0, legendItemList.Count));
                         tmp = legendItemList[random];
                         shopItemList[i] = tmp;
                         break;
@@ -237,7 +237,8 @@ public class ItemManager : MonoBehaviour
                         isLimit = true;
                     if (tmp == 28 && ownRareItemList[29] == 20)
                         isLimit = true;
-                    if (tmp == 29 && ownRareItemList[30] == 1)
+                    // 미구현 33
+                    if (tmp == 29 && ownRareItemList[30] == 0)
                         isLimit = true;
                     if (tmp == 31 && ownRareItemList[32] == 1)
                         isLimit = true;

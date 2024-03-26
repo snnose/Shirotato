@@ -33,20 +33,19 @@ public class RunAwayFromPlayer : MonoBehaviour
 
         float distance = Vector2.Distance(playerPos, monsterPos);
 
+
         // 일정 거리 가까이면 플레이어에서 최대한 멀어지는 방향으로 도망친다
         if (distance <= properDistance)
         {
             // 추후 보완해서 좀 더 괜찮은 움직임으로 설계해야함
             //StartCoroutine(RunAway(playerPos, monsterPos));
-            StartCoroutine(MoveRandomly());
+            yield return StartCoroutine(MoveRandomly());
         }
         // 일정 거리 밖이면 매초 랜덤한 방향으로 일정시간 이동
         else
         {
-            StartCoroutine(MoveRandomly());
+            yield return StartCoroutine(MoveRandomly());
         }
-
-        yield return null;
     }
 
     IEnumerator RunAway(Vector2 playerPos, Vector2 monsterPos)
@@ -61,7 +60,6 @@ public class RunAwayFromPlayer : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         chooseNextMoving = ChooseNextMoving();
-        yield return null;
     }
 
     IEnumerator MoveRandomly()
@@ -99,6 +97,5 @@ public class RunAwayFromPlayer : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         
         chooseNextMoving = ChooseNextMoving();
-        yield return null;
     }
 }

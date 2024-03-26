@@ -50,7 +50,7 @@ public class RealtimeInfoManager : MonoBehaviour
     public int legendItem18Stack = 0;
 
     // 코루틴
-    //public IEnumerator hpRecovery;
+    public Coroutine startAllCoroutine;
     public IEnumerator activateLegendItem25 = null;
 
     private IEnumerator inActivateLegendItem25 = null;
@@ -69,7 +69,7 @@ public class RealtimeInfoManager : MonoBehaviour
     {
         SetAllStatus(PlayerInfo.Instance);
         currentHP = HP;
-        StartCoroutine(HPRecovery());
+        startAllCoroutine = StartCoroutine(StartAllCoroutine());
         StartCoroutine(Bleeding());
         StartCoroutine(ActivateEpicItem36());
         StartCoroutine(ActivateLegendItem24());
@@ -112,6 +112,11 @@ public class RealtimeInfoManager : MonoBehaviour
         }
     }
 
+    public IEnumerator StartAllCoroutine()
+    {
+        yield return StartCoroutine(HPRecovery());
+    }
+
     // 플레이어가 Recovery 능력치에 비례해 회복한다
     public IEnumerator HPRecovery()
     {
@@ -122,6 +127,7 @@ public class RealtimeInfoManager : MonoBehaviour
             if (this.Recovery == 0f)
                 yield return new WaitForSeconds(coolDown);
 
+            Debug.Log("회복 시작");
             // 회복 능력치가 0보다 클 때 (0이면 회복되지 않는다)
             if (this.Recovery > 0f)
             {

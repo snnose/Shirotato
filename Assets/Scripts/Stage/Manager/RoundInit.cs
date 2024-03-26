@@ -52,10 +52,11 @@ public class RoundInit : MonoBehaviour
         // EpicItem30 보유 시 최대 체력의 50%로 라운드 시작
         RealtimeInfoManager.Instance.SetCurrentHP(ActivateEpicItem30(PlayerInfo.Instance.GetHP()));
         RealtimeInfoManager.Instance.SetHP(PlayerInfo.Instance.GetHP());
-        StartCoroutine(RealtimeInfoManager.Instance.HPRecovery());
-        StartCoroutine(RealtimeInfoManager.Instance.Bleeding());
+        RealtimeInfoManager.Instance.SetAllStatus(PlayerInfo.Instance);
+        //StartCoroutine(RealtimeInfoManager.Instance.Bleeding());
         StartCoroutine(RealtimeInfoManager.Instance.ActivateEpicItem36());
         StartCoroutine(RealtimeInfoManager.Instance.ActivateLegendItem24());
+        //RealtimeInfoManager.Instance.startAllCoroutine = StartCoroutine(RealtimeInfoManager.Instance.StartAllCoroutine());
         RealtimeInfoManager.Instance.activateLegendItem25 = RealtimeInfoManager.Instance.ActivateLegendItem25();
 
         // NormalItem45를 샀다면 HP 1로 시작
@@ -70,7 +71,7 @@ public class RoundInit : MonoBehaviour
         if (remainTime > 60f)
             remainTime = 60f;
         // 임시 제한 시간 설정
-        //remainTime = 2f;
+        remainTime = 1f;
         timerControl.gameObject.SetActive(true);
         GameRoot.Instance.SetRemainTime(remainTime);
         timerControl.SetTimerText(remainTime.ToString());
@@ -82,12 +83,14 @@ public class RoundInit : MonoBehaviour
         GameObject playerBox = GameRoot.Instance.GetPlayerBox();
         PlayerInfo playerInfo = playerBox.transform.GetChild(0).GetComponent<PlayerInfo>();
         playerBox.transform.position = new Vector2(0f, 0f);
-        playerInfo.SetMovementSpeed(playerInfo.GetMovementSpeed() * (1 + playerInfo.GetMovementSpeedPercent() / 100));
         PlayerControl.Instance.SetMovementSpeed(PlayerInfo.Instance.GetMovementSpeed());
         // 서거나 움직일 때 능력치 변동이 있는 아이템 코루틴 장전
         PlayerControl.Instance.activateEpicItem20 = PlayerControl.Instance.ActivateEpicItem20();
         PlayerControl.Instance.activateEpicItem22 = PlayerControl.Instance.ActivateEpicItem22();
         PlayerControl.Instance.activateEpicItem33 = PlayerControl.Instance.ActivateEpicItem33();
+
+        // 보유 와플 UI 초기화
+        RenewWaffleAmount.Instance.renewCurrentWaffleAmount = RenewWaffleAmount.Instance.RenewCurrentWaffleAmount();
 
         // 업그레이드 초기화
         // 잠시 업그레이드 매니저 활성화

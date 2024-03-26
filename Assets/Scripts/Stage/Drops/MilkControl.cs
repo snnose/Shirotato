@@ -35,6 +35,7 @@ public class MilkControl : MonoBehaviour
 
             // 현재 체력이 최대 체력과 같으면 LegendItem18 효과 발동 (최대 10번)
             if (currentHP == maxHP &&
+                ItemManager.Instance.GetOwnLegendItemList()[18] > 0 &&
                 RealtimeInfoManager.Instance.legendItem18Stack <= 10)
             {
                 ActivateLegendItem18();

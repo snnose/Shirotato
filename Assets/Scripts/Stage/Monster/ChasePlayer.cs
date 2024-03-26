@@ -34,7 +34,7 @@ public class ChasePlayer : MonoBehaviour
 
             monsterRb2D.velocity = movement * monsterInfo.GetMonsterMovementSpeed();
 
-            yield return null;
+            yield return new WaitForSeconds(0.1f);
         }
     }
 

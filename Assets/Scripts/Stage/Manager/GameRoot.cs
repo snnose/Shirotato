@@ -69,7 +69,7 @@ public class GameRoot : MonoBehaviour
 
         stopRound = StopRound();
 
-        remainTime = 2f;
+        remainTime = 20f;
     }
     // Start is called before the first frame update
     void Start()
@@ -93,6 +93,7 @@ public class GameRoot : MonoBehaviour
             && !isDuringFindItem
             && floatingFindItemUI != null)
         {
+            Debug.Log("아이템 발견 UI 출력");
             StartCoroutine(floatingFindItemUI);
             floatingFindItemUI = null;
         }
@@ -105,6 +106,7 @@ public class GameRoot : MonoBehaviour
             && !isDuringUpgrade
             && floatingUpgradeUI != null)
         {
+            Debug.Log("레벨 업 UI 출력");
             StartCoroutine(floatingUpgradeUI);
             floatingUpgradeUI = null;
         }
@@ -141,16 +143,16 @@ public class GameRoot : MonoBehaviour
         // LegendItem21 보유 시 효과 발동
         ActivateLegendItem21();
 
+        floatingFindItemUI = null;
+        floatingUpgradeUI = null;
+        floatingShopUI = null;
+
         // 와플이 플레이어에게 끌려지도록 잠시 텀을 둔다
-        //yield return StartCoroutine(Sleep(3.0f));
-        Debug.Log("start wait 3 sec");
         yield return new WaitForSeconds(3.0f);
-        Debug.Log("end wait 3 sec");
         // 타이머 비활성화
         timerControl.gameObject.SetActive(false);
 
         // UI 출력 코루틴을 입력
-        Debug.Log("코루틴 장전");
         floatingFindItemUI = FloatingFindItemUI();
         floatingUpgradeUI = FloatingUpgradeUI();
         floatingShopUI = FloatingShopUI();

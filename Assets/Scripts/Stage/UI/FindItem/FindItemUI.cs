@@ -126,7 +126,8 @@ public class FindItemUI : MonoBehaviour
     private void OnClickSellButton()
     {
         // 판매 가격은 아이템 가격의 25%
-        int sellPrice = Mathf.FloorToInt(item.GetComponent<ItemInfo>().price * 0.25f);
+        int sellPrice = Mathf.FloorToInt(item.GetComponent<ItemInfo>().price + GameRoot.Instance.GetCurrentRound() +
+                                        (item.GetComponent<ItemInfo>().price * GameRoot.Instance.GetCurrentRound() / 10));
 
         // 보유 와플에 판매한 가격만큼 추가
         PlayerInfo.Instance.SetCurrentWaffle(PlayerInfo.Instance.GetCurrentWaffle() + sellPrice);
@@ -527,6 +528,8 @@ public class FindItemUI : MonoBehaviour
 
         // RareItem32를 보유했다면 원가의 60%
         // 보유하지 않았다면 원가의 25%를 얻는다
+        int itemPrice = Mathf.FloorToInt(itemInfo.price + GameRoot.Instance.GetCurrentRound() +
+                                        (itemInfo.price * GameRoot.Instance.GetCurrentRound() / 10));
         int sellPrice = ActivateRareItem32(itemInfo.price);
 
         sellButtonText.text = "판매 (+" + sellPrice.ToString() +")";

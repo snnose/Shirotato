@@ -122,7 +122,9 @@ public class ShopWeaponDetailUI : MonoBehaviour
         List<GameObject> weaponList = WeaponManager.Instance.GetCurrentWeaponList();
         List<WeaponInfo> weaponInfoList = WeaponManager.Instance.GetCurrentWeaponInfoList();
 
-        int sellPrice = ActivateRareItem32(weaponInfoList[currentWeaponRoomNumber].price);
+        int weaponPrice = weaponInfoList[currentWeaponRoomNumber].price;
+        int sellPrice = ActivateRareItem32(Mathf.FloorToInt(weaponPrice + GameRoot.Instance.GetCurrentRound() +
+                                                            (weaponPrice * GameRoot.Instance.GetCurrentRound() / 10)));
         PlayerInfo.Instance.SetCurrentWaffle(PlayerInfo.Instance.GetCurrentWaffle() + sellPrice);
 
         // 판매한 무기의 칸을 비운다
@@ -228,7 +230,9 @@ public class ShopWeaponDetailUI : MonoBehaviour
     public void SetWeaponSellButtonText(WeaponInfo weaponInfo)
     {
         // RareItem32를 보유하면 무기 가격의 60%, 아니라면 25%
-        int sellPrice = ActivateRareItem32(weaponInfo.price);
+        int weaponPrice = weaponInfo.price;
+        int sellPrice = ActivateRareItem32(Mathf.FloorToInt(weaponPrice + GameRoot.Instance.GetCurrentRound() +
+                                                            (weaponPrice * GameRoot.Instance.GetCurrentRound() / 10)));
 
         this.weaponSellButtonText.text = "판매 (+" + sellPrice + ")";
     }

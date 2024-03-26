@@ -29,6 +29,7 @@ public class SpawnManager : MonoBehaviour
     private int currentNumber = 1;
 
     public IEnumerator startSpawn;
+    private IEnumerator stopSpawn;
     private IEnumerator spawnMonster;
 
     // 코루틴 함수
@@ -70,13 +71,15 @@ public class SpawnManager : MonoBehaviour
         // 스폰 종료
         else
         {
-            StopSpawn();
+            StartCoroutine(stopSpawn);
         }
     }
 
     // 라운드 시작 시 해당 라운드의 몬스터 테이블을 불러와 스폰한다
     public IEnumerator StartSpawn(int currentRound)
     {
+        // 스폰 중지 코루틴 장전
+        stopSpawn = StopSpawn();
         // 모든 라운드에서 감자 스폰
         spawnPotato = SpawnPotatoes();
         StartCoroutine(spawnPotato);
@@ -100,7 +103,7 @@ public class SpawnManager : MonoBehaviour
                 
                 // 리스폰 관련 아이템 적용
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(sandwichSpawnInterval);
-                spawnSandwich = SpawnSandwich(1.0f, sandwichSpawnInterval, 4);
+                spawnSandwich = SpawnSandwich(1.0f, sandwichSpawnInterval, 5);
                 StartCoroutine(spawnSandwich);
                 
                 break;
@@ -443,29 +446,60 @@ public class SpawnManager : MonoBehaviour
     }
 
     // 라운드 종료 시 모든 스폰 코루틴을 종료한다.
-    private void StopSpawn()
+    private IEnumerator StopSpawn()
     {
-        Debug.Log("몬스터 스폰 중지");
         if (spawnPotato != null)
+        {
             StopCoroutine(spawnPotato);
+            spawnPotato = null;
+        }
         if (spawnSandwich != null)
+        {
             StopCoroutine(spawnSandwich);
+            spawnSandwich = null;
+        }
         if (spawnWatermelon != null)
+        {
             StopCoroutine(spawnWatermelon);
+            spawnWatermelon = null;
+        }
         if (spawnBlueberry != null)
+        {
             StopCoroutine(spawnBlueberry);
+            spawnBlueberry = null;
+        }
         if (spawnSalad != null)
+        {
             StopCoroutine(spawnSalad);
+            spawnSalad = null;
+        }
         if (spawnCheese != null)
+        {
             StopCoroutine(spawnCheese);
+            spawnCheese = null;
+        }
         if (spawnStrongCheese != null)
+        {
             StopCoroutine(spawnStrongCheese);
+            spawnStrongCheese = null;
+        }
         if (spawnSpaghetti != null)
+        {
             StopCoroutine(spawnSpaghetti);
+            spawnSpaghetti = null;
+        }
         if (spawnPancakes != null)
+        {
             StopCoroutine(spawnPancakes);
+            spawnPancakes = null;
+        }
         if (spawnTofuLarge != null)
+        {
             StopCoroutine(spawnTofuLarge);
+            spawnTofuLarge = null;
+        }
+
+        yield return null;
     }
 
     // 스폰 타입을 정한다 (산개 or 뭉침)

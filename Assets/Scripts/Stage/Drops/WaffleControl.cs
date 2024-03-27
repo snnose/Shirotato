@@ -176,7 +176,7 @@ public class WaffleControl : MonoBehaviour
             if (dis < range)
             {
                 this.transform.position =
-                Vector2.Lerp(this.transform.position, playerPos, 0.1f);
+                Vector2.Lerp(this.transform.position, playerPos, 0.08f);
             }
         }
 
@@ -188,7 +188,7 @@ public class WaffleControl : MonoBehaviour
 
             // 와플이 플레이어에게 끌려간다
             this.transform.position =
-                Vector2.Lerp(this.transform.position, playerPos, 0.1f);
+                Vector2.Lerp(this.transform.position, playerPos, 0.08f);
         }
     }
 

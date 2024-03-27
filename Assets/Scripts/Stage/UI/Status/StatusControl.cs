@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ShopStatusControl : MonoBehaviour
+public class StatusControl : MonoBehaviour
 {
     public GameObject statInfo;
 
@@ -16,7 +16,7 @@ public class ShopStatusControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -29,7 +29,7 @@ public class ShopStatusControl : MonoBehaviour
     void RenewStatus()
     {
         // 최대 체력
-        statInfo.transform.GetChild(0).GetChild(2).GetComponent<TextMeshProUGUI>().text = 
+        statInfo.transform.GetChild(0).GetChild(2).GetComponent<TextMeshProUGUI>().text =
                                                         PlayerInfo.Instance.GetHP().ToString();
         // 회복력
         statInfo.transform.GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>().text =

@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IndividualityUIControl : MonoBehaviour
+public class WeaponChooseUIControl : MonoBehaviour
 {
     // singleton
-    private static IndividualityUIControl instance;
-    public static IndividualityUIControl Instance
+    private static WeaponChooseUIControl instance;
+    public static WeaponChooseUIControl Instance
     {
         get
         {
@@ -29,7 +29,7 @@ public class IndividualityUIControl : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -37,12 +37,14 @@ public class IndividualityUIControl : MonoBehaviour
         Cancel();
     }
 
-    // 화면 플로팅 중 Esc 입력 시 UI 비활성화
+    // 화면 플로팅 중 Esc 입력 시 해당 UI 비활성화
+    // 특성 선택 창을 띄운다 (마치 무기 선택에서 특성 선택 창으로 이동하는 것 처럼)
     private void Cancel()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SetActive(false);
+            IndividualityUIControl.Instance.SetActive(true);
         }
     }
 
@@ -56,7 +58,7 @@ public class IndividualityUIControl : MonoBehaviour
         // false일 시 UI 비활성화 및 화면 바깥으로 이동
         else
         {
-            this.transform.position = new Vector2(-Screen.width, Screen.height);
+            this.transform.position = new Vector2(-Screen.width, 0f);
         }
 
         this.gameObject.SetActive(ret);

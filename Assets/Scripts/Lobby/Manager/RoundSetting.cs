@@ -17,6 +17,10 @@ public class RoundSetting : MonoBehaviour
         }
     }
 
+    private string individuality = "";
+    private string startWeapon = "";
+    private int difficulty = 0;
+
     private void Awake()
     {
         if (instance == null)
@@ -25,13 +29,33 @@ public class RoundSetting : MonoBehaviour
             Destroy(this.gameObject);
     }
 
-    void Start()
+    public void SetIndividuality(string individuality)
     {
-        
+        this.individuality = individuality;
     }
 
-    void Update()
+    public void SetStartWeapon(string startWeaponName)
     {
-        
+        this.startWeapon = startWeaponName;
+    }
+
+    public void SetDifficulty(int difficulty)
+    {
+        this.difficulty = difficulty;
+    }
+
+    public string GetIndividuality()
+    {
+        return this.individuality;
+    }
+
+    public string GetStartWeapon()
+    {
+        return this.startWeapon;
+    }
+
+    public int GetDifficulty()
+    {
+        return this.difficulty;
     }
 }

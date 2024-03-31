@@ -93,7 +93,6 @@ public class GameRoot : MonoBehaviour
             && !isDuringFindItem
             && floatingFindItemUI != null)
         {
-            Debug.Log("아이템 발견 UI 출력");
             StartCoroutine(floatingFindItemUI);
             floatingFindItemUI = null;
         }
@@ -106,7 +105,6 @@ public class GameRoot : MonoBehaviour
             && !isDuringUpgrade
             && floatingUpgradeUI != null)
         {
-            Debug.Log("레벨 업 UI 출력");
             StartCoroutine(floatingUpgradeUI);
             floatingUpgradeUI = null;
         }

@@ -20,6 +20,10 @@ public class WaffleControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 게임 오버 시 오브젝트 파괴
+        if (GameRoot.Instance.GetIsGameOver())
+            Destroy(this.gameObject);
+
         // 라운드가 종료되면 플레이어에게 끌려 가 사라진다.
         // 대신 이렇게 획득한 와플은 다음 라운드에 와플을 습득 시 추가 와플을 얻도록 한다.
         if (isAttractImmediatly)

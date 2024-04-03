@@ -52,7 +52,8 @@ public class GameRoot : MonoBehaviour
     private int boxCount = 0;
     private bool isDuringFindItem = false;
 
-    // 라운드 정보 관련 필드
+    // 게임 오버
+    private IEnumerator gameOver = null;
 
     private void Awake()
     {
@@ -64,8 +65,9 @@ public class GameRoot : MonoBehaviour
         playerBox = GameObject.FindGameObjectWithTag("GameController");
         player = GameObject.FindGameObjectWithTag("Player");
         playerInfo = player.GetComponent<PlayerInfo>();
-
         timerControl = GameObject.FindGameObjectWithTag("Timer").GetComponent<TimerControl>();
+
+        gameOver = GameOver();
 
         stopRound = StopRound();
 
@@ -79,6 +81,13 @@ public class GameRoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 게임 오버 판정이 났다면
+        if (isGameOver && gameOver != null)
+        {
+            StartCoroutine(gameOver);
+            gameOver = null;
+        }
+
         // 라운드가 끝나면 아이템 획득 UI-> 업그레이드 UI-> 상점 UI순으로 진행한다
         if (isRoundClear
             && stopRound != null)
@@ -238,6 +247,22 @@ public class GameRoot : MonoBehaviour
         }
     }
 
+    // 게임 오버 절차 실행
+    private IEnumerator GameOver()
+    {
+        // 플레이어가 죽는다
+        Destroy(playerBox);
+        // 시간 정지
+        Time.timeScale = 0.0f;
+        // 패배 UI 활성화
+        DefeatUIControl.Instance.SetActive(true);
+
+        // 3초 후에 패배 UI를 비활성화 후 게임 결과 UI 활성화
+        yield return new WaitForSecondsRealtime(3.0f);
+        DefeatUIControl.Instance.SetActive(false);
+        GameResultUIControl.Instance.SetActive(true);
+    }
+
     public IEnumerator FloatingShopUI()
     {
         yield return StartCoroutine(Sleep(1.0f));
@@ -283,6 +308,11 @@ public class GameRoot : MonoBehaviour
         yield return null;
     }
 
+    public void SetIsGameOver(bool isGameOver)
+    {
+        this.isGameOver = isGameOver;
+    }
+
     public void SetIsRoundClear(bool isRoundClear)
     {
         this.isRoundClear = isRoundClear;
@@ -326,6 +356,11 @@ public class GameRoot : MonoBehaviour
     public int GetCurrentRound()
     {
         return this.currentRound;
+    }
+
+    public bool GetIsGameOver()
+    {
+        return this.isGameOver;
     }
 
     public bool GetIsRoundClear()

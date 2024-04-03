@@ -7,7 +7,7 @@ using TMPro;
 
 public class ShopLockButtonControl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    private GameObject currentClickButton;
+    private Button lockButton;
     private Image background;
     private TextMeshProUGUI text;
 
@@ -15,15 +15,14 @@ public class ShopLockButtonControl : MonoBehaviour, IPointerEnterHandler, IPoint
     {
         background = this.transform.GetChild(0).GetComponent<Image>();
         text = this.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        lockButton = this.GetComponent<Button>();
+        lockButton.onClick.AddListener(OnClickLockButton);
     }
 
     public void OnClickLockButton()
     {
-        // 현재 클릭된 버튼을 가져온다.
-        currentClickButton = EventSystem.current.currentSelectedGameObject;
-
         // 버튼의 X 좌표를 기반으로 몇번째 아이템 품목인지 찾는다.
-        float posX = currentClickButton.transform.position.x - 0.5f;
+        float posX = this.transform.position.x - 0.5f;
         int lockNum = FindLockItemNum(posX);
 
         // 해당 아이템을 잠그거나 잠금 해제한다.

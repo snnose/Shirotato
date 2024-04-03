@@ -148,6 +148,8 @@ public class ShopPurchaseButtonControl : MonoBehaviour
         // 아이템을 구매한 경우
         else
         {
+            IndividualityManager individualityManager = IndividualityManager.Instance;
+
             int itemPrice = item.GetComponent<ItemInfo>().price;
             // (원가 + 현재 라운드 + (원가 * 현재 라운드 / 10)) * 아이템 할인 배율
             int price = Mathf.FloorToInt(itemPrice + currentRound + 
@@ -172,35 +174,48 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                 PlayerInfo.Instance.SetCurrentWaffle(currentWaffle - price);
 
                 // 대미지%
-                PlayerInfo.Instance.SetDMGPercent(PlayerInfo.Instance.GetDMGPercent() + item.GetComponent<ItemInfo>().DMGPercent);
+                PlayerInfo.Instance.SetDMGPercent(PlayerInfo.Instance.GetDMGPercent() + 
+                    item.GetComponent<ItemInfo>().DMGPercent * individualityManager.GetDMGPercentCoeff());
                 // 공격속도
-                PlayerInfo.Instance.SetATKSpeed(PlayerInfo.Instance.GetATKSpeed() + item.GetComponent<ItemInfo>().ATKSpeed);
+                PlayerInfo.Instance.SetATKSpeed(PlayerInfo.Instance.GetATKSpeed() + 
+                    item.GetComponent<ItemInfo>().ATKSpeed * individualityManager.GetATKSpeedCoeff());
                 // 고정 대미지
-                PlayerInfo.Instance.SetFixedDMG(PlayerInfo.Instance.GetFixedDMG() + item.GetComponent<ItemInfo>().FixedDMG);
+                PlayerInfo.Instance.SetFixedDMG(PlayerInfo.Instance.GetFixedDMG() + 
+                    item.GetComponent<ItemInfo>().FixedDMG * individualityManager.GetFixedDMGCoeff());
                 // 치명타 확률
-                PlayerInfo.Instance.SetCritical(PlayerInfo.Instance.GetCritical() + item.GetComponent<ItemInfo>().Critical);
+                PlayerInfo.Instance.SetCritical(PlayerInfo.Instance.GetCritical() + 
+                    item.GetComponent<ItemInfo>().Critical * individualityManager.GetCriticalCoeff());
                 // 범위
-                PlayerInfo.Instance.SetRange(PlayerInfo.Instance.GetRange() + item.GetComponent<ItemInfo>().Range);
+                PlayerInfo.Instance.SetRange(PlayerInfo.Instance.GetRange() + 
+                    item.GetComponent<ItemInfo>().Range * individualityManager.GetRangeCoeff());
 
                 // 최대 체력
-                PlayerInfo.Instance.SetHP(PlayerInfo.Instance.GetHP() + item.GetComponent<ItemInfo>().HP);
+                PlayerInfo.Instance.SetHP(PlayerInfo.Instance.GetHP() + 
+                    item.GetComponent<ItemInfo>().HP * individualityManager.GetHPCoeff());
                 // 회복력
-                PlayerInfo.Instance.SetRecovery(PlayerInfo.Instance.GetRecovery() + item.GetComponent<ItemInfo>().Recovery);
+                PlayerInfo.Instance.SetRecovery(PlayerInfo.Instance.GetRecovery() + 
+                    Mathf.FloorToInt(item.GetComponent<ItemInfo>().Recovery * individualityManager.GetRecoveryCoeff()));
                 // 생명력 흡수
-                PlayerInfo.Instance.SetHPDrain(PlayerInfo.Instance.GetHPDrain() + item.GetComponent<ItemInfo>().HPDrain);
+                PlayerInfo.Instance.SetHPDrain(PlayerInfo.Instance.GetHPDrain() + 
+                    item.GetComponent<ItemInfo>().HPDrain * individualityManager.GetHPDrainCoeff());
                 // 방어력
-                PlayerInfo.Instance.SetArmor(PlayerInfo.Instance.GetArmor() + item.GetComponent<ItemInfo>().Armor);
+                PlayerInfo.Instance.SetArmor(PlayerInfo.Instance.GetArmor() + 
+                    Mathf.FloorToInt(item.GetComponent<ItemInfo>().Armor * individualityManager.GetArmorCoeff()));
                 // 회피
-                PlayerInfo.Instance.SetEvasion(PlayerInfo.Instance.GetEvasion() + item.GetComponent<ItemInfo>().Evasion);
+                PlayerInfo.Instance.SetEvasion(PlayerInfo.Instance.GetEvasion() + 
+                    Mathf.FloorToInt(item.GetComponent<ItemInfo>().Evasion * individualityManager.GetEvasionCoeff()));
 
                 // 이동속도 %
-                PlayerInfo.Instance.SetMovementSpeedPercent(PlayerInfo.Instance.GetMovementSpeedPercent() + item.GetComponent<ItemInfo>().MovementSpeedPercent);
+                PlayerInfo.Instance.SetMovementSpeedPercent(PlayerInfo.Instance.GetMovementSpeedPercent() + 
+                    item.GetComponent<ItemInfo>().MovementSpeedPercent * individualityManager.GetMovementSpeedPercentCoeff());
                 // 획득 범위
                 PlayerInfo.Instance.SetRootingRange(PlayerInfo.Instance.GetRootingRange() + item.GetComponent<ItemInfo>().RootingRange);
                 // 행운
-                PlayerInfo.Instance.SetLuck(PlayerInfo.Instance.GetLuck() + item.GetComponent<ItemInfo>().Luck);
+                PlayerInfo.Instance.SetLuck(PlayerInfo.Instance.GetLuck() + 
+                    item.GetComponent<ItemInfo>().Luck * individualityManager.GetLuckCoeff());
                 // 수확
-                PlayerInfo.Instance.SetHarvest(PlayerInfo.Instance.GetHarvest() + item.GetComponent<ItemInfo>().Harvest);
+                PlayerInfo.Instance.SetHarvest(PlayerInfo.Instance.GetHarvest() + 
+                    item.GetComponent<ItemInfo>().Harvest * individualityManager.GetHarvestCoeff());
                 // 경험치 획득량
                 PlayerInfo.Instance.SetExpGain(PlayerInfo.Instance.GetExpGain() + item.GetComponent<ItemInfo>().ExpGain);
 

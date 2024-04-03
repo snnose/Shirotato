@@ -71,40 +71,29 @@ public class ShopShowWeaponDetail : MonoBehaviour, IPointerEnterHandler, IPointe
 
     private int FindWeaponRoomNumber(GameObject weaponRoom)
     {
+        // 오브젝트의 이름을 받아온다
+        string weaponRoomName = weaponRoom.transform.parent.name;
         int num = -999;
-        // x -> 745.5, 832.1666, 918.8333 (0열, 1열, 2열)
-        // y -> 139, 59 (0행, 1행)
 
-        int x = Mathf.FloorToInt(weaponRoom.transform.position.x);
-        int y = Mathf.FloorToInt(weaponRoom.transform.position.y);
-
-        switch (x)
+        switch (weaponRoomName)
         {
-            // 0열
-            case 745:
+            case "Weapon1":
                 num = 0;
                 break;
-            // 1열
-            case 832:
+            case "Weapon2":
                 num = 1;
                 break;
-            // 2열
-            case 918:
+            case "Weapon3":
                 num = 2;
                 break;
-            default:
+            case "Weapon4":
+                num = 3;
                 break;
-        }
-
-        switch (y)
-        {
-            // 1행
-            case 59:
-                num += 3;
+            case "Weapon5":
+                num = 4;
                 break;
-            // 0행
-            case 139:
-                num += 0;
+            case "Weapon6":
+                num = 5;
                 break;
             default:
                 break;

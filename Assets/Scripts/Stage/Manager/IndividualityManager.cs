@@ -64,8 +64,8 @@ public class IndividualityManager : MonoBehaviour
                 // 수확 계수 0.0
                 this.HarvestCoeff = 0.0f;
                 // 크리티컬과 범위 스탯 10으로 설정
-                PlayerInfo.Instance.SetCritical(10f);
-                PlayerInfo.Instance.SetRange(10f);
+                this.gameObject.GetComponent<PlayerInfo>().SetCritical(10f);
+                this.gameObject.GetComponent<PlayerInfo>().SetRange(10f);
                 break;
             default:
                 break;

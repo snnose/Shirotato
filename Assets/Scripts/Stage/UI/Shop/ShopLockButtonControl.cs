@@ -5,13 +5,16 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class ShopLockButtonControl : MonoBehaviour
+public class ShopLockButtonControl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private GameObject currentClickButton;
+    private Image background;
+    private TextMeshProUGUI text;
 
     private void Awake()
     {
-        
+        background = this.transform.GetChild(0).GetComponent<Image>();
+        text = this.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
     }
 
     public void OnClickLockButton()
@@ -74,6 +77,19 @@ public class ShopLockButtonControl : MonoBehaviour
             tmp[num] = true;
             // 자물쇠 이미지 비활성화
         }
+
         ItemManager.Instance.SetIsLockItemList(tmp);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        text.color = Color.black;
+        background.color = Color.white;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        text.color = Color.white;
+        background.color = Color.black;
     }
 }

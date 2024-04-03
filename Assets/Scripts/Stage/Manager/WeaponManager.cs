@@ -20,7 +20,6 @@ public class WeaponManager : MonoBehaviour
     }
 
     private GameObject playerBox;
-    private GameObject weapon;
 
     public List<GameObject> currentWeaponList = new();
     public List<WeaponInfo> currentWeaponInfoList = new();
@@ -38,17 +37,12 @@ public class WeaponManager : MonoBehaviour
             Destroy(this.gameObject);
 
         playerBox = GameObject.FindGameObjectWithTag("GameController");
-        weapon = Resources.Load<GameObject>("Prefabs/Weapons/Pistol");
 
-        // 임시 무기 착용
-        currentWeaponList.Add(weapon);
-        currentWeaponInfoList.Add(new WeaponInfo(weapon.name, 0));
+        GameObject startWeapon = LoadStartWeapon(RoundSetting.Instance.GetStartWeapon());
+        // 시작 무기 착용
+        currentWeaponList.Add(startWeapon);
+        currentWeaponInfoList.Add(new WeaponInfo(startWeapon.name, 0));
         currentWeaponList[0].GetComponent<WeaponControl>().SetWeaponNumber(currentWeaponInfoList[0].GetWeaponNumber());
-    
-        currentWeaponList.Add(weapon);
-        currentWeaponInfoList.Add(new WeaponInfo(weapon.name, 1));
-        currentWeaponList[1].GetComponent<WeaponControl>().SetWeaponNumber(currentWeaponInfoList[1].GetWeaponNumber());
-        
     }
 
     // Start is called before the first frame update
@@ -70,6 +64,15 @@ public class WeaponManager : MonoBehaviour
         {
             StartCoroutine(destroyWeapons);
         }
+    }
+
+    // 시작 무기를 불러온다
+    private GameObject LoadStartWeapon(string weaponName)
+    {
+        string path = "Prefabs/Weapons/" + weaponName;
+        GameObject startWeapon = Resources.Load<GameObject>(path);
+
+        return startWeapon;
     }
 
     // 무기 장착 함수

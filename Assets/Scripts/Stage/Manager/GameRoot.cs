@@ -64,7 +64,7 @@ public class GameRoot : MonoBehaviour
 
         playerBox = GameObject.FindGameObjectWithTag("GameController");
         player = GameObject.FindGameObjectWithTag("Player");
-        playerInfo = player.GetComponent<PlayerInfo>();
+        playerInfo = PlayerInfo.Instance;
         timerControl = GameObject.FindGameObjectWithTag("Timer").GetComponent<TimerControl>();
 
         gameOver = GameOver();
@@ -81,6 +81,12 @@ public class GameRoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Esc 키를 누르면 퍼즈
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseUIControl.Instance.SetActive(true);
+        }
+
         // 게임 오버 판정이 났다면
         if (isGameOver && gameOver != null)
         {

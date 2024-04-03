@@ -82,9 +82,12 @@ public class PlayerColideDetect : MonoBehaviour
                 && !isEvade)
             {
                 // 받는 대미지를 계산 후 현재 체력을 차감한다
-                int behitDamage = Mathf.FloorToInt(monsterInfo.damage *
-                                                                (1 - playerInfo.GetArmor() /
-                                                                                (Mathf.Abs(playerInfo.GetArmor()) + 10)));
+                // 받는 대미지 감소량
+                float damageReduction = 100 - 100 * playerInfo.GetArmor() / (Mathf.Abs(playerInfo.GetArmor()) + 10);
+                int behitDamage = Mathf.FloorToInt(monsterInfo.damage * damageReduction / 100);
+
+                if (behitDamage <= 0)
+                    behitDamage = 1;
 
                 float currentHP = RealtimeInfoManager.Instance.GetCurrentHP();
                 currentHP -= behitDamage;

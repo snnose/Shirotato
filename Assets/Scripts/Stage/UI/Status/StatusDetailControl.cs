@@ -131,7 +131,8 @@ public class StatusDetailControl : MonoBehaviour
                 detail = playerInfo.GetEvasion() + "% 확률로 공격을 회피합니다.";
                 break;
             case "Armor":
-                detail = "받는 피해가 " + Mathf.FloorToInt(playerInfo.GetArmor() / (Mathf.Abs(playerInfo.GetArmor()) + 10)) + "% 감소합니다.";
+                float tmp = 100 * playerInfo.GetArmor() / (Mathf.Abs(playerInfo.GetArmor()) + 10);
+                detail = "받는 피해가 " + tmp + "% 감소합니다.";
                 break;
             case "MovementSpeed%":
                 detail = playerInfo.GetMovementSpeedPercent() + "% 더 빠르게 이동합니다.";

@@ -35,8 +35,16 @@ public class WeaponDetailControl : MonoBehaviour
                 weaponImage.sprite = Resources.Load<Sprite>("Sprites/Weapons/Pistol");
                 weaponNamePro.text = "권총";
                 weaponDetailPro.text = "대미지 : " + 12 + '\n' +
-                                       "공격속도 : " + 0.87 + "/s \n" +
+                                       "공격속도 : " + 0.83 + "/s \n" +
                                        "범위 : " + 7;
+                break;
+            case "Revolver":
+                weaponImage.sprite = Resources.Load<Sprite>("Sprites/Weapons/Revolver");
+                weaponNamePro.text = "리볼버";
+                weaponDetailPro.text = "대미지 : " + 15 + '\n' +
+                                       "공격속도 : " + 2.32 + "/s \n" +
+                                       "범위 : " + 7.7 + '\n' +
+                                       "6발 사격 후 2.15초 동안 재장전";
                 break;
             default:
                 break;

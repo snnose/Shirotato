@@ -7,11 +7,10 @@ public class WeaponControl : MonoBehaviour
     private WeaponInfo weaponInfo;
     private List<GameObject> Monsters;
 
-    // Weapon info
-
     public int weaponNumber = -1;
-
     public bool isCoolDown = false;
+
+    private int bulletCount = -1;
 
     private void Awake()
     {
@@ -22,6 +21,12 @@ public class WeaponControl : MonoBehaviour
     void Start()
     {
         weaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[weaponNumber];
+
+        // 무기가 리볼버라면 장탄을 갖는다
+        if (weaponInfo.weaponName == "Revolver")
+        {
+            bulletCount = 6;
+        }
     }
 
     // Update is called once per frame
@@ -102,8 +107,23 @@ public class WeaponControl : MonoBehaviour
         Vector2 direction = closetMonster.transform.position - copy.transform.position;
         copy.GetComponent<Rigidbody2D>().AddForce(direction.normalized * 65f, ForceMode2D.Impulse);
 
+        // 무기가 리볼버라면 장전된 탄을 소비한다
+        if (weaponInfo.weaponName == "Revolver")
+        {
+            bulletCount--;
+        }
+
+        // 무기가 리볼버이고 장전된 탄을 모두 썼다면 재장전한다
+        if (weaponInfo.weaponName == "Revolver" &&
+            bulletCount <= 0)
+        {
+            bulletCount = 6;
+            // 재장전 시간 5배 증가
+            coolDown *= 5f;
+        }
+
         isCoolDown = true;
-        yield return new WaitForSeconds(weaponInfo.coolDown);
+        yield return new WaitForSeconds(coolDown);
         isCoolDown = false;
     }
 

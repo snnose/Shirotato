@@ -44,7 +44,7 @@ public class ShopItemListControl : MonoBehaviour
                         currentThing.GetComponent<SpriteRenderer>().sprite;
                     // 이름 텍스트 변경
                     itemList[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
-                        weaponInfo.weaponName;
+                        TranslateWeaponName(weaponInfo.weaponName);
 
                     SetWeaponInfoText(i);
                 }
@@ -81,10 +81,18 @@ public class ShopItemListControl : MonoBehaviour
         float coolDown = weaponInfo.coolDown - weaponInfo.coolDown * PlayerInfo.Instance.GetATKSpeed() / (100 + PlayerInfo.Instance.GetATKSpeed());
         float atkSpeed = Mathf.Round(1 / coolDown * 100) / 100;
         float range = Mathf.Floor(weaponInfo.range * ((PlayerInfo.Instance.GetRange() + 100) / 100) * 100) / 100;
+        string specialNote = weaponInfo.GetSpecialNote();
+
+        // 무기 특이사항 수정
+        if (weaponInfo.weaponName == "Revolver")
+        {
+            specialNote = "6발 사격 후 " + Mathf.FloorToInt(coolDown * 5f * 100) / 100 + "초 간 재장전";
+        }
 
         weaponInfoText.text = "대미지 : " + damage + '\n' +
                               "공격속도 : " + atkSpeed + "/s \n" +
-                              "범위 : " + range;
+                              "범위 : " + range + '\n' +
+                              specialNote;
 
         TextMeshProUGUI weaponPrice = itemList[i].transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>();
         // 무기의 기본 가격 + 현재 라운드 + (무기의 기본 가격 * 현재 라운드) / 10
@@ -368,6 +376,31 @@ public class ShopItemListControl : MonoBehaviour
         }
 
         return color;
+    }
+
+    private string TranslateWeaponName(string weaponName)
+    {
+        string tmp = "";
+
+        switch (weaponName)
+        {
+            case "Pistol":
+                tmp = "권총";
+                break;
+            case "Revolver":
+                tmp = "리볼버";
+                break;
+            case "Shotgun":
+                tmp = "샷건";
+                break;
+            case "SMG":
+                tmp = "SMG";
+                break;
+            default:
+                break;
+        }
+
+        return tmp;
     }
 
     public void SetItemListActive()

@@ -221,10 +221,18 @@ public class ShopWeaponDetailUI : MonoBehaviour
         float coolDown = weaponInfo.coolDown - weaponInfo.coolDown * PlayerInfo.Instance.GetATKSpeed() / (100 + PlayerInfo.Instance.GetATKSpeed());
         float atkSpeed = Mathf.Round(1 / coolDown * 100) / 100;
         float range = Mathf.Floor(weaponInfo.range * ((PlayerInfo.Instance.GetRange() + 100) / 100) * 100) / 100;
+        string specialNote = weaponInfo.GetSpecialNote();
+
+        // 무기 특이사항 수정
+        if (weaponInfo.weaponName == "Revolver")
+        {
+            specialNote = "6발 사격 후 " + Mathf.FloorToInt(coolDown * 5f * 100) / 100 + "초 간 재장전";
+        }
 
         weaponStatusText.text = "대미지 : " + damage + '\n' +
                               "공격속도 : " + atkSpeed + "/s \n" +
-                              "범위 : " + range;
+                              "범위 : " + range + '\n' +
+                              specialNote;
     }
 
     public void SetWeaponSellButtonText(WeaponInfo weaponInfo)

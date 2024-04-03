@@ -54,22 +54,30 @@ public class FinalListControl : MonoBehaviour
         List<string> advantage = new();
         List<string> disadvantage = new();
 
+        individualityNamePro.text = individualityName;
+
         switch (individualityName)
         {
             case "명사수":
-                individualityNamePro.text = individualityName;
-
                 advantage.Add("치명타 확률 +10%");
                 advantage.Add("범위 +10%");
                 advantage.Add("치명타 확률 증감폭 1.3배");
 
                 disadvantage.Add("수확 증감폭 0배");
+                break;
+            case "우다다다":
+                advantage.Add("공격속도 +100%");
+                advantage.Add("이동속도 +10%");
+                advantage.Add("대미지 증감폭 1.4배");
 
-                individualityDetail.text = PaintText(advantage, disadvantage);
+                disadvantage.Add("대미지 -45%");
+                disadvantage.Add("방어력 -5");
                 break;
             default:
                 break;
         }
+
+        individualityDetail.text = PaintText(advantage, disadvantage);
 
         advantage.Clear();
         disadvantage.Clear();

@@ -34,12 +34,20 @@ public class IndividualityDetailControl : MonoBehaviour
                 advantage.Add("치명타 확률 증감폭 1.3배");
 
                 disadvantage.Add("수확 증감폭 0배");
+                break;
+            case "우다다다":
+                advantage.Add("공격속도 +100%");
+                advantage.Add("이동속도 +10%");
+                advantage.Add("대미지 증감폭 1.4배");
 
-                detailTextPro.text = PaintText(advantage, disadvantage);
+                disadvantage.Add("대미지 -45%");
+                disadvantage.Add("방어력 -5");
                 break;
             default:
                 break;
         }
+
+        detailTextPro.text = PaintText(advantage, disadvantage);
 
         advantage.Clear();
         disadvantage.Clear();

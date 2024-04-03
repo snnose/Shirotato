@@ -17,6 +17,8 @@ public class DifficultyUIControl : MonoBehaviour
         }
     }
 
+    private FinalListControl finalListControl;
+
     private void Awake()
     {
         if (instance == null)
@@ -24,6 +26,7 @@ public class DifficultyUIControl : MonoBehaviour
         else
             Destroy(this.gameObject);
 
+        finalListControl = this.transform.GetChild(2).GetComponent<FinalListControl>();
         SetActive(false);
     }
 
@@ -45,6 +48,8 @@ public class DifficultyUIControl : MonoBehaviour
         {
             SetActive(false);
             WeaponChooseUIControl.Instance.SetActive(true);
+            // RoundSetting 무기 초기화
+            RoundSetting.Instance.SetStartWeapon("");
         }
     }
 
@@ -62,5 +67,17 @@ public class DifficultyUIControl : MonoBehaviour
         }
 
         this.gameObject.SetActive(ret);
+
+        if (ret)
+        {
+            // 최종 선택 리스트 정보 갱신
+            finalListControl.RenewIndividualityInfoUI(RoundSetting.Instance.GetIndividuality());
+            finalListControl.RenewWeaponInfoUI(RoundSetting.Instance.GetStartWeapon());
+        }
+    }
+
+    public FinalListControl GetFinalListControl()
+    {
+        return this.finalListControl;
     }
 }

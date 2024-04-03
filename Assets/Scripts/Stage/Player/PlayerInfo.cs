@@ -211,32 +211,32 @@ public class PlayerInfo : MonoBehaviour
 
     public void SetDMGPercent(float dmgPercent)
     {
-        this.DMGPercent = dmgPercent;
+        this.DMGPercent = dmgPercent * IndividualityManager.Instance.GetDMGPercentCoeff();
     }
 
     public void SetATKSpeed(float ATKSpeed)
     {
-        this.ATKSpeed = ATKSpeed;
+        this.ATKSpeed = ATKSpeed * IndividualityManager.Instance.GetATKSpeedCoeff();
     }
 
     public void SetFixedDMG(float fixedDamage)
     {
-        this.FixedDMG = fixedDamage;
+        this.FixedDMG = fixedDamage * IndividualityManager.Instance.GetFixedDMGCoeff();
     }
 
     public void SetCritical(float critical)
     {
-        this.Critical = critical;
+        this.Critical = critical * IndividualityManager.Instance.GetCriticalCoeff();
     }
 
     public void SetRange(float range)
     {
-        this.Range = range;
+        this.Range = range * IndividualityManager.Instance.GetRangeCoeff();
     }
 
     public void SetHP(float HP)
     {
-        this.HP = HP;
+        this.HP = HP * IndividualityManager.Instance.GetHPCoeff();
         // 최대 제한 치보다 값이 커질 수 없음
         if (this.HP > cappedHP)
             this.HP = cappedHP;
@@ -244,22 +244,22 @@ public class PlayerInfo : MonoBehaviour
 
     public void SetRecovery(int recovery)
     {
-        this.Recovery = recovery;
+        this.Recovery = Mathf.FloorToInt(recovery * IndividualityManager.Instance.GetRecoveryCoeff());
     }
 
     public void SetHPDrain(float hpDrain)
     {
-        this.HPDrain = hpDrain;
+        this.HPDrain = hpDrain * IndividualityManager.Instance.GetHPDrainCoeff();
     }
 
     public void SetArmor(int armor)
     {
-        this.Armor = armor;
+        this.Armor = Mathf.FloorToInt(armor * IndividualityManager.Instance.GetArmorCoeff());
     }
 
     public void SetEvasion(int evasion)
     {
-        this.Evasion = evasion;
+        this.Evasion = Mathf.FloorToInt(evasion * IndividualityManager.Instance.GetEvasionCoeff());
     }
 
     public void SetMovementSpeed(float movementSpeed)
@@ -269,7 +269,7 @@ public class PlayerInfo : MonoBehaviour
 
     public void SetMovementSpeedPercent(float movementSpeedPercent)
     {
-        this.MovementSpeedPercent = movementSpeedPercent;
+        this.MovementSpeedPercent = movementSpeedPercent * IndividualityManager.Instance.GetMovementSpeedPercentCoeff();
         // 최대 제한 치보다 값이 커질 수 없음
         if (this.MovementSpeedPercent > this.cappedMovementSpeedPercent)
             this.MovementSpeedPercent = this.cappedMovementSpeedPercent;
@@ -282,12 +282,12 @@ public class PlayerInfo : MonoBehaviour
 
     public void SetLuck(float luck)
     {
-        this.Luck = luck;
+        this.Luck = luck * IndividualityManager.Instance.GetLuckCoeff();
     }
 
     public void SetHarvest(float harvest)
     {
-        this.Harvest = harvest;
+        this.Harvest = harvest * IndividualityManager.Instance.GetHarvestCoeff();
     }
 
     public void SetExpGain(float expGain)

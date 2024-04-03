@@ -17,6 +17,8 @@ public class WeaponChooseUIControl : MonoBehaviour
         }
     }
 
+    private WeaponDetailControl weaponDetailControl;
+
     private void Awake()
     {
         if (instance == null)
@@ -24,6 +26,7 @@ public class WeaponChooseUIControl : MonoBehaviour
         else
             Destroy(this.gameObject);
 
+        weaponDetailControl = this.transform.GetChild(2).GetComponent<WeaponDetailControl>();
         SetActive(false);
     }
 
@@ -45,6 +48,8 @@ public class WeaponChooseUIControl : MonoBehaviour
         {
             SetActive(false);
             IndividualityUIControl.Instance.SetActive(true);
+            // RoundSetting 특성 초기화
+            RoundSetting.Instance.SetIndividuality("");
         }
     }
 
@@ -62,5 +67,10 @@ public class WeaponChooseUIControl : MonoBehaviour
         }
 
         this.gameObject.SetActive(ret);
+    }
+
+    public WeaponDetailControl GetWeaponDetailControl()
+    {
+        return this.weaponDetailControl;
     }
 }

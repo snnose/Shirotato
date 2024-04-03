@@ -47,12 +47,12 @@ public class MonsterInfo : MonoBehaviour
 
     public void SetMonsterHP(float hp)
     {
-        this.HP = hp;
+        this.HP = hp * DifficultyManager.Instance.GetMonsterHPCoeff();
     }
 
     public void SetMonsterDamage(float damage)
     {
-        this.damage = damage;
+        this.damage = damage * DifficultyManager.Instance.GetMonsterDMGCoeff();
     }
 
     public void SetMonsterMovementSpeed(float movementSpeed)

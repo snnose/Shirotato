@@ -80,7 +80,7 @@ public class GameResultUIControl : MonoBehaviour
 
         // 게임 패배 시
         if (isGameOver)
-            title.text = "라운드 패배 (" + difficultyName + ")";
+            title.text = "라운드 패배 (" + difficultyName + ", " + GameRoot.Instance.GetCurrentRound() + ")";
         // 게임 승리 시
         else
             title.text = "라운드 승리 (" + difficultyName + ")";

@@ -106,8 +106,8 @@ public class StatusDetailControl : MonoBehaviour
                 detail = "최대 " + playerInfo.GetHP() + "만큼의 대미지를 받을 수 있습니다.";
                 break;
             case "Recovery":
-                detail = "매 10초 마다 체력 " + playerInfo.GetRecovery() + "을 회복합니다. \n" +
-                         "(" + playerInfo.GetRecovery() / 10 + " 체력 / 초)";
+                detail = "매 10초마다 체력 " + playerInfo.GetRecovery() + "을 회복합니다. \n" +
+                         "(체력 " + playerInfo.GetRecovery() / 10 + "/s)";
                 break;
             case "HPDrain":
                 detail = "공격 시 " + playerInfo.GetHPDrain() + "% 확률로 체력 1을 회복합니다.";
@@ -128,10 +128,10 @@ public class StatusDetailControl : MonoBehaviour
                 detail = "공격 사거리가 " + playerInfo.GetRange() + "% 증가합니다.";
                 break;
             case "Evasion":
-                detail = playerInfo.GetEvasion() + "확률로 공격을 회피합니다.";
+                detail = playerInfo.GetEvasion() + "% 확률로 공격을 회피합니다.";
                 break;
             case "Armor":
-                detail = "받는 피해가 " + Mathf.FloorToInt((1 - playerInfo.GetArmor() / (Mathf.Abs(playerInfo.GetArmor()) + 10))) + "% 감소합니다.";
+                detail = "받는 피해가 " + Mathf.FloorToInt(playerInfo.GetArmor() / (Mathf.Abs(playerInfo.GetArmor()) + 10)) + "% 감소합니다.";
                 break;
             case "MovementSpeed%":
                 detail = playerInfo.GetMovementSpeedPercent() + "% 더 빠르게 이동합니다.";

@@ -8,8 +8,11 @@ public class BulletControl : MonoBehaviour
     private int damage = 0;
     private int pierceCount = 0;
     private int bounceCount = 0;
+
     private float pierceDamage = 0.5f;
     private bool isCritical = false;
+
+    private int knockback = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -123,9 +126,12 @@ public class BulletControl : MonoBehaviour
             if (random < 25f * ItemManager.Instance.GetOwnNormalItemList()[42])
             {
                 // 대미지 * (2 + 고정 대미지 50%)
-                float additionalDamage =
+                int additionalDamage = Mathf.FloorToInt(
                     (1f + (RealtimeInfoManager.Instance.GetDMGPercent() / 100)) * 
-                    (2f + 0.5f * RealtimeInfoManager.Instance.GetFixedDMG());
+                    (2f + 0.5f * RealtimeInfoManager.Instance.GetFixedDMG()));
+                // 대미지는 최소 1
+                if (additionalDamage <= 0)
+                    additionalDamage = 1;
 
                 monsterHP -= additionalDamage;
                 monsterControl.SetMonsterCurrentHP(monsterHP);
@@ -307,5 +313,15 @@ public class BulletControl : MonoBehaviour
     public void SetPierceCount(int count)
     {
         this.pierceCount = count;
+    }
+
+    public void SetPierceDamage(float pierceDamage)
+    {
+        this.pierceDamage = pierceDamage;
+    }
+
+    public void SetKnockback(int knockback)
+    {
+        this.knockback = knockback;
     }
 }

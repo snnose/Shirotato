@@ -117,8 +117,8 @@ public class SpawnManager : MonoBehaviour
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(sandwichSpawnInterval);
                 watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(watermelonSpawnInterval);
 
-                spawnSandwich = SpawnSandwich(9.0f, sandwichSpawnInterval, 4);
-                spawnWatermelon = SpawnWatermelon(1.0f, watermelonSpawnInterval, 3);
+                spawnSandwich = SpawnSandwich(9.0f, sandwichSpawnInterval, 5);
+                spawnWatermelon = SpawnWatermelon(1.0f, watermelonSpawnInterval, 4);
 
                 StartCoroutine(spawnSandwich);
                 StartCoroutine(spawnWatermelon);
@@ -134,7 +134,7 @@ public class SpawnManager : MonoBehaviour
                 watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(watermelonSpawnInterval);
 
                 spawnSandwich = SpawnSandwich(1.0f, sandwichSpawnInterval, 5);
-                spawnWatermelon = SpawnWatermelon(9.0f, watermelonSpawnInterval, 3);
+                spawnWatermelon = SpawnWatermelon(9.0f, watermelonSpawnInterval, 5);
 
                 StartCoroutine(spawnSandwich);
                 StartCoroutine(spawnWatermelon);
@@ -168,7 +168,7 @@ public class SpawnManager : MonoBehaviour
                 saladSpawnInterval = ActivateItemRelatedSpawnInterval(saladSpawnInterval);
 
                 spawnSandwich = SpawnSandwich(4.0f, sandwichSpawnInterval, 5);
-                spawnWatermelon = SpawnWatermelon(3.0f, watermelonSpawnInterval, 3);
+                spawnWatermelon = SpawnWatermelon(3.0f, watermelonSpawnInterval, 4);
                 spawnSalad = SpawnSalad(25.0f, saladSpawnInterval, 2);
 
                 StartCoroutine(spawnSandwich);
@@ -188,7 +188,7 @@ public class SpawnManager : MonoBehaviour
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(sandwichSpawnInterval);
 
                 spawnBlueberry = SpawnBlueberry(1.0f, blueberrySpawnInterval, 4);
-                spawnWatermelon = SpawnWatermelon(3.0f, watermelonSpawnInterval, 3);
+                spawnWatermelon = SpawnWatermelon(3.0f, watermelonSpawnInterval, 4);
                 spawnSandwich = SpawnSandwich(25.0f, sandwichSpawnInterval, 5);
 
                 StartCoroutine(spawnBlueberry);

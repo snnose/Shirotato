@@ -153,6 +153,21 @@ public class FinalListControl : MonoBehaviour
                                        "범위 : " + 7.7 + '\n' +
                                        "6발 사격 후 2.15초 동안 재장전";
                 break;
+            case "SMG":
+                weaponImage.sprite = Resources.Load<Sprite>("Sprites/Weapons/SMG");
+                weaponNamePro.text = "서브머신건";
+                weaponDetailPro.text = "대미지 : " + 3 + '\n' +
+                                       "공격속도 : " + 5.88 + "/s \n" +
+                                       "범위 : " + 7 + '\n';
+                break;
+            case "Shotgun":
+                weaponImage.sprite = Resources.Load<Sprite>("Sprites/Weapons/Shotgun");
+                weaponNamePro.text = "샷건";
+                weaponDetailPro.text = "대미지 : " + 3 + '\n' +
+                                       "공격속도 : " + 0.73 + "/s \n" +
+                                       "범위 : " + 6.2 + '\n' +
+                                       "한번에 4발 발사";
+                break;
             default:
                 break;
         }

@@ -7,8 +7,8 @@ public class WeaponControl : MonoBehaviour
     private WeaponInfo weaponInfo;
     private List<GameObject> Monsters;
 
-    public int weaponNumber = -1;
-    public bool isCoolDown = false;
+    private int weaponNumber = -1;
+    private bool isCoolDown = false;
 
     private int bulletCount = -1;
 
@@ -20,6 +20,7 @@ public class WeaponControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        this.weaponNumber = this.GetComponent<StoredWeaponNumber>().weaponNumber;
         weaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[weaponNumber];
 
         // 무기가 리볼버라면 장탄을 갖는다
@@ -47,7 +48,11 @@ public class WeaponControl : MonoBehaviour
                 // 무기가 쿨타임이 아니라면 사격한다
                 if (!isCoolDown)
                 {
-                    StartCoroutine(Attack(closetMonster));
+                    // 한번에 여러 발을 쏘는 무기가 있을 경우를 고려
+                    for (int i = 0; i < weaponInfo.GetShootBulletCount(); i++)
+                    {
+                        StartCoroutine(Attack(closetMonster));
+                    }
                 }
             }
         }
@@ -90,21 +95,33 @@ public class WeaponControl : MonoBehaviour
         GameObject copy = Instantiate(bullet, this.transform.position, this.transform.rotation);
 
         // 무기의 대미지 계산
+        // (무기 대미지 + 고정 대미지 * 무기 계수) * 대미지%
         int damage = Mathf.FloorToInt(
-            (weaponInfo.damage + Mathf.FloorToInt(RealtimeInfoManager.Instance.GetFixedDMG()))
+            (weaponInfo.damage + weaponInfo.damageCoeff * RealtimeInfoManager.Instance.GetFixedDMG())
                                                 * ((RealtimeInfoManager.Instance.GetDMGPercent() + 100) / 100));
+
+        // 대미지는 최소 1
+        if (damage <= 0)
+            damage = 1;
 
         // 무기의 쿨타임 계산 (롤의 스킬 가속과 같은 공식)
         // 무기 기본 쿨타임 - (기본 쿨타임 * (공격속도 / (100 + 공격속도)))
         float coolDown = weaponInfo.coolDown - 
                        weaponInfo.coolDown * RealtimeInfoManager.Instance.GetATKSpeed() / (100 + RealtimeInfoManager.Instance.GetATKSpeed());
 
-        // 총알에 대미지와 관통 횟수 설정
+        // 총알에 대미지와 넉백, 관통 횟수, 관통 대미지 설정
         copy.GetComponent<BulletControl>().SetDamage(damage);
+        copy.GetComponent<BulletControl>().SetKnockback(weaponInfo.knockback);
         copy.GetComponent<BulletControl>().SetPierceCount(weaponInfo.pierceCount);
+        copy.GetComponent<BulletControl>().SetPierceDamage(weaponInfo.GetPierceDamage());
 
         // 가까운 몬스터에게 발사
         Vector2 direction = closetMonster.transform.position - copy.transform.position;
+        // 무기가 샷건이라면 발사하는 방향에 오차를 준다
+        if (weaponInfo.weaponName == "Shotgun")
+        { 
+            direction = direction.normalized + new Vector2(Random.Range(-0.3f, 0.3f), Random.Range(-0.3f, 0.3f));
+        }
         copy.GetComponent<Rigidbody2D>().AddForce(direction.normalized * 65f, ForceMode2D.Impulse);
 
         // 무기가 리볼버라면 장전된 탄을 소비한다
@@ -147,10 +164,5 @@ public class WeaponControl : MonoBehaviour
         }
 
         return closetMonster;
-    }
-
-    public void SetWeaponNumber(int weaponNumber)
-    {
-        this.weaponNumber = weaponNumber;
     }
 }

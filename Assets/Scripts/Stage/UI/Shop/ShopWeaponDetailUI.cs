@@ -215,8 +215,11 @@ public class ShopWeaponDetailUI : MonoBehaviour
     public void SetWeaponStatusText(WeaponInfo weaponInfo)
     {
         int damage = Mathf.FloorToInt(
-            (weaponInfo.damage + Mathf.FloorToInt(PlayerInfo.Instance.GetFixedDMG())) 
+            (weaponInfo.damage + weaponInfo.damageCoeff * PlayerInfo.Instance.GetFixedDMG()) 
                                                 * ((PlayerInfo.Instance.GetDMGPercent() + 100) / 100));
+        // 대미지는 최소 1
+        if (damage <= 0)
+            damage = 1;
 
         float coolDown = weaponInfo.coolDown - weaponInfo.coolDown * PlayerInfo.Instance.GetATKSpeed() / (100 + PlayerInfo.Instance.GetATKSpeed());
         float atkSpeed = Mathf.Round(1 / coolDown * 100) / 100;

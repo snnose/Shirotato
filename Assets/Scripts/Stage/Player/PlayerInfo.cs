@@ -29,7 +29,7 @@ public class PlayerInfo : MonoBehaviour
     private float HP = 10f;
     private int Recovery = 0;
     private float HPDrain = 0f;
-    private int Armor = 0;
+    public int Armor = 0;
     private int Evasion = 0;
 
     // 유틸 관련
@@ -41,7 +41,7 @@ public class PlayerInfo : MonoBehaviour
     private float expGain = 1.0f;
 
     // 재화 관련 (시작 와플 30)
-    private int currentWaffle = 9930;
+    private int currentWaffle = 30;
     public int storedWaffle = 0;   // 라운드가 끝나 미처 먹지 못한 와플 개수
 
     // 아이템 관련

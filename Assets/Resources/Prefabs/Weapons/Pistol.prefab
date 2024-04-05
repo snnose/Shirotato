@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2563918189923623190}
   - component: {fileID: 3564075378476413590}
-  - component: {fileID: 8634711352545389975}
+  - component: {fileID: -8795019357551382201}
+  - component: {fileID: 4557315352878005096}
   m_Layer: 0
   m_Name: Pistol
   m_TagString: Untagged
@@ -85,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8634711352545389975
+--- !u!114 &-8795019357551382201
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,8 +95,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 5270039100503737263}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10b64b1f1300d784bbaf5e5a19908b10, type: 3}
+  m_Script: {fileID: 11500000, guid: bd560e7ec76af6b4cbb69d5acf91f966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponNumber: 1
-  isCoolDown: 0
+--- !u!114 &4557315352878005096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5270039100503737263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 463d44a816c964f4e9d7c9fba9707692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

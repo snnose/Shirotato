@@ -180,7 +180,7 @@ public class WaffleControl : MonoBehaviour
             if (dis < range)
             {
                 this.transform.position =
-                Vector2.Lerp(this.transform.position, playerPos, 0.08f);
+                Vector2.Lerp(this.transform.position, playerPos, 0.1f);
             }
         }
 

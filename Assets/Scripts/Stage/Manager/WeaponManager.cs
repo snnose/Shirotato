@@ -23,8 +23,8 @@ public class WeaponManager : MonoBehaviour
 
     public List<GameObject> currentWeaponList = new();
     public List<WeaponInfo> currentWeaponInfoList = new();
-    private List<Vector2> weaponPos = new() { new Vector2(-1.8f, 0f), new Vector2(1.8f, 0f), new Vector2(-1.35f, 1.35f),
-                                              new Vector2(1.35f, -1.35f), new Vector2(-1.35f, -1.35f), new Vector2(1.35f, 1.35f)};
+    private List<Vector2> weaponPos = new() { new Vector2(-1.25f, 0f), new Vector2(1.25f, 0f), new Vector2(-1.00f, 1.00f),
+                                              new Vector2(1.00f, -1.00f), new Vector2(1.00f, 1.00f), new Vector2(-1.00f, -1.00f)};
 
     public IEnumerator equipWeapons;
     public IEnumerator destroyWeapons;
@@ -42,7 +42,7 @@ public class WeaponManager : MonoBehaviour
         // 시작 무기 착용
         currentWeaponList.Add(startWeapon);
         currentWeaponInfoList.Add(new WeaponInfo(startWeapon.name, 0));
-        currentWeaponList[0].GetComponent<WeaponControl>().SetWeaponNumber(currentWeaponInfoList[0].GetWeaponNumber());
+        currentWeaponList[0].GetComponent<StoredWeaponNumber>().weaponNumber = currentWeaponInfoList[0].GetWeaponNumber();
     }
 
     // Start is called before the first frame update
@@ -86,7 +86,7 @@ public class WeaponManager : MonoBehaviour
             reversal = 1;
             if (i % 2 == 1)
                 reversal = 0;
-            currentWeaponList[i].GetComponent<WeaponControl>().SetWeaponNumber(currentWeaponInfoList[i].GetWeaponNumber());
+            currentWeaponList[i].GetComponent<StoredWeaponNumber>().weaponNumber = currentWeaponInfoList[i].GetWeaponNumber();
             GameObject copy = Instantiate(currentWeaponList[i], weaponPos[i], Quaternion.Euler(0f, -180f * reversal, 0f)) as GameObject;
 
             copy.transform.SetParent(playerBox.transform, false);

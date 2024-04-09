@@ -234,6 +234,7 @@ public class ShopWeaponDetailUI : MonoBehaviour
 
         weaponStatusText.text = "대미지 : " + damage + '\n' +
                               "공격속도 : " + atkSpeed + "/s \n" +
+                              "넉백 : " + weaponInfo.knockback + '\n' +
                               "범위 : " + range + '\n' +
                               specialNote;
     }

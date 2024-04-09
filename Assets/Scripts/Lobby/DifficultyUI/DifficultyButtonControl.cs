@@ -39,6 +39,9 @@ public class DifficultyButtonControl : MonoBehaviour, IPointerEnterHandler
             case "Easy":
                 RoundSetting.Instance.SetDifficulty(0);
                 break;
+            case "Normal":
+                RoundSetting.Instance.SetDifficulty(1);
+                break;
             default:
                 RoundSetting.Instance.SetDifficulty(0);
                 break;

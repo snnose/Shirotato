@@ -53,7 +53,7 @@ public class RoundInit : MonoBehaviour
         RealtimeInfoManager.Instance.SetCurrentHP(ActivateEpicItem30(PlayerInfo.Instance.GetHP()));
         RealtimeInfoManager.Instance.SetHP(PlayerInfo.Instance.GetHP());
         RealtimeInfoManager.Instance.SetAllStatus(PlayerInfo.Instance);
-        //StartCoroutine(RealtimeInfoManager.Instance.startAllCoroutine);
+
         StartCoroutine(RealtimeInfoManager.Instance.ActivateEpicItem36());
         StartCoroutine(RealtimeInfoManager.Instance.ActivateLegendItem24());
         RealtimeInfoManager.Instance.startAllCoroutine = StartCoroutine(RealtimeInfoManager.Instance.StartAllCoroutine());
@@ -70,8 +70,9 @@ public class RoundInit : MonoBehaviour
         float remainTime = 15f + GameRoot.Instance.GetCurrentRound() * 5f;
         if (remainTime > 60f)
             remainTime = 60f;
-        // 임시 제한 시간 설정
+        // 디버깅용 임시 제한 시간 설정
         //remainTime = 1f;
+
         timerControl.gameObject.SetActive(true);
         GameRoot.Instance.SetRemainTime(remainTime);
         timerControl.SetTimerText(remainTime.ToString());
@@ -111,6 +112,8 @@ public class RoundInit : MonoBehaviour
         ShopUIControl.Instance.GetShopItemListControl().SetIsRenewInfo(false);
         // 아이템 리스트 초기화
         ClearShopItemList();
+        // 아이템 잠금 리스트 초기화
+        ClearShopIsLockList();
         ItemManager.Instance.SetIsRenewItem(false);
         // 상점 리롤 비용 초기화
         ShopUIControl.Instance.GetShopRerollButton().Initialize(); 
@@ -150,6 +153,19 @@ public class RoundInit : MonoBehaviour
         }
 
         ItemManager.Instance.SetShopItemList(tmp);
+    }
+
+    // 상점 잠금 목록을 초기화 하는 함수
+    private void ClearShopIsLockList()
+    {
+        List<bool> tmp = ItemManager.Instance.GetIsLockItemList();
+
+        for (int i = 0; i < 4; i++)
+        {
+            tmp[i] = false;
+        }
+
+        ItemManager.Instance.SetIsLockItemList(tmp);
     }
 
     private void ActivateRareItem30()

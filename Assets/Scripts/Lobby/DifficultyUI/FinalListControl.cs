@@ -168,6 +168,15 @@ public class FinalListControl : MonoBehaviour
                                        "범위 : " + 6.2 + '\n' +
                                        "한번에 4발 발사";
                 break;
+            // Melee Weapon
+            case "Nekohand":
+                weaponImage.sprite = Resources.Load<Sprite>("Sprites/Weapons/Nekohand");
+                weaponNamePro.text = "고양이손";
+                weaponDetailPro.text = "대미지 : " + 8 + '\n' +
+                                       "공격속도 : " + 1.28 + "/s \n" +
+                                       "넉백 : " + 15 + '\n' +
+                                       "범위 : " + 3.8 + '\n';
+                break;
             default:
                 break;
         }
@@ -178,13 +187,16 @@ public class FinalListControl : MonoBehaviour
         switch (difficultyName)
         {
             case "Easy":
-                // 이미지 설정
-
+                difficultyImage.sprite = Resources.Load<Sprite>("Sprites/Difficulty/Easy");
                 difficultyNamePro.text = "쉬움";
                 difficultyDetailPro.text = "적 체력 -20%\n" +
                                            "적 대미지 -20%";
                 break;
             case "Normal":
+                difficultyImage.sprite = Resources.Load<Sprite>("Sprites/Difficulty/Normal");
+                difficultyNamePro.text = "보통";
+                difficultyDetailPro.text = "표준 난이도\n" +
+                                           "변경 사항 X";
                 break;
             default:
                 break;

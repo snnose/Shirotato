@@ -106,16 +106,16 @@ public class PlayerControl : MonoBehaviour
         // 오른쪽으로 이동할 때
         if (playerRb2D.velocity.x > 0)
         {
-            player.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-            playerAnimator.bodyRotation = Quaternion.Euler(0f, 180f, 0f);
+            player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            playerAnimator.bodyRotation = Quaternion.Euler(0f, 0f, 0f);
             currState = state.MOVE;
             playerAnimator.SetBool("IsMove", true);
         }
         // 왼쪽으로 이동할 때
         else if (playerRb2D.velocity.x < 0)
         {
-            player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            playerAnimator.bodyRotation = Quaternion.Euler(0f, 0f, 0f);
+            player.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            playerAnimator.bodyRotation = Quaternion.Euler(0f, 180f, 0f);
             currState = state.MOVE;
             playerAnimator.SetBool("IsMove", true);
         }

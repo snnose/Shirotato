@@ -20,7 +20,7 @@ public class WeaponControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.weaponNumber = this.GetComponent<StoredWeaponNumber>().weaponNumber;
+        this.weaponNumber = this.GetComponent<StoredWeaponNumber>().GetWeaponNumber();
         weaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[weaponNumber];
 
         // 무기가 리볼버라면 장탄을 갖는다

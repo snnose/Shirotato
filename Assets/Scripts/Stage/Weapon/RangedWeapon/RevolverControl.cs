@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RevolverControl : MonoBehaviour
+public class RevolverControl : MonoBehaviour, IRangedWeaponControl
 {
     public int weaponNumber { get; set; }
     public WeaponInfo weaponInfo { get; set; }
@@ -12,7 +12,8 @@ public class RevolverControl : MonoBehaviour
     private int bulletCount = 6;
     void Start()
     {
-        this.weaponNumber = this.GetComponent<StoredWeaponNumber>().weaponNumber;
+        weaponNumber = this.GetComponent<StoredWeaponNumber>().GetWeaponNumber();
+        Debug.Log("리볼버 무기 번호 : " + weaponNumber);
         weaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[weaponNumber];
     }
 

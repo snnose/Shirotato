@@ -287,6 +287,7 @@ public class RealtimeInfoManager : MonoBehaviour
         this.MovementSpeedPercent = playerInfo.GetMovementSpeedPercent();
         this.RootingRange = playerInfo.GetRootingRange();
         this.Luck = playerInfo.GetLuck();
+        this.Harvest = playerInfo.GetHarvest();
         this.expGain = playerInfo.GetExpGain();
 
         this.currentHP = this.HP;

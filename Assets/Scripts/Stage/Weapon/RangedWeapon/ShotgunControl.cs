@@ -10,7 +10,7 @@ public class ShotgunControl : MonoBehaviour
 
     void Start()
     {
-        this.weaponNumber = this.GetComponent<StoredWeaponNumber>().weaponNumber;
+        this.weaponNumber = this.GetComponent<StoredWeaponNumber>().GetWeaponNumber();
         weaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[weaponNumber];
     }
 

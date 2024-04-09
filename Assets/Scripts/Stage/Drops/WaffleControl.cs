@@ -29,7 +29,7 @@ public class WaffleControl : MonoBehaviour
         if (isAttractImmediatly)
             AttractToPlayer(100f);
         else
-            AttractToPlayer(4.0f * (1 + (rootingRange / 100)));
+            AttractToPlayer(3.0f * (1 + (rootingRange / 100)));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

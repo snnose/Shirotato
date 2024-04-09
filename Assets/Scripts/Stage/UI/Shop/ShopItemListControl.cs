@@ -31,9 +31,26 @@ public class ShopItemListControl : MonoBehaviour
             // 각 슬롯에 아이템 정보를 기록한다.
             for (int i = 0; i < 4; i++)
             {
+                // 현재 탐색 중인 아이템 혹은 무기
                 GameObject currentThing = ItemManager.Instance.GetShopItemList()[i];
-                // 무기일 경우 (해당 칸에 무기 정보가 있으면 무기)
-                if (ItemManager.Instance.GetShopWeaponInfoList()[i] != null)
+                // 아이템일 경우 (탐색 중인 것에 아이템 정보 스크립트가 있으면 아이템)
+                if (currentThing.TryGetComponent<ItemInfo>(out ItemInfo itemInfo))
+                {
+                    // 아이템 등급 이미지 변경
+                    itemList[i].transform.GetChild(0).GetComponent<Image>().color =
+                    currentThing.transform.GetChild(0).GetComponent<SpriteRenderer>().color;
+
+                    // 아이템 이미지 변경
+                    itemList[i].transform.GetChild(1).GetComponent<Image>().sprite =
+                        currentThing.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite;
+                    // 아이템 이름 변경
+                    itemList[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
+                        itemInfo.itemName;
+
+                    SetItemInfoText(i);
+                }
+                // 무기일 경우
+                else
                 {
                     WeaponInfo weaponInfo = ItemManager.Instance.GetShopWeaponInfoList()[i];
                     // 무기 등급 이미지 변경
@@ -47,22 +64,6 @@ public class ShopItemListControl : MonoBehaviour
                         TranslateWeaponName(weaponInfo.weaponName);
 
                     SetWeaponInfoText(i);
-                }
-                // 아이템일 경우
-                else
-                {
-                    // 아이템 등급 이미지 변경
-                    itemList[i].transform.GetChild(0).GetComponent<Image>().color =
-                    currentThing.transform.GetChild(0).GetComponent<SpriteRenderer>().color;
-
-                    // 아이템 이미지 변경
-                    itemList[i].transform.GetChild(1).GetComponent<Image>().sprite =
-                        currentThing.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite;
-                    // 아이템 이름 변경
-                    itemList[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
-                        currentThing.GetComponent<ItemInfo>().itemName;
-
-                    SetItemInfoText(i);
                 }
             }
 
@@ -94,6 +95,7 @@ public class ShopItemListControl : MonoBehaviour
 
         weaponInfoText.text = "대미지 : " + damage + '\n' +
                               "공격속도 : " + atkSpeed + "/s \n" +
+                              "넉백 : " + weaponInfo.knockback + '\n' +
                               "범위 : " + range + '\n' +
                               specialNote;
 
@@ -141,7 +143,7 @@ public class ShopItemListControl : MonoBehaviour
         }
         if (itemInfo.Critical > 0)
         {
-            tmpText += "치명타 확률+" + itemInfo.Critical + "%\n";
+            tmpText += "치명타 확률 +" + itemInfo.Critical + "%\n";
             plusCount++;
         }
         if (itemInfo.Range > 0)
@@ -387,6 +389,7 @@ public class ShopItemListControl : MonoBehaviour
 
         switch (weaponName)
         {
+            // Ranged Weapon
             case "Pistol":
                 tmp = "권총";
                 break;
@@ -398,6 +401,10 @@ public class ShopItemListControl : MonoBehaviour
                 break;
             case "SMG":
                 tmp = "SMG";
+                break;
+            // Melee Weapon
+            case "Nekohand":
+                tmp = "고양이손";
                 break;
             default:
                 break;

@@ -12,7 +12,7 @@ public class BulletControl : MonoBehaviour
     private float pierceDamage = 0.5f;
     private bool isCritical = false;
 
-    private int knockback = 0;
+    public int knockback = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -98,6 +98,11 @@ public class BulletControl : MonoBehaviour
             // 입힌 대미지 출력
             PrintText(hitedMonster.transform.position, finalDamage, isCritical);
 
+            // 넉백 적용
+            Rigidbody2D hitedMonsterRb2D = hitedMonster.GetComponent<Rigidbody2D>();
+            Vector2 knockbackVector = PlayerControl.Instance.transform.position - hitedMonster.transform.position;
+            hitedMonsterRb2D.AddForce(knockback * -knockbackVector.normalized * 1.5f, ForceMode2D.Impulse);
+
             // 관통 횟수가 1 이상이라면
             if (pierceCount > 0)
             {
@@ -155,7 +160,12 @@ public class BulletControl : MonoBehaviour
         if (ItemManager.Instance.GetOwnNormalItemList()[44] > 0)
         {
             float monsterSpeed = monsterInfo.GetMonsterMovementSpeed();
-            monsterInfo.SetMonsterMovementSpeed(monsterSpeed * 0.9f);
+            // 이동속도 감소는 최대 3중첩
+            if (monsterInfo.normalItem44Count <= 3)
+            {
+                monsterInfo.SetMonsterMovementSpeed(monsterSpeed * 0.9f);
+                monsterInfo.normalItem44Count++;
+            }
         }
     }
 

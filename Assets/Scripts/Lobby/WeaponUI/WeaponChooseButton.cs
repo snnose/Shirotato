@@ -16,6 +16,9 @@ public class WeaponChooseButton : MonoBehaviour, IPointerEnterHandler
         button = this.GetComponent<Button>();
 
         button.onClick.AddListener(OnClickButton);
+
+        if (this.transform.GetChild(1).GetComponent<Image>().sprite == null)
+            this.gameObject.SetActive(false);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

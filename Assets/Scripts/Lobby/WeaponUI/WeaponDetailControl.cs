@@ -36,6 +36,7 @@ public class WeaponDetailControl : MonoBehaviour
                 weaponNamePro.text = "권총";
                 weaponDetailPro.text = "대미지 : " + 12 + '\n' +
                                        "공격속도 : " + 0.83 + "/s \n" +
+                                       "넉백 : " + 15 + '\n' +
                                        "범위 : " + 7;
                 break;
             case "Revolver":
@@ -43,6 +44,7 @@ public class WeaponDetailControl : MonoBehaviour
                 weaponNamePro.text = "리볼버";
                 weaponDetailPro.text = "대미지 : " + 15 + '\n' +
                                        "공격속도 : " + 2.32 + "/s \n" +
+                                       "넉백 : " + 15 + '\n' +
                                        "범위 : " + 7.7 + '\n' +
                                        "6발 사격 후 2.15초 동안 재장전";
                 break;
@@ -51,6 +53,7 @@ public class WeaponDetailControl : MonoBehaviour
                 weaponNamePro.text = "서브머신건";
                 weaponDetailPro.text = "대미지 : " + 3 + '\n' +
                                        "공격속도 : " + 5.88 + "/s \n" +
+                                       "넉백 : " + 0 + '\n' +
                                        "범위 : " + 7 + '\n';
                 break;
             case "Shotgun":
@@ -58,8 +61,18 @@ public class WeaponDetailControl : MonoBehaviour
                 weaponNamePro.text = "샷건";
                 weaponDetailPro.text = "대미지 : " + 3 + '\n' +
                                        "공격속도 : " + 0.73 + "/s \n" +
+                                       "넉백 : " + 8 + '\n' +
                                        "범위 : " + 6.2 + '\n' +
                                        "한번에 4발 발사";
+                break;
+            // Melee Weapon
+            case "Nekohand":
+                weaponImage.sprite = Resources.Load<Sprite>("Sprites/Weapons/Nekohand");
+                weaponNamePro.text = "고양이손";
+                weaponDetailPro.text = "대미지 : " + 8 + '\n' +
+                                       "공격속도 : " + 1.28 + "/s \n" +
+                                       "넉백 : " + 15 + '\n' +
+                                       "범위 : " + 3.8 + '\n';
                 break;
             default:
                 break;

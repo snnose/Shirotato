@@ -93,8 +93,11 @@ public class RunAwayFromPlayer : MonoBehaviour
         Vector2 movement = new Vector2(movementX, movementY);
         movement.Normalize();
 
-        monsterRb2D.velocity = movement * monsterInfo.GetMonsterMovementSpeed();
-        yield return new WaitForSeconds(1.5f);
+        for (int i = 0; i < 15; i++)
+        {
+            monsterRb2D.velocity = movement * monsterInfo.GetMonsterMovementSpeed();
+            yield return new WaitForSeconds(0.1f);
+        }
         
         chooseNextMoving = ChooseNextMoving();
     }

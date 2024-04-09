@@ -50,6 +50,7 @@ public class WeaponInfo
     {
         switch(weaponName)
         {
+            // Ranged Weapon
             case "Pistol":
                 this.weaponName = weaponName;
                 this.weaponNumber = weaponNumber;
@@ -112,6 +113,22 @@ public class WeaponInfo
                 this.shootBulletCount = 4;
                 this.specialNote = "한번에 4발 발사";
                 this.price = 20;
+                break;
+
+            // Melee Weapon
+            case "Nekohand":
+                this.weaponName = weaponName;
+                this.weaponNumber = weaponNumber;
+                this.grade = 0;
+
+                this.damage = 8;
+                this.damageCoeff = 2.0f;
+                this.range = 3.8f;
+                this.coolDown = 0.78f;
+                this.knockback = 15;
+
+                this.specialNote = "";
+                this.price = 10;
                 break;
             default:
                 break;
@@ -358,6 +375,54 @@ public class WeaponInfo
                         this.shootBulletCount = 6;
                         this.specialNote = "한번에 6발 발사";
                         this.price = 149;
+                        break;
+                }
+                break;
+            // Melee Weapon
+            case "Nekohand":
+                switch (weaponGrade)
+                {
+                    case 0:
+                        this.damage = 8;
+                        this.damageCoeff = 2.0f;
+                        this.range = 3.8f;
+                        this.coolDown = 0.78f;
+                        this.knockback = 15;
+
+                        this.specialNote = "";
+                        this.price = 10;
+                        break;
+                    case 1:
+                        this.damage = 16;
+                        this.damageCoeff = 2.0f;
+                        this.range = 3.8f;
+                        this.coolDown = 0.73f;
+                        this.knockback = 15;
+
+                        this.specialNote = "";
+                        this.price = 22;
+                        break;
+                    case 2:
+                        this.damage = 32;
+                        this.damageCoeff = 2.0f;
+                        this.range = 3.8f;
+                        this.coolDown = 0.69f;
+                        this.knockback = 15;
+
+                        this.specialNote = "";
+                        this.price = 45;
+                        break;
+                    case 3:
+                        this.damage = 64;
+                        this.damageCoeff = 2.0f;
+                        this.range = 3.8f;
+                        this.coolDown = 0.59f;
+                        this.knockback = 15;
+
+                        this.specialNote = "";
+                        this.price = 91;
+                        break;
+                    default:
                         break;
                 }
                 break;

@@ -54,13 +54,19 @@ public class ChargeToPlayer : MonoBehaviour
             // 플레이어 추격을 멈춘다
             chasePlayer.StopChasing();
             monsterRb2D.velocity = new Vector2(0, 0);
-            // 0.5초 동안 서서히 빨개지면서 대기한 후 시전한다
+            // 0.75초 동안 서서히 빨개지면서 대기한 후 시전한다
+            // 돌진 시전 중에는 넉백되지 않는다.
+            this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             yield return new WaitForSeconds(0.75f);
+
+            // 대기가 끝나면 고정 상태 해제
+            this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
             // 0.5초 동안 돌진
             monsterRb2D.AddForce(chargeVector.normalized * 25f, ForceMode2D.Impulse);
 
             yield return new WaitForSeconds(0.5f);
+
             chasePlayer.StartChasing();
 
             // 쿨타임을 돌린다

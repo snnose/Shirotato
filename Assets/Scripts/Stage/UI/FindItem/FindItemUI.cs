@@ -126,8 +126,8 @@ public class FindItemUI : MonoBehaviour
     private void OnClickSellButton()
     {
         // 판매 가격은 아이템 가격의 25%
-        int sellPrice = Mathf.FloorToInt(item.GetComponent<ItemInfo>().price + GameRoot.Instance.GetCurrentRound() +
-                                        (item.GetComponent<ItemInfo>().price * GameRoot.Instance.GetCurrentRound() / 10));
+        int sellPrice = ActivateRareItem32(Mathf.FloorToInt(item.GetComponent<ItemInfo>().price + GameRoot.Instance.GetCurrentRound() +
+                                        (item.GetComponent<ItemInfo>().price * GameRoot.Instance.GetCurrentRound() / 10)));
 
         // 보유 와플에 판매한 가격만큼 추가
         PlayerInfo.Instance.SetCurrentWaffle(PlayerInfo.Instance.GetCurrentWaffle() + sellPrice);
@@ -262,6 +262,149 @@ public class FindItemUI : MonoBehaviour
                 tmp = ItemManager.Instance.legendItemList[random];
                 break;
             default:
+                break;
+        }
+
+        return tmp;
+    }
+
+    int CheckIsOwnLimit(int rarity, int itemNumber)
+    {
+        bool isLimit = false;
+        int tmp = itemNumber;
+
+        while (true)
+        {
+            switch (rarity)
+            {
+                case 0:
+                    // 아이템 리스트와 보유 아이템 리스트의 번호가 다르기 때문에 주의
+                    if (tmp == 35 && ItemManager.Instance.GetOwnNormalItemList()[36] == 5)
+                        isLimit = true;
+                    if (tmp == 36 && ItemManager.Instance.GetOwnNormalItemList()[37] == 3)
+                        isLimit = true;
+                    if (tmp == 37 && ItemManager.Instance.GetOwnNormalItemList()[38] == 13)
+                        isLimit = true;
+                    if (tmp == 38 && ItemManager.Instance.GetOwnNormalItemList()[39] == 5)
+                        isLimit = true;
+                    if (tmp == 39 && ItemManager.Instance.GetOwnNormalItemList()[40] == 10)
+                        isLimit = true;
+                    if (tmp == 41 && ItemManager.Instance.GetOwnNormalItemList()[42] == 4)
+                        isLimit = true;
+                    if (tmp == 42 && ItemManager.Instance.GetOwnNormalItemList()[43] == 1)
+                        isLimit = true;
+                    if (tmp == 43 && ItemManager.Instance.GetOwnNormalItemList()[44] == 1)
+                        isLimit = true;
+
+                    // 현재 아이템이 보유 제한이라면 다른 아이템으로 변경한다
+                    if (isLimit)
+                    {
+                        tmp = UnityEngine.Random.Range(0, 46);
+
+                        isLimit = false;
+                        continue;
+                    }
+                    break;
+                case 1:
+                    // 미구현
+                    if (tmp == 24 && ItemManager.Instance.GetOwnRareItemList()[25] == 0)
+                        isLimit = true;
+                    // 미구현 22
+                    if (tmp == 25 && ItemManager.Instance.GetOwnRareItemList()[26] == 0)
+                        isLimit = true;
+                    if (tmp == 27 && ItemManager.Instance.GetOwnRareItemList()[28] == 3)
+                        isLimit = true;
+                    if (tmp == 28 && ItemManager.Instance.GetOwnRareItemList()[29] == 20)
+                        isLimit = true;
+                    // 미구현 33
+                    if (tmp == 29 && ItemManager.Instance.GetOwnRareItemList()[30] == 0)
+                        isLimit = true;
+                    if (tmp == 31 && ItemManager.Instance.GetOwnRareItemList()[32] == 1)
+                        isLimit = true;
+                    if (tmp == 32 && ItemManager.Instance.GetOwnRareItemList()[33] == 1)
+                        isLimit = true;
+                    if (tmp == 33 && ItemManager.Instance.GetOwnRareItemList()[34] == 1)
+                        isLimit = true;
+                    if (tmp == 34 && ItemManager.Instance.GetOwnRareItemList()[35] == 4)
+                        isLimit = true;
+                    if (tmp == 35 && ItemManager.Instance.GetOwnRareItemList()[36] == 5)
+                        isLimit = true;
+                    if (tmp == 36 && ItemManager.Instance.GetOwnRareItemList()[37] == 1)
+                        isLimit = true;
+
+                    if (isLimit)
+                    {
+                        tmp = UnityEngine.Random.Range(0, 37);
+
+                        isLimit = false;
+                        continue;
+                    }
+                    break;
+                case 2:
+                    if (tmp == 15 && ItemManager.Instance.GetOwnEpicItemList()[16] == 1)
+                        isLimit = true;
+                    if (tmp == 22 && ItemManager.Instance.GetOwnEpicItemList()[23] == 1)
+                        isLimit = true;
+                    if (tmp == 23 && ItemManager.Instance.GetOwnEpicItemList()[24] == 1)
+                        isLimit = true;
+                    if (tmp == 25 && ItemManager.Instance.GetOwnEpicItemList()[26] == 1)
+                        isLimit = true;
+                    if (tmp == 26 && ItemManager.Instance.GetOwnEpicItemList()[27] == 3)
+                        isLimit = true;
+                    if (tmp == 27 && ItemManager.Instance.GetOwnEpicItemList()[28] == 5)
+                        isLimit = true;
+                    if (tmp == 28 && ItemManager.Instance.GetOwnEpicItemList()[29] == 1)
+                        isLimit = true;
+                    if (tmp == 29 && ItemManager.Instance.GetOwnEpicItemList()[30] == 1)
+                        isLimit = true;
+                    if (tmp == 30 && ItemManager.Instance.GetOwnEpicItemList()[31] == 1)
+                        isLimit = true;
+                    if (tmp == 35 && ItemManager.Instance.GetOwnEpicItemList()[36] == 1)
+                        isLimit = true;
+
+                    if (isLimit)
+                    {
+                        tmp = UnityEngine.Random.Range(0, 36);
+
+                        isLimit = false;
+                        continue;
+                    }
+                    break;
+                case 3:
+                    if (tmp == 14 && ItemManager.Instance.GetOwnLegendItemList()[15] == 1)
+                        isLimit = true;
+                    if (tmp == 15 && ItemManager.Instance.GetOwnLegendItemList()[16] == 1)
+                        isLimit = true;
+                    if (tmp == 16 && ItemManager.Instance.GetOwnLegendItemList()[17] == 1)
+                        isLimit = true;
+                    if (tmp == 17 && ItemManager.Instance.GetOwnLegendItemList()[18] == 1)
+                        isLimit = true;
+                    if (tmp == 19 && ItemManager.Instance.GetOwnLegendItemList()[20] == 1)
+                        isLimit = true;
+                    if (tmp == 21 && ItemManager.Instance.GetOwnLegendItemList()[22] == 1)
+                        isLimit = true;
+                    if (tmp == 22 && ItemManager.Instance.GetOwnLegendItemList()[23] == 1)
+                        isLimit = true;
+                    if (tmp == 24 && ItemManager.Instance.GetOwnLegendItemList()[25] == 1)
+                        isLimit = true;
+                    // 탄성 기능 미구현으로 아이템 미등장
+                    if (tmp == 25 && ItemManager.Instance.GetOwnLegendItemList()[26] == 0)
+                        isLimit = true;
+
+                    if (isLimit)
+                    {
+                        tmp = UnityEngine.Random.Range(0, 28);
+
+                        isLimit = false;
+                        continue;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            // 보유 제한에 걸리는 아이템이 아니라면 탈출
+            if (!isLimit)
                 break;
         }
 

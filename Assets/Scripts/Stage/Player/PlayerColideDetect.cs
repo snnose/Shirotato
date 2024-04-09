@@ -181,7 +181,7 @@ public class PlayerColideDetect : MonoBehaviour
         List<GameObject> Monsters = SpawnManager.Instance.GetCurrentMonsters();
         
         float closetDistance = float.MaxValue;
-        float range = 1.3f;
+        float range = 2f;
 
         // 가장 가까이 있는 몬스터와의 거리를 측정한다
         foreach (GameObject monster in Monsters)

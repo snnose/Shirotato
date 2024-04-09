@@ -11,26 +11,27 @@ public class ShopPurchaseButtonControl : MonoBehaviour
 {
     private ShopOwnItemListControl ownItemListControl;
     private ShopOwnWeaponListControl ownWeaponListControl;
-    private GameObject currentClickButton;
+    private Button purchaseButton;
 
     // 구매 버튼을 누른 아이템 칸 번호
     private int currentNumber;
     private void Awake()
     {
-        // List -> ShopUI 로 거쳐 올라간 후 OwnItemList를 찾음
+        purchaseButton = this.gameObject.GetComponent<Button>();
+        purchaseButton.onClick.AddListener(OnClickItemPurchaseButton);
+        // Button -> List -> ShopUI 로 거쳐 올라간 후 OwnItemList를 찾음
         ownItemListControl = this.gameObject.transform.
-            parent.GetChild(4).gameObject.GetComponent<ShopOwnItemListControl>();
-        // List -> ShopUI로 거쳐 올라간 후 OwnWeaponList 찾음
+            parent.parent.GetChild(4).gameObject.GetComponent<ShopOwnItemListControl>();
+        // Button -> List -> ShopUI로 거쳐 올라간 후 OwnWeaponList 찾음
         ownWeaponListControl = this.gameObject.transform.
-            parent.GetChild(5).gameObject.GetComponent<ShopOwnWeaponListControl>();
+            parent.parent.GetChild(5).gameObject.GetComponent<ShopOwnWeaponListControl>();
     }
+
     public void OnClickItemPurchaseButton()
     {
-        currentClickButton = EventSystem.current.currentSelectedGameObject;
-        
-        float btnPosX = currentClickButton.transform.position.x - 0.5f;
+        string buttonName = this.transform.parent.name;
 
-        GameObject item = FindItemNumber(btnPosX);
+        GameObject item = FindItemNumber(buttonName);
 
         // 아이템의 능력치를 플레이어의 능력치에 적용
         PurchaseItem(item);
@@ -39,22 +40,22 @@ public class ShopPurchaseButtonControl : MonoBehaviour
     }
 
     // 버튼의 Pos X 값에 따라 몇번째 아이템을 구매하는 것인지 반환한다.
-    private GameObject FindItemNumber(float posX)
+    private GameObject FindItemNumber(string buttonName)
     {
         currentNumber = -1;
-        switch(posX)
+        switch(buttonName)
         {
             // 첫번째 (0)
-            case 135:
+            case "ItemZero":
                 currentNumber = 0;
                 break;
-            case 380:
+            case "ItemOne":
                 currentNumber = 1;
                 break;
-            case 625:
+            case "ItemTwo":
                 currentNumber = 2;
                 break;
-            case 870:
+            case "ItemThree":
                 currentNumber = 3;
                 break;
             default:
@@ -100,7 +101,7 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                 PlayerInfo.Instance.SetCurrentWaffle(currentWaffle - price);
 
                 // 슬롯 비활성화
-                currentClickButton.transform.parent.gameObject.SetActive(false);
+                this.transform.parent.gameObject.SetActive(false);
                 
                 // 보유 무기 리스트에 추가
                 WeaponManager.Instance.GetCurrentWeaponList().Add(item);
@@ -131,7 +132,7 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                     PlayerInfo.Instance.SetCurrentWaffle(currentWaffle - price);
 
                     // 슬롯 비활성화
-                    currentClickButton.transform.parent.gameObject.SetActive(false);
+                    this.transform.parent.gameObject.SetActive(false);
                 }
             }
 
@@ -269,7 +270,7 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                 PlayerInfo.Instance.ActivateLegendItem23();
 
                 // 아이템 슬롯을 비활성화 한다.
-                currentClickButton.transform.parent.gameObject.SetActive(false);
+                this.transform.parent.gameObject.SetActive(false);
                 // 상점 아이템 UI 갱신 (무기 정보 갱신)
                 ShopUIControl.Instance.GetShopItemListControl().SetIsRenewInfo(false);
                 // 보유 아이템 리스트 갱신

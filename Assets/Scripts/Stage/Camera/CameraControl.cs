@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
-    public GameObject player;
+    private GameObject player;
     private Vector3 posDiff = Vector3.zero;
 
     void Start()
     {
+        player = PlayerControl.Instance.gameObject;
         this.posDiff = this.transform.position - player.transform.position;
         posDiff.z = 0;
     }

@@ -8,10 +8,14 @@ public class RangedWeaponControl : MonoBehaviour, IRangedWeaponControl
     public WeaponInfo weaponInfo { get; set; }
     public bool isCoolDown { get; set; }
 
+    Vector2 direction;
+
     void Start()
     {
-        this.weaponNumber = this.GetComponent<StoredWeaponNumber>().weaponNumber;
+        this.weaponNumber = this.GetComponent<StoredWeaponNumber>().GetWeaponNumber();
         weaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[weaponNumber];
+
+        isCoolDown = false;
     }
 
     void Update()
@@ -45,9 +49,9 @@ public class RangedWeaponControl : MonoBehaviour, IRangedWeaponControl
         float rotateZ = 0f;
         Vector2 vec = new Vector2(closetMonster.transform.position.x - this.transform.position.x,
                                   closetMonster.transform.position.y - this.transform.position.y);
-        Vector2 norm = vec.normalized;
+        direction = vec.normalized;
 
-        rotateZ = Mathf.Atan2(norm.y, norm.x) * Mathf.Rad2Deg;
+        rotateZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         // 오른쪽에 몬스터가 있을 때
         if (rotateZ < 90f || rotateZ > -90f)
@@ -99,9 +103,23 @@ public class RangedWeaponControl : MonoBehaviour, IRangedWeaponControl
         Vector2 direction = closetMonster.transform.position - copy.transform.position;
         copy.GetComponent<Rigidbody2D>().AddForce(direction.normalized * 65f, ForceMode2D.Impulse);
 
+        // 반동을 준다
+        //StartCoroutine(Recoil());
+
         isCoolDown = true;
         yield return new WaitForSeconds(coolDown);
         isCoolDown = false;
+    }
+
+    // 반동
+    private IEnumerator Recoil()
+    {
+        Debug.Log(direction);
+        Vector2 firstPos = this.transform.position;
+        
+        this.transform.position = Vector2.Lerp(firstPos, firstPos - direction, 0.8f);
+        this.transform.position = Vector2.Lerp(this.transform.position, firstPos, 0.8f);
+        yield return null;
     }
 
     public GameObject GetClosetMonster()

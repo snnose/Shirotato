@@ -132,6 +132,7 @@ public class ItemManager : MonoBehaviour
                     {
                         if (weaponList[j].name == currentWeaponList[random].name)
                         {
+                            // 무기와 아이템을 설정
                             GameObject tmp = weaponList[j];
                             WeaponInfo tmpInfo = new WeaponInfo(weaponList[j].name);
                             tmpInfo.SetWeaponStatus(weaponList[j].name, rarity);

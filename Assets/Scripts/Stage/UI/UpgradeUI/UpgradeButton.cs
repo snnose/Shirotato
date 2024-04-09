@@ -8,22 +8,22 @@ public class UpgradeButton : MonoBehaviour
 {
     public void OnClickUpgradeButton()
     {
-        float buttonPosX = this.gameObject.transform.position.x;
+        string buttonName = this.transform.parent.name;
 
         int roomNumber = -1;
 
-        switch(buttonPosX)
+        switch(buttonName)
         {
-            case 143:
+            case "UpgradeZero":
                 roomNumber = 0;
                 break;
-            case 393:
+            case "UpgradeOne":
                 roomNumber = 1;
                 break;
-            case 643:
+            case "UpgradeTwo":
                 roomNumber = 2;
                 break;
-            case 893:
+            case "UpgradeThree":
                 roomNumber = 3;
                 break;
             default:

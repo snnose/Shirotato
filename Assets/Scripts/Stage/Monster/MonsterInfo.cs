@@ -11,6 +11,8 @@ public class MonsterInfo : MonoBehaviour
     public float damage;
     public float MovementSpeed;
 
+    public int normalItem44Count = 0;
+
     // 드랍 관련
     public int waffleDropCount;
     public float consumableDropRate;    // 소모품 드랍 확률

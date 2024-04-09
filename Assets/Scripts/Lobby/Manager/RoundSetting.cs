@@ -29,6 +29,8 @@ public class RoundSetting : MonoBehaviour
             instance = this;
         else
             Destroy(this.gameObject);
+
+        Screen.SetResolution(1366, 768, false);
     }
 
     public void SetIndividuality(string individuality)

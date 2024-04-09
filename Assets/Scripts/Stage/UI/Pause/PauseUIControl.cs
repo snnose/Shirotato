@@ -17,12 +17,18 @@ public class PauseUIControl : MonoBehaviour
         }
     }
 
+    private ShopOwnItemListControl shopOwnItemListControl;
+    private ShopOwnWeaponListControl shopOwnWeaponListControl;
+
     private void Awake()
     {
         if (instance == null)
             instance = this;
         else
             Destroy(this.gameObject);
+
+        shopOwnWeaponListControl = this.transform.GetChild(4).GetComponent<ShopOwnWeaponListControl>();
+        shopOwnItemListControl = this.transform.GetChild(5).GetComponent<ShopOwnItemListControl>();
 
         SetActive(false);
     }
@@ -41,9 +47,11 @@ public class PauseUIControl : MonoBehaviour
     {
         if (ret)
         {
-            Time.timeScale = 0.0f;
             this.gameObject.SetActive(ret);
             this.transform.position = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+            StartCoroutine(shopOwnItemListControl.RenewOwnItemList());
+            shopOwnWeaponListControl.renewOwnWeaponList = shopOwnWeaponListControl.RenewOwnWeaponList();
+            Time.timeScale = 0.0f;
         }
         else
         {

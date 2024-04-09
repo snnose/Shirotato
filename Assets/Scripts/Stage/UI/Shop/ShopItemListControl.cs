@@ -90,7 +90,8 @@ public class ShopItemListControl : MonoBehaviour
         // 무기 특이사항 수정
         if (weaponInfo.weaponName == "Revolver")
         {
-            specialNote = "6발 사격 후 " + Mathf.FloorToInt(coolDown * 5f * 100) / 100 + "초 간 재장전";
+            float reloadingCoolDown = Mathf.FloorToInt(coolDown * 5f * 100) / 100;
+            specialNote = "6발 사격 후 " + reloadingCoolDown + "초 간 재장전";
         }
 
         weaponInfoText.text = "대미지 : " + damage + '\n' +
@@ -138,7 +139,7 @@ public class ShopItemListControl : MonoBehaviour
         }
         if (itemInfo.FixedDMG > 0)
         {
-            tmpText += "고정 대미지 +" + itemInfo.FixedDMG + '\n';
+            tmpText += "추가 대미지 +" + itemInfo.FixedDMG + '\n';
             plusCount++;
         }
         if (itemInfo.Critical > 0)
@@ -226,7 +227,7 @@ public class ShopItemListControl : MonoBehaviour
         }
         if (itemInfo.FixedDMG < 0)
         {
-            tmpText += "고정 대미지 " + itemInfo.FixedDMG + '\n';
+            tmpText += "추가 대미지 " + itemInfo.FixedDMG + '\n';
             minusCount++;
         }
         if (itemInfo.Critical < 0)

@@ -135,14 +135,14 @@ MonoBehaviour:
   rarity: 2
   positiveSpecial: 
   negativeSpecial: "\uB77C\uC6B4\uB4DC \uC2DC\uC791 \uC2DC 50%\uC758 \uCCB4\uB825\uC73C\uB85C
-    \uC2DC\uC791                                \uBCF4\uC720 \uC81C\uD55C (1)"
+    \uC2DC\uC791                                 \uBCF4\uC720 \uC81C\uD55C (1)"
   DMGPercent: 0
   ATKSpeed: 0
   FixedDMG: 0
   Critical: 0
   Range: 0
   HP: 0
-  Recovery: 0
+  Recovery: 8
   HPDrain: 0
   Armor: 0
   Evasion: 0

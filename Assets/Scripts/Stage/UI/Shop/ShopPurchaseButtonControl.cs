@@ -19,12 +19,12 @@ public class ShopPurchaseButtonControl : MonoBehaviour
     {
         purchaseButton = this.gameObject.GetComponent<Button>();
         purchaseButton.onClick.AddListener(OnClickItemPurchaseButton);
-        // Button -> List -> ShopUI 로 거쳐 올라간 후 OwnItemList를 찾음
+        // Button -> item -> List -> ShopUI 로 거쳐 올라간 후 OwnItemList를 찾음
         ownItemListControl = this.gameObject.transform.
-            parent.parent.GetChild(4).gameObject.GetComponent<ShopOwnItemListControl>();
-        // Button -> List -> ShopUI로 거쳐 올라간 후 OwnWeaponList 찾음
+            parent.parent.parent.GetChild(4).gameObject.GetComponent<ShopOwnItemListControl>();
+        // Button -> item -> List -> ShopUI로 거쳐 올라간 후 OwnWeaponList 찾음
         ownWeaponListControl = this.gameObject.transform.
-            parent.parent.GetChild(5).gameObject.GetComponent<ShopOwnWeaponListControl>();
+            parent.parent.parent.GetChild(5).gameObject.GetComponent<ShopOwnWeaponListControl>();
     }
 
     public void OnClickItemPurchaseButton()
@@ -142,7 +142,7 @@ public class ShopPurchaseButtonControl : MonoBehaviour
             // LegendItem28 활성화
             // 각기 다른 무기가 있을 때마다 공격속도 +3%
             WeaponManager.Instance.ActivateLegendItem28();
-
+           
             // 보유 무기 리스트 갱신
             ownWeaponListControl.renewOwnWeaponList = ownWeaponListControl.RenewOwnWeaponList();
         }

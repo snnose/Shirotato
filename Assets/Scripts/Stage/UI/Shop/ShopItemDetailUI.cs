@@ -82,7 +82,7 @@ public class ShopItemDetailUI : MonoBehaviour
         }
         if (itemInfo.FixedDMG > 0)
         {
-            tmpText += "고정 대미지 +" + itemInfo.FixedDMG + '\n';
+            tmpText += "추가 대미지 +" + itemInfo.FixedDMG + '\n';
             plusCount++;
         }
         if (itemInfo.Critical > 0)
@@ -170,7 +170,7 @@ public class ShopItemDetailUI : MonoBehaviour
         }
         if (itemInfo.FixedDMG < 0)
         {
-            tmpText += "고정 대미지 " + itemInfo.FixedDMG + '\n';
+            tmpText += "추가 대미지 " + itemInfo.FixedDMG + '\n';
             minusCount++;
         }
         if (itemInfo.Critical < 0)

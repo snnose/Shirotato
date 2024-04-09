@@ -73,7 +73,7 @@ public class GameRoot : MonoBehaviour
 
         remainTime = 20f;
         // µð¹ö±ë ¿ë
-        //remainTime = 1f;
+        remainTime = 1f;
     }
     // Start is called before the first frame update
     void Start()

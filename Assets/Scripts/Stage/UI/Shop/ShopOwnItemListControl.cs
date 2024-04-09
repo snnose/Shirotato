@@ -9,7 +9,7 @@ public class ShopOwnItemListControl : MonoBehaviour
 {
     private GameObject ownItemListContent;
     // Item1 = 아이템
-    public List<GameObject> ownItemList = new();
+    public static List<(GameObject, int)> ownItemList = new();
 
     public IEnumerator renewOwnItemList;
 
@@ -33,6 +33,35 @@ public class ShopOwnItemListControl : MonoBehaviour
         }
     }
 
+    public IEnumerator RenewOwnItemList()
+    {
+        Debug.Log("진입");
+        int ownItemCount = ownItemList.Count;
+
+        if (ownItemCount > 0)
+        {
+            for (int i = 0; i < ownItemCount; i++)
+            {
+                GameObject item = ownItemList[i].Item1;
+
+                int r = i / 6;  // 행
+                int c = i % 6;  // 열
+                Debug.Log(r + "행 " + c + "열");
+                GameObject itemRoom = ownItemListContent.transform.GetChild(r).GetChild(c).gameObject;
+
+                // 등록하려는 아이템의 등급 이미지를 넣는다.
+                itemRoom.transform.GetChild(0).GetComponent<Image>().color =
+                    item.transform.GetChild(0).GetComponent<SpriteRenderer>().color;
+                // 등록하려는 아이템의 이미지를 넣는다.
+                itemRoom.transform.GetChild(1).GetComponent<Image>().sprite =
+                    item.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite;
+                // 등록하려는 아이템의 개수 입력
+                itemRoom.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "x" + ownItemList[i].Item2;
+            }
+        }
+        yield return null;
+    }
+
     public IEnumerator RenewOwnItemList(GameObject item)
     {
         yield return null;
@@ -45,7 +74,7 @@ public class ShopOwnItemListControl : MonoBehaviour
             for (int i = 0; i < ownItemList.Count; i++)
             {
                 // 있다면 수량 +1
-                if (ownItemList[i].name == item.name)
+                if (ownItemList[i].Item1.name == item.name)
                 {
                     // 중복 아이템 트리거 True
                     isOverlapItem = true;
@@ -60,6 +89,7 @@ public class ShopOwnItemListControl : MonoBehaviour
                     int num = tmp[1] - 47;
                     itemNumberText.text = "x" + num;
 
+                    ownItemList[i] = (item, num);
                     break;
                 }
             }
@@ -68,7 +98,7 @@ public class ShopOwnItemListControl : MonoBehaviour
         // 중복된 아이템이 아니면 리스트에 추가
         if (!isOverlapItem)
         {
-            ownItemList.Add(item);
+            ownItemList.Add((item, 1));
             int r = (ownItemList.Count - 1) / 6;    // 0행 ~ n행
             int c = (ownItemList.Count - 1) % 6;    // 0열 ~ 5열
             GameObject itemRoom = ownItemListContent.transform.GetChild(r).GetChild(c).gameObject;

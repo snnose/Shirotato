@@ -101,7 +101,7 @@ public class ShopWeaponDetailUI : MonoBehaviour
                 AdjustWeaponNum(i);
   
                 // ShopOwnItemListControl의 코루틴 호출로 UI를 갱신한다
-                ShopOwnWeaponListControl shopOwnWeaponListControl = ShopUIControl.Instance.GetShopOwnWeaponListControl();
+                ShopOwnWeaponListControl shopOwnWeaponListControl = ShopUIControl.Instance.GetShopOwnWeaponListControl();               
                 shopOwnWeaponListControl.renewOwnWeaponList = shopOwnWeaponListControl.RenewOwnWeaponList();
 
                 // WeaponDetailUI 비활성화

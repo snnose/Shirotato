@@ -116,7 +116,8 @@ public class StatusDetailControl : MonoBehaviour
                 detail = "공격 시 대미지가 " + playerInfo.GetDMGPercent() + "% 증가합니다.";
                 break;
             case "DamageFixed":
-                detail = "공격 시 대미지가 " + playerInfo.GetFixedDMG() + " 증가합니다";
+                detail = "공격 시 대미지가 증가합니다. \n" +
+                         "(무기 계수 x " + playerInfo.GetFixedDMG() + ")";
                 break;
             case "ATKSpeed":
                 detail = "공격 주기가 " + playerInfo.GetATKSpeed() + "% 더 빨라집니다.";

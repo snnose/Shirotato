@@ -114,14 +114,14 @@ public class ItemManager : MonoBehaviour
             }
 
             // 무기, 아이템을 확률에 따라 정한다.
-            int ran = UnityEngine.Random.Range(1, 100);
+            int ran = UnityEngine.Random.Range(0, 100);
             
             // 난수 값이 30이하라면 무기
             if (ran <= 30)
             {
                 currentWeaponList = WeaponManager.Instance.GetCurrentWeaponList();
                 // 한번 더 난수를 사용해 같은 무기가 나오도록 보정
-                int weaponRan = UnityEngine.Random.Range(1, 100);
+                int weaponRan = UnityEngine.Random.Range(0, 100);
                 // 난수 값이 35이하일 때 같은 무기 보정 적용
                 if (weaponRan <= 35)
                 {

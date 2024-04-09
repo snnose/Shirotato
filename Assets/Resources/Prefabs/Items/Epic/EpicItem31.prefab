@@ -51,7 +51,7 @@ MonoBehaviour:
   rarity: 2
   positiveSpecial: 
   negativeSpecial: "\uC774\uB3D9\uC18D\uB3C4%\uAC00 \uAD6C\uB9E4 \uC2DC\uC810 \uAC12\uBCF4\uB2E4
-    \uB354 \uC0C1\uC2B9\uD558\uC9C0 \uC54A\uC74C                  \uBCF4\uC720 \uC81C\uD55C
+    \uB354 \uC0C1\uC2B9\uD558\uC9C0 \uC54A\uC74C                   \uBCF4\uC720 \uC81C\uD55C
     (1)"
   DMGPercent: 0
   ATKSpeed: 0

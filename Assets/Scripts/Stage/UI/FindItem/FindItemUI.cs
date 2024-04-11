@@ -246,19 +246,19 @@ public class FindItemUI : MonoBehaviour
         switch (rarity)
         {
             case 0:
-                random = UnityEngine.Random.Range(0, ItemManager.Instance.normalItemList.Count);
+                random = CheckIsOwnLimit(rarity, UnityEngine.Random.Range(0, ItemManager.Instance.normalItemList.Count));
                 tmp = ItemManager.Instance.normalItemList[random];
                 break;
             case 1:
-                random = UnityEngine.Random.Range(0, ItemManager.Instance.rareItemList.Count);
+                random = CheckIsOwnLimit(rarity, UnityEngine.Random.Range(0, ItemManager.Instance.rareItemList.Count));
                 tmp = ItemManager.Instance.rareItemList[random];
                 break;
             case 2:
-                random = UnityEngine.Random.Range(0, ItemManager.Instance.epicItemList.Count);
+                random = CheckIsOwnLimit(rarity, UnityEngine.Random.Range(0, ItemManager.Instance.epicItemList.Count));
                 tmp = ItemManager.Instance.epicItemList[random];
                 break;
             case 3:
-                random = UnityEngine.Random.Range(0, ItemManager.Instance.legendItemList.Count);
+                random = CheckIsOwnLimit(rarity, UnityEngine.Random.Range(0, ItemManager.Instance.legendItemList.Count));
                 tmp = ItemManager.Instance.legendItemList[random];
                 break;
             default:

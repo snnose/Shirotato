@@ -14,6 +14,9 @@ public class PlayerColideDetect : MonoBehaviour
 
     private IEnumerator calBeHitDamage; // 피격 시 대미지 계산 함수
 
+    // 오디오 소스
+    public AudioSource beHittedAudioSource;
+
     private void Awake()
     {
         playerCollider = this.GetComponent<CircleCollider2D>();
@@ -101,7 +104,7 @@ public class PlayerColideDetect : MonoBehaviour
 
                     currentHP = 0;
                     // Player를 죽음 상태로 변경
-                    this.gameObject.transform.parent.GetComponent<PlayerControl>().currState = PlayerControl.state.DEAD;
+                    PlayerControl.Instance.currState = PlayerControl.state.DEAD;
                 }
 
                 // 아이템 효과 적용
@@ -128,7 +131,7 @@ public class PlayerColideDetect : MonoBehaviour
                 {
                     currentHP = 0;
                     // Player를 죽음 상태로 변경
-                    this.gameObject.transform.parent.GetComponent<PlayerControl>().currState = PlayerControl.state.DEAD;
+                    PlayerControl.Instance.currState = PlayerControl.state.DEAD;
                 }
 
                 // 아이템 효과 적용
@@ -248,6 +251,11 @@ public class PlayerColideDetect : MonoBehaviour
             float DMGPercent = RealtimeInfoManager.Instance.GetDMGPercent() - 2f;
             RealtimeInfoManager.Instance.SetDMGPercent(DMGPercent);
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+       
     }
 
     private void OnTriggerStay2D(Collider2D collider)

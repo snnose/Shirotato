@@ -23,8 +23,8 @@ public class WeaponManager : MonoBehaviour
 
     public List<GameObject> currentWeaponList = new();
     public List<WeaponInfo> currentWeaponInfoList = new();
-    private List<Vector2> weaponPos = new() { new Vector2(-1.5f, -0.6f), new Vector2(1.5f, -0.6f), new Vector2(-1.3f, -0.0f),
-                                              new Vector2(1f, -1.2f), new Vector2(1.3f, -0.0f), new Vector2(-1f, -1.2f)};
+    private List<Vector2> weaponPos = new() { new Vector2(-1.2f, -0.5f), new Vector2(1.2f, -0.5f), new Vector2(-1.2f, -0.0f),
+                                              new Vector2(1f, -1.1f), new Vector2(1.2f, -0.0f), new Vector2(-1f, -1.1f)};
 
     public IEnumerator equipWeapons;
     public IEnumerator destroyWeapons;

@@ -73,7 +73,7 @@ public class GameRoot : MonoBehaviour
 
         remainTime = 20f;
         // 디버깅 용
-        remainTime = 1f;
+        //remainTime = 1f;
     }
     // Start is called before the first frame update
     void Start()
@@ -221,21 +221,30 @@ public class GameRoot : MonoBehaviour
     {
         if (ItemManager.Instance.GetOwnLegendItemList()[15] > 0)
         {
-            // 보유 무기 중 하나를 선택해 등급을 상승시킨다.
-            int random = Random.Range(0, WeaponManager.Instance.GetCurrentWeaponInfoList().Count);
-            WeaponInfo selectedWeaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[random];
+            // 보유 무기가 하나라도 있다면
+            if (WeaponManager.Instance.GetCurrentWeaponList().Count > 0)
+            {
+                // 보유 무기 중 하나를 선택해 등급을 상승시킨다.
+                int random = Random.Range(0, WeaponManager.Instance.GetCurrentWeaponInfoList().Count);
+                WeaponInfo selectedWeaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[random];
 
-            // 선택된 무기의 등급을 한 단계 상승시킨 능력치를 적용시킨다
-            int currGrade = selectedWeaponInfo.GetWeaponGrade();
-            // 선택된 무기가 전설 등급이면 방어력 +2
-            if (currGrade == 3)
-                PlayerInfo.Instance.SetArmor(PlayerInfo.Instance.GetArmor() + 2);
+                // 선택된 무기의 등급을 한 단계 상승시킨 능력치를 적용시킨다
+                int currGrade = selectedWeaponInfo.GetWeaponGrade();
+                // 선택된 무기가 전설 등급이면 방어력 +2
+                if (currGrade == 3)
+                    PlayerInfo.Instance.SetArmor(PlayerInfo.Instance.GetArmor() + 2);
+                else
+                    selectedWeaponInfo.SetWeaponStatus(selectedWeaponInfo.weaponName, currGrade + 1);
+
+                // ShopOwnItemListControl의 코루틴 호출로 UI를 갱신한다
+                ShopOwnWeaponListControl shopOwnWeaponListControl = ShopUIControl.Instance.GetShopOwnWeaponListControl();
+                shopOwnWeaponListControl.renewOwnWeaponList = shopOwnWeaponListControl.RenewOwnWeaponList();
+            }
             else
-                selectedWeaponInfo.SetWeaponStatus(selectedWeaponInfo.weaponName, currGrade + 1);
-
-            // ShopOwnItemListControl의 코루틴 호출로 UI를 갱신한다
-            ShopOwnWeaponListControl shopOwnWeaponListControl = ShopUIControl.Instance.GetShopOwnWeaponListControl();
-            shopOwnWeaponListControl.renewOwnWeaponList = shopOwnWeaponListControl.RenewOwnWeaponList();
+            {
+                // 보유 무기가 없다면 방어력 +2
+                PlayerInfo.Instance.SetArmor(PlayerInfo.Instance.GetArmor() + 2);
+            }
         }
     }
 

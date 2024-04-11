@@ -76,6 +76,15 @@ public class IndividualityManager : MonoBehaviour
                 this.gameObject.GetComponent<PlayerInfo>().SetDMGPercent(-45f * this.DMGPercentCoeff);
                 this.gameObject.GetComponent<PlayerInfo>().SetArmor(-5);
                 break;
+            case "행운냥이":
+                // 행운 계수 1.25
+                this.LuckCoeff = 1.25f;
+                // 행운 +100, 수확 +10, 대미지 -50%, 경험치 획득 -50%
+                this.gameObject.GetComponent<PlayerInfo>().SetLuck(100f * this.LuckCoeff);
+                this.gameObject.GetComponent<PlayerInfo>().SetHarvest(10f);
+                this.gameObject.GetComponent<PlayerInfo>().SetDMGPercent(-50f * this.DMGPercentCoeff);
+                this.gameObject.GetComponent<PlayerInfo>().SetExpGain(-50f);
+                break;
             default:
                 break;
         }

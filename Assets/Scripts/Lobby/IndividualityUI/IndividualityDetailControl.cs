@@ -43,6 +43,14 @@ public class IndividualityDetailControl : MonoBehaviour
                 disadvantage.Add("대미지 -45%");
                 disadvantage.Add("방어력 -5");
                 break;
+            case "행운냥이":
+                advantage.Add("행운 +100");
+                advantage.Add("수확 +10");
+                advantage.Add("행운 증감폭 1.25배");
+
+                disadvantage.Add("대미지 -50%");
+                disadvantage.Add("경험치 획득 -50%");
+                break;
             default:
                 break;
         }

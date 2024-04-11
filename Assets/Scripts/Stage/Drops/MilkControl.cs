@@ -26,7 +26,7 @@ public class MilkControl : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // 플레이어와 맞닿을 경우
-        if (collision.gameObject == PlayerControl.Instance.GetPlayer())
+        if (collision.gameObject == GameObject.FindGameObjectWithTag("Player"))
         {
             // RareItem35가 있다면 아이템 효과 발동
             ActivateRareItem35();

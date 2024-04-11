@@ -19,7 +19,7 @@ public class BoxControl : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // 플레이어와 맞닿으면 박스 획득
-        if (collision.gameObject == PlayerControl.Instance.gameObject)
+        if (collision.gameObject == GameObject.FindGameObjectWithTag("Player"))
         {
             // 현재 라운드에 얻은 박스 개수 추가
             int boxCount = GameRoot.Instance.GetBoxCount();

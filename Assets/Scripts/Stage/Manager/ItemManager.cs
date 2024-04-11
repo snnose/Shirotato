@@ -343,7 +343,7 @@ public class ItemManager : MonoBehaviour
 
         int round = GameRoot.Instance.GetCurrentRound();
         // 전설 등급 확률 (최대 8%)
-        tmp[3] = (round - 7) / 4 * (1 + luck / 100);
+        tmp[3] = (round - 7) * (1 + luck / 100) / 4;
         if (tmp[3] <= 0)
             tmp[3] = 0;
         else if (tmp[3] >= 8)

@@ -12,11 +12,16 @@ public class MeleeWeaponControl : MonoBehaviour, IMeleeWeaponControl
     public int damage = 0;
     float coolDown = 1;
     int knockback = 0;
-    void Start()
+
+    private void Awake()
     {
         this.weaponNumber = this.GetComponent<StoredWeaponNumber>().GetWeaponNumber();
         weaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[weaponNumber];
+    }
 
+    void Start()
+    {
+        knockback = weaponInfo.knockback;
         isCoolDown = false;
     }
 
@@ -104,7 +109,6 @@ public class MeleeWeaponControl : MonoBehaviour, IMeleeWeaponControl
 
     public IEnumerator Attack(GameObject closetMonster)
     {
-        Debug.Log("공격");
         // 무기의 대미지 계산
         // (무기 대미지 + 고정 대미지 * 무기 계수) * 대미지%
         damage = Mathf.FloorToInt(
@@ -130,39 +134,26 @@ public class MeleeWeaponControl : MonoBehaviour, IMeleeWeaponControl
 
     IEnumerator MoveToEnemy(Vector2 dir)
     {
-        Vector2 initPos = this.transform.position - PlayerControl.Instance.transform.position;
+        Vector2 initPos = this.transform.localPosition;
         Vector2 destPos = initPos + dir;
 
-        int frame = Mathf.FloorToInt(coolDown / 0.0167f);
-        frame--;
+        int frame = Mathf.FloorToInt(this.coolDown * 60f);
+        float moveSpeed = 3f / frame;
 
-        // 무기가 적을 향함
-        for (int i = 0; i < frame / 3; i++)
+        for (int i = 0; i < frame / 2; i++)
         {
-            Vector2 previousParentPosition = this.transform.parent.position - this.transform.parent.position * Time.deltaTime;
-            Vector2 currentParentPosition = this.transform.parent.position;
-            Vector2 parentPosDelta = currentParentPosition - previousParentPosition;
-
-            initPos += parentPosDelta; destPos += parentPosDelta;
-
-            Debug.Log(initPos + ", " + destPos);
-
-            this.transform.position = Vector2.Lerp(this.transform.position, destPos, 0.05f);
-            yield return new WaitForSeconds(0.0167f);
-        }
-        // 무기가 다시 돌아옴
-        for (int i = 0; i < frame / 3; i++)
-        {
-            Vector2 previousParentPosition = this.transform.parent.position - this.transform.parent.position * Time.deltaTime;
-            Vector2 currentParentPosition = this.transform.parent.position;
-            Vector2 parentPosDelta = currentParentPosition - previousParentPosition;
-
-            initPos += parentPosDelta; destPos += parentPosDelta;
-
-            this.transform.position = Vector2.Lerp(this.transform.position, initPos, 0.05f);
-            yield return new WaitForSeconds(0.0167f);
+            this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, destPos, moveSpeed);
+            yield return null;
         }
 
+        for (int i = 0; i < frame / 2; i++)
+        {
+            this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, initPos, moveSpeed);
+            yield return null;
+        }
+
+        // 제자리로 돌아온다
+        this.transform.localPosition = initPos;
         yield return null;
     }
 

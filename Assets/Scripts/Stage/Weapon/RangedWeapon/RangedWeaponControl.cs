@@ -9,6 +9,12 @@ public class RangedWeaponControl : MonoBehaviour, IRangedWeaponControl
     public bool isCoolDown { get; set; }
 
     Vector2 direction;
+    AudioSource shootSound;
+
+    private void Awake()
+    {
+        shootSound = this.GetComponent<AudioSource>();
+    }
 
     void Start()
     {
@@ -74,6 +80,8 @@ public class RangedWeaponControl : MonoBehaviour, IRangedWeaponControl
 
     public IEnumerator Attack(GameObject closetMonster)
     {
+        PlayShootSound();
+
         // ÃÑ¾Ë »ý¼º
         GameObject bullet = Resources.Load<GameObject>("Prefabs/Weapons/Bullet");
         GameObject copy = Instantiate(bullet, this.transform.position, this.transform.rotation);
@@ -145,5 +153,10 @@ public class RangedWeaponControl : MonoBehaviour, IRangedWeaponControl
         }
 
         return closetMonster;
+    }
+
+    private void PlayShootSound()
+    {
+        shootSound.Play();
     }
 }

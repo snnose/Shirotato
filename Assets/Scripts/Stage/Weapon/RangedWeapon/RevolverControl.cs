@@ -8,12 +8,18 @@ public class RevolverControl : MonoBehaviour, IRangedWeaponControl
     public WeaponInfo weaponInfo { get; set; }
     public bool isCoolDown { get; set; }
 
+    AudioSource shootSound;
+
+    private void Awake()
+    {
+        shootSound = this.GetComponent<AudioSource>();
+    }
+
     // 리볼버는 장탄 수 6발을 갖는다
     private int bulletCount = 6;
     void Start()
     {
         weaponNumber = this.GetComponent<StoredWeaponNumber>().GetWeaponNumber();
-        Debug.Log("리볼버 무기 번호 : " + weaponNumber);
         weaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[weaponNumber];
     }
 
@@ -73,6 +79,8 @@ public class RevolverControl : MonoBehaviour, IRangedWeaponControl
 
     public IEnumerator Attack(GameObject closetMonster)
     {
+        PlayShootSound();
+
         // 총알 생성
         GameObject bullet = Resources.Load<GameObject>("Prefabs/Weapons/Bullet");
         GameObject copy = Instantiate(bullet, this.transform.position, this.transform.rotation);
@@ -141,5 +149,10 @@ public class RevolverControl : MonoBehaviour, IRangedWeaponControl
         }
 
         return closetMonster;
+    }
+
+    private void PlayShootSound()
+    {
+        shootSound.Play();
     }
 }

@@ -8,6 +8,13 @@ public class WaffleControl : MonoBehaviour
     bool isAttractImmediatly = false;
     float rootingRange;
 
+    private AudioSource waffleAudioSource;
+
+    private void Awake()
+    {
+        waffleAudioSource = this.GetComponent<AudioSource>();
+    }
+
     // Start is called before the first frame update
     void Start()
     { 
@@ -39,7 +46,7 @@ public class WaffleControl : MonoBehaviour
         float currentExp = ExpManager.Instance.GetCurrentExp();
 
         // 라운드 진행 중 플레이어와 닿을 경우
-        if (collision.gameObject == PlayerControl.Instance.GetPlayer()
+        if (collision.gameObject == GameObject.FindGameObjectWithTag("Player")
             && !GameRoot.Instance.GetIsRoundClear())
         {
             // 보유 와플 개수 + 1
@@ -73,10 +80,12 @@ public class WaffleControl : MonoBehaviour
 
             // Waffle UI 갱신
             RenewWaffleAmount.Instance.renewCurrentWaffleAmount = RenewWaffleAmount.Instance.RenewCurrentWaffleAmount();
+
             Destroy(this.gameObject);
+            WaffleSoundManager.Instance.PlayWaffleSound();
         }
         // 라운드 종료 후 플레이어와 닿을 경우 저장 와플 + 1
-        if (collision.gameObject == PlayerControl.Instance.GetPlayer()
+        if (collision.gameObject == GameObject.FindGameObjectWithTag("Player")
             && GameRoot.Instance.GetIsRoundClear())
         {
             PlayerInfo.Instance.SetStoredWaffle(++storedWaffle);
@@ -84,6 +93,7 @@ public class WaffleControl : MonoBehaviour
             RenewWaffleAmount.Instance.renewStoredWaffleAmount = RenewWaffleAmount.Instance.RenewStoredWaffleAmount();
 
             Destroy(this.gameObject);
+            WaffleSoundManager.Instance.PlayWaffleSound();
         }
     }
 
@@ -192,7 +202,7 @@ public class WaffleControl : MonoBehaviour
 
             // 와플이 플레이어에게 끌려간다
             this.transform.position =
-                Vector2.Lerp(this.transform.position, playerPos, 0.08f);
+                Vector2.Lerp(this.transform.position, playerPos, 0.02f);
         }
     }
 

@@ -8,6 +8,13 @@ public class ShotgunControl : MonoBehaviour
     public WeaponInfo weaponInfo { get; set; }
     public bool isCoolDown { get; set; }
 
+    AudioSource shootSound;
+
+    private void Awake()
+    {
+        shootSound = this.GetComponent<AudioSource>();
+    }
+
     void Start()
     {
         this.weaponNumber = this.GetComponent<StoredWeaponNumber>().GetWeaponNumber();
@@ -70,6 +77,8 @@ public class ShotgunControl : MonoBehaviour
 
     public IEnumerator Attack(GameObject closetMonster)
     {
+        PlayShootSound();
+
         // ÃÑ¾Ë »ý¼º
         GameObject bullet = Resources.Load<GameObject>("Prefabs/Weapons/Bullet");
         GameObject copy = Instantiate(bullet, this.transform.position, this.transform.rotation);
@@ -130,5 +139,10 @@ public class ShotgunControl : MonoBehaviour
         }
 
         return closetMonster;
+    }
+
+    private void PlayShootSound()
+    {
+        shootSound.Play();
     }
 }

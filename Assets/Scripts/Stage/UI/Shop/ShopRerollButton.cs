@@ -42,12 +42,12 @@ public class ShopRerollButton : MonoBehaviour
             rerollIncrease = 1;
         rerollPrice = currentRound + rerollIncrease * rerollCount;
 
-        priceText.text = "초기화 - " + rerollPrice;
+        SetTProtext(rerollPrice);
 
         if (ItemManager.Instance.GetOwnRareItemList()[28] > 0)
         {
-            freeRerollCount = ItemManager.Instance.GetOwnRareItemList()[28];
-            priceText.text = "초기화 - 0";
+            SetFreeRerollCount(ItemManager.Instance.GetOwnRareItemList()[28]);
+            SetTProtext(0);
         }
     }
 
@@ -56,6 +56,8 @@ public class ShopRerollButton : MonoBehaviour
         if (freeRerollCount > 0)
         {
             ActivateRareItem28();
+            // 현재 아이템 리스트를 비운다
+            ClearShopItemList();
             return;
         }
 
@@ -66,11 +68,6 @@ public class ShopRerollButton : MonoBehaviour
             PlayerInfo.Instance.SetCurrentWaffle(PlayerInfo.Instance.GetCurrentWaffle() - rerollPrice);
             // 현재 아이템 리스트를 비운다
             ClearShopItemList();
-            // 아이템 리스트 UI를 활성화하고 갱신
-            shopItemListControl.SetItemListActive();
-            // 갱신 트리거 false로 설정
-            shopItemListControl.SetIsRenewInfo(false);
-            ItemManager.Instance.SetIsRenewItem(false);
 
             // 리롤 누적 횟수 증가
             rerollCount++;
@@ -78,7 +75,7 @@ public class ShopRerollButton : MonoBehaviour
             // 리롤 비용 재조정
             rerollPrice = currentRound + rerollIncrease * rerollCount;
 
-            priceText.text = "초기화 - " + rerollPrice;
+            SetTProtext(rerollPrice);
         }
     }
     
@@ -100,29 +97,37 @@ public class ShopRerollButton : MonoBehaviour
 
         ItemManager.Instance.SetShopItemList(tmp);
         ItemManager.Instance.SetShopWeaponInfoList(tmpInfo);
-    }
 
-    void ActivateRareItem28()
-    {
-        // 현재 아이템 리스트를 비운다
-        ClearShopItemList();
         // 아이템 리스트 UI를 활성화하고 갱신
         shopItemListControl.SetItemListActive();
         // 갱신 트리거 false로 설정
         shopItemListControl.SetIsRenewInfo(false);
         ItemManager.Instance.SetIsRenewItem(false);
+    }
 
+    void ActivateRareItem28()
+    { 
         // 무료 리롤 횟수 감소
         freeRerollCount--;
 
         // 그 다음 비용을 알려주는 텍스트를 설정
         if (freeRerollCount > 0)
         {
-            priceText.text = "초기화 - 0";
+            SetTProtext(rerollPrice);
         }
         else
         {
-            priceText.text = "초기화 - " + rerollPrice;
+            SetTProtext(rerollPrice);
         }
+    }
+
+    public void SetFreeRerollCount(int count)
+    {
+        this.freeRerollCount = count;
+    }
+
+    public void SetTProtext(int price)
+    {
+        priceText.text = "초기화 - " + price;
     }
 }

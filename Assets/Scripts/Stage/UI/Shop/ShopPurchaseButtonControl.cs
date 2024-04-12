@@ -37,6 +37,8 @@ public class ShopPurchaseButtonControl : MonoBehaviour
         PurchaseItem(item);
         // 구매한 아이템 칸이 잠겨있었다면 잠금 해제
         ItemManager.Instance.GetIsLockItemList()[currentNumber] = false;
+        // 자물쇠 이미지 비활성화
+        this.transform.parent.GetChild(6).gameObject.SetActive(false);
     }
 
     // 버튼의 Pos X 값에 따라 몇번째 아이템을 구매하는 것인지 반환한다.
@@ -228,6 +230,16 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                         break;
                     case 1:
                         ItemManager.Instance.GetOwnRareItemList()[item.GetComponent<ItemInfo>().itemNumber] += 1;
+
+                        // 특정 아이템 구매 시 작동
+                        // RareItem28 구매 시 구매 시점의 상점 초기화 비용을 0원으로 변경
+                        if (item.GetComponent<ItemInfo>().itemNumber == 28)
+                        {
+                            ShopRerollButton shopRerollButton = ShopUIControl.Instance.GetShopRerollButton();
+                            // 무료 리롤 횟수 +1
+                            shopRerollButton.SetFreeRerollCount(ItemManager.Instance.GetOwnRareItemList()[item.GetComponent<ItemInfo>().itemNumber]);
+                            shopRerollButton.SetTProtext(0);
+                        }
                         break;
                     case 2:
                         // 특정 아이템 구매 시 작동

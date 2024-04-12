@@ -221,6 +221,8 @@ public class ShopWeaponDetailUI : MonoBehaviour
         if (damage <= 0)
             damage = 1;
 
+        int damageCoeff = Mathf.FloorToInt(weaponInfo.damageCoeff * 100);
+
         float coolDown = weaponInfo.coolDown - weaponInfo.coolDown * PlayerInfo.Instance.GetATKSpeed() / (100 + PlayerInfo.Instance.GetATKSpeed());
         float atkSpeed = Mathf.Round(1 / coolDown * 100) / 100;
         float range = Mathf.Floor(weaponInfo.range * ((PlayerInfo.Instance.GetRange() + 100) / 100) * 100) / 100;
@@ -232,7 +234,7 @@ public class ShopWeaponDetailUI : MonoBehaviour
             specialNote = "6발 사격 후 " + Mathf.FloorToInt(coolDown * 5f * 100) / 100 + "초 간 재장전";
         }
 
-        weaponStatusText.text = "대미지 : " + damage + '\n' +
+        weaponStatusText.text = "대미지 : " + damage + " (+" + damageCoeff + "%)\n" +
                               "공격속도 : " + atkSpeed + "/s \n" +
                               "넉백 : " + weaponInfo.knockback + '\n' +
                               "범위 : " + range + '\n' +

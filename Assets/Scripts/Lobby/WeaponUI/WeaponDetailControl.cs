@@ -34,7 +34,7 @@ public class WeaponDetailControl : MonoBehaviour
             case "Pistol":
                 weaponImage.sprite = Resources.Load<Sprite>("Sprites/Weapons/Pistol");
                 weaponNamePro.text = "권총";
-                weaponDetailPro.text = "대미지 : " + 12 + '\n' +
+                weaponDetailPro.text = "대미지 : " + 12 + " (+100%)\n" +
                                        "공격속도 : " + 0.83 + "/s \n" +
                                        "넉백 : " + 15 + '\n' +
                                        "범위 : " + 7;
@@ -42,7 +42,7 @@ public class WeaponDetailControl : MonoBehaviour
             case "Revolver":
                 weaponImage.sprite = Resources.Load<Sprite>("Sprites/Weapons/Revolver");
                 weaponNamePro.text = "리볼버";
-                weaponDetailPro.text = "대미지 : " + 15 + '\n' +
+                weaponDetailPro.text = "대미지 : " + 15 + " (+100%)\n" +
                                        "공격속도 : " + 2.32 + "/s \n" +
                                        "넉백 : " + 15 + '\n' +
                                        "범위 : " + 7.7 + '\n' +
@@ -51,7 +51,7 @@ public class WeaponDetailControl : MonoBehaviour
             case "SMG":
                 weaponImage.sprite = Resources.Load<Sprite>("Sprites/Weapons/SMG");
                 weaponNamePro.text = "서브머신건";
-                weaponDetailPro.text = "대미지 : " + 3 + '\n' +
+                weaponDetailPro.text = "대미지 : " + 3 + " (+50%)\n" +
                                        "공격속도 : " + 5.88 + "/s \n" +
                                        "넉백 : " + 0 + '\n' +
                                        "범위 : " + 7 + '\n';
@@ -59,7 +59,7 @@ public class WeaponDetailControl : MonoBehaviour
             case "Shotgun":
                 weaponImage.sprite = Resources.Load<Sprite>("Sprites/Weapons/Shotgun");
                 weaponNamePro.text = "샷건";
-                weaponDetailPro.text = "대미지 : " + 3 + '\n' +
+                weaponDetailPro.text = "대미지 : " + 3 + " (+80%)\n" +
                                        "공격속도 : " + 0.73 + "/s \n" +
                                        "넉백 : " + 8 + '\n' +
                                        "범위 : " + 6.2 + '\n' +
@@ -69,10 +69,18 @@ public class WeaponDetailControl : MonoBehaviour
             case "Nekohand":
                 weaponImage.sprite = Resources.Load<Sprite>("Sprites/Weapons/Nekohand");
                 weaponNamePro.text = "고양이손";
-                weaponDetailPro.text = "대미지 : " + 8 + '\n' +
+                weaponDetailPro.text = "대미지 : " + 8 + " (+200%)\n" +
                                        "공격속도 : " + 1.28 + "/s \n" +
                                        "넉백 : " + 15 + '\n' +
                                        "범위 : " + 3.8 + '\n';
+                break;
+            case "Hammer":
+                weaponImage.sprite = Resources.Load<Sprite>("Sprites/Weapons/Hammer");
+                weaponNamePro.text = "망치";
+                weaponDetailPro.text = "대미지 : " + 15 + " (+250%)\n" +
+                                       "공격속도 : " + 0.57 + "/s \n" +
+                                       "넉백 : " + 20 + '\n' +
+                                       "범위 : " + 4.2 + '\n';
                 break;
             default:
                 break;

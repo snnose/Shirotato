@@ -134,6 +134,8 @@ public class BulletControl : MonoBehaviour
     // 튕김은 적에게 적중 후 다른 랜덤한 적에게 향하는 기능
     void Bounce(GameObject collision)
     {
+        // 대미지 반감
+        damage /= 2;
         // 현재 존재하는 몬스터 목록을 받아온다.
         List<GameObject> Monsters;
         Monsters = SpawnManager.Instance.GetCurrentMonsters();

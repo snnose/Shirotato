@@ -116,8 +116,8 @@ public class ItemManager : MonoBehaviour
             // 무기, 아이템을 확률에 따라 정한다.
             int ran = UnityEngine.Random.Range(0, 100);
             
-            // 난수 값이 30이하라면 무기
-            if (ran <= 30)
+            // 난수 값이 30미만라면 무기
+            if (ran < 30)
             {
                 currentWeaponList = WeaponManager.Instance.GetCurrentWeaponList();
                 // 한번 더 난수를 사용해 같은 무기가 나오도록 보정
@@ -155,8 +155,8 @@ public class ItemManager : MonoBehaviour
                     shopWeaponInfoList[i] = tmpInfo;
                 }
             }
-            // 난수 값이 30 초과라면 아이템
-            else
+            // 난수 값이 30 이상이라면 아이템
+            if (ran >= 30)
             {
                 GameObject tmp;
                 int random = 0;
@@ -308,9 +308,6 @@ public class ItemManager : MonoBehaviour
                     if (tmp == 22 && ownLegendItemList[23] == 1)
                         isLimit = true;
                     if (tmp == 24 && ownLegendItemList[25] == 1)
-                        isLimit = true;
-                    // 탄성 기능 미구현으로 아이템 미등장
-                    if (tmp == 25 && ownLegendItemList[26] == 0)
                         isLimit = true;
 
                     if (isLimit)

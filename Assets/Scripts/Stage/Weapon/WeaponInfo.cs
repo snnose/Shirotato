@@ -130,6 +130,21 @@ public class WeaponInfo
                 this.specialNote = "";
                 this.price = 10;
                 break;
+
+            case "Hammer":
+                this.weaponName = weaponName;
+                this.weaponNumber = weaponNumber;
+                this.grade = 0;
+
+                this.damage = 15;
+                this.damageCoeff = 2.5f;
+                this.range = 4.2f;
+                this.coolDown = 1.75f;
+                this.knockback = 20;
+
+                this.specialNote = "";
+                this.price = 25;
+                break;
             default:
                 break;
         }
@@ -421,6 +436,54 @@ public class WeaponInfo
 
                         this.specialNote = "";
                         this.price = 91;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+
+            case "Hammer":
+                switch (weaponGrade)
+                {
+                    case 0:
+                        this.damage = 15;
+                        this.damageCoeff = 2.5f;
+                        this.range = 4.2f;
+                        this.coolDown = 1.75f;
+                        this.knockback = 20;
+
+                        this.specialNote = "";
+                        this.price = 25;
+                        break;
+                    case 1:
+                        this.damage = 30;
+                        this.damageCoeff = 3.0f;
+                        this.range = 4.2f;
+                        this.coolDown = 1.67f;
+                        this.knockback = 25;
+
+                        this.specialNote = "";
+                        this.price = 51;
+                        break;
+                    case 2:
+                        this.damage = 60;
+                        this.damageCoeff = 3.5f;
+                        this.range = 4.2f;
+                        this.coolDown = 1.59f;
+                        this.knockback = 35;
+
+                        this.specialNote = "";
+                        this.price = 95;
+                        break;
+                    case 3:
+                        this.damage = 100;
+                        this.damageCoeff = 4.0f;
+                        this.range = 4.2f;
+                        this.coolDown = 1.5f;
+                        this.knockback = 40;
+
+                        this.specialNote = "";
+                        this.price = 190;
                         break;
                     default:
                         break;

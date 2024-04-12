@@ -125,36 +125,12 @@ public class MeleeWeaponControl : MonoBehaviour, IMeleeWeaponControl
 
         // 가까운 몬스터에게 발사
         Vector2 direction = closetMonster.transform.position - this.transform.position;
-        StartCoroutine(MoveToEnemy(direction.normalized * weaponInfo.range));
+        StartCoroutine(this.GetComponent<Stab>().
+            StabMovement(direction.normalized * weaponInfo.range, Mathf.FloorToInt(coolDown * 60f)));
 
         isCoolDown = true;
         yield return new WaitForSeconds(coolDown);
         isCoolDown = false;
-    }
-
-    IEnumerator MoveToEnemy(Vector2 dir)
-    {
-        Vector2 initPos = this.transform.localPosition;
-        Vector2 destPos = initPos + dir;
-
-        int frame = Mathf.FloorToInt(this.coolDown * 60f);
-        float moveSpeed = 3f / frame;
-
-        for (int i = 0; i < frame / 2; i++)
-        {
-            this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, destPos, moveSpeed);
-            yield return null;
-        }
-
-        for (int i = 0; i < frame / 2; i++)
-        {
-            this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, initPos, moveSpeed);
-            yield return null;
-        }
-
-        // 제자리로 돌아온다
-        this.transform.localPosition = initPos;
-        yield return null;
     }
 
     public void TrackingClosetMonster(GameObject closetMonster)

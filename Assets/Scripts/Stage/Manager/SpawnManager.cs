@@ -555,7 +555,7 @@ public class SpawnManager : MonoBehaviour
             case "Sandwich":
                 monsterInfo.SetMonsterHP(3f + 2f * currentRound);
                 monsterInfo.SetMonsterDamage(1f + 0.6f * currentRound);
-                monsterInfo.SetMonsterMovementSpeed(Random.Range(4.4f, 6.6f));
+                monsterInfo.SetMonsterMovementSpeed(Random.Range(3.1f, 4.6f));
                 monsterInfo.SetMonsterWaffleDropCount(1);
                 monsterInfo.SetMonsterConsumableDropRate(0.01f);
                 monsterInfo.SetMonsterLootDropRate(0.01f);
@@ -563,7 +563,7 @@ public class SpawnManager : MonoBehaviour
             case "Watermelon":
                 monsterInfo.SetMonsterHP(1f + 1f * currentRound);
                 monsterInfo.SetMonsterDamage(1f + 0.6f * currentRound);
-                monsterInfo.SetMonsterMovementSpeed(7.6f);
+                monsterInfo.SetMonsterMovementSpeed(5.3f);
                 monsterInfo.SetMonsterWaffleDropCount(1);
                 monsterInfo.SetMonsterConsumableDropRate(0.02f);
                 monsterInfo.SetMonsterLootDropRate(0.03f);
@@ -571,7 +571,7 @@ public class SpawnManager : MonoBehaviour
             case "Blueberry":
                 monsterInfo.SetMonsterHP(4f + 2.5f * currentRound);
                 monsterInfo.SetMonsterDamage(1f + 0.85f * currentRound);
-                monsterInfo.SetMonsterMovementSpeed(8f);
+                monsterInfo.SetMonsterMovementSpeed(5.6f);
                 monsterInfo.SetMonsterWaffleDropCount(1);
                 monsterInfo.SetMonsterConsumableDropRate(0.01f);
                 monsterInfo.SetMonsterLootDropRate(0.01f);
@@ -579,7 +579,7 @@ public class SpawnManager : MonoBehaviour
             case "Salad":
                 monsterInfo.SetMonsterHP(8f + 1f * currentRound);
                 monsterInfo.SetMonsterDamage(1f + 0.6f * currentRound);
-                monsterInfo.SetMonsterMovementSpeed(3.8f);
+                monsterInfo.SetMonsterMovementSpeed(2.7f);
                 monsterInfo.SetMonsterWaffleDropCount(1);
                 monsterInfo.SetMonsterConsumableDropRate(0.03f);
                 monsterInfo.SetMonsterLootDropRate(0.1f);
@@ -587,7 +587,7 @@ public class SpawnManager : MonoBehaviour
             case "Cheese":
                 monsterInfo.SetMonsterHP(20f + 11f * currentRound);
                 monsterInfo.SetMonsterDamage(2f + 0.85f * currentRound);
-                monsterInfo.SetMonsterMovementSpeed(6f);
+                monsterInfo.SetMonsterMovementSpeed(4.2f);
                 monsterInfo.SetMonsterWaffleDropCount(3);
                 monsterInfo.SetMonsterConsumableDropRate(0.03f);
                 monsterInfo.SetMonsterLootDropRate(0.03f);
@@ -595,7 +595,7 @@ public class SpawnManager : MonoBehaviour
             case "StrongCheese":
                 monsterInfo.SetMonsterHP(30f + 22f * currentRound);
                 monsterInfo.SetMonsterDamage(1f + 1.15f * currentRound);
-                monsterInfo.SetMonsterMovementSpeed(6f);
+                monsterInfo.SetMonsterMovementSpeed(4.2f);
                 monsterInfo.SetMonsterWaffleDropCount(3);
                 monsterInfo.SetMonsterConsumableDropRate(0.03f);
                 monsterInfo.SetMonsterLootDropRate(0.03f);
@@ -603,7 +603,7 @@ public class SpawnManager : MonoBehaviour
             case "Spaghetti":
                 monsterInfo.SetMonsterHP(10f + 24f * currentRound);
                 monsterInfo.SetMonsterDamage(1f + 1.2f * currentRound);
-                monsterInfo.SetMonsterMovementSpeed(3f);
+                monsterInfo.SetMonsterMovementSpeed(2.1f);
                 monsterInfo.SetMonsterWaffleDropCount(3);
                 monsterInfo.SetMonsterConsumableDropRate(0.03f);
                 monsterInfo.SetMonsterLootDropRate(0.03f);
@@ -611,7 +611,7 @@ public class SpawnManager : MonoBehaviour
             case "Pancakes":
                 monsterInfo.SetMonsterHP(8f + 3f * currentRound);
                 monsterInfo.SetMonsterDamage(1 + 1.0f * currentRound);
-                monsterInfo.SetMonsterMovementSpeed(Random.Range(4.5f, 5.5f));
+                monsterInfo.SetMonsterMovementSpeed(Random.Range(3.2f, 3.9f));
                 monsterInfo.SetMonsterWaffleDropCount(1);
                 monsterInfo.SetMonsterConsumableDropRate(0.01f);
                 monsterInfo.SetMonsterLootDropRate(0.01f);
@@ -619,7 +619,7 @@ public class SpawnManager : MonoBehaviour
             case "TofuLarge":
                 monsterInfo.SetMonsterHP(10f + 1f * currentRound);
                 monsterInfo.SetMonsterDamage(1f + 0.85f * currentRound);
-                monsterInfo.SetMonsterMovementSpeed(2.4f);
+                monsterInfo.SetMonsterMovementSpeed(1.7f);
                 monsterInfo.SetMonsterWaffleDropCount(1);
                 monsterInfo.SetMonsterConsumableDropRate(0.01f);
                 monsterInfo.SetMonsterLootDropRate(0.01f);
@@ -627,7 +627,7 @@ public class SpawnManager : MonoBehaviour
             case "TofuSmall":
                 monsterInfo.SetMonsterHP(15f + 5f * currentRound);
                 monsterInfo.SetMonsterDamage(1f + 1.0f * currentRound);
-                monsterInfo.SetMonsterMovementSpeed(7f);
+                monsterInfo.SetMonsterMovementSpeed(4.9f);
                 monsterInfo.SetMonsterWaffleDropCount(1);
                 monsterInfo.SetMonsterConsumableDropRate(0.01f);
                 monsterInfo.SetMonsterLootDropRate(0.01f);

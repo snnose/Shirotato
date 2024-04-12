@@ -33,7 +33,7 @@ public class PlayerInfo : MonoBehaviour
     private int Evasion = 0;
 
     // 유틸 관련
-    public float MovementSpeed = 10f;
+    public float MovementSpeed = 7f;
     private float MovementSpeedPercent = 0f;
     private float RootingRange = 1f;
     private float Luck = 0f;

@@ -18,7 +18,7 @@ public class WeaponInfo
 
     private float pierceDamage = 0.5f;
     public int pierceCount = 0;
-    private int bounceCount = 0;
+    public int bounceCount = 0;
 
     // 발사하는 탄환 개수
     private int shootBulletCount = 1;
@@ -96,6 +96,7 @@ public class WeaponInfo
                 this.pierceDamage = 0.5f;
                 this.price = 20;
                 break;
+
             case "Shotgun":
                 this.weaponName = weaponName;
                 this.weaponNumber = weaponNumber;
@@ -113,6 +114,26 @@ public class WeaponInfo
                 this.shootBulletCount = 4;
                 this.specialNote = "한번에 4발 발사";
                 this.price = 20;
+                break;
+
+            case "Bow":
+                this.weaponName = weaponName;
+                this.weaponNumber = weaponNumber;
+                this.grade = 0;
+
+                this.damage = 10;
+                this.damageCoeff = 0.8f;
+                this.range = 6f;
+                this.coolDown = 1.22f;
+                this.knockback = 5;
+
+                this.pierceCount = 0;
+                this.pierceDamage = 0.5f;
+
+                this.bounceCount = 1;
+
+                this.specialNote = "화살이 1회 튕깁니다";
+                this.price = 15;
                 break;
 
             // Melee Weapon
@@ -390,6 +411,72 @@ public class WeaponInfo
                         this.shootBulletCount = 6;
                         this.specialNote = "한번에 6발 발사";
                         this.price = 149;
+                        break;
+                }
+                break;
+
+            case "Bow":
+                switch (weaponGrade)
+                {
+                    case 0:
+                        this.damage = 10;
+                        this.damageCoeff = 0.8f;
+                        this.range = 6f;
+                        this.coolDown = 1.22f;
+                        this.knockback = 5;
+
+                        this.pierceCount = 0;
+                        this.pierceDamage = 0.5f;
+
+                        this.bounceCount = 1;
+
+                        this.specialNote = "화살이 1회 튕깁니다";
+                        this.price = 15;
+                        break;
+                    case 1:
+                        this.damage = 13;
+                        this.damageCoeff = 0.8f;
+                        this.range = 6f;
+                        this.coolDown = 1.17f;
+                        this.knockback = 5;
+
+                        this.pierceCount = 0;
+                        this.pierceDamage = 0.5f;
+
+                        this.bounceCount = 2;
+
+                        this.specialNote = "화살이 2회 튕깁니다";
+                        this.price = 31;
+                        break;
+                    case 2:
+                        this.damage = 16;
+                        this.damageCoeff = 0.8f;
+                        this.range = 6f;
+                        this.coolDown = 1.13f;
+                        this.knockback = 5;
+
+                        this.pierceCount = 0;
+                        this.pierceDamage = 0.5f;
+
+                        this.bounceCount = 3;
+
+                        this.specialNote = "화살이 3회 튕깁니다";
+                        this.price = 61;
+                        break;
+                    case 3:
+                        this.damage = 20;
+                        this.damageCoeff = 0.8f;
+                        this.range = 6f;
+                        this.coolDown = 1.1f;
+                        this.knockback = 5;
+
+                        this.pierceCount = 0;
+                        this.pierceDamage = 0.5f;
+
+                        this.bounceCount = 4;
+
+                        this.specialNote = "화살이 4회 튕깁니다";
+                        this.price = 122;
                         break;
                 }
                 break;

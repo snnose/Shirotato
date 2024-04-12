@@ -405,6 +405,9 @@ public class ShopItemListControl : MonoBehaviour
             case "SMG":
                 tmp = "SMG";
                 break;
+            case "Bow":
+                tmp = "활";
+                break;
             // Melee Weapon
             case "Nekohand":
                 tmp = "고양이손";

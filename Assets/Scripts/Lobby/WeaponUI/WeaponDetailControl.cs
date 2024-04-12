@@ -65,6 +65,16 @@ public class WeaponDetailControl : MonoBehaviour
                                        "범위 : " + 6.2 + '\n' +
                                        "한번에 4발 발사";
                 break;
+
+            case "Bow":
+                weaponImage.sprite = Resources.Load<Sprite>("Sprites/Weapons/Bow");
+                weaponNamePro.text = "활";
+                weaponDetailPro.text = "대미지 : " + 10 + " (+80%)\n" +
+                                       "공격속도 : " + 0.82 + "/s \n" +
+                                       "넉백 : " + 5 + '\n' +
+                                       "범위 : " + 6 + '\n' +
+                                       "화살이 1회 튕깁니다";
+                break;
             // Melee Weapon
             case "Nekohand":
                 weaponImage.sprite = Resources.Load<Sprite>("Sprites/Weapons/Nekohand");

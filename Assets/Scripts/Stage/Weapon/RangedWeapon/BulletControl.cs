@@ -103,21 +103,65 @@ public class BulletControl : MonoBehaviour
             Vector2 knockbackVector = PlayerControl.Instance.transform.position - hitedMonster.transform.position;
             hitedMonsterRb2D.AddForce(knockback * -knockbackVector.normalized * 1.5f, ForceMode2D.Impulse);
 
-            // 관통 횟수가 1 이상이라면
-            if (pierceCount > 0)
+            // 튕김 횟수와 관통 횟수 모두 있다면 튕김이 우선시된다
+            // 튕김 횟수가 1 이상이라면
+            if (bounceCount > 0)
             {
-                // 횟수를 감소시키고 대미지를 절반으로 감소
-                this.pierceCount--;
-                this.damage = Mathf.FloorToInt(this.damage * pierceDamage);
-                if (this.damage <= 0)
-                    this.damage = 1;
+                Bounce(collision.gameObject);
+                bounceCount--;
             }
-            // 관통 횟수가 0이면
+            // 튕김 횟수가 없다면
             else
             {
-                Destroy(this.gameObject);
+                // 관통 횟수가 1 이상이라면
+                if (pierceCount > 0)
+                {
+                    // 횟수를 감소시키고 대미지를 절반으로 감소
+                    this.pierceCount--;
+                    this.damage = Mathf.FloorToInt(this.damage * pierceDamage);
+                    if (this.damage <= 0)
+                        this.damage = 1;
+                }
+                // 관통 횟수가 0이면
+                else
+                {
+                    Destroy(this.gameObject);
+                }
             }
         }
+    }
+
+    // 튕김은 적에게 적중 후 다른 랜덤한 적에게 향하는 기능
+    void Bounce(GameObject collision)
+    {
+        // 현재 존재하는 몬스터 목록을 받아온다.
+        List<GameObject> Monsters;
+        Monsters = SpawnManager.Instance.GetCurrentMonsters();
+        // 랜덤한 몬스터를 선택한다
+        int maxNum = Monsters.Count;
+        // 몬스터가 단 한마리 존재하면 발동하지 않는다
+        if (maxNum == 1)
+            return;
+        GameObject targetMonster = null;
+        while (true)
+        {
+            int ran = Random.Range(0, maxNum);
+            targetMonster = Monsters[Random.Range(0, maxNum)];
+            // 타겟팅된 몬스터가 현재 피격된 몬스터와 다르면 탈출
+            if (ran != collision.GetComponent<MonsterInfo>().GetMonsterNumber())
+                break;
+        }
+
+        // 총알 -> 몬스터 벡터를 구한다
+        Vector2 direction = targetMonster.transform.position - this.transform.position;
+        // 총알의 속도를 초기화한 후
+        this.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        // 해당 몬스터가 있는 방향으로 다시 발사
+        this.GetComponent<Rigidbody2D>().AddForce(direction.normalized * 50f, ForceMode2D.Impulse);
+        // 회전 조정
+        float rotateZ = Mathf.Atan2(direction.normalized.y, direction.normalized.x) * Mathf.Rad2Deg;
+
+        this.transform.rotation = Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, rotateZ);
     }
 
     void ActivateNormalItem42(MonsterControl monsterControl)

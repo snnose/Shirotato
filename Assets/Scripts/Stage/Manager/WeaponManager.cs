@@ -77,7 +77,7 @@ public class WeaponManager : MonoBehaviour
     private void SettingWeaponPos()
     {
         // weaponPos ¼³Á¤
-        List<Vector2> WeaponPos1 = new List<Vector2>() { new Vector2(-1.2f, -0.5f) };
+        List<Vector2> WeaponPos1 = new List<Vector2>() { new Vector2(1.2f, -0.5f) };
         List<Vector2> WeaponPos2 = new List<Vector2>() { new Vector2(-1.2f, -0.5f), new Vector2(1.2f, -0.5f) };
         List<Vector2> WeaponPos3 = new List<Vector2>() { new Vector2(-1.2f, -0.5f), new Vector2(1.2f, -0.5f), new Vector2(0f, 1.0f) };
         List<Vector2> WeaponPos4 = new List<Vector2>() { new Vector2(-1.2f, -0.5f), new Vector2(1.2f, -0.5f), new Vector2(-1.2f, 0f),

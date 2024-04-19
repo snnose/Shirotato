@@ -54,13 +54,9 @@ public class ChargeToPlayer : MonoBehaviour
             // 플레이어 추격을 멈춘다
             chasePlayer.StopChasing();
             monsterRb2D.velocity = new Vector2(0, 0);
-            // 0.75초 동안 서서히 빨개지면서 대기한 후 시전한다
+            // 0.5초 동안 서서히 빨개지면서 대기한 후 시전한다
             // 돌진 시전 중에는 넉백되지 않는다.
-            this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            yield return new WaitForSeconds(0.75f);
-
-            // 대기가 끝나면 고정 상태 해제
-            this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            yield return StartCoroutine(WaitToCharge());
 
             // 0.5초 동안 돌진
             this.GetComponent<Collider2D>().isTrigger = true;
@@ -83,5 +79,27 @@ public class ChargeToPlayer : MonoBehaviour
             isCoolDown = false;
         }
         yield return null;
+    }
+
+    IEnumerator WaitToCharge()
+    {
+        this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        Color color = this.GetComponent<SpriteRenderer>().color;
+        Color originColor = color;
+
+        for (int i = 0; i < 50; i++)
+        {
+            color.g = 1f - (i * 0.015f);
+            color.b = 1f - (i * 0.015f);
+            this.GetComponent<SpriteRenderer>().color = color;
+
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        // 돌진 대기가 끝나면 다시 색을 원상태로 돌려놓는다.
+        this.GetComponent<SpriteRenderer>().color = originColor;
+
+        // 대기가 끝나면 고정 상태 해제
+        this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
     }
 }

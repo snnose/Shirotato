@@ -37,8 +37,6 @@ public class MonsterControl : MonoBehaviour
         // 몬스터가 죽을 때의 처리
         if (currentHP <= 0)
         {
-            // 현재 생존 몬스터 리스트에서 삭제
-            SpawnManager.Instance.GetCurrentMonsters().Remove(this.gameObject);
             // RareItem27 보유 시 효과 발동
             ActivateRareItem27();
             // EpicItem18 보유 시 효과 발동
@@ -58,6 +56,12 @@ public class MonsterControl : MonoBehaviour
             SpawnManager.Instance.GetCurrentMonsters().Remove(this.gameObject);
             Destroy(this.gameObject);
         }
+    }
+
+    private void OnDestroy()
+    {
+        // 현재 생존 몬스터 리스트에서 삭제
+        SpawnManager.Instance.GetCurrentMonsters().Remove(this.gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -196,6 +200,10 @@ public class MonsterControl : MonoBehaviour
     public void SetMonsterCurrentHP(float hp)
     {
         this.currentHP = hp;
+
+        // 최대 체력보다 높을 경우 방지
+        if (hp >= this.GetComponent<MonsterInfo>().GetMonsterHP())
+            this.currentHP = this.GetComponent<MonsterInfo>().GetMonsterHP();
     }
 
     public float GetMonsterCurrentHP()

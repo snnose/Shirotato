@@ -23,8 +23,11 @@ public class WeaponManager : MonoBehaviour
 
     public List<GameObject> currentWeaponList = new();
     public List<WeaponInfo> currentWeaponInfoList = new();
-    private List<Vector2> weaponPos = new() { new Vector2(-1.2f, -0.5f), new Vector2(1.2f, -0.5f), new Vector2(-1.2f, -0.0f),
-                                              new Vector2(1f, -1.1f), new Vector2(1.2f, -0.0f), new Vector2(-1f, -1.1f)};
+    private List<List<Vector2>> weaponPos = new();
+    /*
+    private List<Vector2> weaponPos = new() { new Vector2(-1.2f, 0.0f), new Vector2(1.2f, 0.0f), new Vector2(-1.2f, 0.6f),
+                                              new Vector2(1.2f, 0.6f), new Vector2(-1f, -0.6f), new Vector2(1f, -0.6f)};
+    */
 
     public IEnumerator equipWeapons;
     public IEnumerator destroyWeapons;
@@ -36,9 +39,13 @@ public class WeaponManager : MonoBehaviour
         else
             Destroy(this.gameObject);
 
+        // weaponPos 설정
+        SettingWeaponPos();
+
         playerBox = GameObject.FindGameObjectWithTag("GameController");
 
         GameObject startWeapon = LoadStartWeapon(RoundSetting.Instance.GetStartWeapon());
+
         // 시작 무기 착용
         currentWeaponList.Add(startWeapon);
         currentWeaponInfoList.Add(new WeaponInfo(startWeapon.name, 0));
@@ -66,6 +73,28 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
+    // 무기 생성 위치를 담는다
+    private void SettingWeaponPos()
+    {
+        // weaponPos 설정
+        List<Vector2> WeaponPos1 = new List<Vector2>() { new Vector2(-1.2f, -0.5f) };
+        List<Vector2> WeaponPos2 = new List<Vector2>() { new Vector2(-1.2f, -0.5f), new Vector2(1.2f, -0.5f) };
+        List<Vector2> WeaponPos3 = new List<Vector2>() { new Vector2(-1.2f, -0.5f), new Vector2(1.2f, -0.5f), new Vector2(0f, 1.0f) };
+        List<Vector2> WeaponPos4 = new List<Vector2>() { new Vector2(-1.2f, -0.5f), new Vector2(1.2f, -0.5f), new Vector2(-1.2f, 0f),
+                                                         new Vector2(1.2f, 0)};
+        List<Vector2> WeaponPos5 = new List<Vector2>() { new Vector2(-1.2f, -0.5f), new Vector2(1.2f, -0.5f), new Vector2(-1.2f, 0f),
+                                                         new Vector2(1.2f, 0), new Vector2(0f, 1.0f)};
+        List<Vector2> WeaponPos6 = new List<Vector2>() { new Vector2(-1.2f, -0.6f), new Vector2(1.2f, -0.6f), new Vector2(-1.2f, -0.1f),
+                                                         new Vector2(1.2f, -0.1f), new Vector2(-1.2f, 0.4f), new Vector2(1.2f, 0.4f)};
+
+        weaponPos.Add(WeaponPos1);
+        weaponPos.Add(WeaponPos2);
+        weaponPos.Add(WeaponPos3);
+        weaponPos.Add(WeaponPos4);
+        weaponPos.Add(WeaponPos5);
+        weaponPos.Add(WeaponPos6);
+    }
+
     // 시작 무기를 불러온다
     private GameObject LoadStartWeapon(string weaponName)
     {
@@ -87,7 +116,7 @@ public class WeaponManager : MonoBehaviour
             if (i % 2 == 1)
                 reversal = 0;
             currentWeaponList[i].GetComponent<StoredWeaponNumber>().SetWeaponNumber(currentWeaponInfoList[i].GetWeaponNumber());
-            GameObject copy = Instantiate(currentWeaponList[i], weaponPos[i], Quaternion.Euler(0f, -180f * reversal, 0f)) as GameObject;
+            GameObject copy = Instantiate(currentWeaponList[i], weaponPos[repeat - 1][i], Quaternion.Euler(0f, -180f * reversal, 0f)) as GameObject;
 
             copy.transform.SetParent(playerBox.transform, false);
             yield return null;

@@ -11,6 +11,8 @@ public class MonsterInfo : MonoBehaviour
     public float damage;
     public float MovementSpeed;
 
+    public bool isBuffed = false;
+
     public int normalItem44Count = 0;
 
     // 드랍 관련

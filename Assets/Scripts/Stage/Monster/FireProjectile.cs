@@ -29,7 +29,8 @@ public class FireProjectile : MonoBehaviour
 
     IEnumerator FireProjectileToPlayer()
     {
-        yield return new WaitForSeconds(4.0f);
+        yield return new WaitForSeconds(3.0f);
+        yield return StartCoroutine(WaitToFire());
 
         // 플레이어와 몬스터의 위치를 바탕으로 발사 방향 계산
         Vector2 playerPos = PlayerControl.Instance.transform.position;
@@ -64,5 +65,23 @@ public class FireProjectile : MonoBehaviour
         tmp.Normalize();
 
         return tmp;
+    }
+
+    IEnumerator WaitToFire()
+    {
+        Color color = this.GetComponent<SpriteRenderer>().color;
+        Color originColor = color;
+
+        for (int i = 0; i < 50; i++)
+        {
+            color.g = 1f - (i * 0.015f);
+            color.b = 1f - (i * 0.015f);
+            this.GetComponent<SpriteRenderer>().color = color;
+
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        // 투사체를 발사했으면 색을 원상태로 돌려놓는다
+        this.GetComponent<SpriteRenderer>().color = originColor;
     }
 }

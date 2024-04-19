@@ -9,7 +9,7 @@ public class Stab : MonoBehaviour
         Vector2 initPos = this.transform.localPosition;
         Vector2 destPos = initPos + dir;
 
-        float moveSpeed = 3f / frame;
+        float moveSpeed = 6f / frame;
 
         for (int i = 0; i < frame / 2; i++)
         {

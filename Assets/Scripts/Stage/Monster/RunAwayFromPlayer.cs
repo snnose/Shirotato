@@ -26,14 +26,8 @@ public class RunAwayFromPlayer : MonoBehaviour
     // 다음 움직임을 결정하는 기능
     IEnumerator ChooseNextMoving()
     {
-        float properDistance = 9f;
-        
-        Vector2 playerPos = PlayerControl.Instance.transform.position;
-        Vector2 monsterPos = this.transform.position;
-
-        float distance = Vector2.Distance(playerPos, monsterPos);
-
-
+        yield return StartCoroutine(MoveRandomly());
+        /*
         // 일정 거리 가까이면 플레이어에서 최대한 멀어지는 방향으로 도망친다
         if (distance <= properDistance)
         {
@@ -46,20 +40,7 @@ public class RunAwayFromPlayer : MonoBehaviour
         {
             yield return StartCoroutine(MoveRandomly());
         }
-    }
-
-    IEnumerator RunAway(Vector2 playerPos, Vector2 monsterPos)
-    {
-        float relativePosX = monsterPos.x - playerPos.x;
-        float relativePosY = monsterPos.y - playerPos.y;
-
-        Vector2 movement = new Vector2(relativePosY, relativePosX);
-        movement.Normalize();
-        
-        monsterRb2D.velocity = movement * monsterInfo.GetMonsterMovementSpeed();
-        yield return new WaitForSeconds(0.5f);
-
-        chooseNextMoving = ChooseNextMoving();
+        */
     }
 
     IEnumerator MoveRandomly()

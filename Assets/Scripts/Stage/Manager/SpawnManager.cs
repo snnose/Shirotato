@@ -18,7 +18,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    // 0 = 샌드위치, 1 = 수박
+    // 0 = 샌드위치, 1 = 요거트
     public GameObject[] monsterPrefabs;
     private GameObject warningSign;
     private GameObject greenSign;
@@ -27,6 +27,7 @@ public class SpawnManager : MonoBehaviour
     public List<GameObject> currentMonsters = new();
 
     private int currentNumber = 1;
+    private int difficulty = 0;
 
     public IEnumerator startSpawn;
     private IEnumerator stopSpawn;
@@ -35,14 +36,19 @@ public class SpawnManager : MonoBehaviour
     // 코루틴 함수
     IEnumerator spawnPotato;        // 브로테이토 나무 같은 포지션
     IEnumerator spawnSandwich;      // 1 ~
-    IEnumerator spawnWatermelon;    // 2 ~
-    IEnumerator spawnBlueberry;     // 3 ~
+    IEnumerator spawnYogurt;    // 2 ~
+    IEnumerator spawnStrongYogurt;
+    IEnumerator spawnWatermelon;     // 3 ~
     IEnumerator spawnSalad;         // 4 ~
-    IEnumerator spawnCheese;
-    IEnumerator spawnStrongCheese;
+    IEnumerator spawnDaepe;
+    IEnumerator spawnStrongDaepe;
     IEnumerator spawnSpaghetti;
-    IEnumerator spawnPancakes;
+    IEnumerator spawnSeeweedroll;
     IEnumerator spawnTofuLarge;
+    IEnumerator spawnFrenchFries;   // fly
+    IEnumerator spawnTakoyaki;      // healer
+    IEnumerator spawnDumbling;      // buffer
+    IEnumerator spawnEgg;
 
     private void Awake()
     {
@@ -58,6 +64,7 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         startSpawn = StartSpawn(GameRoot.Instance.GetCurrentRound());
+        difficulty = RoundSetting.Instance.GetDifficulty();
     }
 
     // Update is called once per frame
@@ -85,14 +92,19 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(spawnPotato);
 
         float sandwichSpawnInterval;
-        float watermelonSpawnInterval;
+        float yogurtSpawnInterval;
+        float strongYogurtSpawnInterval;
         float saladSpawnInterval;
-        float blueberrySpawnInterval;
-        float cheeseSpawnInterval;
-        float strongCheeseSpawnInterval;
+        float watermelonSpawnInterval;
+        float daepeSpawnInterval;
+        float strongDaepeSpawnInterval;
         float spaghettiSpawnInterval;
-        float pancakesSpawnInterval;
+        float seaweedrollSpawnInterval;
         float tofuLargeSpawnInterval;
+        float frenchFriesSpawnInterval;
+        float takoyakiSpawnInterval;
+        float dumblingSpawnInterval;
+        float eggSpawnInterval;
 
         switch (currentRound)
         {
@@ -100,44 +112,64 @@ public class SpawnManager : MonoBehaviour
             case 1:
                 // 리스폰 시간 설정
                 sandwichSpawnInterval = 3.0f;
-                
+                // 테스트
+                //takoyakiSpawnInterval = 20.0f;
+
                 // 리스폰 관련 아이템 적용
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(sandwichSpawnInterval);
                 spawnSandwich = SpawnSandwich(1.0f, sandwichSpawnInterval, 5);
                 StartCoroutine(spawnSandwich);
-                
+
+                // 테스트
+                //spawnTakoyaki = SpawnTakoyaki(1.0f, takoyakiSpawnInterval, 1);
+                //StartCoroutine(spawnTakoyaki);
+
                 break;
             // 2라운드
             case 2:
                 // 리스폰 시간 설정
                 sandwichSpawnInterval = 6.0f;
-                watermelonSpawnInterval = 3.0f;
+                yogurtSpawnInterval = 3.0f;
 
                 // 리스폰 관련 아이템 적용
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(sandwichSpawnInterval);
-                watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(watermelonSpawnInterval);
+                yogurtSpawnInterval = ActivateItemRelatedSpawnInterval(yogurtSpawnInterval);
 
                 spawnSandwich = SpawnSandwich(9.0f, sandwichSpawnInterval, 5);
-                spawnWatermelon = SpawnWatermelon(1.0f, watermelonSpawnInterval, 4);
+                spawnYogurt = SpawnYogurt(1.0f, yogurtSpawnInterval, 4);
 
                 StartCoroutine(spawnSandwich);
-                StartCoroutine(spawnWatermelon);
+                StartCoroutine(spawnYogurt);
                 break;
             // 3라운드
             case 3:
                 // 리스폰 시간 설정
                 sandwichSpawnInterval = 4.0f;
-                watermelonSpawnInterval = 7.0f;
+                yogurtSpawnInterval = 7.0f;
 
                 // 리스폰 관련 아이템 적용
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(sandwichSpawnInterval);
-                watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(watermelonSpawnInterval);
+                yogurtSpawnInterval = ActivateItemRelatedSpawnInterval(yogurtSpawnInterval);
 
                 spawnSandwich = SpawnSandwich(1.0f, sandwichSpawnInterval, 5);
-                spawnWatermelon = SpawnWatermelon(9.0f, watermelonSpawnInterval, 5);
+                spawnYogurt = SpawnYogurt(9.0f, yogurtSpawnInterval, 5);
 
                 StartCoroutine(spawnSandwich);
-                StartCoroutine(spawnWatermelon);
+                StartCoroutine(spawnYogurt);
+
+                // 난이도 어려움 이상일 때 스폰되는 몬스터 종류
+                if (difficulty >= 2)
+                {
+                    watermelonSpawnInterval = 5.0f;
+
+                    watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(watermelonSpawnInterval);
+
+                    spawnWatermelon = SpawnWatermelon(10f, watermelonSpawnInterval, 2);
+                    spawnFrenchFries = SpawnFrenchFries(10f, 999f, 1);
+
+                    StartCoroutine(spawnWatermelon);
+                    StartCoroutine(spawnFrenchFries);
+                }
                 break;
             // 4라운드
             case 4:
@@ -154,285 +186,423 @@ public class SpawnManager : MonoBehaviour
 
                 StartCoroutine(spawnSandwich);
                 StartCoroutine(spawnSalad);
+
+                // 난이도 어려움 이상일 때 스폰되는 몬스터 종류
+                if (difficulty >= 2)
+                {
+                    spaghettiSpawnInterval = 4.0f;
+
+                    spaghettiSpawnInterval = ActivateItemRelatedSpawnInterval(spaghettiSpawnInterval);
+
+                    spawnSpaghetti = SpawnSpaghetti(3f, spaghettiSpawnInterval, 2);
+                    spawnFrenchFries = SpawnFrenchFries(15f, 999f, 2);
+
+                    StartCoroutine(spawnSpaghetti);
+                    StartCoroutine(spawnFrenchFries);
+                }
                 break;
             // 5라운드
             case 5:
                 // 리스폰 시간 설정
                 sandwichSpawnInterval = 4f;
-                watermelonSpawnInterval = 5f;
+                yogurtSpawnInterval = 5f;
                 saladSpawnInterval = 6.0f;
 
                 // 리스폰 관련 아이템 적용
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(sandwichSpawnInterval);
-                watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(watermelonSpawnInterval);
+                yogurtSpawnInterval = ActivateItemRelatedSpawnInterval(yogurtSpawnInterval);
                 saladSpawnInterval = ActivateItemRelatedSpawnInterval(saladSpawnInterval);
 
-                spawnSandwich = SpawnSandwich(4.0f, sandwichSpawnInterval, 5);
-                spawnWatermelon = SpawnWatermelon(3.0f, watermelonSpawnInterval, 4);
+                spawnSandwich = SpawnSandwich(1.0f, sandwichSpawnInterval, 5);
+                spawnYogurt = SpawnYogurt(3.0f, yogurtSpawnInterval, 4);
                 spawnSalad = SpawnSalad(25.0f, saladSpawnInterval, 2);
 
                 StartCoroutine(spawnSandwich);
-                StartCoroutine(spawnWatermelon);
+                StartCoroutine(spawnYogurt);
                 StartCoroutine(spawnSalad);
+
+                // 난이도 어려움 이상일 때 스폰되는 몬스터 종류
+                if (difficulty >= 2)
+                {
+                    watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(4f);
+
+                    spawnWatermelon = SpawnWatermelon(15f, watermelonSpawnInterval, 3);
+
+                    StartCoroutine(spawnWatermelon);
+                }
                 break;
             // 6라운드
             case 6:
                 // 리스폰 시간 설정
-                blueberrySpawnInterval = 5f;
-                watermelonSpawnInterval = 3f;
+                watermelonSpawnInterval = 5f;
+                yogurtSpawnInterval = 3f;
                 sandwichSpawnInterval = 3f;
 
                 // 리스폰 관련 아이템 적용
-                blueberrySpawnInterval = ActivateItemRelatedSpawnInterval(blueberrySpawnInterval);
                 watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(watermelonSpawnInterval);
+                yogurtSpawnInterval = ActivateItemRelatedSpawnInterval(yogurtSpawnInterval);
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(sandwichSpawnInterval);
 
-                spawnBlueberry = SpawnBlueberry(1.0f, blueberrySpawnInterval, 4);
-                spawnWatermelon = SpawnWatermelon(3.0f, watermelonSpawnInterval, 4);
+                spawnWatermelon = SpawnWatermelon(1.0f, watermelonSpawnInterval, 4);
+                spawnYogurt = SpawnYogurt(3.0f, yogurtSpawnInterval, 4);
                 spawnSandwich = SpawnSandwich(25.0f, sandwichSpawnInterval, 5);
 
-                StartCoroutine(spawnBlueberry);
                 StartCoroutine(spawnWatermelon);
+                StartCoroutine(spawnYogurt);
                 StartCoroutine(spawnSandwich);
+
+                // 난이도 어려움 이상일 때 스폰되는 몬스터 종류
+                if (difficulty >= 2)
+                {
+                    watermelonSpawnInterval = 10.0f;
+                    frenchFriesSpawnInterval = 5.0f;
+
+                    watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(watermelonSpawnInterval);
+                    frenchFriesSpawnInterval = ActivateItemRelatedSpawnInterval(frenchFriesSpawnInterval);
+
+                    spawnWatermelon = SpawnWatermelon(15f, watermelonSpawnInterval, 2);
+                    spawnFrenchFries = SpawnFrenchFries(15f, frenchFriesSpawnInterval, 2);
+
+                    StartCoroutine(spawnWatermelon);
+                    StartCoroutine(spawnFrenchFries);
+                }
                 break;
             // 7라운드
             case 7:
                 // 리스폰 시간 설정
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(2f);
-                blueberrySpawnInterval = ActivateItemRelatedSpawnInterval(5f);
+                watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
                 saladSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
 
                 spawnSandwich = SpawnSandwich(1.0f, sandwichSpawnInterval, 8);
-                spawnBlueberry = SpawnBlueberry(10f, blueberrySpawnInterval, 6);
+                spawnWatermelon = SpawnWatermelon(10f, watermelonSpawnInterval, 6);
                 spawnSalad = SpawnSalad(30f, saladSpawnInterval, 2);
 
                 StartCoroutine(spawnSandwich);
-                StartCoroutine(spawnBlueberry);
+                StartCoroutine(spawnWatermelon);
                 StartCoroutine(spawnSalad);
+
+                // 난이도 어려움 이상일 때 스폰되는 몬스터 종류
+                if (difficulty >= 2)
+                {
+                    takoyakiSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
+                    eggSpawnInterval = ActivateItemRelatedSpawnInterval(8f);
+
+                    spawnTakoyaki = SpawnTakoyaki(1.0f, takoyakiSpawnInterval, 1);
+                    spawnEgg = SpawnEgg(5.0f, eggSpawnInterval, 2);
+
+                    StartCoroutine(spawnTakoyaki);
+                    StartCoroutine(spawnEgg);
+                }
                 break;
             // 8라운드
             case 8:
                 // 리스폰 시간 설정
-                cheeseSpawnInterval = ActivateItemRelatedSpawnInterval(8f);
+                daepeSpawnInterval = ActivateItemRelatedSpawnInterval(8f);
                 saladSpawnInterval = ActivateItemRelatedSpawnInterval(4f);
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(1.5f);
 
-                spawnCheese = SpawnCheese(1.0f, cheeseSpawnInterval, 3);
+                spawnDaepe = SpawnDaepe(1.0f, daepeSpawnInterval, 3);
                 spawnSalad = SpawnSalad(1.0f, saladSpawnInterval, 2);
                 spawnSandwich = SpawnSandwich(5.0f, sandwichSpawnInterval, 4);
 
-                StartCoroutine(spawnCheese);
+                StartCoroutine(spawnDaepe);
                 StartCoroutine(spawnSalad);
                 StartCoroutine(spawnSandwich);
+
+                // 난이도 어려움 이상일 때 스폰되는 몬스터 종류
+                if (difficulty >= 2)
+                {
+                    strongDaepeSpawnInterval = ActivateItemRelatedSpawnInterval(8f);
+
+                    spawnStrongDaepe = SpawnStrongDaepe(15.0f, strongDaepeSpawnInterval, 1);
+
+                    StartCoroutine(spawnStrongDaepe);
+                }
                 break;
             // 9라운드
             case 9:
                 // 리스폰 시간 설정
-                watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(1f);
-                blueberrySpawnInterval = ActivateItemRelatedSpawnInterval(4f);
-                cheeseSpawnInterval = ActivateItemRelatedSpawnInterval(8f);
+                yogurtSpawnInterval = ActivateItemRelatedSpawnInterval(1f);
+                watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(4f);
+                daepeSpawnInterval = ActivateItemRelatedSpawnInterval(8f);
 
-                spawnWatermelon = SpawnWatermelon(1.0f, watermelonSpawnInterval, 6);
-                spawnBlueberry = SpawnBlueberry(10.0f, blueberrySpawnInterval, 2);
-                spawnCheese = SpawnCheese(22.0f, cheeseSpawnInterval, 2);
+                spawnYogurt = SpawnYogurt(1.0f, yogurtSpawnInterval, 6);
+                spawnWatermelon = SpawnWatermelon(10.0f, watermelonSpawnInterval, 2);
+                spawnDaepe = SpawnDaepe(22.0f, daepeSpawnInterval, 2);
 
+                StartCoroutine(spawnYogurt);
                 StartCoroutine(spawnWatermelon);
-                StartCoroutine(spawnBlueberry);
-                StartCoroutine(spawnCheese);
+                StartCoroutine(spawnDaepe);
+
+                // 난이도 어려움 이상일 때 스폰되는 몬스터 종류
+                if (difficulty >= 2)
+                {
+                    strongYogurtSpawnInterval = ActivateItemRelatedSpawnInterval(2f);
+
+                    spawnStrongYogurt = SpawnStrongYogurt(5.0f, strongYogurtSpawnInterval, 3);
+
+                    StartCoroutine(spawnStrongYogurt);
+                }
                 break;
             // 10라운드
             case 10:
                 // 리스폰 시간 설정
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(2f);
-                cheeseSpawnInterval = ActivateItemRelatedSpawnInterval(8f);
-                blueberrySpawnInterval = ActivateItemRelatedSpawnInterval(8f);
-                watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(2f);
+                daepeSpawnInterval = ActivateItemRelatedSpawnInterval(8f);
+                watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(8f);
+                yogurtSpawnInterval = ActivateItemRelatedSpawnInterval(2f);
 
                 spawnSandwich = SpawnSandwich(1.0f, sandwichSpawnInterval, 7);
-                spawnCheese = SpawnCheese(5.0f, cheeseSpawnInterval, 3);
-                spawnBlueberry = SpawnBlueberry(20.0f, blueberrySpawnInterval, 2);
-                spawnWatermelon = SpawnWatermelon(30.0f, watermelonSpawnInterval, 5);
+                spawnDaepe = SpawnDaepe(5.0f, daepeSpawnInterval, 3);
+                spawnWatermelon = SpawnWatermelon(20.0f, watermelonSpawnInterval, 2);
+                spawnYogurt = SpawnYogurt(30.0f, yogurtSpawnInterval, 5);
 
                 StartCoroutine(spawnSandwich);
-                StartCoroutine(spawnCheese);
-                StartCoroutine(spawnBlueberry);
+                StartCoroutine(spawnDaepe);
                 StartCoroutine(spawnWatermelon);
+                StartCoroutine(spawnYogurt);
                 break;
             // 11라운드
             case 11:
                 // 리스폰 시간 설정
                 spaghettiSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(6f);
-                blueberrySpawnInterval = ActivateItemRelatedSpawnInterval(3f);
+                watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
                 saladSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
 
                 spawnSpaghetti = SpawnSpaghetti(1.0f, spaghettiSpawnInterval, 3);
                 spawnSandwich = SpawnSandwich(3.0f, sandwichSpawnInterval, 3);
-                spawnBlueberry = SpawnBlueberry(5.0f, blueberrySpawnInterval, 3);
+                spawnWatermelon = SpawnWatermelon(5.0f, watermelonSpawnInterval, 3);
                 spawnSalad = SpawnSalad(25.0f, saladSpawnInterval, 2);
 
                 StartCoroutine(spawnSpaghetti);
                 StartCoroutine(spawnSandwich);
-                StartCoroutine(spawnBlueberry);
+                StartCoroutine(spawnWatermelon);
                 StartCoroutine(spawnSalad);
+
+                // 난이도 어려움 이상일 때 스폰되는 몬스터 종류
+                if (difficulty >= 2)
+                {
+                    frenchFriesSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
+
+                    spawnFrenchFries = SpawnFrenchFries(15f, frenchFriesSpawnInterval, 2);
+
+                    StartCoroutine(spawnFrenchFries);
+                }
                 break;
             // 12라운드
             case 12:
                 // 리스폰 시간 설정
-                watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(2f);
+                yogurtSpawnInterval = ActivateItemRelatedSpawnInterval(2f);
                 spaghettiSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
-                cheeseSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
+                daepeSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
-                blueberrySpawnInterval = ActivateItemRelatedSpawnInterval(3f);
+                watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
 
-                spawnWatermelon = SpawnWatermelon(1f, watermelonSpawnInterval, 8);
+                spawnYogurt = SpawnYogurt(1f, yogurtSpawnInterval, 8);
                 spawnSpaghetti = SpawnSpaghetti(5f, spaghettiSpawnInterval, 1);
-                spawnCheese = SpawnCheese(15.0f, cheeseSpawnInterval, 3);
+                spawnDaepe = SpawnDaepe(15.0f, daepeSpawnInterval, 3);
                 spawnSandwich = SpawnSandwich(25.0f, sandwichSpawnInterval, 5);
-                spawnBlueberry = SpawnBlueberry(30.0f, blueberrySpawnInterval, 3);
+                spawnWatermelon = SpawnWatermelon(30.0f, watermelonSpawnInterval, 3);
 
-                StartCoroutine(spawnWatermelon);
+                StartCoroutine(spawnYogurt);
                 StartCoroutine(spawnSpaghetti);
-                StartCoroutine(spawnCheese);
+                StartCoroutine(spawnDaepe);
                 StartCoroutine(spawnSandwich);
-                StartCoroutine(spawnBlueberry);
+                StartCoroutine(spawnWatermelon);
+
+                // 난이도 어려움 이상일 때 스폰되는 몬스터 종류
+                if (difficulty >= 2)
+                {
+                    takoyakiSpawnInterval = ActivateItemRelatedSpawnInterval(8f);
+
+                    spawnTakoyaki = SpawnTakoyaki(20f, takoyakiSpawnInterval, 2);
+
+                    StartCoroutine(spawnTakoyaki);
+                }
                 break;
             // 13라운드
             case 13:
                 // 리스폰 시간 설정
-                pancakesSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
+                seaweedrollSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
                 saladSpawnInterval = ActivateItemRelatedSpawnInterval(8f);
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
-                cheeseSpawnInterval = ActivateItemRelatedSpawnInterval(8f);
-                strongCheeseSpawnInterval = ActivateItemRelatedSpawnInterval(4f);
+                daepeSpawnInterval = ActivateItemRelatedSpawnInterval(8f);
+                strongDaepeSpawnInterval = ActivateItemRelatedSpawnInterval(4f);
 
-                spawnPancakes = SpawnPancakes(1.0f, pancakesSpawnInterval, 8);
+                spawnSeeweedroll = SpawnSeaweedroll(1.0f, seaweedrollSpawnInterval, 8);
                 spawnSalad = SpawnSalad(4.0f, saladSpawnInterval, 2);
                 spawnSandwich = SpawnSandwich(8.0f, sandwichSpawnInterval, 4);
-                spawnCheese = SpawnCheese(30.0f, cheeseSpawnInterval, 3);
-                spawnStrongCheese = SpawnStrongCheese(40.0f, strongCheeseSpawnInterval, 1);
+                spawnDaepe = SpawnDaepe(30.0f, daepeSpawnInterval, 3);
+                spawnStrongDaepe = SpawnStrongDaepe(40.0f, strongDaepeSpawnInterval, 1);
 
-                StartCoroutine(spawnPancakes);
+                StartCoroutine(spawnSeeweedroll);
                 StartCoroutine(spawnSalad);
                 StartCoroutine(spawnSandwich);
-                StartCoroutine(spawnCheese);
-                StartCoroutine(spawnStrongCheese);
+                StartCoroutine(spawnDaepe);
+                StartCoroutine(spawnStrongDaepe);
+
+                // 난이도 어려움 이상일 때 스폰되는 몬스터 종류
+                if (difficulty >= 2)
+                {
+                    frenchFriesSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
+
+                    spawnFrenchFries = SpawnFrenchFries(10f, frenchFriesSpawnInterval, 3);
+
+                    StartCoroutine(spawnFrenchFries);
+                }
                 break;
             // 14라운드
             case 14:
                 // 리스폰 시간 설정
                 tofuLargeSpawnInterval = ActivateItemRelatedSpawnInterval(8f);
-                pancakesSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
+                seaweedrollSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(4f);
-                cheeseSpawnInterval = ActivateItemRelatedSpawnInterval(10f);
+                daepeSpawnInterval = ActivateItemRelatedSpawnInterval(10f);
 
                 spawnTofuLarge = SpawnTofuLarge(1.0f, tofuLargeSpawnInterval, 3);
-                spawnPancakes = SpawnPancakes(2.0f, pancakesSpawnInterval, 8);
+                spawnSeeweedroll = SpawnSeaweedroll(2.0f, seaweedrollSpawnInterval, 8);
                 spawnSandwich = SpawnSandwich(15.0f, sandwichSpawnInterval, 6);
-                spawnCheese = SpawnCheese(30.0f, cheeseSpawnInterval, 3);
+                spawnDaepe = SpawnDaepe(30.0f, daepeSpawnInterval, 3);
 
                 StartCoroutine(spawnTofuLarge);
-                StartCoroutine(spawnPancakes);
+                StartCoroutine(spawnSeeweedroll);
                 StartCoroutine(spawnSandwich);
-                StartCoroutine(spawnCheese);
+                StartCoroutine(spawnDaepe);
                 break;
             // 15라운드
             case 15:
                 // 리스폰 시간 설정
                 tofuLargeSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
-                pancakesSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
+                seaweedrollSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
                 saladSpawnInterval = ActivateItemRelatedSpawnInterval(10f);
-                watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
+                strongYogurtSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
 
                 spawnTofuLarge = SpawnTofuLarge(1.0f, tofuLargeSpawnInterval, 3);
                 spawnSandwich = SpawnSandwich(1.0f, sandwichSpawnInterval, 10);
-                spawnPancakes = SpawnPancakes(1.0f, pancakesSpawnInterval, 5);
+                spawnSeeweedroll = SpawnSeaweedroll(1.0f, seaweedrollSpawnInterval, 5);
                 spawnSalad = SpawnSalad(9.0f, saladSpawnInterval, 3);
-                spawnWatermelon = SpawnWatermelon(20.0f, watermelonSpawnInterval, 2);
+                spawnStrongYogurt = SpawnStrongYogurt(20.0f, strongYogurtSpawnInterval, 2);
 
                 StartCoroutine(spawnTofuLarge);
                 StartCoroutine(spawnSandwich);
-                StartCoroutine(spawnPancakes);
+                StartCoroutine(spawnSeeweedroll);
                 StartCoroutine(spawnSalad);
-                StartCoroutine(spawnWatermelon);
+                StartCoroutine(spawnStrongYogurt);
+
+                // 난이도 어려움 이상일 때 스폰되는 몬스터 종류
+                if (difficulty >= 2)
+                {
+                    eggSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
+
+                    spawnEgg = SpawnEgg(5f, eggSpawnInterval, 2);
+
+                    StartCoroutine(spawnEgg);
+                }
                 break;
             // 16라운드
             case 16:
                 // 리스폰 시간 설정
-                pancakesSpawnInterval = ActivateItemRelatedSpawnInterval(4f);
+                seaweedrollSpawnInterval = ActivateItemRelatedSpawnInterval(4f);
+                dumblingSpawnInterval = ActivateItemRelatedSpawnInterval(4f);
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
-                watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(2f);
-                strongCheeseSpawnInterval = ActivateItemRelatedSpawnInterval(4f);
-                cheeseSpawnInterval = ActivateItemRelatedSpawnInterval(6f);
+                strongYogurtSpawnInterval = ActivateItemRelatedSpawnInterval(2f);
+                strongDaepeSpawnInterval = ActivateItemRelatedSpawnInterval(4f);
+                daepeSpawnInterval = ActivateItemRelatedSpawnInterval(6f);
 
-                spawnPancakes = SpawnPancakes(1.0f, pancakesSpawnInterval, 9);
-                spawnSandwich = SpawnSandwich(5.0f, sandwichSpawnInterval, 7);
-                spawnWatermelon = SpawnWatermelon(29.0f, watermelonSpawnInterval, 5);
-                spawnStrongCheese = SpawnStrongCheese(35.0f, strongCheeseSpawnInterval, 1);
-                spawnCheese = SpawnCheese(40.0f, cheeseSpawnInterval, 3);
+                spawnSeeweedroll = SpawnSeaweedroll(1.0f, seaweedrollSpawnInterval, 8);
+                spawnDumbling = SpawnDumbling(1.0f, dumblingSpawnInterval, 1);
+                spawnSandwich = SpawnSandwich(5.0f, sandwichSpawnInterval, 5);
+                spawnStrongYogurt = SpawnStrongYogurt(29.0f, strongYogurtSpawnInterval, 5);
+                spawnStrongDaepe = SpawnStrongDaepe(35.0f, strongDaepeSpawnInterval, 1);
+                spawnDaepe = SpawnDaepe(40.0f, daepeSpawnInterval, 3);
 
-                StartCoroutine(spawnPancakes);
+                StartCoroutine(spawnSeeweedroll);
+                StartCoroutine(spawnDumbling);
                 StartCoroutine(spawnSandwich);
-                StartCoroutine(spawnWatermelon);
-                StartCoroutine(spawnStrongCheese);
-                StartCoroutine(spawnCheese);
+                StartCoroutine(spawnStrongYogurt);
+                StartCoroutine(spawnStrongDaepe);
+                StartCoroutine(spawnDaepe);
                 break;
             // 17라운드
             case 17:
                 // 리스폰 시간 설정
                 spaghettiSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
                 tofuLargeSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
-                pancakesSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
-                watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
+                seaweedrollSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
+                strongYogurtSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(2f);
 
                 spawnSpaghetti = SpawnSpaghetti(1.0f, spaghettiSpawnInterval, 6);
                 spawnTofuLarge = SpawnTofuLarge(10.0f, tofuLargeSpawnInterval, 2);
-                spawnPancakes = SpawnPancakes(25.0f, pancakesSpawnInterval, 4);
-                spawnWatermelon = SpawnWatermelon(30.0f, watermelonSpawnInterval, 5);
+                spawnSeeweedroll = SpawnSeaweedroll(25.0f, seaweedrollSpawnInterval, 4);
+                spawnStrongYogurt = SpawnStrongYogurt(30.0f, strongYogurtSpawnInterval, 5);
                 spawnSandwich = SpawnSandwich(40.0f, sandwichSpawnInterval, 3);
 
                 StartCoroutine(spawnSpaghetti);
                 StartCoroutine(spawnTofuLarge);
-                StartCoroutine(spawnPancakes);
-                StartCoroutine(spawnWatermelon);
+                StartCoroutine(spawnSeeweedroll);
+                StartCoroutine(spawnStrongYogurt);
                 StartCoroutine(spawnSandwich);
+
+                // 난이도 어려움 이상일 때 스폰되는 몬스터 종류
+                if (difficulty >= 2)
+                {
+                    
+                }
                 break;
             // 18라운드
             case 18:
                 // 리스폰 시간 설정
-                blueberrySpawnInterval = ActivateItemRelatedSpawnInterval(3f);
-                pancakesSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
+                watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
+                dumblingSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
+                seaweedrollSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
                 tofuLargeSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
                 saladSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
 
-                spawnBlueberry = SpawnBlueberry(1.0f, blueberrySpawnInterval, 10);
-                spawnPancakes = SpawnPancakes(4.0f, pancakesSpawnInterval, 5);
+                spawnWatermelon = SpawnWatermelon(1.0f, watermelonSpawnInterval, 10);
+                spawnDumbling = SpawnDumbling(1.0f, dumblingSpawnInterval, 2);
+                spawnSeeweedroll = SpawnSeaweedroll(4.0f, seaweedrollSpawnInterval, 5);
                 spawnTofuLarge = SpawnTofuLarge(25.0f, tofuLargeSpawnInterval, 3);
                 spawnSalad = SpawnSalad(45.0f, saladSpawnInterval, 3);
 
-                StartCoroutine(spawnBlueberry);
-                StartCoroutine(spawnPancakes);
+                StartCoroutine(spawnWatermelon);
+                StartCoroutine(spawnDumbling);
+                StartCoroutine(spawnSeeweedroll);
                 StartCoroutine(spawnTofuLarge);
                 StartCoroutine(spawnSalad);
+
+                // 난이도 어려움 이상일 때 스폰되는 몬스터 종류
+                if (difficulty >= 2)
+                {
+                    takoyakiSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
+
+                    spawnTakoyaki = SpawnTakoyaki(10f, takoyakiSpawnInterval, 2);
+
+                    StartCoroutine(spawnTakoyaki);
+                }
                 break;
             // 19라운드
             case 19:
                 // 리스폰 시간 설정
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(1f);
-                pancakesSpawnInterval = ActivateItemRelatedSpawnInterval(2f);
-                strongCheeseSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
+                seaweedrollSpawnInterval = ActivateItemRelatedSpawnInterval(2f);
+                dumblingSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
+                strongDaepeSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
                 spaghettiSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
 
                 spawnSandwich = SpawnSandwich(1.0f, sandwichSpawnInterval, 6);
-                spawnPancakes = SpawnPancakes(5.0f, pancakesSpawnInterval, 5);
-                spawnStrongCheese = SpawnStrongCheese(15.0f, strongCheeseSpawnInterval, 3);
+                spawnDumbling = SpawnDumbling(10f, dumblingSpawnInterval, 2);
+                spawnSeeweedroll = SpawnSeaweedroll(5.0f, seaweedrollSpawnInterval, 5);
+                spawnStrongDaepe = SpawnStrongDaepe(15.0f, strongDaepeSpawnInterval, 3);
                 spawnSpaghetti = SpawnSpaghetti(35.0f, spaghettiSpawnInterval, 3);
 
                 StartCoroutine(spawnSandwich);
-                StartCoroutine(spawnPancakes);
-                StartCoroutine(spawnStrongCheese);
+                StartCoroutine(spawnDumbling);
+                StartCoroutine(spawnSeeweedroll);
+                StartCoroutine(spawnStrongDaepe);
                 StartCoroutine(spawnSpaghetti);
                 break;
             case 20:
@@ -458,45 +628,70 @@ public class SpawnManager : MonoBehaviour
             StopCoroutine(spawnSandwich);
             spawnSandwich = null;
         }
+        if (spawnYogurt != null)
+        {
+            StopCoroutine(spawnYogurt);
+            spawnYogurt = null;
+        }
+        if (spawnStrongYogurt != null)
+        {
+            StopCoroutine(spawnStrongYogurt);
+            spawnStrongYogurt = null;
+        }
         if (spawnWatermelon != null)
         {
             StopCoroutine(spawnWatermelon);
             spawnWatermelon = null;
-        }
-        if (spawnBlueberry != null)
-        {
-            StopCoroutine(spawnBlueberry);
-            spawnBlueberry = null;
         }
         if (spawnSalad != null)
         {
             StopCoroutine(spawnSalad);
             spawnSalad = null;
         }
-        if (spawnCheese != null)
+        if (spawnDaepe != null)
         {
-            StopCoroutine(spawnCheese);
-            spawnCheese = null;
+            StopCoroutine(spawnDaepe);
+            spawnDaepe = null;
         }
-        if (spawnStrongCheese != null)
+        if (spawnStrongDaepe != null)
         {
-            StopCoroutine(spawnStrongCheese);
-            spawnStrongCheese = null;
+            StopCoroutine(spawnStrongDaepe);
+            spawnStrongDaepe = null;
         }
         if (spawnSpaghetti != null)
         {
             StopCoroutine(spawnSpaghetti);
             spawnSpaghetti = null;
         }
-        if (spawnPancakes != null)
+        if (spawnSeeweedroll != null)
         {
-            StopCoroutine(spawnPancakes);
-            spawnPancakes = null;
+            StopCoroutine(spawnSeeweedroll);
+            spawnSeeweedroll = null;
         }
         if (spawnTofuLarge != null)
         {
             StopCoroutine(spawnTofuLarge);
             spawnTofuLarge = null;
+        }
+        if (spawnFrenchFries != null)
+        {
+            StopCoroutine(spawnFrenchFries);
+            spawnFrenchFries = null;
+        }
+        if (spawnTakoyaki != null)
+        {
+            StopCoroutine(spawnTakoyaki);
+            spawnTakoyaki = null;
+        }
+        if (spawnDumbling != null)
+        {
+            StopCoroutine(spawnDumbling);
+            spawnDumbling = null;
+        }
+        if (spawnEgg != null)
+        {
+            StopCoroutine(spawnEgg);
+            spawnEgg = null;
         }
 
         yield return null;
@@ -523,6 +718,9 @@ public class SpawnManager : MonoBehaviour
         float spawnPosX = 0;
         float spawnPosY = 0;
 
+        // 스폰 방식 변경 필요
+        // 플레이어의 위치 기준으로 등장하지 않도록
+
         // x값 -8 ~ 8, y값 -7 ~ 7 사이 범위가 나오지 않도록 조정
         // 맵의 중앙부근에 스폰되면 불쾌한 경험이 많을 것 같음
         while(-8.0f <= spawnPosX && spawnPosX <= 8.0f
@@ -545,6 +743,7 @@ public class SpawnManager : MonoBehaviour
         switch (monsterName)
         {
             case "Potatoes":
+                monsterInfo.type = "Potato";
                 monsterInfo.SetMonsterHP(10f + 5f * currentRound);
                 monsterInfo.SetMonsterDamage(0);
                 monsterInfo.SetMonsterMovementSpeed(0);
@@ -553,6 +752,7 @@ public class SpawnManager : MonoBehaviour
                 monsterInfo.SetMonsterLootDropRate(0.2f);
                 break;
             case "Sandwich":
+                monsterInfo.type = "General";
                 monsterInfo.SetMonsterHP(3f + 2f * currentRound);
                 monsterInfo.SetMonsterDamage(1f + 0.6f * currentRound);
                 monsterInfo.SetMonsterMovementSpeed(Random.Range(3.1f, 4.6f));
@@ -560,7 +760,8 @@ public class SpawnManager : MonoBehaviour
                 monsterInfo.SetMonsterConsumableDropRate(0.01f);
                 monsterInfo.SetMonsterLootDropRate(0.01f);
                 break;
-            case "Watermelon":
+            case "Yogurt":
+                monsterInfo.type = "General";
                 monsterInfo.SetMonsterHP(1f + 1f * currentRound);
                 monsterInfo.SetMonsterDamage(1f + 0.6f * currentRound);
                 monsterInfo.SetMonsterMovementSpeed(5.3f);
@@ -568,7 +769,17 @@ public class SpawnManager : MonoBehaviour
                 monsterInfo.SetMonsterConsumableDropRate(0.02f);
                 monsterInfo.SetMonsterLootDropRate(0.03f);
                 break;
-            case "Blueberry":
+            case "StrongYogurt":
+                monsterInfo.type = "General";
+                monsterInfo.SetMonsterHP(12f + 2f * currentRound);
+                monsterInfo.SetMonsterDamage(1f + 1.0f * currentRound);
+                monsterInfo.SetMonsterMovementSpeed(5.6f);
+                monsterInfo.SetMonsterWaffleDropCount(1);
+                monsterInfo.SetMonsterConsumableDropRate(0.02f);
+                monsterInfo.SetMonsterLootDropRate(0.03f);
+                break;
+            case "Watermelon":
+                monsterInfo.type = "General";
                 monsterInfo.SetMonsterHP(4f + 2.5f * currentRound);
                 monsterInfo.SetMonsterDamage(1f + 0.85f * currentRound);
                 monsterInfo.SetMonsterMovementSpeed(5.6f);
@@ -577,6 +788,7 @@ public class SpawnManager : MonoBehaviour
                 monsterInfo.SetMonsterLootDropRate(0.01f);
                 break;
             case "Salad":
+                monsterInfo.type = "General";
                 monsterInfo.SetMonsterHP(8f + 1f * currentRound);
                 monsterInfo.SetMonsterDamage(1f + 0.6f * currentRound);
                 monsterInfo.SetMonsterMovementSpeed(2.7f);
@@ -584,7 +796,8 @@ public class SpawnManager : MonoBehaviour
                 monsterInfo.SetMonsterConsumableDropRate(0.03f);
                 monsterInfo.SetMonsterLootDropRate(0.1f);
                 break;
-            case "Cheese":
+            case "Daepe":
+                monsterInfo.type = "General";
                 monsterInfo.SetMonsterHP(20f + 11f * currentRound);
                 monsterInfo.SetMonsterDamage(2f + 0.85f * currentRound);
                 monsterInfo.SetMonsterMovementSpeed(4.2f);
@@ -592,7 +805,8 @@ public class SpawnManager : MonoBehaviour
                 monsterInfo.SetMonsterConsumableDropRate(0.03f);
                 monsterInfo.SetMonsterLootDropRate(0.03f);
                 break;
-            case "StrongCheese":
+            case "StrongDaepe":
+                monsterInfo.type = "General";
                 monsterInfo.SetMonsterHP(30f + 22f * currentRound);
                 monsterInfo.SetMonsterDamage(1f + 1.15f * currentRound);
                 monsterInfo.SetMonsterMovementSpeed(4.2f);
@@ -601,6 +815,7 @@ public class SpawnManager : MonoBehaviour
                 monsterInfo.SetMonsterLootDropRate(0.03f);
                 break;
             case "Spaghetti":
+                monsterInfo.type = "General";
                 monsterInfo.SetMonsterHP(10f + 24f * currentRound);
                 monsterInfo.SetMonsterDamage(1f + 1.2f * currentRound);
                 monsterInfo.SetMonsterMovementSpeed(2.1f);
@@ -608,7 +823,8 @@ public class SpawnManager : MonoBehaviour
                 monsterInfo.SetMonsterConsumableDropRate(0.03f);
                 monsterInfo.SetMonsterLootDropRate(0.03f);
                 break;
-            case "Pancakes":
+            case "Seaweedroll":
+                monsterInfo.type = "General";
                 monsterInfo.SetMonsterHP(8f + 3f * currentRound);
                 monsterInfo.SetMonsterDamage(1 + 1.0f * currentRound);
                 monsterInfo.SetMonsterMovementSpeed(Random.Range(3.2f, 3.9f));
@@ -617,6 +833,7 @@ public class SpawnManager : MonoBehaviour
                 monsterInfo.SetMonsterLootDropRate(0.01f);
                 break;
             case "TofuLarge":
+                monsterInfo.type = "General";
                 monsterInfo.SetMonsterHP(10f + 1f * currentRound);
                 monsterInfo.SetMonsterDamage(1f + 0.85f * currentRound);
                 monsterInfo.SetMonsterMovementSpeed(1.7f);
@@ -625,10 +842,56 @@ public class SpawnManager : MonoBehaviour
                 monsterInfo.SetMonsterLootDropRate(0.01f);
                 break;
             case "TofuSmall":
+                monsterInfo.type = "General";
                 monsterInfo.SetMonsterHP(15f + 5f * currentRound);
                 monsterInfo.SetMonsterDamage(1f + 1.0f * currentRound);
                 monsterInfo.SetMonsterMovementSpeed(4.9f);
                 monsterInfo.SetMonsterWaffleDropCount(1);
+                monsterInfo.SetMonsterConsumableDropRate(0.01f);
+                monsterInfo.SetMonsterLootDropRate(0.01f);
+                break;
+            case "FrenchFries":
+                monsterInfo.type = "General";
+                monsterInfo.SetMonsterHP(15f + 4f * currentRound);
+                monsterInfo.SetMonsterDamage(1f + 0.85f * currentRound);
+                monsterInfo.SetMonsterMovementSpeed(Random.Range(4.55f, 5.25f));
+                monsterInfo.SetMonsterWaffleDropCount(1);
+                monsterInfo.SetMonsterConsumableDropRate(0.01f);
+                monsterInfo.SetMonsterLootDropRate(0.01f);
+                break;
+            case "Takoyaki":
+                monsterInfo.type = "General";
+                monsterInfo.SetMonsterHP(10f + 8f * currentRound);
+                monsterInfo.SetMonsterDamage(1f + 0.85f * currentRound);
+                monsterInfo.SetMonsterMovementSpeed(5.6f);
+                monsterInfo.SetMonsterWaffleDropCount(2);
+                monsterInfo.SetMonsterConsumableDropRate(0.03f);
+                monsterInfo.SetMonsterLootDropRate(0.03f);
+                break;
+            case "Dumbling":
+                monsterInfo.type = "General";
+                monsterInfo.SetMonsterHP(20f + 3f * currentRound);
+                monsterInfo.SetMonsterDamage(1f + 0.6f * currentRound);
+                monsterInfo.SetMonsterMovementSpeed(2.1f);
+                monsterInfo.SetMonsterWaffleDropCount(2);
+                monsterInfo.SetMonsterConsumableDropRate(0.01f);
+                monsterInfo.SetMonsterLootDropRate(0.01f);
+                break;
+            case "Egg":
+                monsterInfo.type = "General";
+                monsterInfo.SetMonsterHP(5f + 3f * currentRound);
+                monsterInfo.SetMonsterDamage(1f + 0.6f * currentRound);
+                monsterInfo.SetMonsterMovementSpeed(0f);
+                monsterInfo.SetMonsterWaffleDropCount(1);
+                monsterInfo.SetMonsterConsumableDropRate(0f);
+                monsterInfo.SetMonsterLootDropRate(0f);
+                break;
+            case "EggFry":
+                monsterInfo.type = "General";
+                monsterInfo.SetMonsterHP(50f + 25f * currentRound);
+                monsterInfo.SetMonsterDamage(1f + 1.15f * currentRound);
+                monsterInfo.SetMonsterMovementSpeed(Random.Range(3.5f, 4.2f)); ;
+                monsterInfo.SetMonsterWaffleDropCount(3);
                 monsterInfo.SetMonsterConsumableDropRate(0.01f);
                 monsterInfo.SetMonsterLootDropRate(0.01f);
                 break;
@@ -649,6 +912,8 @@ public class SpawnManager : MonoBehaviour
             sign = Instantiate(greenSign, spawnPos, monster.transform.rotation);
 
         yield return new WaitForSeconds(1.0f);
+        // 만약 스폰 위치 바로 위에 플레이어가 있다면 스폰 위치를 조정한다
+
         GameObject copy = Instantiate(monster, spawnPos, monster.transform.rotation);
 
         MonsterInfo monsterInfo = copy.GetComponent<MonsterInfo>();
@@ -731,7 +996,7 @@ public class SpawnManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator SpawnWatermelon(float waitToStartTime, float spawnInterval, int monsterCount)
+    private IEnumerator SpawnYogurt(float waitToStartTime, float spawnInterval, int monsterCount)
     {
         yield return new WaitForSeconds(waitToStartTime);
 
@@ -778,7 +1043,54 @@ public class SpawnManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator SpawnBlueberry(float waitToStartTime, float spawnInterval, int monsterCount)
+    private IEnumerator SpawnStrongYogurt(float waitToStartTime, float spawnInterval, int monsterCount)
+    {
+        yield return new WaitForSeconds(waitToStartTime);
+
+        // 라운드 종료까지 반복
+        while (!GameRoot.Instance.GetIsRoundClear())
+        {
+            bool spawnType = ChooseSpawnType();
+
+            // 산개 스폰
+            if (spawnType)
+            {
+                // 몬스터 마릿수 만큼 랜덤 장소에 스폰
+                for (int i = 0; i < monsterCount; i++)
+                {
+                    Vector2 spawnLocation = SetSpawnPos();
+
+                    // 몬스터 스폰
+                    spawnMonster = SpawnMonster(monsterPrefabs[2], spawnLocation);
+                    StartCoroutine(spawnMonster);
+                    yield return null;
+                }
+            }
+            // 뭉침 스폰
+            if (!spawnType)
+            {
+                // 스폰되는 장소를 특정한 후
+                Vector2 spawnLocation = SetSpawnPos();
+                for (int i = 0; i < monsterCount; i++)
+                {
+                    // 각 개체가 한 곳에 스폰되지 않도록 조정해준다
+                    float posX = Random.Range(-2.0f, 2.0f);
+                    float posY = Random.Range(-2.0f, 2.0f);
+                    spawnLocation.x += posX; spawnLocation.y += posY;
+
+                    spawnMonster = SpawnMonster(monsterPrefabs[2], spawnLocation);
+                    StartCoroutine(spawnMonster);
+                    yield return null;
+                }
+            }
+
+            yield return new WaitForSeconds(spawnInterval);
+        }
+
+        yield return null;
+    }
+
+    private IEnumerator SpawnWatermelon(float waitToStartTime, float spawnInterval, int monsterCount)
     {
         yield return new WaitForSeconds(waitToStartTime);
 
@@ -843,36 +1155,6 @@ public class SpawnManager : MonoBehaviour
                     Vector2 spawnLocation = SetSpawnPos();
 
                     // 몬스터 스폰
-                    spawnMonster = SpawnMonster(monsterPrefabs[2], spawnLocation);
-                    StartCoroutine(spawnMonster);
-                    yield return null;
-                }
-            }
-
-            yield return new WaitForSeconds(spawnInterval);
-        }
-
-        yield return null;
-    }
-
-    private IEnumerator SpawnCheese(float waitToStartTime, float spawnInterval, int monsterCount)
-    {
-        yield return new WaitForSeconds(waitToStartTime);
-
-        // 라운드 종료까지 반복
-        while (!GameRoot.Instance.GetIsRoundClear())
-        {
-            bool spawnType = true;
-
-            // 산개 스폰
-            if (spawnType)
-            {
-                // 몬스터 마릿수 만큼 랜덤 장소에 스폰
-                for (int i = 0; i < monsterCount; i++)
-                {
-                    Vector2 spawnLocation = SetSpawnPos();
-
-                    // 몬스터 스폰
                     spawnMonster = SpawnMonster(monsterPrefabs[4], spawnLocation);
                     StartCoroutine(spawnMonster);
                     yield return null;
@@ -885,37 +1167,7 @@ public class SpawnManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator SpawnStrongCheese(float waitToStartTime, float spawnInterval, int monsterCount)
-    {
-        yield return new WaitForSeconds(waitToStartTime);
-
-        // 라운드 종료까지 반복
-        while (!GameRoot.Instance.GetIsRoundClear())
-        {
-            bool spawnType = true;
-
-            // 산개 스폰
-            if (spawnType)
-            {
-                // 몬스터 마릿수 만큼 랜덤 장소에 스폰
-                for (int i = 0; i < monsterCount; i++)
-                {
-                    Vector2 spawnLocation = SetSpawnPos();
-
-                    // 몬스터 스폰
-                    spawnMonster = SpawnMonster(monsterPrefabs[4], spawnLocation);
-                    StartCoroutine(spawnMonster);
-                    yield return null;
-                }
-            }
-
-            yield return new WaitForSeconds(spawnInterval);
-        }
-
-        yield return null;
-    }
-
-    private IEnumerator SpawnSpaghetti(float waitToStartTime, float spawnInterval, int monsterCount)
+    private IEnumerator SpawnDaepe(float waitToStartTime, float spawnInterval, int monsterCount)
     {
         yield return new WaitForSeconds(waitToStartTime);
 
@@ -945,7 +1197,7 @@ public class SpawnManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator SpawnPancakes(float waitToStartTime, float spawnInterval, int monsterCount)
+    private IEnumerator SpawnStrongDaepe(float waitToStartTime, float spawnInterval, int monsterCount)
     {
         yield return new WaitForSeconds(waitToStartTime);
 
@@ -975,7 +1227,7 @@ public class SpawnManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator SpawnTofuLarge(float waitToStartTime, float spawnInterval, int monsterCount)
+    private IEnumerator SpawnSpaghetti(float waitToStartTime, float spawnInterval, int monsterCount)
     {
         yield return new WaitForSeconds(waitToStartTime);
 
@@ -1005,6 +1257,66 @@ public class SpawnManager : MonoBehaviour
         yield return null;
     }
 
+    private IEnumerator SpawnSeaweedroll(float waitToStartTime, float spawnInterval, int monsterCount)
+    {
+        yield return new WaitForSeconds(waitToStartTime);
+
+        // 라운드 종료까지 반복
+        while (!GameRoot.Instance.GetIsRoundClear())
+        {
+            bool spawnType = true;
+
+            // 산개 스폰
+            if (spawnType)
+            {
+                // 몬스터 마릿수 만큼 랜덤 장소에 스폰
+                for (int i = 0; i < monsterCount; i++)
+                {
+                    Vector2 spawnLocation = SetSpawnPos();
+
+                    // 몬스터 스폰
+                    spawnMonster = SpawnMonster(monsterPrefabs[8], spawnLocation);
+                    StartCoroutine(spawnMonster);
+                    yield return null;
+                }
+            }
+
+            yield return new WaitForSeconds(spawnInterval);
+        }
+
+        yield return null;
+    }
+
+    private IEnumerator SpawnTofuLarge(float waitToStartTime, float spawnInterval, int monsterCount)
+    {
+        yield return new WaitForSeconds(waitToStartTime);
+
+        // 라운드 종료까지 반복
+        while (!GameRoot.Instance.GetIsRoundClear())
+        {
+            bool spawnType = true;
+
+            // 산개 스폰
+            if (spawnType)
+            {
+                // 몬스터 마릿수 만큼 랜덤 장소에 스폰
+                for (int i = 0; i < monsterCount; i++)
+                {
+                    Vector2 spawnLocation = SetSpawnPos();
+
+                    // 몬스터 스폰
+                    spawnMonster = SpawnMonster(monsterPrefabs[9], spawnLocation);
+                    StartCoroutine(spawnMonster);
+                    yield return null;
+                }
+            }
+
+            yield return new WaitForSeconds(spawnInterval);
+        }
+
+        yield return null;
+    }
+
     public IEnumerator StartSpawnTofuSmall(Vector2 position)
     {
         yield return StartCoroutine(SpawnTofuSmall(position));
@@ -1020,10 +1332,151 @@ public class SpawnManager : MonoBehaviour
             Vector2 errorPos = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
             Vector2 spawnLocation = position + errorPos;
 
-            Debug.Log("Spawn");
-
             // 몬스터 스폰
             spawnMonster = SpawnMonster(tofuSmall, spawnLocation);
+            StartCoroutine(spawnMonster);
+            yield return null;
+        }
+    }
+
+    private IEnumerator SpawnFrenchFries(float waitToStartTime, float spawnInterval, int monsterCount)
+    {
+        yield return new WaitForSeconds(waitToStartTime);
+
+        // 라운드 종료까지 반복
+        while (!GameRoot.Instance.GetIsRoundClear())
+        {
+            bool spawnType = true;
+
+            // 산개 스폰
+            if (spawnType)
+            {
+                // 몬스터 마릿수 만큼 랜덤 장소에 스폰
+                for (int i = 0; i < monsterCount; i++)
+                {
+                    Vector2 spawnLocation = SetSpawnPos();
+
+                    // 몬스터 스폰
+                    spawnMonster = SpawnMonster(monsterPrefabs[10], spawnLocation);
+                    StartCoroutine(spawnMonster);
+                    yield return null;
+                }
+            }
+
+            yield return new WaitForSeconds(spawnInterval);
+        }
+
+        yield return null;
+    }
+
+    private IEnumerator SpawnTakoyaki(float waitToStartTime, float spawnInterval, int monsterCount)
+    {
+        yield return new WaitForSeconds(waitToStartTime);
+
+        // 라운드 종료까지 반복
+        while (!GameRoot.Instance.GetIsRoundClear())
+        {
+            bool spawnType = true;
+
+            // 산개 스폰
+            if (spawnType)
+            {
+                // 몬스터 마릿수 만큼 랜덤 장소에 스폰
+                for (int i = 0; i < monsterCount; i++)
+                {
+                    Vector2 spawnLocation = SetSpawnPos();
+
+                    // 몬스터 스폰
+                    spawnMonster = SpawnMonster(monsterPrefabs[11], spawnLocation);
+                    StartCoroutine(spawnMonster);
+                    yield return null;
+                }
+            }
+
+            yield return new WaitForSeconds(spawnInterval);
+        }
+
+        yield return null;
+    }
+
+    private IEnumerator SpawnDumbling(float waitToStartTime, float spawnInterval, int monsterCount)
+    {
+        yield return new WaitForSeconds(waitToStartTime);
+
+        // 라운드 종료까지 반복
+        while (!GameRoot.Instance.GetIsRoundClear())
+        {
+            bool spawnType = true;
+
+            // 산개 스폰
+            if (spawnType)
+            {
+                // 몬스터 마릿수 만큼 랜덤 장소에 스폰
+                for (int i = 0; i < monsterCount; i++)
+                {
+                    Vector2 spawnLocation = SetSpawnPos();
+
+                    // 몬스터 스폰
+                    spawnMonster = SpawnMonster(monsterPrefabs[12], spawnLocation);
+                    StartCoroutine(spawnMonster);
+                    yield return null;
+                }
+            }
+
+            yield return new WaitForSeconds(spawnInterval);
+        }
+
+        yield return null;
+    }
+
+
+    private IEnumerator SpawnEgg(float waitToStartTime, float spawnInterval, int monsterCount)
+    {
+        yield return new WaitForSeconds(waitToStartTime);
+
+        // 라운드 종료까지 반복
+        while (!GameRoot.Instance.GetIsRoundClear())
+        {
+            bool spawnType = true;
+
+            // 산개 스폰
+            if (spawnType)
+            {
+                // 몬스터 마릿수 만큼 랜덤 장소에 스폰
+                for (int i = 0; i < monsterCount; i++)
+                {
+                    Vector2 spawnLocation = SetSpawnPos();
+
+                    // 몬스터 스폰
+                    spawnMonster = SpawnMonster(monsterPrefabs[13], spawnLocation);
+                    StartCoroutine(spawnMonster);
+                    yield return null;
+                }
+            }
+
+            yield return new WaitForSeconds(spawnInterval);
+        }
+
+        yield return null;
+    }
+
+    public IEnumerator StartSpawnEggFry(Vector2 position)
+    {
+        yield return StartCoroutine(SpawnEggFry(position));
+    }
+
+    private IEnumerator SpawnEggFry(Vector2 position)
+    {
+        GameObject eggFry = Resources.Load<GameObject>("Prefabs/Monsters/EggFry");
+
+        // 몬스터 마릿수 만큼 랜덤 장소에 스폰
+        for (int i = 0; i < 1; i++)
+        {
+            Vector2 errorPos = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+            Vector2 spawnLocation = position + errorPos;
+
+            // 몬스터 스폰
+            spawnMonster = SpawnMonster(eggFry, spawnLocation);
             StartCoroutine(spawnMonster);
             yield return null;
         }

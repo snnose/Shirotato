@@ -216,6 +216,30 @@ public class FinalListControl : MonoBehaviour
                 difficultyDetailPro.text = "표준 난이도\n" +
                                            "변경 사항 X";
                 break;
+            case "Hard":
+                difficultyImage.sprite = Resources.Load<Sprite>("Sprites/Difficulty/Hard");
+                difficultyNamePro.text = "어려움";
+                difficultyDetailPro.text = "새로운 적 추가\n" +
+                                           "적 대미지 +10%\n" + 
+                                           "적 체력 +10%";
+                break;
+            case "VeryHard":
+                difficultyImage.sprite = Resources.Load<Sprite>("Sprites/Difficulty/VeryHard");
+                difficultyNamePro.text = "매우 어려움";
+                difficultyDetailPro.text = "낮은 확률로 특수 능력이 추가된 적 등장(미완)\n" +
+                                           "새로운 적 추가\n" +
+                                           "적 대미지 +25%\n" +
+                                           "적 체력 +25%";
+                break;
+            case "Hell":
+                difficultyImage.sprite = Resources.Load<Sprite>("Sprites/Difficulty/Hell");
+                difficultyNamePro.text = "지옥";
+                difficultyDetailPro.text = "보스 2마리 (미완)\n" +
+                                           "낮은 확률로 특수 능력이 추가된 적 등장(미완)\n" +
+                                           "새로운 적 추가\n" +
+                                           "적 대미지 +40%\n" +
+                                           "적 체력 +40%";
+                break;
             default:
                 break;
         }

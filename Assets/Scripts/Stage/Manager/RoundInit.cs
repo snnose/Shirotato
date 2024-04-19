@@ -71,7 +71,7 @@ public class RoundInit : MonoBehaviour
         if (remainTime > 60f)
             remainTime = 60f;
         // 디버깅용 임시 제한 시간 설정
-        remainTime = 1f;
+        //remainTime = 1f;
 
         timerControl.gameObject.SetActive(true);
         GameRoot.Instance.SetRemainTime(remainTime);
@@ -82,7 +82,6 @@ public class RoundInit : MonoBehaviour
 
         // 플레이어의 상태 초기화
         GameObject playerBox = GameRoot.Instance.GetPlayerBox();
-        PlayerInfo playerInfo = playerBox.transform.GetChild(0).GetComponent<PlayerInfo>();
         playerBox.transform.position = new Vector3(0f, 0f, -1f);
 
         // 서거나 움직일 때 능력치 변동이 있는 아이템 코루틴 장전

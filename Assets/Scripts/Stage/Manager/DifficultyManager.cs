@@ -48,6 +48,24 @@ public class DifficultyManager : MonoBehaviour
             // 보통 (아무 것도 없음)
             case 1:
                 break;
+            // 어려움
+            // 새로운 음식, 적 대미지 +10%, 체력 + 10%
+            case 2:
+                monsterHPCoeff = 1.1f;
+                monsterDMGCoeff = 1.1f;
+                break;
+            // 매우 어려움
+            // 새로운 음식, 적 대미지 +25%, 체력 + 25%
+            case 3:
+                monsterHPCoeff = 1.25f;
+                monsterDMGCoeff = 1.25f;
+                break;
+            // 지옥
+            // 보스 2마리, 새로운 음식, 적 대미지 +40%, 체력 + 40%
+            case 4:
+                monsterHPCoeff = 1.4f;
+                monsterDMGCoeff = 1.4f;
+                break;
             default:
                 break;
         }

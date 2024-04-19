@@ -223,7 +223,7 @@ public class HammerControl : MonoBehaviour, IMeleeWeaponControl
                 monsterHP -= additionalDamage;
                 monsterControl.SetMonsterCurrentHP(monsterHP);
 
-                PrintText(monsterControl.transform.position + new Vector3(0f, 0.75f, 0f), additionalDamage, Color.white);
+                PrintText(monsterControl.transform.position + new Vector3(0f, 0.75f, 0f), additionalDamage, Color.cyan);
             }
         }
     }

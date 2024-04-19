@@ -64,7 +64,10 @@ public class BulletControl : MonoBehaviour
                 float currentHP = RealtimeInfoManager.Instance.GetCurrentHP();
                 currentHP += 1f;
                 RealtimeInfoManager.Instance.SetCurrentHP(currentHP);
-                PrintText(PlayerControl.Instance.transform, 1);
+
+                Color color = Color.white;
+                ColorUtility.TryParseHtmlString("#1FDE38", out color);
+                PrintText(PlayerControl.Instance.transform.position, 1, color);
             }
 
             float finalDamage = damage;
@@ -96,7 +99,10 @@ public class BulletControl : MonoBehaviour
             }
 
             // 입힌 대미지 출력
-            PrintText(hitedMonster.transform.position, finalDamage, isCritical);
+            if (isCritical)
+                PrintText(hitedMonster.transform.position, finalDamage, Color.yellow);
+            else
+                PrintText(hitedMonster.transform.position, finalDamage, Color.white);
 
             // 넉백 적용
             Rigidbody2D hitedMonsterRb2D = hitedMonster.GetComponent<Rigidbody2D>();
@@ -187,7 +193,7 @@ public class BulletControl : MonoBehaviour
                 monsterHP -= additionalDamage;
                 monsterControl.SetMonsterCurrentHP(monsterHP);
 
-                PrintText(monsterControl.transform.position + new Vector3(0f, 0.75f, 0f) , additionalDamage, false);
+                PrintText(monsterControl.transform.position + new Vector3(0f, 0.75f, 0f) , additionalDamage, Color.cyan);
             }
         }
     }
@@ -239,7 +245,9 @@ public class BulletControl : MonoBehaviour
 
                 RealtimeInfoManager.Instance.SetCurrentHP(playerCurrentHP);
 
-                PrintText(PlayerControl.Instance.transform, 1);
+                Color color = Color.white;
+                ColorUtility.TryParseHtmlString("1FDE38", out color);
+                PrintText(PlayerControl.Instance.transform.position, 1, color);
             }
         }
     }
@@ -308,7 +316,7 @@ public class BulletControl : MonoBehaviour
         }
     }
 
-    void PrintText(Vector3 position, float damage, bool isCritical)
+    void PrintText(Vector3 position, float damage, Color color)
     {
         // 대미지 텍스트 출력
         GameObject textObject = Resources.Load<GameObject>("Prefabs/DamageText");
@@ -316,34 +324,11 @@ public class BulletControl : MonoBehaviour
 
         // 텍스트 및 색상 결정
         tmPro.text = damage.ToString();
-        Color color = Color.white;
-        if (isCritical)
-        {
-            color = Color.yellow;
-        }
         tmPro.color = color;
 
         GameObject copy = Instantiate(textObject);
         Vector3 randomPos = new Vector3(Random.Range(-0.4f, 0.4f), Random.Range(0.4f, 0.6f), 0f);
         copy.transform.position = position + randomPos;
-    }
-
-    // 초록색 텍스트 출력
-    void PrintText(Transform transform, int num)
-    {
-        // 텍스트 출력
-        GameObject textObject = Resources.Load<GameObject>("Prefabs/DamageText");
-        TextMeshPro tmPro = textObject.GetComponent<TextMeshPro>();
-
-        // 텍스트 및 색상 결정
-        tmPro.text = "+" + num.ToString();
-        Color color = Color.white;
-        ColorUtility.TryParseHtmlString("#1FDE38", out color);
-        tmPro.color = color;
-
-        GameObject copy = Instantiate(textObject);
-        Vector3 randomPos = new Vector3(Random.Range(-0.4f, 0.4f), Random.Range(0.4f, 0.6f), 0f);
-        copy.transform.position = transform.position + randomPos;
     }
 
     void TryHPDrain()

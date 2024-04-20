@@ -103,7 +103,7 @@ public class HammerControl : MonoBehaviour, IMeleeWeaponControl
             // ³Ë¹é Àû¿ë
             Rigidbody2D hitedMonsterRb2D = hitedMonster.GetComponent<Rigidbody2D>();
             Vector2 knockbackVector = PlayerControl.Instance.transform.position - hitedMonster.transform.position;
-            hitedMonsterRb2D.AddForce(knockback * -knockbackVector.normalized * 1.5f, ForceMode2D.Impulse);
+            hitedMonsterRb2D.AddForce(knockback * -knockbackVector.normalized * 0.5f, ForceMode2D.Impulse);
         }
     }
 

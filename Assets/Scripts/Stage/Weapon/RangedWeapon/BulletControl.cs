@@ -61,11 +61,12 @@ public class BulletControl : MonoBehaviour
             if (random < RealtimeInfoManager.Instance.GetHPDrain()
                 && RealtimeInfoManager.Instance.GetCurrentHP() < RealtimeInfoManager.Instance.GetHP())
             {
+                Debug.Log("»ý¸í·Â Èí¼ö");
                 float currentHP = RealtimeInfoManager.Instance.GetCurrentHP();
                 currentHP += 1f;
                 RealtimeInfoManager.Instance.SetCurrentHP(currentHP);
 
-                Color color = Color.white;
+                Color color;
                 ColorUtility.TryParseHtmlString("#1FDE38", out color);
                 PrintText(PlayerControl.Instance.transform.position, 1, color);
             }
@@ -107,7 +108,7 @@ public class BulletControl : MonoBehaviour
             // ³Ë¹é Àû¿ë
             Rigidbody2D hitedMonsterRb2D = hitedMonster.GetComponent<Rigidbody2D>();
             Vector2 knockbackVector = PlayerControl.Instance.transform.position - hitedMonster.transform.position;
-            hitedMonsterRb2D.AddForce(knockback * -knockbackVector.normalized * 1.5f, ForceMode2D.Impulse);
+            hitedMonsterRb2D.AddForce(knockback * -knockbackVector.normalized * 0.5f, ForceMode2D.Impulse);
 
             // Æ¨±è È½¼ö¿Í °üÅë È½¼ö ¸ðµÎ ÀÖ´Ù¸é Æ¨±èÀÌ ¿ì¼±½ÃµÈ´Ù
             // Æ¨±è È½¼ö°¡ 1 ÀÌ»óÀÌ¶ó¸é

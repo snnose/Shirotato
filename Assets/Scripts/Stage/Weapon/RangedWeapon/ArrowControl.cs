@@ -107,7 +107,7 @@ public class ArrowControl : MonoBehaviour
             // ³Ë¹é Àû¿ë
             Rigidbody2D hitedMonsterRb2D = hitedMonster.GetComponent<Rigidbody2D>();
             Vector2 knockbackVector = PlayerControl.Instance.transform.position - hitedMonster.transform.position;
-            hitedMonsterRb2D.AddForce(knockback * -knockbackVector.normalized * 1.5f, ForceMode2D.Impulse);
+            hitedMonsterRb2D.AddForce(knockback * -knockbackVector.normalized * 0.5f, ForceMode2D.Impulse);
 
             // Æ¨±è È½¼ö¿Í °üÅë È½¼ö ¸ðµÎ ÀÖ´Ù¸é Æ¨±èÀÌ ¿ì¼±½ÃµÈ´Ù
             // Æ¨±è È½¼ö°¡ 1 ÀÌ»óÀÌ¶ó¸é

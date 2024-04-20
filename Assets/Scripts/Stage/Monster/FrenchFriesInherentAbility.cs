@@ -27,8 +27,9 @@ public class FrenchFriesInherentAbility : MonoBehaviour
         if (collision.TryGetComponent<BulletControl>(out BulletControl bulletControl) ||
             collision.TryGetComponent<ArrowControl>(out ArrowControl arrowControl))
         {
-            // 랜덤한 방향으로 투사체 발사
-            StartCoroutine(fire);
+            // 피격되고 죽지 않았다면 랜덤한 방향으로 투사체 발사
+            if (this.GetComponent<MonsterControl>().GetMonsterCurrentHP() >= 0)
+                StartCoroutine(fire);
         }
     }
 

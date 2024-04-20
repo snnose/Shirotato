@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: EpicItem
-  itemNumber: 0
+  itemNumber: 5
   rarity: 2
   positiveSpecial: 
   negativeSpecial: 

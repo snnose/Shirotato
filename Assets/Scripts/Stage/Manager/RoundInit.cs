@@ -111,9 +111,7 @@ public class RoundInit : MonoBehaviour
         ShopUIControl.Instance.GetShopItemListControl().SetIsRenewInfo(false);
         // 아이템 리스트 초기화
         ClearShopItemList();
-        // 아이템 잠금 리스트 초기화
-        //ClearShopIsLockList();
-        ItemManager.Instance.SetIsRenewItem(false);
+        //ItemManager.Instance.SetIsRenewItem(false);
         // 상점 리롤 비용 초기화
         ShopUIControl.Instance.GetShopRerollButton().Initialize(); 
         // 상점UI 비활성화

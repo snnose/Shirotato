@@ -140,6 +140,8 @@ public class GameRoot : MonoBehaviour
             StartCoroutine(floatingShopUI);
             // 상점 UI 위치 조정
             ShopUIControl.Instance.transform.position = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+            // 상점 품목 초기화
+            ItemManager.Instance.SetIsRenewItem(false);
             floatingShopUI = null;
         }
     }

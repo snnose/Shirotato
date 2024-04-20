@@ -16,6 +16,8 @@ public class MonsterControl : MonoBehaviour
 
     private float currentHP = 0;
 
+    IEnumerator vanishing;
+
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -30,13 +32,20 @@ public class MonsterControl : MonoBehaviour
     void Start()
     {
         currentHP = monsterInfo.GetMonsterHP();
+        vanishing = Vanishing();
     }
 
     void Update()
     {
         // 몬스터가 죽을 때의 처리
-        if (currentHP <= 0)
+        if (currentHP <= 0 && vanishing != null)
         {
+            // 부착된 컴포넌트 제거
+            RemoveComponent();
+            // 몬스터가 빙글빙글 돌면서 작아진 후에 파괴된다 
+            StartCoroutine(vanishing);
+            // 현재 생존 몬스터 리스트에서 삭제
+            SpawnManager.Instance.GetCurrentMonsters().Remove(this.gameObject);
             // RareItem27 보유 시 효과 발동
             ActivateRareItem27();
             // EpicItem18 보유 시 효과 발동
@@ -48,6 +57,7 @@ public class MonsterControl : MonoBehaviour
             }
             // 와플, 소모품, 상자 드랍 처리
             Drop();
+            vanishing = null;  
         }
 
         // 라운드 종료 시의 처리
@@ -58,16 +68,65 @@ public class MonsterControl : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        // 현재 생존 몬스터 리스트에서 삭제
-        SpawnManager.Instance.GetCurrentMonsters().Remove(this.gameObject);
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject == GameObject.FindGameObjectWithTag("Player"))
             this.monsterCollider.isTrigger = true;
+    }
+
+    private IEnumerator Vanishing()
+    {
+        float rotationSpeed = 360f;
+        float scaleSpeed = 2f;      // 크기 축소 속도
+        float timeElapsed = 0f;
+
+        // 0.5초에 걸쳐 회전 및 축소된다
+        while (timeElapsed < 0.5f)
+        {
+            transform.localScale *= 1f - scaleSpeed * Time.deltaTime;
+            transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // 오브젝트 파괴
+        Destroy(this.gameObject);
+    }
+
+    // 처치당할 때 부착된 컴포넌트를 제거
+    private void RemoveComponent()
+    {
+        // 리지드바디 2D 제거
+        if (this.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb2D))
+            Destroy(GetComponent<Rigidbody2D>());
+
+        // 돌진하는 기능 제거
+        if (this.TryGetComponent<ChargeToPlayer>(out ChargeToPlayer chargeToPlayer))
+            Destroy(GetComponent<ChargeToPlayer>());
+
+        // 플레이어 추적 기능 제거
+        if (this.TryGetComponent<ChasePlayer>(out ChasePlayer chasePlayer))
+            Destroy(GetComponent<ChasePlayer>());
+
+        // 투사체 발사 기능 제거
+        if (this.TryGetComponent<FireProjectile>(out FireProjectile fireProjectile))
+            Destroy(GetComponent<FireProjectile>());
+
+        // 감자튀김 고유 기능 제거 (피격 시 랜덤 방향 투사체)
+        if (this.TryGetComponent<FrenchFriesInherentAbility>(out FrenchFriesInherentAbility frenchFriesInherentAbility))
+            Destroy(GetComponent<FrenchFriesInherentAbility>());
+
+        // 플레이어 주변을 배회하는 기능 제거
+        if (this.TryGetComponent<MoveAroundPlayer>(out MoveAroundPlayer moveAroundPlayer))
+            Destroy(GetComponent<MoveAroundPlayer>());
+
+        // 몬스터를 따라가는 기능 제거
+        if (this.TryGetComponent<MoveToEnemies>(out MoveToEnemies moveToEnemies))
+            Destroy(GetComponent<MoveToEnemies>());
+
+        // 플레이어에게 도망가는 기능 제거
+        if (this.TryGetComponent<RunAwayFromPlayer>(out RunAwayFromPlayer runAwayFromPlayer))
+            Destroy(GetComponent<RunAwayFromPlayer>());
     }
 
     // 몬스터 사망 시 드랍 처리를 한다
@@ -106,7 +165,6 @@ public class MonsterControl : MonoBehaviour
                 GameObject copy = Instantiate(milk, dropPos, Quaternion.identity);
             }
         }
-        Destroy(this.gameObject);
     }
 
     // 몬스터 처치 시 확률에 따라 행운에 비례한 대미지를 입히는 아이템 기능

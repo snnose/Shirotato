@@ -43,11 +43,11 @@ public class SpawnManager : MonoBehaviour
     IEnumerator spawnDaepe;
     IEnumerator spawnStrongDaepe;
     IEnumerator spawnSpaghetti;
-    IEnumerator spawnSeeweedroll;
+    IEnumerator spawnSeaweedroll;
     IEnumerator spawnTofuLarge;
     IEnumerator spawnFrenchFries;   // fly
     IEnumerator spawnTakoyaki;      // healer
-    IEnumerator spawnDumbling;      // buffer
+    IEnumerator spawnDumpling;      // buffer
     IEnumerator spawnEgg;
 
     private void Awake()
@@ -103,7 +103,7 @@ public class SpawnManager : MonoBehaviour
         float tofuLargeSpawnInterval;
         float frenchFriesSpawnInterval;
         float takoyakiSpawnInterval;
-        float dumblingSpawnInterval;
+        float dumplingSpawnInterval;
         float eggSpawnInterval;
 
         switch (currentRound)
@@ -190,14 +190,12 @@ public class SpawnManager : MonoBehaviour
                 // 난이도 어려움 이상일 때 스폰되는 몬스터 종류
                 if (difficulty >= 2)
                 {
-                    spaghettiSpawnInterval = 4.0f;
+                    seaweedrollSpawnInterval = ActivateItemRelatedSpawnInterval(4.0f);
 
-                    spaghettiSpawnInterval = ActivateItemRelatedSpawnInterval(spaghettiSpawnInterval);
-
-                    spawnSpaghetti = SpawnSpaghetti(3f, spaghettiSpawnInterval, 2);
+                    spawnSeaweedroll = SpawnSeaweedroll(3f, seaweedrollSpawnInterval, 2);
                     spawnFrenchFries = SpawnFrenchFries(15f, 999f, 2);
 
-                    StartCoroutine(spawnSpaghetti);
+                    StartCoroutine(spawnSeaweedroll);
                     StartCoroutine(spawnFrenchFries);
                 }
                 break;
@@ -431,13 +429,13 @@ public class SpawnManager : MonoBehaviour
                 daepeSpawnInterval = ActivateItemRelatedSpawnInterval(8f);
                 strongDaepeSpawnInterval = ActivateItemRelatedSpawnInterval(4f);
 
-                spawnSeeweedroll = SpawnSeaweedroll(1.0f, seaweedrollSpawnInterval, 8);
+                spawnSeaweedroll = SpawnSeaweedroll(1.0f, seaweedrollSpawnInterval, 8);
                 spawnSalad = SpawnSalad(4.0f, saladSpawnInterval, 2);
                 spawnSandwich = SpawnSandwich(8.0f, sandwichSpawnInterval, 4);
                 spawnDaepe = SpawnDaepe(30.0f, daepeSpawnInterval, 3);
                 spawnStrongDaepe = SpawnStrongDaepe(40.0f, strongDaepeSpawnInterval, 1);
 
-                StartCoroutine(spawnSeeweedroll);
+                StartCoroutine(spawnSeaweedroll);
                 StartCoroutine(spawnSalad);
                 StartCoroutine(spawnSandwich);
                 StartCoroutine(spawnDaepe);
@@ -462,12 +460,12 @@ public class SpawnManager : MonoBehaviour
                 daepeSpawnInterval = ActivateItemRelatedSpawnInterval(10f);
 
                 spawnTofuLarge = SpawnTofuLarge(1.0f, tofuLargeSpawnInterval, 3);
-                spawnSeeweedroll = SpawnSeaweedroll(2.0f, seaweedrollSpawnInterval, 8);
+                spawnSeaweedroll = SpawnSeaweedroll(2.0f, seaweedrollSpawnInterval, 8);
                 spawnSandwich = SpawnSandwich(15.0f, sandwichSpawnInterval, 6);
                 spawnDaepe = SpawnDaepe(30.0f, daepeSpawnInterval, 3);
 
                 StartCoroutine(spawnTofuLarge);
-                StartCoroutine(spawnSeeweedroll);
+                StartCoroutine(spawnSeaweedroll);
                 StartCoroutine(spawnSandwich);
                 StartCoroutine(spawnDaepe);
                 break;
@@ -482,13 +480,13 @@ public class SpawnManager : MonoBehaviour
 
                 spawnTofuLarge = SpawnTofuLarge(1.0f, tofuLargeSpawnInterval, 3);
                 spawnSandwich = SpawnSandwich(1.0f, sandwichSpawnInterval, 10);
-                spawnSeeweedroll = SpawnSeaweedroll(1.0f, seaweedrollSpawnInterval, 5);
+                spawnSeaweedroll = SpawnSeaweedroll(1.0f, seaweedrollSpawnInterval, 5);
                 spawnSalad = SpawnSalad(9.0f, saladSpawnInterval, 3);
                 spawnStrongYogurt = SpawnStrongYogurt(20.0f, strongYogurtSpawnInterval, 2);
 
                 StartCoroutine(spawnTofuLarge);
                 StartCoroutine(spawnSandwich);
-                StartCoroutine(spawnSeeweedroll);
+                StartCoroutine(spawnSeaweedroll);
                 StartCoroutine(spawnSalad);
                 StartCoroutine(spawnStrongYogurt);
 
@@ -506,21 +504,21 @@ public class SpawnManager : MonoBehaviour
             case 16:
                 // 리스폰 시간 설정
                 seaweedrollSpawnInterval = ActivateItemRelatedSpawnInterval(4f);
-                dumblingSpawnInterval = ActivateItemRelatedSpawnInterval(4f);
+                dumplingSpawnInterval = ActivateItemRelatedSpawnInterval(4f);
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
                 strongYogurtSpawnInterval = ActivateItemRelatedSpawnInterval(2f);
                 strongDaepeSpawnInterval = ActivateItemRelatedSpawnInterval(4f);
                 daepeSpawnInterval = ActivateItemRelatedSpawnInterval(6f);
 
-                spawnSeeweedroll = SpawnSeaweedroll(1.0f, seaweedrollSpawnInterval, 8);
-                spawnDumbling = SpawnDumbling(1.0f, dumblingSpawnInterval, 1);
+                spawnSeaweedroll = SpawnSeaweedroll(1.0f, seaweedrollSpawnInterval, 8);
+                spawnDumpling = SpawnDumpling(1.0f, dumplingSpawnInterval, 1);
                 spawnSandwich = SpawnSandwich(5.0f, sandwichSpawnInterval, 5);
                 spawnStrongYogurt = SpawnStrongYogurt(29.0f, strongYogurtSpawnInterval, 5);
                 spawnStrongDaepe = SpawnStrongDaepe(35.0f, strongDaepeSpawnInterval, 1);
                 spawnDaepe = SpawnDaepe(40.0f, daepeSpawnInterval, 3);
 
-                StartCoroutine(spawnSeeweedroll);
-                StartCoroutine(spawnDumbling);
+                StartCoroutine(spawnSeaweedroll);
+                StartCoroutine(spawnDumpling);
                 StartCoroutine(spawnSandwich);
                 StartCoroutine(spawnStrongYogurt);
                 StartCoroutine(spawnStrongDaepe);
@@ -537,13 +535,13 @@ public class SpawnManager : MonoBehaviour
 
                 spawnSpaghetti = SpawnSpaghetti(1.0f, spaghettiSpawnInterval, 6);
                 spawnTofuLarge = SpawnTofuLarge(10.0f, tofuLargeSpawnInterval, 2);
-                spawnSeeweedroll = SpawnSeaweedroll(25.0f, seaweedrollSpawnInterval, 4);
+                spawnSeaweedroll = SpawnSeaweedroll(25.0f, seaweedrollSpawnInterval, 4);
                 spawnStrongYogurt = SpawnStrongYogurt(30.0f, strongYogurtSpawnInterval, 5);
                 spawnSandwich = SpawnSandwich(40.0f, sandwichSpawnInterval, 3);
 
                 StartCoroutine(spawnSpaghetti);
                 StartCoroutine(spawnTofuLarge);
-                StartCoroutine(spawnSeeweedroll);
+                StartCoroutine(spawnSeaweedroll);
                 StartCoroutine(spawnStrongYogurt);
                 StartCoroutine(spawnSandwich);
 
@@ -557,20 +555,20 @@ public class SpawnManager : MonoBehaviour
             case 18:
                 // 리스폰 시간 설정
                 watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
-                dumblingSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
+                dumplingSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
                 seaweedrollSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
                 tofuLargeSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
                 saladSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
 
                 spawnWatermelon = SpawnWatermelon(1.0f, watermelonSpawnInterval, 10);
-                spawnDumbling = SpawnDumbling(1.0f, dumblingSpawnInterval, 2);
-                spawnSeeweedroll = SpawnSeaweedroll(4.0f, seaweedrollSpawnInterval, 5);
+                spawnDumpling = SpawnDumpling(1.0f, dumplingSpawnInterval, 2);
+                spawnSeaweedroll = SpawnSeaweedroll(4.0f, seaweedrollSpawnInterval, 5);
                 spawnTofuLarge = SpawnTofuLarge(25.0f, tofuLargeSpawnInterval, 3);
                 spawnSalad = SpawnSalad(45.0f, saladSpawnInterval, 3);
 
                 StartCoroutine(spawnWatermelon);
-                StartCoroutine(spawnDumbling);
-                StartCoroutine(spawnSeeweedroll);
+                StartCoroutine(spawnDumpling);
+                StartCoroutine(spawnSeaweedroll);
                 StartCoroutine(spawnTofuLarge);
                 StartCoroutine(spawnSalad);
 
@@ -589,19 +587,19 @@ public class SpawnManager : MonoBehaviour
                 // 리스폰 시간 설정
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(1f);
                 seaweedrollSpawnInterval = ActivateItemRelatedSpawnInterval(2f);
-                dumblingSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
+                dumplingSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
                 strongDaepeSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
                 spaghettiSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
 
                 spawnSandwich = SpawnSandwich(1.0f, sandwichSpawnInterval, 6);
-                spawnDumbling = SpawnDumbling(10f, dumblingSpawnInterval, 2);
-                spawnSeeweedroll = SpawnSeaweedroll(5.0f, seaweedrollSpawnInterval, 5);
+                spawnDumpling = SpawnDumpling(10f, dumplingSpawnInterval, 2);
+                spawnSeaweedroll = SpawnSeaweedroll(5.0f, seaweedrollSpawnInterval, 5);
                 spawnStrongDaepe = SpawnStrongDaepe(15.0f, strongDaepeSpawnInterval, 3);
                 spawnSpaghetti = SpawnSpaghetti(35.0f, spaghettiSpawnInterval, 3);
 
                 StartCoroutine(spawnSandwich);
-                StartCoroutine(spawnDumbling);
-                StartCoroutine(spawnSeeweedroll);
+                StartCoroutine(spawnDumpling);
+                StartCoroutine(spawnSeaweedroll);
                 StartCoroutine(spawnStrongDaepe);
                 StartCoroutine(spawnSpaghetti);
                 break;
@@ -663,10 +661,10 @@ public class SpawnManager : MonoBehaviour
             StopCoroutine(spawnSpaghetti);
             spawnSpaghetti = null;
         }
-        if (spawnSeeweedroll != null)
+        if (spawnSeaweedroll != null)
         {
-            StopCoroutine(spawnSeeweedroll);
-            spawnSeeweedroll = null;
+            StopCoroutine(spawnSeaweedroll);
+            spawnSeaweedroll = null;
         }
         if (spawnTofuLarge != null)
         {
@@ -683,10 +681,10 @@ public class SpawnManager : MonoBehaviour
             StopCoroutine(spawnTakoyaki);
             spawnTakoyaki = null;
         }
-        if (spawnDumbling != null)
+        if (spawnDumpling != null)
         {
-            StopCoroutine(spawnDumbling);
-            spawnDumbling = null;
+            StopCoroutine(spawnDumpling);
+            spawnDumpling = null;
         }
         if (spawnEgg != null)
         {
@@ -868,7 +866,7 @@ public class SpawnManager : MonoBehaviour
                 monsterInfo.SetMonsterConsumableDropRate(0.03f);
                 monsterInfo.SetMonsterLootDropRate(0.03f);
                 break;
-            case "Dumbling":
+            case "Dumpling":
                 monsterInfo.type = "General";
                 monsterInfo.SetMonsterHP(20f + 3f * currentRound);
                 monsterInfo.SetMonsterDamage(1f + 0.6f * currentRound);
@@ -1399,7 +1397,7 @@ public class SpawnManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator SpawnDumbling(float waitToStartTime, float spawnInterval, int monsterCount)
+    private IEnumerator SpawnDumpling(float waitToStartTime, float spawnInterval, int monsterCount)
     {
         yield return new WaitForSeconds(waitToStartTime);
 

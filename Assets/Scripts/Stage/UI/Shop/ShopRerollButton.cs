@@ -30,7 +30,15 @@ public class ShopRerollButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // 모든 아이템을 구매했다면
+        if (ItemManager.Instance.itemPurchaseCount == 4)
+        {
+            // 리롤 비용이 0이 된다
+            {
+                rerollPrice = 0;
+                SetTProtext(0);
+            }
+        }
     }
 
     public void Initialize()
@@ -97,6 +105,9 @@ public class ShopRerollButton : MonoBehaviour
 
         ItemManager.Instance.SetShopItemList(tmp);
         ItemManager.Instance.SetShopWeaponInfoList(tmpInfo);
+
+        // 아이템 구매 횟수 초기화
+        ItemManager.Instance.itemPurchaseCount = 0;
 
         // 아이템 리스트 UI를 활성화하고 갱신
         shopItemListControl.SetItemListActive();

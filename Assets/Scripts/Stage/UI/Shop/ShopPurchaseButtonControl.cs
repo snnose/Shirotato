@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 
 
-public class ShopPurchaseButtonControl : MonoBehaviour
+public class ShopPurchaseButtonControl : MonoBehaviour, IPointerEnterHandler
 {
     private ShopOwnItemListControl ownItemListControl;
     private ShopOwnWeaponListControl ownWeaponListControl;
@@ -39,6 +39,12 @@ public class ShopPurchaseButtonControl : MonoBehaviour
         ItemManager.Instance.GetIsLockItemList()[currentNumber] = false;
         // 자물쇠 이미지 비활성화
         this.transform.parent.GetChild(6).gameObject.SetActive(false);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // 마우스 포인터가 들어오면 사운드 출력
+        ButtonSoundManager.Instance.onPointerEnterSound1.Play();
     }
 
     // 버튼의 Pos X 값에 따라 몇번째 아이템을 구매하는 것인지 반환한다.
@@ -108,6 +114,9 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                 // 보유 무기 리스트에 추가
                 WeaponManager.Instance.GetCurrentWeaponList().Add(item);
                 WeaponManager.Instance.GetCurrentWeaponInfoList().Add(weaponInfo);
+
+                // 아이템 구매 횟수 +1
+                ItemManager.Instance.itemPurchaseCount += 1;
             }
             // 보유 와플이 가격보다 많고, 보유 무기 수가 6개라면
             else if (currentWaffle >= price && WeaponManager.Instance.GetCurrentWeaponList().Count == 6)
@@ -135,6 +144,9 @@ public class ShopPurchaseButtonControl : MonoBehaviour
 
                     // 슬롯 비활성화
                     this.transform.parent.gameObject.SetActive(false);
+
+                    // 아이템 구매 횟수 +1
+                    ItemManager.Instance.itemPurchaseCount += 1;
                 }
             }
 
@@ -226,11 +238,14 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                 switch (item.GetComponent<ItemInfo>().rarity)
                 {
                     case 0:
-                        ItemManager.Instance.GetOwnNormalItemList()[item.GetComponent<ItemInfo>().itemNumber] += 1;
+                        ++ItemManager.Instance.GetOwnNormalItemList()[item.GetComponent<ItemInfo>().itemNumber];
+                        Debug.Log("Normal " + item.GetComponent<ItemInfo>().itemNumber + "번, "
+                                    + ItemManager.Instance.GetOwnNormalItemList()[item.GetComponent<ItemInfo>().itemNumber]);
                         break;
                     case 1:
-                        ItemManager.Instance.GetOwnRareItemList()[item.GetComponent<ItemInfo>().itemNumber] += 1;
-
+                        ++ItemManager.Instance.GetOwnRareItemList()[item.GetComponent<ItemInfo>().itemNumber];
+                        Debug.Log("Rare " + item.GetComponent<ItemInfo>().itemNumber + "번, "
+                                    + ItemManager.Instance.GetOwnRareItemList()[item.GetComponent<ItemInfo>().itemNumber]);
                         // 특정 아이템 구매 시 작동
                         // RareItem28 구매 시 구매 시점의 상점 초기화 비용을 0원으로 변경
                         if (item.GetComponent<ItemInfo>().itemNumber == 28)
@@ -242,6 +257,10 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                         }
                         break;
                     case 2:
+                        ++ItemManager.Instance.GetOwnEpicItemList()[item.GetComponent<ItemInfo>().itemNumber];
+                        Debug.Log("Epic " + item.GetComponent<ItemInfo>().itemNumber + "번, "
+                                    + ItemManager.Instance.GetOwnEpicItemList()[item.GetComponent<ItemInfo>().itemNumber]);
+
                         // 특정 아이템 구매 시 작동
                         // EpicItem26 구매 시 구매 시점의 최대 체력 이상으로 체력이 상승하지 않음
                         if (item.GetComponent<ItemInfo>().itemNumber == 26)
@@ -249,9 +268,12 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                         // EpicItem31 구매 시 구매 시점의 이동 속도% 이상으로 이동 속도%가 상승하지 않음
                         if (item.GetComponent<ItemInfo>().itemNumber == 31)
                             PlayerInfo.Instance.ActivateEpicItem31(PlayerInfo.Instance.GetMovementSpeedPercent());
-                        ItemManager.Instance.GetOwnEpicItemList()[item.GetComponent<ItemInfo>().itemNumber] += 1;
                         break;
                     case 3:
+                        ++ItemManager.Instance.GetOwnLegendItemList()[item.GetComponent<ItemInfo>().itemNumber];
+                        Debug.Log("Legend " + item.GetComponent<ItemInfo>().itemNumber + "번, "
+                                    + ItemManager.Instance.GetOwnLegendItemList()[item.GetComponent<ItemInfo>().itemNumber]);
+
                         // 특정 아이템 구매시 작동
                         // LegendItem19 구매 시 해당 아이템 활성화 (각기 다른 무기 보유할 때마다 공격속도 -3%)
                         if (item.GetComponent<ItemInfo>().itemNumber == 19)
@@ -259,7 +281,6 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                         // LegendItem28 구매 시 해당 아이템 활성화 (각기 다른 무기 보유할 때마다 공격속도 +6%)
                         if (item.GetComponent<ItemInfo>().itemNumber == 28)
                             WeaponManager.Instance.ActivateLegendItem28();
-                        ItemManager.Instance.GetOwnLegendItemList()[item.GetComponent<ItemInfo>().itemNumber] += 1;
                         break;
                     default:
                         break;
@@ -287,6 +308,8 @@ public class ShopPurchaseButtonControl : MonoBehaviour
                 ShopUIControl.Instance.GetShopItemListControl().SetIsRenewInfo(false);
                 // 보유 아이템 리스트 갱신
                 ownItemListControl.renewOwnItemList = ownItemListControl.RenewOwnItemList(item);
+                // 아이템 구매 횟수 +1
+                ItemManager.Instance.itemPurchaseCount += 1;
             }
         }
     }

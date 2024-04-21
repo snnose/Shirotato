@@ -41,8 +41,12 @@ public class ItemManager : MonoBehaviour
     // 현재 보유 무기 리스트
     List<GameObject> currentWeaponList;
 
+    // 아이템 구매 횟수
+    // 새로고침 시 0으로 초기화된다
+    public int itemPurchaseCount = 0;
+
     // 아이템 새로고침 시 true로 전환.
-    public bool isRenewItem = false;
+    public bool isRenewItem = true;
 
     private void Awake()
     {
@@ -70,7 +74,7 @@ public class ItemManager : MonoBehaviour
 
     void Start()
     {
-        //ownLegendItemList[18] = 1;
+        //ownEpicItemList[23] = 1;
     }
 
     void Update()

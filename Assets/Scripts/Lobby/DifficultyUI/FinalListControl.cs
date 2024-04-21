@@ -225,7 +225,7 @@ public class FinalListControl : MonoBehaviour
                 break;
             case "VeryHard":
                 difficultyImage.sprite = Resources.Load<Sprite>("Sprites/Difficulty/VeryHard");
-                difficultyNamePro.text = "매우 어려움";
+                difficultyNamePro.text = "매우어려움";
                 difficultyDetailPro.text = "낮은 확률로 특수 능력이 추가된 적 등장(미완)\n" +
                                            "새로운 적 추가\n" +
                                            "적 대미지 +25%\n" +

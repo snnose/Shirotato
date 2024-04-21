@@ -39,7 +39,7 @@ public class StatusControl : MonoBehaviour
             PlayerInfo.Instance.GetHPDrain().ToString();
         // 대미지%
         statInfo.transform.GetChild(3).GetChild(2).GetComponent<TextMeshProUGUI>().text =
-            PlayerInfo.Instance.GetDMGPercent().ToString();
+            Mathf.FloorToInt(PlayerInfo.Instance.GetDMGPercent()).ToString();
         // 고정 대미지
         statInfo.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text =
             PlayerInfo.Instance.GetFixedDMG().ToString();
@@ -63,7 +63,7 @@ public class StatusControl : MonoBehaviour
             PlayerInfo.Instance.GetMovementSpeedPercent().ToString();
         // 행운
         statInfo.transform.GetChild(11).GetChild(2).GetComponent<TextMeshProUGUI>().text =
-            PlayerInfo.Instance.GetLuck().ToString();
+            Mathf.FloorToInt(PlayerInfo.Instance.GetLuck()).ToString();
         // 수확
         statInfo.transform.GetChild(12).GetChild(2).GetComponent<TextMeshProUGUI>().text =
             PlayerInfo.Instance.GetHarvest().ToString();

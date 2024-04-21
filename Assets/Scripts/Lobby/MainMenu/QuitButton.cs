@@ -4,26 +4,28 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class GameStart : MonoBehaviour, IPointerEnterHandler
+public class QuitButton : MonoBehaviour, IPointerEnterHandler
 {
-    Button startButton;
+    Button quitButton;
+
+    private void Awake()
+    {
+        quitButton = this.GetComponent<Button>();
+        quitButton.onClick.AddListener(OnClickQuitButton);
+    }
 
     void Start()
     {
-        startButton = this.GetComponent<Button>();
-        startButton.onClick.AddListener(OnClickStartButton);
+        
     }
 
     void Update()
     {
-
+        
     }
 
-    private void OnClickStartButton()
+    private void OnClickQuitButton()
     {
-        // 특성 선택 UI 플로팅
-        IndividualityUIControl.Instance.SetActive(true);
-
         // 음성 출력
         ButtonSoundManager.Instance.PlayOnButtonClickSound1();
     }

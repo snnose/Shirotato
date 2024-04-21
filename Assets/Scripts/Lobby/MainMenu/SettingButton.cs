@@ -4,14 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class GameStart : MonoBehaviour, IPointerEnterHandler
+public class SettingButton : MonoBehaviour, IPointerEnterHandler
 {
-    Button startButton;
+    Button settingButton;
+
+    private void Awake()
+    {
+        settingButton = this.GetComponent<Button>();
+        settingButton.onClick.AddListener(OnClickSettingButton);
+    }
 
     void Start()
     {
-        startButton = this.GetComponent<Button>();
-        startButton.onClick.AddListener(OnClickStartButton);
+
     }
 
     void Update()
@@ -19,11 +24,8 @@ public class GameStart : MonoBehaviour, IPointerEnterHandler
 
     }
 
-    private void OnClickStartButton()
+    private void OnClickSettingButton()
     {
-        // 특성 선택 UI 플로팅
-        IndividualityUIControl.Instance.SetActive(true);
-
         // 음성 출력
         ButtonSoundManager.Instance.PlayOnButtonClickSound1();
     }

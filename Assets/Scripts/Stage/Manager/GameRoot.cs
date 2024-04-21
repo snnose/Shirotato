@@ -24,6 +24,9 @@ public class GameRoot : MonoBehaviour
     private GameObject player;
     private PlayerInfo playerInfo;
 
+    // 라운드 관련 사운드
+    private RoundSoundManager roundSoundManager;
+
     // 라운드 관련 필드
     private TimerControl timerControl;
 
@@ -66,6 +69,7 @@ public class GameRoot : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerInfo = PlayerInfo.Instance;
         timerControl = GameObject.FindGameObjectWithTag("Timer").GetComponent<TimerControl>();
+        roundSoundManager = GameObject.FindGameObjectWithTag("AudioManager").transform.GetChild(1).GetComponent<RoundSoundManager>();
 
         gameOver = GameOver();
 
@@ -102,6 +106,8 @@ public class GameRoot : MonoBehaviour
         {
             StartCoroutine(stopRound);
             stopRound = null;
+            // 라운드 종료 사운드 출력
+            roundSoundManager.roundEndSound.Play();
         }
 
         // 박스를 드랍했다면

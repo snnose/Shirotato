@@ -36,8 +36,8 @@ public class FrenchFriesInherentAbility : MonoBehaviour
     IEnumerator Fire()
     {
         yield return StartCoroutine(FireRandomDirection());
-        // 쿨타임 0.1초 (너무 과한 투사체 발사 방지)
-        yield return new WaitForSeconds(0.1f);
+        // 쿨타임 0.03초 (너무 과한 투사체 발사 방지)
+        yield return new WaitForSeconds(0.03f);
         fire = Fire();
     }
 

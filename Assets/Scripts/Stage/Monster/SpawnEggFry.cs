@@ -10,6 +10,12 @@ public class SpawnEggFry : MonoBehaviour
         StartCoroutine(StartTimer());
     }
 
+    private void OnDestroy()
+    {
+        // 현재 생존 몬스터 리스트에서 삭제
+        SpawnManager.Instance.GetCurrentMonsters().Remove(this.gameObject);
+    }
+
     IEnumerator StartTimer()
     {
         yield return StartCoroutine(SpawnEggFryTimer());

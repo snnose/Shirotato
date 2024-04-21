@@ -15,7 +15,7 @@ public class BowControl : MonoBehaviour, IRangedWeaponControl
 
     private void Awake()
     {
-        //shootSound = this.GetComponent<AudioSource>();
+        shootSound = this.GetComponent<AudioSource>();
         chargingBow = Resources.Load<Sprite>("Sprites/Weapons/ChargingBow");
         emptyBow = Resources.Load<Sprite>("Sprites/Weapons/Bow");
     }
@@ -85,7 +85,7 @@ public class BowControl : MonoBehaviour, IRangedWeaponControl
 
     public IEnumerator Attack(GameObject closetMonster)
     {
-        //PlayShootSound();
+        PlayShootSound();
         // 화살을 발사하면 화살이 비어있는 이미지로 교체한다
         this.GetComponent<SpriteRenderer>().sprite = emptyBow;
 

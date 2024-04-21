@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class BoxControl : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private BoxSoundManager boxSoundManager;
+
+    private void Awake()
+    {
+        boxSoundManager = GameObject.FindGameObjectWithTag("AudioManager").
+                                transform.GetChild(0).GetChild(2).GetComponent<BoxSoundManager>();
+    }
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         AttractToPlayer();
@@ -33,6 +39,9 @@ public class BoxControl : MonoBehaviour
             }
 
             // 화면 우상단에 UI 플로팅
+
+            // 사운드 출력
+            boxSoundManager.PlayBoxSound();
 
             Destroy(this.gameObject);
         }

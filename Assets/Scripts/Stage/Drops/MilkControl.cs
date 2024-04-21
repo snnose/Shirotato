@@ -5,13 +5,19 @@ using TMPro;
 
 public class MilkControl : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private MilkSoundManager milkSoundManager;
+
+    private void Awake()
+    {
+        milkSoundManager = GameObject.FindGameObjectWithTag("AudioManager").
+                                transform.GetChild(0).GetChild(1).GetComponent<MilkSoundManager>();
+    }
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         AttractToPlayer(1.5f);
@@ -57,6 +63,8 @@ public class MilkControl : MonoBehaviour
 
             // 텍스트를 출력한다
             PrintText(collision.transform, int.Parse(healing.ToString()));
+            // 사운드를 출력한다
+            milkSoundManager.PlayMilkSound();
             Destroy(this.gameObject);
         }
     }

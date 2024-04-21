@@ -9,6 +9,9 @@ public class UpgradeButton : MonoBehaviour, IPointerEnterHandler
 {
     public void OnClickUpgradeButton()
     {
+        // 버튼 클릭 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnClickButtonSound1();
+
         string buttonName = this.transform.parent.name;
 
         int roomNumber = -1;
@@ -70,8 +73,8 @@ public class UpgradeButton : MonoBehaviour, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // 마우스 포인터가 들어오면 사운드 출력
-        ButtonSoundManager.Instance.onPointerEnterSound1.Play();
+        // 포인터 진입 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnPointerEnterSound1();
     }
 
     // 해당 업그레이드 칸에 맞는 능력치를 상승시켜 적용한다

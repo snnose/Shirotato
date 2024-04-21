@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class WarningSignControl : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private AudioSource spawnWarningSound;
+    private int repeat = 1;
+
+    private void Awake()
+    {
+        spawnWarningSound = this.GetComponent<AudioSource>();
+    }
+
     void Start()
     {
         StartCoroutine(BlinkWarningSign());
@@ -13,7 +20,14 @@ public class WarningSignControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (spawnWarningSound.isPlaying)
+            return;
+
+        if (repeat > 0)
+        {
+            spawnWarningSound.Play();
+            repeat--;
+        }
     }
 
     // ¿ö´× »çÀÎÀÌ 1ÃÊ µ¿¾È ±ôºıÀÎ´Ù

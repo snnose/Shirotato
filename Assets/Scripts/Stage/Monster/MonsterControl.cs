@@ -14,6 +14,8 @@ public class MonsterControl : MonoBehaviour
     private Collider2D monsterCollider;
     private MonsterInfo monsterInfo;
 
+    private AudioSource monsterBeHitedSound;
+
     private float currentHP = 0;
 
     IEnumerator vanishing;
@@ -27,6 +29,7 @@ public class MonsterControl : MonoBehaviour
         monsterRb2D = this.GetComponent<Rigidbody2D>();
         monsterCollider = this.GetComponent<Collider2D>();
         monsterInfo = this.GetComponent<MonsterInfo>();
+        monsterBeHitedSound = this.GetComponent<AudioSource>();
     }
     
     void Start()
@@ -74,6 +77,15 @@ public class MonsterControl : MonoBehaviour
             this.monsterCollider.isTrigger = true;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject == GameObject.FindGameObjectWithTag("Weapon"))
+        {
+            // 피격되면 피격 사운드 출력
+            monsterBeHitedSound.Play();
+        }
+    }
+
     private IEnumerator Vanishing()
     {
         float rotationSpeed = 360f;
@@ -100,6 +112,18 @@ public class MonsterControl : MonoBehaviour
         if (this.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb2D))
             Destroy(GetComponent<Rigidbody2D>());
 
+        // CapsuleCollider2D 제거
+        if (this.TryGetComponent<CapsuleCollider2D>(out CapsuleCollider2D capsuleCollider2D))
+            Destroy(GetComponent<CapsuleCollider2D>());
+
+        // CircleCollider2D 제거
+        if (this.TryGetComponent<CircleCollider2D>(out CircleCollider2D circleCollider2D))
+            Destroy(GetComponent<CircleCollider2D>());
+
+        // PolygonCollider2D 제거
+        if (this.TryGetComponent<PolygonCollider2D>(out PolygonCollider2D polygonCollider2D))
+            Destroy(GetComponent<PolygonCollider2D>());
+
         // 돌진하는 기능 제거
         if (this.TryGetComponent<ChargeToPlayer>(out ChargeToPlayer chargeToPlayer))
             Destroy(GetComponent<ChargeToPlayer>());
@@ -113,8 +137,8 @@ public class MonsterControl : MonoBehaviour
             Destroy(GetComponent<FireProjectile>());
 
         // 감자튀김 고유 기능 제거 (피격 시 랜덤 방향 투사체)
-        if (this.TryGetComponent<FrenchFriesInherentAbility>(out FrenchFriesInherentAbility frenchFriesInherentAbility))
-            Destroy(GetComponent<FrenchFriesInherentAbility>());
+        //if (this.TryGetComponent<FrenchFriesInherentAbility>(out FrenchFriesInherentAbility frenchFriesInherentAbility))
+            //Destroy(GetComponent<FrenchFriesInherentAbility>());
 
         // 플레이어 주변을 배회하는 기능 제거
         if (this.TryGetComponent<MoveAroundPlayer>(out MoveAroundPlayer moveAroundPlayer))

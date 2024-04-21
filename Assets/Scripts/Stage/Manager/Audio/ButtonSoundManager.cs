@@ -20,8 +20,8 @@ public class ButtonSoundManager : MonoBehaviour
     public AudioSource onPointerEnterSound1;
     public AudioSource onPointerEnterSound2;
 
-    public AudioSource onButtonClickSound1;
-    public AudioSource onButtonClickSound2;
+    public AudioSource onClickButtonSound1;
+    public AudioSource onClickButtonSound2;
 
     private void Awake()
     {
@@ -33,25 +33,25 @@ public class ButtonSoundManager : MonoBehaviour
 
     public void PlayOnPointerEnterSound1()
     {
-        onPointerEnterSound1.pitch = Random.Range(0.8f, 1.2f);
+        onPointerEnterSound1.pitch = Random.Range(0.9f, 1.1f);
         onPointerEnterSound1.Play();
     }
 
     public void PlayOnPointerEnterSound2()
     {
-        onPointerEnterSound2.pitch = Random.Range(0.8f, 1.2f);
+        onPointerEnterSound2.pitch = Random.Range(0.9f, 1.1f);
         onPointerEnterSound2.Play();
     }
 
-    public void PlayOnButtonClickSound1()
+    public void PlayOnClickButtonSound1()
     {
-        onButtonClickSound1.pitch = Random.Range(0.8f, 1.2f);
-        onButtonClickSound1.Play();
+        onClickButtonSound1.pitch = Random.Range(0.9f, 1.1f);
+        onClickButtonSound1.Play();
     }
 
-    public void PlayOnButtonClickSound2()
+    public void PlayOnClickButtonSound2()
     {
-        onButtonClickSound2.pitch = Random.Range(0.8f, 1.2f);
-        onButtonClickSound2.Play();
+        onClickButtonSound2.pitch = Random.Range(0.9f, 1.1f);
+        onClickButtonSound2.Play();
     }
 }

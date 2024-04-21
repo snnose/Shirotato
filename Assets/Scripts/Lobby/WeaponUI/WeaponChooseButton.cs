@@ -23,6 +23,8 @@ public class WeaponChooseButton : MonoBehaviour, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        // 포인터 진입 음성 출력
+        ButtonSoundManager.Instance.PlayOnPointerEnterSound2();
         // 해당 이미지의 이름을 받아와 어떤 무기인지 파악
         weaponImage = this.transform.GetChild(1).GetComponent<Image>();
         weaponName = weaponImage.sprite.name;
@@ -34,6 +36,8 @@ public class WeaponChooseButton : MonoBehaviour, IPointerEnterHandler
 
     private void OnClickButton()
     {
+        // 버튼 클릭 음성 출력
+        ButtonSoundManager.Instance.PlayOnClickButtonSound2();
         // 선택된 무기 정보를 전달한다
         RoundSetting.Instance.SetStartWeapon(weaponName);
         // 무기 선택 창 종료

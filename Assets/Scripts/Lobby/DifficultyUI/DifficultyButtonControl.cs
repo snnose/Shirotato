@@ -25,6 +25,9 @@ public class DifficultyButtonControl : MonoBehaviour, IPointerEnterHandler
     // 마우스 포인터가 진입하면 난이도 정보 갱신
     public void OnPointerEnter(PointerEventData eventData)
     {
+        // 포인터 진입 음성 출력
+        ButtonSoundManager.Instance.PlayOnPointerEnterSound2();
+
         difficultyName = this.name;
 
         DifficultyUIControl.Instance.GetFinalListControl().RenewDifficultyInfoUI(difficultyName);
@@ -33,6 +36,9 @@ public class DifficultyButtonControl : MonoBehaviour, IPointerEnterHandler
     // 버튼 클릭 시 난이도 기록 및 게임 시작
     private void OnClickDifficultyButton()
     {
+        // 버튼 클릭 음성 출력
+        ButtonSoundManager.Instance.PlayOnClickButtonSound2();
+
         // 난이도 기록
         switch (difficultyName)
         {

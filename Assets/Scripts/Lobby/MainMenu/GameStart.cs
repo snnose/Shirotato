@@ -25,7 +25,7 @@ public class GameStart : MonoBehaviour, IPointerEnterHandler
         IndividualityUIControl.Instance.SetActive(true);
 
         // 음성 출력
-        ButtonSoundManager.Instance.PlayOnButtonClickSound1();
+        ButtonSoundManager.Instance.PlayOnClickButtonSound1();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

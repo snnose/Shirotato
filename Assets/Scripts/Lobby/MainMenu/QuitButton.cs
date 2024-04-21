@@ -27,7 +27,7 @@ public class QuitButton : MonoBehaviour, IPointerEnterHandler
     private void OnClickQuitButton()
     {
         // 음성 출력
-        ButtonSoundManager.Instance.PlayOnButtonClickSound1();
+        ButtonSoundManager.Instance.PlayOnClickButtonSound1();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

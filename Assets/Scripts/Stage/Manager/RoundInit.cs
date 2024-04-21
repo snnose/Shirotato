@@ -149,20 +149,11 @@ public class RoundInit : MonoBehaviour
             }
         }
 
+        // 아이템 구매 횟수 초기화
+        ItemManager.Instance.itemPurchaseCount = 0;
+
         ItemManager.Instance.SetShopItemList(tmp);
-    }
-
-    // 상점 잠금 목록을 초기화 하는 함수
-    private void ClearShopIsLockList()
-    {
-        List<bool> tmp = ItemManager.Instance.GetIsLockItemList();
-
-        for (int i = 0; i < 4; i++)
-        {
-            tmp[i] = false;
-        }
-
-        ItemManager.Instance.SetIsLockItemList(tmp);
+        ItemManager.Instance.SetShopWeaponInfoList(tmpInfo);
     }
 
     private void ActivateRareItem30()

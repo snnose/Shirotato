@@ -78,14 +78,14 @@ public class WeaponManager : MonoBehaviour
     {
         // weaponPos ¼³Á¤
         List<Vector2> WeaponPos1 = new List<Vector2>() { new Vector2(1.2f, -0.5f) };
-        List<Vector2> WeaponPos2 = new List<Vector2>() { new Vector2(-1.2f, -0.5f), new Vector2(1.2f, -0.5f) };
-        List<Vector2> WeaponPos3 = new List<Vector2>() { new Vector2(-1.2f, -0.5f), new Vector2(1.2f, -0.5f), new Vector2(0f, 1.0f) };
-        List<Vector2> WeaponPos4 = new List<Vector2>() { new Vector2(-1.2f, -0.5f), new Vector2(1.2f, -0.5f), new Vector2(-1.2f, 0f),
-                                                         new Vector2(1.2f, 0)};
-        List<Vector2> WeaponPos5 = new List<Vector2>() { new Vector2(-1.2f, -0.5f), new Vector2(1.2f, -0.5f), new Vector2(-1.2f, 0f),
-                                                         new Vector2(1.2f, 0), new Vector2(0f, 1.0f)};
-        List<Vector2> WeaponPos6 = new List<Vector2>() { new Vector2(-1.2f, -0.6f), new Vector2(1.2f, -0.6f), new Vector2(-1.2f, -0.1f),
-                                                         new Vector2(1.2f, -0.1f), new Vector2(-1.2f, 0.4f), new Vector2(1.2f, 0.4f)};
+        List<Vector2> WeaponPos2 = new List<Vector2>() { new Vector2(1.2f, -0.5f), new Vector2(-1.2f, -0.5f) };
+        List<Vector2> WeaponPos3 = new List<Vector2>() { new Vector2(1.2f, -0.5f), new Vector2(-1.2f, -0.5f), new Vector2(0f, 1.0f) };
+        List<Vector2> WeaponPos4 = new List<Vector2>() { new Vector2(1.2f, -0.5f), new Vector2(-1.2f, -0.5f), new Vector2(1.2f, 0f),
+                                                         new Vector2(-1.2f, 0)};
+        List<Vector2> WeaponPos5 = new List<Vector2>() { new Vector2(1.2f, -0.5f), new Vector2(-1.2f, -0.5f), new Vector2(1.2f, 0f),
+                                                         new Vector2(-1.2f, 0), new Vector2(0f, 1.0f)};
+        List<Vector2> WeaponPos6 = new List<Vector2>() { new Vector2(1.2f, -0.6f), new Vector2(-1.2f, -0.6f), new Vector2(1.2f, -0.1f),
+                                                         new Vector2(-1.2f, -0.1f), new Vector2(1.2f, 0.4f), new Vector2(-1.2f, 0.4f)};
 
         weaponPos.Add(WeaponPos1);
         weaponPos.Add(WeaponPos2);
@@ -108,15 +108,15 @@ public class WeaponManager : MonoBehaviour
     public IEnumerator EquipWeapons()
     {
         int repeat = currentWeaponList.Count;
-        int reversal = 0;
+        int reversal;
 
         for (int i = 0; i < repeat; i++)
         {
-            reversal = 1;
+            reversal = 0;
             if (i % 2 == 1)
-                reversal = 0;
+                reversal = 1;
             currentWeaponList[i].GetComponent<StoredWeaponNumber>().SetWeaponNumber(currentWeaponInfoList[i].GetWeaponNumber());
-            GameObject copy = Instantiate(currentWeaponList[i], weaponPos[repeat - 1][i], Quaternion.Euler(0f, -180f * reversal, 0f)) as GameObject;
+            GameObject copy = Instantiate(currentWeaponList[i], weaponPos[repeat - 1][i], Quaternion.Euler(0f, 180f * reversal, 0f)) as GameObject;
 
             copy.transform.SetParent(playerBox.transform, false);
             yield return null;

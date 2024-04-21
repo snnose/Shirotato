@@ -2,9 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UpgradeButton : MonoBehaviour
+public class UpgradeButton : MonoBehaviour, IPointerEnterHandler
 {
     public void OnClickUpgradeButton()
     {
@@ -65,6 +66,12 @@ public class UpgradeButton : MonoBehaviour
         GameRoot.Instance.SetIsDuringUpgrade(false);
         // GameRoot의 floatingUpgradeUI 코루틴 장전
         GameRoot.Instance.floatingUpgradeUI = GameRoot.Instance.FloatingUpgradeUI();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // 마우스 포인터가 들어오면 사운드 출력
+        ButtonSoundManager.Instance.onPointerEnterSound1.Play();
     }
 
     // 해당 업그레이드 칸에 맞는 능력치를 상승시켜 적용한다

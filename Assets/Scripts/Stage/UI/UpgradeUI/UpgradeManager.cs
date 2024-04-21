@@ -28,14 +28,10 @@ public class UpgradeManager : MonoBehaviour
     List<int> currentUpgradeList = new();
 
     private UpgradeListControl upgradeListControl;
+    private UpgradeRerollButton upgradeRerollButton;
 
     private int currentUpgradeLevel = 0;
     public IEnumerator renewUpgradeList;
-
-    // 버튼
-    private TextMeshProUGUI rerollText;
-    private int currentCost = 2;
-    int rerollCount = 0;
 
     private void Awake()
     {
@@ -45,7 +41,7 @@ public class UpgradeManager : MonoBehaviour
             Destroy(this.gameObject);
 
         upgradeListControl = this.gameObject.transform.GetChild(1).GetComponent<UpgradeListControl>();
-
+        upgradeRerollButton = this.transform.GetChild(3).GetComponent<UpgradeRerollButton>();
     }
 
     // Start is called before the first frame update
@@ -150,21 +146,14 @@ public class UpgradeManager : MonoBehaviour
         this.currentUpgradeLevel = level;
     }
 
-    public void InitReroll()
-    {
-        this.rerollCount = 0;
-
-        int increaseCost = Mathf.FloorToInt((rerollCount + 1) * GameRoot.Instance.GetCurrentRound() * 0.5f);
-        if (increaseCost < 1)
-            increaseCost = 1;
-
-        this.currentCost = GameRoot.Instance.GetCurrentRound() + increaseCost;
-        rerollText.text = "초기화 -" + currentCost;
-    }
-
     public int GetCurrentUpgradeLevel()
     {
         return this.currentUpgradeLevel;
+    }
+
+    public UpgradeRerollButton GetUpgradeRerollButton()
+    {
+        return this.upgradeRerollButton;
     }
 
     public List<(int, int)> GetUpgradeList()

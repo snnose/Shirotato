@@ -96,7 +96,7 @@ public class RoundInit : MonoBehaviour
         // 잠시 업그레이드 매니저 활성화
         UpgradeManager.Instance.gameObject.SetActive(true);
         // 업그레이드 리롤 비용을 초기화한다
-        UpgradeManager.Instance.InitReroll();
+        UpgradeManager.Instance.GetUpgradeRerollButton().InitReroll();
         // 다시 비활성화
         UpgradeManager.Instance.gameObject.SetActive(false);
 

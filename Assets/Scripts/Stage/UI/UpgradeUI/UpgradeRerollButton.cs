@@ -49,6 +49,18 @@ public class UpgradeRerollButton : MonoBehaviour
         }
     }
 
+    public void InitReroll()
+    {
+        this.rerollCount = 0;
+
+        int increaseCost = Mathf.FloorToInt((rerollCount + 1) * GameRoot.Instance.GetCurrentRound() * 0.5f);
+        if (increaseCost < 1)
+            increaseCost = 1;
+
+        this.currentCost = GameRoot.Instance.GetCurrentRound() + increaseCost;
+        rerollText.text = "초기화 -" + currentCost;
+    }
+
     // 현재 리롤 비용을 계산하는 기능
     private int CalCurrentCost()
     {

@@ -71,8 +71,10 @@ public class GameResultUIControl : MonoBehaviour
                 difficultyName = "어려움";
                 break;
             case 3:
+                difficultyName = "매우 어려움";
                 break;
             case 4:
+                difficultyName = "지옥";
                 break;
             default:
                 break;

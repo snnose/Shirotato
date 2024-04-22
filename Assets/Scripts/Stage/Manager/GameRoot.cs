@@ -36,6 +36,8 @@ public class GameRoot : MonoBehaviour
     private int currentRound = 1;
     private float remainTime;
 
+    public int bossKilledCount = 0;
+
     public IEnumerator stopRound = null;
 
     // 상점 UI 관련 필드
@@ -57,6 +59,7 @@ public class GameRoot : MonoBehaviour
 
     // 게임 오버
     private IEnumerator gameOver = null;
+    private IEnumerator gameClear = null;
 
     private void Awake()
     {
@@ -72,6 +75,7 @@ public class GameRoot : MonoBehaviour
         roundSoundManager = GameObject.FindGameObjectWithTag("AudioManager").transform.GetChild(1).GetComponent<RoundSoundManager>();
 
         gameOver = GameOver();
+        gameClear = GameClear();
 
         stopRound = StopRound();
 
@@ -91,6 +95,25 @@ public class GameRoot : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             PauseUIControl.Instance.SetActive(true);
+        }
+
+        // 20라운드 진행 중일 때
+        if (currentRound == 20)
+        {
+            // 보스를 처치했다면 게임 클리어
+            if (RoundSetting.Instance.GetDifficulty() == 4 &&
+                bossKilledCount >= 2)
+                isRoundClear = true;
+
+            if (RoundSetting.Instance.GetDifficulty() < 4 &&
+                bossKilledCount == 1)
+                isRoundClear = true;
+            
+            if (isRoundClear && gameClear != null)
+            {
+                StartCoroutine(gameClear);
+                gameClear = null;
+            }
         }
 
         // 게임 오버 판정이 났다면
@@ -280,7 +303,7 @@ public class GameRoot : MonoBehaviour
         // 시간 정지
         Time.timeScale = 0.0f;
         // 패배 UI 활성화
-        DefeatUIControl.Instance.SetActive(true);
+        PreResultUIControl.Instance.SetActive(true, false);
 
         // 3초 후에 패배 UI를 비활성화 후 게임 결과 UI 활성화
         yield return new WaitForSecondsRealtime(3.0f);
@@ -288,13 +311,18 @@ public class GameRoot : MonoBehaviour
         GameResultUIControl.Instance.SetActive(true);
     }
 
-    // 20라운드 클리어 시 실행
+    // 20라운드 클리어 시 게임 클리어 절차 실행
     private IEnumerator GameClear()
     {
         // 시간 정지
         Time.timeScale = 0.0f;
+        // 패배 UI 활성화
+        PreResultUIControl.Instance.SetActive(true, true);
 
+        // 3초 후에 패배 UI를 비활성화 후 게임 결과 UI 활성화
         yield return new WaitForSecondsRealtime(3.0f);
+        PreResultUIControl.Instance.SetActive(false, true);
+        GameResultUIControl.Instance.SetActive(true);
     }
 
     public IEnumerator FloatingShopUI()

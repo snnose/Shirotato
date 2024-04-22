@@ -74,6 +74,9 @@ public class FindItemUI : MonoBehaviour
     // 사용 버튼을 누를 경우 보유 아이템에 추가
     private void OnClickUseButton()
     {
+        // 버튼 클릭 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnClickButtonSound1();
+
         // 특정 스탯에 비례해서 스탯이 오르는 아이템들 처리
         // EpicItem29 비활성화
         PlayerInfo.Instance.InActivateEpicItem29();
@@ -88,6 +91,9 @@ public class FindItemUI : MonoBehaviour
 
         // 해당 아이템의 능력치 적용
         ApplyStatus();
+        // 해당 아이템의 개수 스택 상승
+        StackItem(item);
+
 
         // 특정 스탯에 비례해서 스탯이 오르는 아이템들 처리
         // EpicItem29 활성화
@@ -125,6 +131,9 @@ public class FindItemUI : MonoBehaviour
 
     private void OnClickSellButton()
     {
+        // 버튼 클릭 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnClickButtonSound1();
+
         // 판매 가격은 아이템 가격의 25%
         int sellPrice = ActivateRareItem32(Mathf.FloorToInt(item.GetComponent<ItemInfo>().price + GameRoot.Instance.GetCurrentRound() +
                                         (item.GetComponent<ItemInfo>().price * GameRoot.Instance.GetCurrentRound() / 10)));
@@ -190,6 +199,61 @@ public class FindItemUI : MonoBehaviour
             item.GetComponent<ItemInfo>().Harvest * individualityManager.GetHarvestCoeff());
         // 경험치 획득량
         PlayerInfo.Instance.SetExpGain(PlayerInfo.Instance.GetExpGain() + item.GetComponent<ItemInfo>().ExpGain);
+    }
+
+    private void StackItem(GameObject item)
+    {
+        // 구매한 아이템을 기억한다.
+        switch (item.GetComponent<ItemInfo>().rarity)
+        {
+            case 0:
+                ++ItemManager.Instance.GetOwnNormalItemList()[item.GetComponent<ItemInfo>().itemNumber];
+                Debug.Log("Normal " + item.GetComponent<ItemInfo>().itemNumber + "번, "
+                            + ItemManager.Instance.GetOwnNormalItemList()[item.GetComponent<ItemInfo>().itemNumber]);
+                break;
+            case 1:
+                ++ItemManager.Instance.GetOwnRareItemList()[item.GetComponent<ItemInfo>().itemNumber];
+                Debug.Log("Rare " + item.GetComponent<ItemInfo>().itemNumber + "번, "
+                            + ItemManager.Instance.GetOwnRareItemList()[item.GetComponent<ItemInfo>().itemNumber]);
+                // 특정 아이템 획득 시 작동
+                // RareItem28 획득 시 구매 시점의 상점 초기화 비용을 0원으로 변경
+                if (item.GetComponent<ItemInfo>().itemNumber == 28)
+                {
+                    ShopRerollButton shopRerollButton = ShopUIControl.Instance.GetShopRerollButton();
+                    // 무료 리롤 횟수 +1
+                    shopRerollButton.SetFreeRerollCount(ItemManager.Instance.GetOwnRareItemList()[item.GetComponent<ItemInfo>().itemNumber]);
+                    shopRerollButton.SetTProtext(0);
+                }
+                break;
+            case 2:
+                ++ItemManager.Instance.GetOwnEpicItemList()[item.GetComponent<ItemInfo>().itemNumber];
+                Debug.Log("Epic " + item.GetComponent<ItemInfo>().itemNumber + "번, "
+                            + ItemManager.Instance.GetOwnEpicItemList()[item.GetComponent<ItemInfo>().itemNumber]);
+
+                // 특정 아이템 획득 시 작동
+                // EpicItem26 획득 시 구매 시점의 최대 체력 이상으로 체력이 상승하지 않음
+                if (item.GetComponent<ItemInfo>().itemNumber == 26)
+                    PlayerInfo.Instance.ActivateEpicItem26(PlayerInfo.Instance.GetHP());
+                // EpicItem31 획득 시 구매 시점의 이동 속도% 이상으로 이동 속도%가 상승하지 않음
+                if (item.GetComponent<ItemInfo>().itemNumber == 31)
+                    PlayerInfo.Instance.ActivateEpicItem31(PlayerInfo.Instance.GetMovementSpeedPercent());
+                break;
+            case 3:
+                ++ItemManager.Instance.GetOwnLegendItemList()[item.GetComponent<ItemInfo>().itemNumber];
+                Debug.Log("Legend " + item.GetComponent<ItemInfo>().itemNumber + "번, "
+                            + ItemManager.Instance.GetOwnLegendItemList()[item.GetComponent<ItemInfo>().itemNumber]);
+
+                // 특정 아이템 획득시 작동
+                // LegendItem19 획득 시 해당 아이템 활성화 (각기 다른 무기 보유할 때마다 공격속도 -3%)
+                if (item.GetComponent<ItemInfo>().itemNumber == 19)
+                    WeaponManager.Instance.ActivateLegendItem19();
+                // LegendItem28 획득 시 해당 아이템 활성화 (각기 다른 무기 보유할 때마다 공격속도 +6%)
+                if (item.GetComponent<ItemInfo>().itemNumber == 28)
+                    WeaponManager.Instance.ActivateLegendItem28();
+                break;
+            default:
+                break;
+        }
     }
 
     // 아이템 등급 설정 함수
@@ -387,8 +451,7 @@ public class FindItemUI : MonoBehaviour
                         isLimit = true;
                     if (tmp == 24 && ItemManager.Instance.GetOwnLegendItemList()[25] == 1)
                         isLimit = true;
-                    // 탄성 기능 미구현으로 아이템 미등장
-                    if (tmp == 25 && ItemManager.Instance.GetOwnLegendItemList()[26] == 0)
+                    if (tmp == 25 && ItemManager.Instance.GetOwnLegendItemList()[26] == 1)
                         isLimit = true;
 
                     if (isLimit)

@@ -313,6 +313,8 @@ public class ItemManager : MonoBehaviour
                         isLimit = true;
                     if (tmp == 24 && ownLegendItemList[25] == 1)
                         isLimit = true;
+                    if (tmp == 25 && ownLegendItemList[26] == 1)
+                        isLimit = true;
 
                     if (isLimit)
                     {

@@ -23,6 +23,9 @@ public class QuitButtonControl : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void OnClickQuitButton()
     {
+        // 버튼 클릭 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnClickButtonSound1();
+
         // 스테이지에서 로비로 이동 시 RoundSetting을 갖는 오브젝트를 파괴한다
         // 파괴하지 않고 로비로 이동하면 RoundSetting의 단일성에 문제가 생김
         Destroy(RoundSetting.Instance.gameObject);
@@ -36,6 +39,9 @@ public class QuitButtonControl : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        // 포인터 진입 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnPointerEnterSound1();
+
         text.color = Color.black;
         background.color = Color.white;
     }

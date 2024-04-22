@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
-public class ShopNextRoundButton : MonoBehaviour
+public class ShopNextRoundButton : MonoBehaviour, IPointerEnterHandler
 {
     private TextMeshProUGUI buttonText;
 
@@ -33,7 +34,16 @@ public class ShopNextRoundButton : MonoBehaviour
     // 다음 라운드로 이동하는 버튼
     public void OnClickNextRoundButton()
     {
+        // 버튼 클릭 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnClickButtonSound1();
+
         StartCoroutine(RoundInit.Instance.InitRound());
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // 포인터 진입 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnPointerEnterSound1();
     }
 
     private IEnumerator SetNextRoundButtonText()

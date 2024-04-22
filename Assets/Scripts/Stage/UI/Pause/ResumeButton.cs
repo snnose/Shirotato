@@ -27,12 +27,18 @@ public class ResumeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     private void OnClickResumeButton()
     {
+        // 버튼 클릭 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnPointerEnterSound1();
+
         // 일시 정지 UI를 종료한다
         PauseUIControl.Instance.SetActive(false);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        // 포인터 진입 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnPointerEnterSound1();
+
         text.color = Color.black;
         background.color = Color.white;
     }

@@ -18,7 +18,8 @@ public class ShopShowItemDetail : MonoBehaviour, IPointerEnterHandler, IPointerE
     // PointerEnter 이벤트 함수
     public void OnPointerEnter(PointerEventData eventData)
     {
-        //Debug.Log(this.gameObject.transform.position.x);
+        // 포인터 진입 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnPointerEnterSound2();
         
         ItemInfo itemInfo;
         // 해당 아이템 슬롯에 아이템이 등록됐다면 이벤트 발생

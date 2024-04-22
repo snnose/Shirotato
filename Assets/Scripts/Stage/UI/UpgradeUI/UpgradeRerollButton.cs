@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-public class UpgradeRerollButton : MonoBehaviour
+public class UpgradeRerollButton : MonoBehaviour, IPointerEnterHandler
 {
     // 버튼
     private Button rerollButton;
@@ -32,6 +32,9 @@ public class UpgradeRerollButton : MonoBehaviour
 
     private void OnClickRerollButton()
     {
+        // 버튼 클릭 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnClickButtonSound1();
+
         // 가진 와플이 요구 와플보다 많으면
         if (PlayerInfo.Instance.GetCurrentWaffle() > currentCost)
         {
@@ -47,6 +50,12 @@ public class UpgradeRerollButton : MonoBehaviour
             // 텍스트 변경
             SetTextToCurrentCost();
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // 포인터 진입 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnPointerEnterSound1();
     }
 
     public void InitReroll()

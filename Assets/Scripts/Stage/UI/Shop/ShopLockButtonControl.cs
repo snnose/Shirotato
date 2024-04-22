@@ -27,6 +27,9 @@ public class ShopLockButtonControl : MonoBehaviour, IPointerEnterHandler, IPoint
 
     public void OnClickLockButton()
     {
+        // 버튼 클릭 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnClickButtonSound1();
+
         // 부모의 이름을 바탕으로 몇번째 아이템인지 찾는다.
         string parentName = this.transform.parent.name;
         int lockNum = FindLockItemNum(parentName);
@@ -90,6 +93,9 @@ public class ShopLockButtonControl : MonoBehaviour, IPointerEnterHandler, IPoint
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        // 포인터 진입 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnPointerEnterSound1();
+
         text.color = Color.black;
         background.color = Color.white;
     }

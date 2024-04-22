@@ -46,7 +46,7 @@ public class ShopOwnItemListControl : MonoBehaviour
 
                 int r = i / 6;  // 행
                 int c = i % 6;  // 열
-                Debug.Log(r + "행 " + c + "열");
+                //Debug.Log(r + "행 " + c + "열");
                 GameObject itemRoom = ownItemListContent.transform.GetChild(r).GetChild(c).gameObject;
 
                 // 등록하려는 아이템의 등급 이미지를 넣는다.

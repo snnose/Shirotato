@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
-public class ShopRerollButton : MonoBehaviour
+public class ShopRerollButton : MonoBehaviour, IPointerEnterHandler
 {
     int rerollCount = 1;
     int currentRound;
@@ -61,6 +62,9 @@ public class ShopRerollButton : MonoBehaviour
 
     public void OnClickRerollButton()
     {
+        // 버튼 클릭 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnClickButtonSound1();
+
         if (freeRerollCount > 0)
         {
             ActivateRareItem28();
@@ -85,6 +89,12 @@ public class ShopRerollButton : MonoBehaviour
 
             SetTProtext(rerollPrice);
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // 포인터 진입 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnPointerEnterSound1();
     }
     
     private void ClearShopItemList()

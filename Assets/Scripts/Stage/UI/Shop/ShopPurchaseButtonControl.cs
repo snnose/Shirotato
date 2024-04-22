@@ -29,6 +29,9 @@ public class ShopPurchaseButtonControl : MonoBehaviour, IPointerEnterHandler
 
     public void OnClickItemPurchaseButton()
     {
+        // 버튼 클릭 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnClickButtonSound1();
+
         string buttonName = this.transform.parent.name;
 
         GameObject item = FindItemNumber(buttonName);
@@ -44,7 +47,7 @@ public class ShopPurchaseButtonControl : MonoBehaviour, IPointerEnterHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         // 마우스 포인터가 들어오면 사운드 출력
-        ButtonSoundManager.Instance.onPointerEnterSound1.Play();
+        ButtonSoundManager.Instance.PlayOnPointerEnterSound1();
     }
 
     // 버튼의 Pos X 값에 따라 몇번째 아이템을 구매하는 것인지 반환한다.

@@ -44,6 +44,9 @@ public class ShopShowWeaponDetail : MonoBehaviour, IPointerEnterHandler, IPointe
     // 버튼을 누를 시 DetailUI의 취소를 누르기 전 까지 해당 기능은 작동하지 않는다.
     public void OnPointerExit(PointerEventData eventData)
     {
+        // 포인터 진입 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnPointerEnterSound2();
+
         // 해당 무기 칸에 무기가 등록되어있고, 버튼을 누르지 않은 상태일 때 진입
         if (currentPointWeaponRoomNumber < WeaponManager.Instance.GetCurrentWeaponList().Count 
             && WeaponManager.Instance.GetCurrentWeaponInfoList()[currentPointWeaponRoomNumber] != null
@@ -58,6 +61,9 @@ public class ShopShowWeaponDetail : MonoBehaviour, IPointerEnterHandler, IPointe
     // 해당 무기 칸을 클릭 시 WeaponDetailUI 활성화
     public void OnClickWeaponRoom()
     {
+        // 버튼 클릭 시 사운드 출력
+        ButtonSoundManager.Instance.PlayOnClickButtonSound2();
+
         if (currentPointWeaponRoomNumber < WeaponManager.Instance.GetCurrentWeaponList().Count
             && !ShopWeaponDetailUI.Instance.GetIsLockOn())
         {

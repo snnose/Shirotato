@@ -284,8 +284,17 @@ public class GameRoot : MonoBehaviour
 
         // 3초 후에 패배 UI를 비활성화 후 게임 결과 UI 활성화
         yield return new WaitForSecondsRealtime(3.0f);
-        DefeatUIControl.Instance.SetActive(false);
+        PreResultUIControl.Instance.SetActive(false, false);
         GameResultUIControl.Instance.SetActive(true);
+    }
+
+    // 20라운드 클리어 시 실행
+    private IEnumerator GameClear()
+    {
+        // 시간 정지
+        Time.timeScale = 0.0f;
+
+        yield return new WaitForSecondsRealtime(3.0f);
     }
 
     public IEnumerator FloatingShopUI()

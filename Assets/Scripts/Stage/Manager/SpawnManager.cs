@@ -20,6 +20,7 @@ public class SpawnManager : MonoBehaviour
 
     // 0 = 샌드위치, 1 = 요거트
     public GameObject[] monsterPrefabs;
+    public GameObject[] bossMonsterPrefabs;
     private GameObject warningSign;
     private GameObject greenSign;
     private GameObject copy;
@@ -49,6 +50,9 @@ public class SpawnManager : MonoBehaviour
     IEnumerator spawnTakoyaki;      // healer
     IEnumerator spawnDumpling;      // buffer
     IEnumerator spawnEgg;
+
+    // 보스 스폰
+    IEnumerator spawnSalmonSushi;
 
     private void Awake()
     {
@@ -121,8 +125,8 @@ public class SpawnManager : MonoBehaviour
                 StartCoroutine(spawnSandwich);
 
                 // 테스트
-                //spawnTakoyaki = SpawnTakoyaki(1.0f, takoyakiSpawnInterval, 1);
-                //StartCoroutine(spawnTakoyaki);
+                //spawnSalmonSushi = SpawnSalmonSushi(1.0f, 999f, 1);
+                //StartCoroutine(spawnSalmonSushi);
 
                 break;
             // 2라운드
@@ -604,7 +608,24 @@ public class SpawnManager : MonoBehaviour
                 StartCoroutine(spawnSpaghetti);
                 break;
             case 20:
+                sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
+                yogurtSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
+                watermelonSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
+                saladSpawnInterval = ActivateItemRelatedSpawnInterval(10f);
+                daepeSpawnInterval = ActivateItemRelatedSpawnInterval(10f);
+                spaghettiSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
 
+                spawnSandwich = SpawnSandwich(1.0f, sandwichSpawnInterval, 10);
+                spawnYogurt = SpawnYogurt(15f, yogurtSpawnInterval, 4);
+                spawnWatermelon = SpawnWatermelon(25f, watermelonSpawnInterval, 3);
+                spawnSalad = SpawnSalad(20f, saladSpawnInterval, 1);
+                spawnDaepe = SpawnDaepe(45f, daepeSpawnInterval, 3);
+                spawnSpaghetti = SpawnSpaghetti(55f, spaghettiSpawnInterval, 3);
+
+
+                // 보스 스폰
+                spawnSalmonSushi = SpawnSalmonSushi(1.0f, 999f, 1);
+                StartCoroutine(spawnSalmonSushi);
                 break;
             default:
                 break;
@@ -892,6 +913,16 @@ public class SpawnManager : MonoBehaviour
                 monsterInfo.SetMonsterWaffleDropCount(3);
                 monsterInfo.SetMonsterConsumableDropRate(0.01f);
                 monsterInfo.SetMonsterLootDropRate(0.01f);
+                break;
+            // Boss
+            case "SalmonSushi":
+                monsterInfo.type = "Boss";
+                monsterInfo.SetMonsterHP(29250);
+                monsterInfo.SetMonsterDamage(30f);
+                monsterInfo.SetMonsterMovementSpeed(4.2f);
+                monsterInfo.SetMonsterWaffleDropCount(0);
+                monsterInfo.SetMonsterConsumableDropRate(1f);
+                monsterInfo.SetMonsterLootDropRate(1f);
                 break;
             default:
                 break;
@@ -1478,6 +1509,36 @@ public class SpawnManager : MonoBehaviour
             StartCoroutine(spawnMonster);
             yield return null;
         }
+    }
+
+    private IEnumerator SpawnSalmonSushi(float waitToStartTime, float spawnInterval, int monsterCount)
+    {
+        yield return new WaitForSeconds(waitToStartTime);
+
+        // 라운드 종료까지 반복
+        while (!GameRoot.Instance.GetIsRoundClear())
+        {
+            bool spawnType = true;
+
+            // 산개 스폰
+            if (spawnType)
+            {
+                // 몬스터 마릿수 만큼 랜덤 장소에 스폰
+                for (int i = 0; i < monsterCount; i++)
+                {
+                    Vector2 spawnLocation = SetSpawnPos();
+
+                    // 몬스터 스폰
+                    spawnMonster = SpawnMonster(bossMonsterPrefabs[0], spawnLocation);
+                    StartCoroutine(spawnMonster);
+                    yield return null;
+                }
+            }
+
+            yield return new WaitForSeconds(spawnInterval);
+        }
+
+        yield return null;
     }
 
     private float ActivateItemRelatedSpawnInterval(float spawnInterval)

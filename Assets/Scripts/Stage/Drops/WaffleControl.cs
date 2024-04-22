@@ -8,11 +8,9 @@ public class WaffleControl : MonoBehaviour
     bool isAttractImmediatly = false;
     float rootingRange;
 
-    private AudioSource waffleAudioSource;
-
     private void Awake()
     {
-        waffleAudioSource = this.GetComponent<AudioSource>();
+        
     }
 
     // Start is called before the first frame update

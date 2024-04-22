@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -7011521498327821623}
   - component: {fileID: 5321585422896899685}
   - component: {fileID: 415033850069767177}
+  - component: {fileID: -1126646136779489092}
   m_Layer: 0
   m_Name: SalmonSushi
   m_TagString: Untagged
@@ -270,5 +271,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d410e6df18e3aa04aab1f0b17178fe43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-1126646136779489092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233488855917868424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11790712c6e26da449f400d3d9bdb0fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -60,6 +60,8 @@ public class ExpManager : MonoBehaviour
         {
             // 레벨 업 사운드 출력
             roundSoundManager.PlayLevelUpSound();
+            // 레벨 업 UI 활성화
+            LevelUpUIControl.Instance.SetActive(true);
 
             // 현재 경험치를 요구 경험치 만큼 차감한다
             currentExp -= demandExp;

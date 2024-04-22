@@ -48,6 +48,10 @@ public class RoundInit : MonoBehaviour
         // 코루틴 재장전
         GameRoot.Instance.stopRound = GameRoot.Instance.StopRound();
 
+        // 레벨 업, 상자 획득 UI 초기화
+        LevelUpUIControl.Instance.SetActive(false);
+        GetBoxUIControl.Instance.SetActive(false);
+
         // 실시간 스탯 관리자 초기화
         // EpicItem30 보유 시 최대 체력의 50%로 라운드 시작
         RealtimeInfoManager.Instance.SetCurrentHP(ActivateEpicItem30(PlayerInfo.Instance.GetHP()));

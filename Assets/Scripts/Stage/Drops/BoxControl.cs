@@ -30,6 +30,8 @@ public class BoxControl : MonoBehaviour
             // 현재 라운드에 얻은 박스 개수 추가
             int boxCount = GameRoot.Instance.GetBoxCount();
             GameRoot.Instance.SetBoxCount(++boxCount);
+            // 박스 획득 UI 활성화
+            GetBoxUIControl.Instance.SetActive(true);
 
             // 아이템 보유 시 효과 발동
             if (ItemManager.Instance.GetOwnNormalItemList()[37] > 0)

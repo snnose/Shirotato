@@ -15,6 +15,9 @@ public class ExpManager : MonoBehaviour
             return instance;
         }
     }
+
+    private RoundSoundManager roundSoundManager;
+
     private int currentLevel = 0;
 
     private float currentExp;
@@ -28,6 +31,9 @@ public class ExpManager : MonoBehaviour
             instance = this;
         else
             Destroy(this.gameObject);
+
+        roundSoundManager = GameObject.FindGameObjectWithTag("AudioManager").transform.GetChild(1).
+                            GetComponent<RoundSoundManager>();
 
         levelUp = LevelUp();
     }
@@ -52,6 +58,9 @@ public class ExpManager : MonoBehaviour
     {
         if (currentExp >= demandExp)
         {
+            // 레벨 업 사운드 출력
+            roundSoundManager.PlayLevelUpSound();
+
             // 현재 경험치를 요구 경험치 만큼 차감한다
             currentExp -= demandExp;
             // 현재 레벨을 + 1

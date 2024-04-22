@@ -7,6 +7,8 @@ public class RoundSoundManager : MonoBehaviour
     public AudioSource roundEndSound;
     public AudioSource roundDefeatSound;
 
+    public AudioSource levelUpSound;
+
     void Start()
     {
         
@@ -15,5 +17,10 @@ public class RoundSoundManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void PlayLevelUpSound()
+    {
+        levelUpSound.Play();
     }
 }

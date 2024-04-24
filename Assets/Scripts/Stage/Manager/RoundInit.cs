@@ -72,8 +72,13 @@ public class RoundInit : MonoBehaviour
 
         // 라운드 제한 시간 조정
         float remainTime = 15f + GameRoot.Instance.GetCurrentRound() * 5f;
-        if (remainTime > 60f)
+        // 마지막 라운드가 아니면 최대 60초
+        if (remainTime > 60f && GameRoot.Instance.GetCurrentRound() != 20)
             remainTime = 60f;
+        // 마지막 라운드는 90초
+        if (GameRoot.Instance.GetCurrentRound() == 20)
+            remainTime = 90f;
+        
         // 디버깅용 임시 제한 시간 설정
         //remainTime = 1f;
 

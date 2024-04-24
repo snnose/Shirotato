@@ -28,6 +28,9 @@ public class SettingButton : MonoBehaviour, IPointerEnterHandler
     {
         // 음성 출력
         ButtonSoundManager.Instance.PlayOnClickButtonSound1();
+
+        // ConfigSettingUI 플로팅
+        ConfigSettingUI.Instance.SetActive(true);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

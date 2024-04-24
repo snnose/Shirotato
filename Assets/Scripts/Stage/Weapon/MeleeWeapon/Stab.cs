@@ -9,18 +9,42 @@ public class Stab : MonoBehaviour
         Vector2 initPos = this.transform.localPosition;
         Vector2 destPos = initPos + dir;
 
-        float moveSpeed = 6f / frame;
+        float playerRotationY = this.transform.parent.rotation.y;
 
-        for (int i = 0; i < frame / 2; i++)
+        float moveSpeed = 10f / frame;
+
+        if (playerRotationY == 0f)
         {
-            this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, destPos, moveSpeed);
-            yield return null;
+            destPos = initPos + dir;
+
+            for (int i = 0; i < frame / 2; i++)
+            {
+                this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, destPos, moveSpeed);
+                yield return new WaitForSeconds(0.0167f);
+            }
+
+            for (int i = 0; i < frame / 2; i++)
+            {
+                this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, initPos, moveSpeed);
+                yield return new WaitForSeconds(0.0167f);
+            }
         }
-
-        for (int i = 0; i < frame / 2; i++)
+        else
         {
-            this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, initPos, moveSpeed);
-            yield return null;
+            destPos = initPos - dir;
+            destPos.y = -destPos.y;
+
+            for (int i = 0; i < frame / 2; i++)
+            {
+                this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, destPos, moveSpeed);
+                yield return new WaitForSeconds(0.0167f);
+            }
+
+            for (int i = 0; i < frame / 2; i++)
+            {
+                this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, initPos, moveSpeed);
+                yield return new WaitForSeconds(0.0167f);
+            }
         }
 
         // 제자리로 돌아온다

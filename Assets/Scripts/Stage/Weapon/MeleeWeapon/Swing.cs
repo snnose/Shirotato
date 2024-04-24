@@ -22,6 +22,8 @@ public class Swing : MonoBehaviour
 
         if (playerRotationY == 0f)
         {
+            attackStartPosition = DegToVec2(rotateZ + 90f, range);
+
             // 무기가 공격 시작 위치로 이동하면서 천천히 회전한다
             for (int i = 0; i < frame / 6; i++)
             {
@@ -46,6 +48,8 @@ public class Swing : MonoBehaviour
         }
         else
         {
+            attackStartPosition = DegToVec2(-rotateZ + 90f, range);
+
             for (int i = 0; i < frame / 6; i++)
             {
                 rotateZ += 90f / (frame / 6f);

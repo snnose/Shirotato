@@ -151,18 +151,22 @@ public class ShopWeaponDetailUI : MonoBehaviour
     // 무기 결합 버튼
     public void OnClickWeaponCombinationButton()
     {
+        ButtonSoundManager.Instance.PlayOnClickButtonSound1();
         CombineWeapon();
     }
 
     // 판매 버튼
     public void OnClickSellButton()
     {
+        // 나중에 파는 소리 따로 추가해야될듯
+        ButtonSoundManager.Instance.PlayOnClickButtonSound1();
         SellWeapon();
     }
 
     // UI 닫기 버튼
     public void OnClickCloseButton()
     {
+        ButtonSoundManager.Instance.PlayOnClickButtonSound1();
         // UI 고정 해제
         SetIsLockOn(false);
         // UI 비활성화

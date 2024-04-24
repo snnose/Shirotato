@@ -70,6 +70,8 @@ public class ItemManager : MonoBehaviour
             ownEpicItemList.Add(0);
             ownLegendItemList.Add(0);
         }
+
+        isRenewItem = true;
     }
 
     void Start()
@@ -120,14 +122,14 @@ public class ItemManager : MonoBehaviour
             // 무기, 아이템을 확률에 따라 정한다.
             int ran = UnityEngine.Random.Range(0, 100);
             
-            // 난수 값이 30미만라면 무기
-            if (ran < 30)
+            // 난수 값이 35미만라면 무기
+            if (ran < 35)
             {
                 currentWeaponList = WeaponManager.Instance.GetCurrentWeaponList();
                 // 한번 더 난수를 사용해 같은 무기가 나오도록 보정
                 int weaponRan = UnityEngine.Random.Range(0, 100);
-                // 난수 값이 35이하일 때 같은 무기 보정 적용
-                if (weaponRan <= 35)
+                // 난수 값이 35미만일 때 같은 무기 보정 적용
+                if (weaponRan < 35)
                 {
                     // 현재 갖고 있는 무기 중에서 하나를 골라 상점 리스트에 넣는다.
                     int random = UnityEngine.Random.Range(0, currentWeaponList.Count - 1);
@@ -147,7 +149,7 @@ public class ItemManager : MonoBehaviour
                         }
                     }
                 }
-                // 난수 값이 36 이상일 때
+                // 난수 값이 35 이상일 때
                 else
                 {
                     // 무기 리스트 중에 하나를 골라 상점 리스트에 넣는다.
@@ -159,8 +161,8 @@ public class ItemManager : MonoBehaviour
                     shopWeaponInfoList[i] = tmpInfo;
                 }
             }
-            // 난수 값이 30 이상이라면 아이템
-            if (ran >= 30)
+            // 난수 값이 35 이상이라면 아이템
+            if (ran >= 35)
             {
                 GameObject tmp;
                 int random = 0;
@@ -190,6 +192,9 @@ public class ItemManager : MonoBehaviour
                         break;
                 }
             }
+            // 디버그
+            Debug.Log(i + "번째 품목 : " +shopItemList[i]);
+            Debug.Log(i + "번째 무기 정보 : " + shopWeaponInfoList[i]);
         }
     }
 

@@ -84,93 +84,14 @@ public class ShopPurchaseButtonControl : MonoBehaviour, IPointerEnterHandler
         int currentRound = GameRoot.Instance.GetCurrentRound();
         int currentWaffle = PlayerInfo.Instance.GetCurrentWaffle();
 
-        // 무기를 구매한 경우
-        if (ItemManager.Instance.GetShopWeaponInfoList()[currentNumber] != null)
-        {
-            // LegendItem19 비활성화
-            // 원래의 공격속도로 돌려놓는다
-            WeaponManager.Instance.InActivateLegendItem19();
-            // LegendItem28 비활성화
-            // 원래의 공격속도로 돌려놓는다
-            WeaponManager.Instance.InActivateLegendItem28();
-            WeaponInfo weaponInfo = ItemManager.Instance.GetShopWeaponInfoList()[currentNumber];
-
-            int weaponPrice = weaponInfo.price;
-            // (원가 + 현재 라운드 + (원가 * 현재 라운드 / 10)) * 아이템 할인 배율
-            int price = 
-                Mathf.FloorToInt(weaponPrice + currentRound + 
-                                (weaponPrice * currentRound / 10) *
-                                (1f - 0.05f * ItemManager.Instance.GetOwnNormalItemList()[39]));
-
-            // 보유 와플이 가격보다 많고 보유 무기 수가 6개 미만이라면
-            if (currentWaffle >= price && WeaponManager.Instance.GetCurrentWeaponList().Count < 6)
-            {
-                // 무기 번호 부여
-                weaponInfo.SetWeaponNumber(WeaponManager.Instance.GetCurrentWeaponList().Count);
-             
-                // 보유 와플 수 차감
-                PlayerInfo.Instance.SetCurrentWaffle(currentWaffle - price);
-
-                // 슬롯 비활성화
-                this.transform.parent.gameObject.SetActive(false);
-                
-                // 보유 무기 리스트에 추가
-                WeaponManager.Instance.GetCurrentWeaponList().Add(item);
-                WeaponManager.Instance.GetCurrentWeaponInfoList().Add(weaponInfo);
-
-                // 아이템 구매 횟수 +1
-                ItemManager.Instance.itemPurchaseCount += 1;
-            }
-            // 보유 와플이 가격보다 많고, 보유 무기 수가 6개라면
-            else if (currentWaffle >= price && WeaponManager.Instance.GetCurrentWeaponList().Count == 6)
-            {
-                WeaponInfo mainWeaponInfo = null;
-                // 보유 무기 중 같은 등급의 같은 무기를 찾는다
-                for (int i = 0; i < WeaponManager.Instance.GetCurrentWeaponList().Count; i++)
-                {
-                    mainWeaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[i];
-                    // 찾았다면 탈출
-                    if (mainWeaponInfo.weaponName == weaponInfo.weaponName
-                        && mainWeaponInfo.GetWeaponGrade() == weaponInfo.GetWeaponGrade())
-                        break;
-
-                    // 못찾았다면 null 처리
-                    if (i == 5)
-                        mainWeaponInfo = null;
-                }
-
-                // 찾은 무기에 결합시킨다
-                if (mainWeaponInfo != null)
-                {
-                    mainWeaponInfo.SetWeaponStatus(mainWeaponInfo.weaponName, mainWeaponInfo.GetWeaponGrade() + 1);
-                    PlayerInfo.Instance.SetCurrentWaffle(currentWaffle - price);
-
-                    // 슬롯 비활성화
-                    this.transform.parent.gameObject.SetActive(false);
-
-                    // 아이템 구매 횟수 +1
-                    ItemManager.Instance.itemPurchaseCount += 1;
-                }
-            }
-
-            // LegendItem19 활성화
-            // 각기 다른 무기가 있을 때마다 공격속도 -3%
-            WeaponManager.Instance.ActivateLegendItem19();
-            // LegendItem28 활성화
-            // 각기 다른 무기가 있을 때마다 공격속도 +3%
-            WeaponManager.Instance.ActivateLegendItem28();
-           
-            // 보유 무기 리스트 갱신
-            ownWeaponListControl.renewOwnWeaponList = ownWeaponListControl.RenewOwnWeaponList();
-        }
         // 아이템을 구매한 경우
-        else
+        if (item.TryGetComponent<ItemInfo>(out ItemInfo itemInfo))
         {
             IndividualityManager individualityManager = IndividualityManager.Instance;
 
             int itemPrice = item.GetComponent<ItemInfo>().price;
             // (원가 + 현재 라운드 + (원가 * 현재 라운드 / 10)) * 아이템 할인 배율
-            int price = Mathf.FloorToInt(itemPrice + currentRound + 
+            int price = Mathf.FloorToInt(itemPrice + currentRound +
                                         (itemPrice * currentRound / 10) *
                                         (1f - 0.05f * ItemManager.Instance.GetOwnNormalItemList()[39]));
 
@@ -192,47 +113,47 @@ public class ShopPurchaseButtonControl : MonoBehaviour, IPointerEnterHandler
                 PlayerInfo.Instance.SetCurrentWaffle(currentWaffle - price);
 
                 // 대미지%
-                PlayerInfo.Instance.SetDMGPercent(PlayerInfo.Instance.GetDMGPercent() + 
+                PlayerInfo.Instance.SetDMGPercent(PlayerInfo.Instance.GetDMGPercent() +
                     item.GetComponent<ItemInfo>().DMGPercent * individualityManager.GetDMGPercentCoeff());
                 // 공격속도
-                PlayerInfo.Instance.SetATKSpeed(PlayerInfo.Instance.GetATKSpeed() + 
+                PlayerInfo.Instance.SetATKSpeed(PlayerInfo.Instance.GetATKSpeed() +
                     item.GetComponent<ItemInfo>().ATKSpeed * individualityManager.GetATKSpeedCoeff());
                 // 고정 대미지
-                PlayerInfo.Instance.SetFixedDMG(PlayerInfo.Instance.GetFixedDMG() + 
+                PlayerInfo.Instance.SetFixedDMG(PlayerInfo.Instance.GetFixedDMG() +
                     item.GetComponent<ItemInfo>().FixedDMG * individualityManager.GetFixedDMGCoeff());
                 // 치명타 확률
-                PlayerInfo.Instance.SetCritical(PlayerInfo.Instance.GetCritical() + 
+                PlayerInfo.Instance.SetCritical(PlayerInfo.Instance.GetCritical() +
                     item.GetComponent<ItemInfo>().Critical * individualityManager.GetCriticalCoeff());
                 // 범위
-                PlayerInfo.Instance.SetRange(PlayerInfo.Instance.GetRange() + 
+                PlayerInfo.Instance.SetRange(PlayerInfo.Instance.GetRange() +
                     item.GetComponent<ItemInfo>().Range * individualityManager.GetRangeCoeff());
 
                 // 최대 체력
-                PlayerInfo.Instance.SetHP(PlayerInfo.Instance.GetHP() + 
+                PlayerInfo.Instance.SetHP(PlayerInfo.Instance.GetHP() +
                     item.GetComponent<ItemInfo>().HP * individualityManager.GetHPCoeff());
                 // 회복력
-                PlayerInfo.Instance.SetRecovery(PlayerInfo.Instance.GetRecovery() + 
+                PlayerInfo.Instance.SetRecovery(PlayerInfo.Instance.GetRecovery() +
                     Mathf.FloorToInt(item.GetComponent<ItemInfo>().Recovery * individualityManager.GetRecoveryCoeff()));
                 // 생명력 흡수
-                PlayerInfo.Instance.SetHPDrain(PlayerInfo.Instance.GetHPDrain() + 
+                PlayerInfo.Instance.SetHPDrain(PlayerInfo.Instance.GetHPDrain() +
                     item.GetComponent<ItemInfo>().HPDrain * individualityManager.GetHPDrainCoeff());
                 // 방어력
-                PlayerInfo.Instance.SetArmor(PlayerInfo.Instance.GetArmor() + 
+                PlayerInfo.Instance.SetArmor(PlayerInfo.Instance.GetArmor() +
                     Mathf.FloorToInt(item.GetComponent<ItemInfo>().Armor * individualityManager.GetArmorCoeff()));
                 // 회피
-                PlayerInfo.Instance.SetEvasion(PlayerInfo.Instance.GetEvasion() + 
+                PlayerInfo.Instance.SetEvasion(PlayerInfo.Instance.GetEvasion() +
                     Mathf.FloorToInt(item.GetComponent<ItemInfo>().Evasion * individualityManager.GetEvasionCoeff()));
 
                 // 이동속도 %
-                PlayerInfo.Instance.SetMovementSpeedPercent(PlayerInfo.Instance.GetMovementSpeedPercent() + 
+                PlayerInfo.Instance.SetMovementSpeedPercent(PlayerInfo.Instance.GetMovementSpeedPercent() +
                     item.GetComponent<ItemInfo>().MovementSpeedPercent * individualityManager.GetMovementSpeedPercentCoeff());
                 // 획득 범위
                 PlayerInfo.Instance.SetRootingRange(PlayerInfo.Instance.GetRootingRange() + item.GetComponent<ItemInfo>().RootingRange);
                 // 행운
-                PlayerInfo.Instance.SetLuck(PlayerInfo.Instance.GetLuck() + 
+                PlayerInfo.Instance.SetLuck(PlayerInfo.Instance.GetLuck() +
                     item.GetComponent<ItemInfo>().Luck * individualityManager.GetLuckCoeff());
                 // 수확
-                PlayerInfo.Instance.SetHarvest(PlayerInfo.Instance.GetHarvest() + 
+                PlayerInfo.Instance.SetHarvest(PlayerInfo.Instance.GetHarvest() +
                     item.GetComponent<ItemInfo>().Harvest * individualityManager.GetHarvestCoeff());
                 // 경험치 획득량
                 PlayerInfo.Instance.SetExpGain(PlayerInfo.Instance.GetExpGain() + item.GetComponent<ItemInfo>().ExpGain);
@@ -314,6 +235,85 @@ public class ShopPurchaseButtonControl : MonoBehaviour, IPointerEnterHandler
                 // 아이템 구매 횟수 +1
                 ItemManager.Instance.itemPurchaseCount += 1;
             }
+        }
+        // 무기를 구매한 경우
+        else
+        {
+            // LegendItem19 비활성화
+            // 원래의 공격속도로 돌려놓는다
+            WeaponManager.Instance.InActivateLegendItem19();
+            // LegendItem28 비활성화
+            // 원래의 공격속도로 돌려놓는다
+            WeaponManager.Instance.InActivateLegendItem28();
+            WeaponInfo weaponInfo = ItemManager.Instance.GetShopWeaponInfoList()[currentNumber];
+
+            int weaponPrice = weaponInfo.price;
+            // (원가 + 현재 라운드 + (원가 * 현재 라운드 / 10)) * 아이템 할인 배율
+            int price =
+                Mathf.FloorToInt(weaponPrice + currentRound +
+                                (weaponPrice * currentRound / 10) *
+                                (1f - 0.05f * ItemManager.Instance.GetOwnNormalItemList()[39]));
+
+            // 보유 와플이 가격보다 많고 보유 무기 수가 6개 미만이라면
+            if (currentWaffle >= price && WeaponManager.Instance.GetCurrentWeaponList().Count < 6)
+            {
+                // 무기 번호 부여
+                weaponInfo.SetWeaponNumber(WeaponManager.Instance.GetCurrentWeaponList().Count);
+
+                // 보유 와플 수 차감
+                PlayerInfo.Instance.SetCurrentWaffle(currentWaffle - price);
+
+                // 슬롯 비활성화
+                this.transform.parent.gameObject.SetActive(false);
+
+                // 보유 무기 리스트에 추가
+                WeaponManager.Instance.GetCurrentWeaponList().Add(item);
+                WeaponManager.Instance.GetCurrentWeaponInfoList().Add(weaponInfo);
+
+                // 아이템 구매 횟수 +1
+                ItemManager.Instance.itemPurchaseCount += 1;
+            }
+            // 보유 와플이 가격보다 많고, 보유 무기 수가 6개라면
+            else if (currentWaffle >= price && WeaponManager.Instance.GetCurrentWeaponList().Count == 6)
+            {
+                WeaponInfo mainWeaponInfo = null;
+                // 보유 무기 중 같은 등급의 같은 무기를 찾는다
+                for (int i = 0; i < WeaponManager.Instance.GetCurrentWeaponList().Count; i++)
+                {
+                    mainWeaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[i];
+                    // 찾았다면 탈출
+                    if (mainWeaponInfo.weaponName == weaponInfo.weaponName
+                        && mainWeaponInfo.GetWeaponGrade() == weaponInfo.GetWeaponGrade())
+                        break;
+
+                    // 못찾았다면 null 처리
+                    if (i == 5)
+                        mainWeaponInfo = null;
+                }
+
+                // 찾은 무기에 결합시킨다
+                if (mainWeaponInfo != null)
+                {
+                    mainWeaponInfo.SetWeaponStatus(mainWeaponInfo.weaponName, mainWeaponInfo.GetWeaponGrade() + 1);
+                    PlayerInfo.Instance.SetCurrentWaffle(currentWaffle - price);
+
+                    // 슬롯 비활성화
+                    this.transform.parent.gameObject.SetActive(false);
+
+                    // 아이템 구매 횟수 +1
+                    ItemManager.Instance.itemPurchaseCount += 1;
+                }
+            }
+
+            // LegendItem19 활성화
+            // 각기 다른 무기가 있을 때마다 공격속도 -3%
+            WeaponManager.Instance.ActivateLegendItem19();
+            // LegendItem28 활성화
+            // 각기 다른 무기가 있을 때마다 공격속도 +3%
+            WeaponManager.Instance.ActivateLegendItem28();
+
+            // 보유 무기 리스트 갱신
+            ownWeaponListControl.renewOwnWeaponList = ownWeaponListControl.RenewOwnWeaponList();
         }
     }
 }

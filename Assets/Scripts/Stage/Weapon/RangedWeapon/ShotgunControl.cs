@@ -17,6 +17,7 @@ public class ShotgunControl : MonoBehaviour
 
     void Start()
     {
+        shootSound.volume = 0.1f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.effectVolume;
         this.weaponNumber = this.GetComponent<StoredWeaponNumber>().GetWeaponNumber();
         weaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[weaponNumber];
     }

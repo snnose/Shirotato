@@ -41,7 +41,8 @@ public class WaffleSoundManager : MonoBehaviour
 
     public void PlayWaffleSound()
     {
-        waffleSounds[num].volume = 0.2f;
+        waffleSounds[num].volume = 0.1f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.effectVolume;
+        waffleSounds[num].pitch = Random.Range(0.95f, 1.05f);
         waffleSounds[num].Play();
 
         num++;

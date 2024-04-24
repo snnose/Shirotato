@@ -11,7 +11,9 @@ public class RoundSoundManager : MonoBehaviour
 
     void Start()
     {
-        
+        roundEndSound.volume = 0.1f * ConfigManager.Instance.masterVolume* ConfigManager.Instance.effectVolume;
+        //roundDefeatSound.volume = 0.1f ConfigManager.Instance.masterVolume * ConfigManager.Instance.effectVolume;
+        levelUpSound.volume = 0.1f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.effectVolume;
     }
 
     void Update()

@@ -5,7 +5,6 @@ using TMPro;
 
 public class MonsterControl : MonoBehaviour
 {
-    private GameObject player;
     private GameObject waffle;
     private GameObject milk;
     private GameObject box;
@@ -22,7 +21,6 @@ public class MonsterControl : MonoBehaviour
 
     void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
         waffle = Resources.Load<GameObject>("Prefabs/Drops/Waffle");
         milk = Resources.Load<GameObject>("Prefabs/Drops/Milk");
         box = Resources.Load<GameObject>("Prefabs/Drops/Box");
@@ -34,6 +32,7 @@ public class MonsterControl : MonoBehaviour
     
     void Start()
     {
+        monsterBeHitedSound.volume = 0.1f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.effectVolume;
         currentHP = monsterInfo.GetMonsterHP();
         vanishing = Vanishing();
     }
@@ -82,6 +81,7 @@ public class MonsterControl : MonoBehaviour
         if (collision.gameObject == GameObject.FindGameObjectWithTag("Weapon"))
         {
             // 피격되면 피격 사운드 출력
+            monsterBeHitedSound.pitch = Random.Range(0.95f, 1.05f);
             monsterBeHitedSound.Play();
         }
     }
@@ -108,10 +108,6 @@ public class MonsterControl : MonoBehaviour
     // 처치당할 때 부착된 컴포넌트를 제거
     private void RemoveComponent()
     {
-        // 리지드바디 2D 제거
-        if (this.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb2D))
-            Destroy(GetComponent<Rigidbody2D>());
-
         // CapsuleCollider2D 제거
         if (this.TryGetComponent<CapsuleCollider2D>(out CapsuleCollider2D capsuleCollider2D))
             Destroy(GetComponent<CapsuleCollider2D>());

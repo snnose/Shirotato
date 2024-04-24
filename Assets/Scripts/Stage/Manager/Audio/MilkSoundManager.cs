@@ -9,6 +9,7 @@ public class MilkSoundManager : MonoBehaviour
     void Start()
     {
         milkSound = this.GetComponent<AudioSource>();
+        milkSound.volume = 0.1f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.effectVolume;
     }
 
     void Update()

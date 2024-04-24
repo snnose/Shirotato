@@ -8,6 +8,8 @@ TagManager:
   - PlayerBox
   - Wall
   - Timer
+  - Weapon
+  - AudioManager
   layers:
   - Default
   - TransparentFX

@@ -9,6 +9,8 @@ public class Swing : MonoBehaviour
         Quaternion initRotation = this.transform.localRotation;
         Vector3 initPosition = this.transform.localPosition;
 
+        float playerRotationY = this.transform.parent.rotation.y;
+
         // 몬스터를 바라보는 방향 각 계산
         float rotateZ = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         //Quaternion attackStartRotation = Quaternion.Euler(0f, initRotation.y, rotateZ + 90f);
@@ -18,24 +20,51 @@ public class Swing : MonoBehaviour
         //Debug.Log("몬스터 방향 : " + dir + ", " + "공격 시작 위치 : " + attackStartPosition);
         float moveSpeed = 18f / frame;
 
-        // 무기가 공격 시작 위치로 이동하면서 천천히 회전한다
-        for (int i = 0; i < frame / 6; i++)
+        if (playerRotationY == 0f)
         {
-            rotateZ += 90f / (frame / 6f);
-            this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, attackStartPosition, moveSpeed);
-            this.transform.localRotation = Quaternion.Euler(0f, initRotation.y, rotateZ);
-            yield return null;
+            // 무기가 공격 시작 위치로 이동하면서 천천히 회전한다
+            for (int i = 0; i < frame / 6; i++)
+            {
+                rotateZ += 90f / (frame / 6f);
+
+                this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, attackStartPosition, moveSpeed);
+                this.transform.localRotation = Quaternion.Euler(0f, initRotation.y, rotateZ);
+
+                yield return new WaitForSeconds(0.0167f);
+            }
+
+            // 공격 시작 위치로 이동했다면 반대 방향으로 반원을 그리면서 회전한다
+            for (int i = 0; i < frame / 3; i++)
+            {
+                rotateZ -= 180f / (frame / 3f);
+
+                this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, DegToVec2(rotateZ, range), moveSpeed);
+                this.transform.localRotation = Quaternion.Euler(0f, initRotation.y, rotateZ);
+
+                yield return new WaitForSeconds(0.0167f);
+            }
         }
-
-        moveSpeed = 18f / frame;
-
-        // 공격 시작 위치로 이동했다면 반대 방향으로 반원을 그리면서 회전한다
-        for (int i = 0; i < frame / 3; i++)
+        else
         {
-            rotateZ -= 180f / (frame / 3f);
-            this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, DegToVec2(rotateZ, range), moveSpeed);
-            this.transform.localRotation = Quaternion.Euler(0f, initRotation.y, rotateZ);
-            yield return null;
+            for (int i = 0; i < frame / 6; i++)
+            {
+                rotateZ += 90f / (frame / 6f);
+
+                this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, attackStartPosition, moveSpeed);
+                this.transform.localRotation = Quaternion.Euler(0f, -initRotation.y, -rotateZ);
+
+                yield return new WaitForSeconds(0.0167f);
+            }
+
+            for (int i = 0; i < frame / 3; i++)
+            {
+                rotateZ -= 180f / (frame / 3f);
+
+                this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, -DegToVec2(-rotateZ, range), moveSpeed);
+                this.transform.localRotation = Quaternion.Euler(0f, -initRotation.y, -rotateZ);
+
+                yield return new WaitForSeconds(0.0167f);
+            }
         }
 
         this.transform.localPosition = initPosition;

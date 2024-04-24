@@ -29,6 +29,12 @@ public class ButtonSoundManager : MonoBehaviour
             instance = this;
         else
             Destroy(this.gameObject);
+
+        // 환경 설정의 볼륨 조절에 맞게 소리 크기 변경
+        onPointerEnterSound1.volume = 0.1f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.effectVolume;
+        onPointerEnterSound2.volume = 0.1f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.effectVolume;
+        onClickButtonSound1.volume = 0.1f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.effectVolume;
+        onClickButtonSound2.volume = 0.1f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.effectVolume;
     }
 
     public void PlayOnPointerEnterSound1()

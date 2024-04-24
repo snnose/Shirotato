@@ -9,6 +9,7 @@ public class BoxSoundManager : MonoBehaviour
     private void Awake()
     {
         boxSound = this.GetComponent<AudioSource>();
+        boxSound.volume = 0.1f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.effectVolume;
     }
 
     void Start()

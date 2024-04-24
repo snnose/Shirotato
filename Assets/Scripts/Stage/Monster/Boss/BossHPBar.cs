@@ -24,7 +24,10 @@ public class BossHPBar : MonoBehaviour
     void Update()
     {
         Vector2 bossHPBarPos =
-            Camera.main.WorldToScreenPoint(new Vector2(this.transform.position.x, this.transform.position.y + 1.0f));
+            Camera.main.WorldToScreenPoint(
+                new Vector2(monsterControl.gameObject.transform.position.x, monsterControl.gameObject.transform.position.y + 1.0f));
+
+        this.transform.position = bossHPBarPos;
 
         ChangeHPGageAmount(monsterControl.GetMonsterCurrentHP() / maxHP);
     }

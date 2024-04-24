@@ -9,6 +9,8 @@ public class HammerControl : MonoBehaviour, IMeleeWeaponControl
     public WeaponInfo weaponInfo { get; set; }
     public bool isCoolDown { get; set; }
 
+    private bool isAttackPossible;
+
     public int damage = 0;
     float coolDown = 1;
     int knockback = 0;
@@ -23,6 +25,7 @@ public class HammerControl : MonoBehaviour, IMeleeWeaponControl
     {
         knockback = weaponInfo.knockback;
         isCoolDown = false;
+        isAttackPossible = false;
     }
 
     void Update()
@@ -47,7 +50,8 @@ public class HammerControl : MonoBehaviour, IMeleeWeaponControl
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // 무기가 몬스터와 닿았다면
-        if (collision.TryGetComponent<MonsterControl>(out MonsterControl monsterControl))
+        if (collision.TryGetComponent<MonsterControl>(out MonsterControl monsterControl) &&
+            isAttackPossible)
         {
             GameObject hitedMonster = collision.gameObject;
             float monsterHP = monsterControl.GetMonsterCurrentHP();
@@ -109,6 +113,10 @@ public class HammerControl : MonoBehaviour, IMeleeWeaponControl
 
     public IEnumerator Attack(GameObject closetMonster)
     {
+        // 쿨타임 on
+        isCoolDown = true;
+        // 공격 판정 on
+        isAttackPossible = true;
         // 무기의 대미지 계산
         // (무기 대미지 + 고정 대미지 * 무기 계수) * 대미지%
         damage = Mathf.FloorToInt(
@@ -125,10 +133,11 @@ public class HammerControl : MonoBehaviour, IMeleeWeaponControl
 
         // 가까운 몬스터에게 휘두른다
         Vector2 direction = closetMonster.transform.position - this.transform.position;
-        StartCoroutine(this.GetComponent<Swing>().
+        yield return StartCoroutine(this.GetComponent<Swing>().
                         SwingMovement(direction.normalized, weaponInfo.range * 0.75f, Mathf.FloorToInt(this.coolDown * 60f)));
+        // 공격 판정 off
+        isAttackPossible = false;
 
-        isCoolDown = true;
         yield return new WaitForSeconds(coolDown);
         isCoolDown = false;
     }

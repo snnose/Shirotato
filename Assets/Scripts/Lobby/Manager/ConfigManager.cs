@@ -29,6 +29,10 @@ public class ConfigManager : MonoBehaviour
             instance = this;
         else
             Destroy(this.gameObject);
+
+        masterVolume = 0.5f;
+        bgmVolume = 1.0f;
+        effectVolume = 1.0f;
     }
 
 

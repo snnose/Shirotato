@@ -76,7 +76,7 @@ public class RealtimeInfoManager : MonoBehaviour
         activateLegendItem25 = ActivateLegendItem25();
 
         // test
-        //FixedDMG = 1000f;
+        //ATKSpeed = 200f;
     }
 
     // Update is called once per frame

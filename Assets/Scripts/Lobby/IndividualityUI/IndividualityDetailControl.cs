@@ -52,6 +52,10 @@ public class IndividualityDetailControl : MonoBehaviour
                 disadvantage.Add("°ø°İ¼Óµµ -60%");
                 disadvantage.Add("°æÇèÄ¡ È¹µæ -50%");
                 break;
+            case "0222":
+                advantage.Add("¸ğµç ½ºÅÈ +2");
+                advantage.Add("¸ğµç ½ºÅÈ +2");
+                break;
             default:
                 break;
         }

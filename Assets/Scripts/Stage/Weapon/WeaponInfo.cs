@@ -42,7 +42,33 @@ public class WeaponInfo
 
     public WeaponInfo(string weaponName)
     {
-        this.weaponName = weaponName;
+        switch (weaponName)
+        {
+            case "Pistol":
+                this.weaponName = "권총";
+                break;
+            case "Revolver":
+                this.weaponName = "리볼버";
+                break;
+            case "SMG":
+                this.weaponName = "서브머신건";
+                break;
+            case "Shotgun":
+                this.weaponName = "산탄총";
+                break;
+            case "Bow":
+                this.weaponName = "활";
+                break;
+            case "Nekohand":
+                this.weaponName = "고양이손";
+                break;
+            case "Hammer":
+                this.weaponName = "망치";
+                break;
+            default:
+                break;
+        }
+        
         this.weaponNumber = -1;
     }
 
@@ -85,7 +111,7 @@ public class WeaponInfo
                 this.price = 20;
                 break;
             case "SMG":
-                this.weaponName = "SMG";
+                this.weaponName = "서브머신건";
                 this.weaponNumber = weaponNumber;
                 this.grade = 0;
                 this.damage = 3;

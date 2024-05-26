@@ -61,7 +61,7 @@ public class StatusDetailControl : MonoBehaviour
                 name = "대미지%";
                 break;
             case "DamageFixed":
-                name = "고정 대미지";
+                name = "추가 대미지";
                 break;
             case "ATKSpeed":
                 name = "공격속도";
@@ -135,13 +135,13 @@ public class StatusDetailControl : MonoBehaviour
                 detail = "공격 주기가 " + playerInfo.GetATKSpeed() + "% 더 빨라집니다.";
                 break;
             case "Critical":
-                detail = "공격 시 " + playerInfo.GetCritical() + "% 확률로 2배 증가된 피해를 입힙니다.";
+                detail = "공격 시 " + Mathf.FloorToInt(playerInfo.GetCritical() * 10f) / 10 + "% 확률로 2배 증가된 피해를 입힙니다.";
                 break;
             case "Range%":
                 detail = "공격 사거리가 " + playerInfo.GetRange() + "% 증가합니다.";
                 break;
             case "Evasion":
-                detail = playerInfo.GetEvasion() + "% 확률로 공격을 회피합니다.";
+                detail = playerInfo.GetEvasion() + "% 확률로 공격을 회피합니다 (최대 60%).";
                 break;
             case "Armor":
                 float tmp = 100 * playerInfo.GetArmor() / (Mathf.Abs(playerInfo.GetArmor()) + 10);

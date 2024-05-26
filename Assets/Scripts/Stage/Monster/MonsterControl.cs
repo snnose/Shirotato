@@ -39,6 +39,9 @@ public class MonsterControl : MonoBehaviour
 
     void Update()
     {
+        // 근처에 플레이어가 있으면 충돌 무시 상태가 된다
+        DetectNearbyPlayer();
+
         // 몬스터가 죽을 때의 처리
         if (currentHP <= 0 && vanishing != null)
         {
@@ -72,8 +75,8 @@ public class MonsterControl : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject == GameObject.FindGameObjectWithTag("Player"))
-            this.monsterCollider.isTrigger = true;
+        //if (collision.gameObject == GameObject.FindGameObjectWithTag("Player"))
+            //this.monsterCollider.isTrigger = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -84,6 +87,29 @@ public class MonsterControl : MonoBehaviour
             monsterBeHitedSound.pitch = Random.Range(0.95f, 1.05f);
             monsterBeHitedSound.Play();
         }
+    }
+
+    // 근처에 플레이어를 인식하면 isTrigger = True
+    private void DetectNearbyPlayer()
+    {
+        // 플레이어를 받아온다
+        GameObject player = PlayerControl.Instance.gameObject;
+
+        float closetDistance = float.MaxValue;
+        float range = 1.6f;
+
+        float dis = Vector2.Distance(this.transform.position, player.transform.position);
+
+        if (dis < range && dis < closetDistance)
+        {
+            closetDistance = dis;
+        }
+
+        // range 내라면 트리거 on, 아닐 경우 off
+        if (closetDistance < range)
+            monsterCollider.isTrigger = true;
+        else
+            monsterCollider.isTrigger = false;
     }
 
     private IEnumerator Vanishing()

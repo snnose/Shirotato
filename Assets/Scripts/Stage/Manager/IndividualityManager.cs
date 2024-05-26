@@ -85,6 +85,23 @@ public class IndividualityManager : MonoBehaviour
                 this.gameObject.GetComponent<PlayerInfo>().SetATKSpeed(-60f * this.DMGPercentCoeff);
                 this.gameObject.GetComponent<PlayerInfo>().SetExpGain(-50f);
                 break;
+            case "0222":
+                this.gameObject.GetComponent<PlayerInfo>().SetDMGPercent(4f);
+                this.gameObject.GetComponent<PlayerInfo>().SetATKSpeed(4f);
+                this.gameObject.GetComponent<PlayerInfo>().SetFixedDMG(4f);
+                this.gameObject.GetComponent<PlayerInfo>().SetCritical(4f);
+                this.gameObject.GetComponent<PlayerInfo>().SetRange(4f);
+
+                this.gameObject.GetComponent<PlayerInfo>().SetHP(14f);
+                this.gameObject.GetComponent<PlayerInfo>().SetRecovery(4);
+                this.gameObject.GetComponent<PlayerInfo>().SetHPDrain(4f);
+                this.gameObject.GetComponent<PlayerInfo>().SetArmor(4);
+                this.gameObject.GetComponent<PlayerInfo>().SetEvasion(4);
+
+                this.gameObject.GetComponent<PlayerInfo>().SetMovementSpeedPercent(4f);
+                this.gameObject.GetComponent<PlayerInfo>().SetLuck(4f);
+                this.gameObject.GetComponent<PlayerInfo>().SetHarvest(4f);
+                break;
             default:
                 break;
         }

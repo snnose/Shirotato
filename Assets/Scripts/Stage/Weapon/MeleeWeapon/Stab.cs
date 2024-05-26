@@ -12,19 +12,22 @@ public class Stab : MonoBehaviour
 
         float playerRotationY = this.transform.parent.rotation.y;
 
-        float moveSpeed = 20f / frame;
+        float moveSpeed = 10f / frame;
 
         if (playerRotationY == 0f)
         {
             destPos = initPos + dir;
 
-            for (int i = 0; i < frame / 2; i++)
+            for (int i = 0; i < frame / 3; i++)
             {
                 this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, destPos, moveSpeed);
                 yield return new WaitForSeconds(waitSeconds);
             }
 
-            for (int i = 0; i < frame / 2; i++)
+            for (int i = 0; i < frame / 3; i++)
+                yield return new WaitForSeconds(waitSeconds);
+
+            for (int i = 0; i < frame / 3; i++)
             {
                 this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, initPos, moveSpeed);
                 yield return new WaitForSeconds(waitSeconds);

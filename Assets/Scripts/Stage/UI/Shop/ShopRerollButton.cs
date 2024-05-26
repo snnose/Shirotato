@@ -134,7 +134,7 @@ public class ShopRerollButton : MonoBehaviour, IPointerEnterHandler
         // 그 다음 비용을 알려주는 텍스트를 설정
         if (freeRerollCount > 0)
         {
-            SetTProtext(rerollPrice);
+            SetTProtext(0);
         }
         else
         {

@@ -19,7 +19,7 @@ public class Swing : MonoBehaviour
         // 처음 Z 회전 각을 토대로 공격 시작 위치를 구한다
         Vector3 attackStartPosition = DegToVec2(rotateZ + 90f, range);
         //Debug.Log("몬스터 방향 : " + dir + ", " + "공격 시작 위치 : " + attackStartPosition);
-        float moveSpeed = 60f / frame;
+        float moveSpeed = 45f / frame;
 
         if (playerRotationY == 0f)
         {

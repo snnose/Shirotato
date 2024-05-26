@@ -745,8 +745,8 @@ public class SpawnManager : MonoBehaviour
         while(-8.0f <= spawnPosX && spawnPosX <= 8.0f
            && -7.0f <= spawnPosY && spawnPosY <= 7.0f)
         {
-            spawnPosX = UnityEngine.Random.Range(-18f, 18f);
-            spawnPosY = UnityEngine.Random.Range(-15f, 15f);
+            spawnPosX = UnityEngine.Random.Range(-16f, 16f);
+            spawnPosY = UnityEngine.Random.Range(-13f, 13f);
         }
 
         Vector2 tmp = new Vector2(spawnPosX, spawnPosY);

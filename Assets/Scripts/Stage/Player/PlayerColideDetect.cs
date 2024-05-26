@@ -33,7 +33,7 @@ public class PlayerColideDetect : MonoBehaviour
     void Update()
     {
         // 근처에 몬스터가 있으면 충돌 무시 상태가 된다
-        DetectNearbyMonster();
+        //DetectNearbyMonster();
 
         // 플레이어가 몬스터와 충돌했다면 (무적이 아닐 시)
         if (GetAttackedMonster() != null && !isPlayerImune)
@@ -187,7 +187,7 @@ public class PlayerColideDetect : MonoBehaviour
         List<GameObject> Monsters = SpawnManager.Instance.GetCurrentMonsters();
         
         float closetDistance = float.MaxValue;
-        float range = 2f;
+        float range = 1.6f;
 
         // 가장 가까이 있는 몬스터와의 거리를 측정한다
         foreach (GameObject monster in Monsters)

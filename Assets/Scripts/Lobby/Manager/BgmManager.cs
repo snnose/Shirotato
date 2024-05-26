@@ -45,7 +45,7 @@ public class BgmManager : MonoBehaviour
         if (ConfigManager.Instance.isBgmVolumeChanged ||
             ConfigManager.Instance.isMasterVolumeChanged)
         {
-            pale.volume = 0.05f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.bgmVolume;
+            pale.volume = 0.1f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.bgmVolume;
         }
     }
 }

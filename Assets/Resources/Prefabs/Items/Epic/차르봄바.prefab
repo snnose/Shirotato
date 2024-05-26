@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 819206586590221749}
   - component: {fileID: 2345586484585446808}
   m_Layer: 0
-  m_Name: "\uCC28\uB974\uBD90\uBC14"
+  m_Name: "\uCC28\uB974\uBD04\uBC14"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94b2362cbbf86214ab13e6d3a7aeb66b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: "\uCC28\uB974\uBD90\uBC14"
+  itemName: "\uCC28\uB974\uBD04\uBC14"
   itemNumber: 7
   rarity: 2
   positiveSpecial: 

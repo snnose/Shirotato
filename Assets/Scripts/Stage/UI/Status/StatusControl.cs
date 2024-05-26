@@ -53,8 +53,11 @@ public class StatusControl : MonoBehaviour
         statInfo.transform.GetChild(7).GetChild(2).GetComponent<TextMeshProUGUI>().text =
             PlayerInfo.Instance.GetRange().ToString();
         // 회피 확률
+        int evade = PlayerInfo.Instance.GetEvasion();
+        if (evade >= 60)
+            evade = 60;
         statInfo.transform.GetChild(8).GetChild(2).GetComponent<TextMeshProUGUI>().text =
-            PlayerInfo.Instance.GetEvasion().ToString();
+            evade.ToString();
         // 방어력
         statInfo.transform.GetChild(9).GetChild(2).GetComponent<TextMeshProUGUI>().text =
             PlayerInfo.Instance.GetArmor().ToString();

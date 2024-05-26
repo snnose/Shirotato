@@ -36,12 +36,13 @@ public class ShopPurchaseButtonControl : MonoBehaviour, IPointerEnterHandler
 
         GameObject item = FindItemNumber(buttonName);
 
-        // 아이템의 능력치를 플레이어의 능력치에 적용
-        PurchaseItem(item);
         // 구매한 아이템 칸이 잠겨있었다면 잠금 해제
         ItemManager.Instance.GetIsLockItemList()[currentNumber] = false;
         // 자물쇠 이미지 비활성화
         this.transform.parent.GetChild(6).gameObject.SetActive(false);
+
+        // 아이템의 능력치를 플레이어의 능력치에 적용
+        PurchaseItem(item);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

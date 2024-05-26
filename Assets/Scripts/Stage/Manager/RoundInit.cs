@@ -48,15 +48,34 @@ public class RoundInit : MonoBehaviour
         // 코루틴 재장전
         GameRoot.Instance.stopRound = GameRoot.Instance.StopRound();
 
+        //Debug.Log("GameRoot 초기화 완료");
+
+        // 라운드 제한 시간 조정
+        float remainTime = 15f + GameRoot.Instance.GetCurrentRound() * 5f;
+        // 마지막 라운드가 아니면 최대 60초
+        if (remainTime > 60f && GameRoot.Instance.GetCurrentRound() != 20)
+            remainTime = 60f;
+        // 마지막 라운드는 90초
+        if (GameRoot.Instance.GetCurrentRound() == 20)
+            remainTime = 90f;
+
+        // 디버깅용 임시 제한 시간 설정
+        //remainTime = 1f;
+
+        timerControl.gameObject.SetActive(true);
+        GameRoot.Instance.SetRemainTime(remainTime);
+        timerControl.SetTimerText(remainTime.ToString());
+
+        //Debug.Log("라운드 시간 설정 완료");
+
         // 레벨 업, 상자 획득 UI 초기화
         LevelUpUIControl.Instance.SetActive(false);
         GetBoxUIControl.Instance.SetActive(false);
 
         // 실시간 스탯 관리자 초기화
+        RealtimeInfoManager.Instance.SetAllStatus(PlayerInfo.Instance);
         // EpicItem30 보유 시 최대 체력의 50%로 라운드 시작
         RealtimeInfoManager.Instance.SetCurrentHP(ActivateEpicItem30(PlayerInfo.Instance.GetHP()));
-        RealtimeInfoManager.Instance.SetHP(PlayerInfo.Instance.GetHP());
-        RealtimeInfoManager.Instance.SetAllStatus(PlayerInfo.Instance);
 
         StartCoroutine(RealtimeInfoManager.Instance.ActivateEpicItem36());
         StartCoroutine(RealtimeInfoManager.Instance.ActivateLegendItem24());
@@ -70,24 +89,12 @@ public class RoundInit : MonoBehaviour
             ItemManager.Instance.GetOwnNormalItemList()[45] = 0;
         }
 
-        // 라운드 제한 시간 조정
-        float remainTime = 15f + GameRoot.Instance.GetCurrentRound() * 5f;
-        // 마지막 라운드가 아니면 최대 60초
-        if (remainTime > 60f && GameRoot.Instance.GetCurrentRound() != 20)
-            remainTime = 60f;
-        // 마지막 라운드는 90초
-        if (GameRoot.Instance.GetCurrentRound() == 20)
-            remainTime = 90f;
-        
-        // 디버깅용 임시 제한 시간 설정
-        //remainTime = 1f;
-
-        timerControl.gameObject.SetActive(true);
-        GameRoot.Instance.SetRemainTime(remainTime);
-        timerControl.SetTimerText(remainTime.ToString());
+        //Debug.Log("RealtimeInfoManager 초기화 완료");
 
         // SpawnManager 초기화
         SpawnManager.Instance.startSpawn = SpawnManager.Instance.StartSpawn(GameRoot.Instance.GetCurrentRound());
+
+        //Debug.Log("SpawnManager 초기화 완료");
 
         // 플레이어의 상태 초기화
         GameObject playerBox = GameRoot.Instance.GetPlayerBox();
@@ -98,8 +105,12 @@ public class RoundInit : MonoBehaviour
         PlayerControl.Instance.activateEpicItem22 = PlayerControl.Instance.ActivateEpicItem22();
         PlayerControl.Instance.activateEpicItem33 = PlayerControl.Instance.ActivateEpicItem33();
 
+        //Debug.Log("PlayerControl 초기화 완료");
+
         // 보유 와플 UI 초기화
         RenewWaffleAmount.Instance.renewCurrentWaffleAmount = RenewWaffleAmount.Instance.RenewCurrentWaffleAmount();
+
+        //Debug.Log("보유 와플 초기화 완료");
 
         // 업그레이드 초기화
         // 잠시 업그레이드 매니저 활성화
@@ -108,6 +119,8 @@ public class RoundInit : MonoBehaviour
         UpgradeManager.Instance.GetUpgradeRerollButton().InitReroll();
         // 다시 비활성화
         UpgradeManager.Instance.gameObject.SetActive(false);
+
+        //Debug.Log("업그레이드 매니저 초기화 완료");
 
         // 상점 초기화
         // 상점 품목 리스트를 모두 활성화한다
@@ -120,13 +133,15 @@ public class RoundInit : MonoBehaviour
         ClearShopItemList();
         //ItemManager.Instance.SetIsRenewItem(false);
         // 상점 리롤 비용 초기화
-        ShopUIControl.Instance.GetShopRerollButton().Initialize(); 
+        ShopUIControl.Instance.GetShopRerollButton().Initialize();
         // 상점UI 비활성화
-        GameRoot.Instance.shopUI.SetActive(false);
+        ShopUIControl.Instance.gameObject.SetActive(false);
 
         // 아이템 효과 발동
         // RareItem30 보유 시 보유 재료의 20% 추가 획득
         ActivateRareItem30();
+
+        //Debug.Log("상점 초기화 완료");
 
         // 무기 생성
         if (WeaponManager.Instance.GetCurrentWeaponList().Count != 0)
@@ -169,6 +184,10 @@ public class RoundInit : MonoBehaviour
         {
             int currentWaffle = PlayerInfo.Instance.GetCurrentWaffle();
             PlayerInfo.Instance.SetCurrentWaffle(Mathf.FloorToInt(currentWaffle * 1.2f));
+
+            // 보유 와플 갱신
+            RenewWaffleAmount.Instance.renewCurrentWaffleAmount =
+                RenewWaffleAmount.Instance.RenewCurrentWaffleAmount();
         }
     }
 
@@ -178,7 +197,7 @@ public class RoundInit : MonoBehaviour
 
         if (ItemManager.Instance.GetOwnEpicItemList()[30] > 0)
         {
-            tmp /= 2;
+            tmp = currentHP * 0.5f;
         }
 
         return tmp;

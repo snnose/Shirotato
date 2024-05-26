@@ -49,8 +49,10 @@ public class PauseUIControl : MonoBehaviour
         {
             this.gameObject.SetActive(ret);
             this.transform.position = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+            // 보유 무기, 아이템 리스트 갱신
             StartCoroutine(shopOwnItemListControl.RenewOwnItemList());
             shopOwnWeaponListControl.renewOwnWeaponList = shopOwnWeaponListControl.RenewOwnWeaponList();
+
             Time.timeScale = 0.0f;
         }
         else

@@ -74,6 +74,9 @@ public class RealtimeInfoManager : MonoBehaviour
         StartCoroutine(ActivateEpicItem36());
         StartCoroutine(ActivateLegendItem24());
         activateLegendItem25 = ActivateLegendItem25();
+
+        // test
+        //FixedDMG = 1000f;
     }
 
     // Update is called once per frame
@@ -124,7 +127,7 @@ public class RealtimeInfoManager : MonoBehaviour
         {
             float coolDown = 10f;
 
-            if (this.Recovery == 0f)
+            if (this.Recovery <= 0f && this.Recovery > -5f)
                 yield return new WaitForSeconds(coolDown);
 
             //Debug.Log("회복 시작");
@@ -199,8 +202,11 @@ public class RealtimeInfoManager : MonoBehaviour
         // 5초마다 대미지% +5%
         if (ItemManager.Instance.GetOwnEpicItemList()[36] > 0)
         {
-            yield return new WaitForSeconds(5.0f);
-            this.DMGPercent += 5f;
+            while (!GameRoot.Instance.GetIsRoundClear())
+            {
+                yield return new WaitForSeconds(5.0f);
+                this.SetDMGPercent(GetDMGPercent() + 5f);
+            }
         }
 
         yield return null;
@@ -212,8 +218,11 @@ public class RealtimeInfoManager : MonoBehaviour
         // 5초마다 회복력 +2
         if (itemCount > 0)
         {
-            yield return new WaitForSeconds(5.0f);
-            this.Recovery += 2 * itemCount;
+            while (!GameRoot.Instance.GetIsRoundClear())
+            {
+                yield return new WaitForSeconds(5.0f);
+                this.Recovery += 2 * itemCount;
+            }
         }
 
         yield return null;
@@ -268,6 +277,9 @@ public class RealtimeInfoManager : MonoBehaviour
     public void SetCurrentHP(float currentHP)
     {
         this.currentHP = currentHP;
+
+        if (currentHP >= HP)
+            currentHP = HP;
     }
 
     public void SetAllStatus(PlayerInfo playerInfo)

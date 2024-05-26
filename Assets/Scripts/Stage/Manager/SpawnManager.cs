@@ -1009,8 +1009,8 @@ public class SpawnManager : MonoBehaviour
                 for (int i = 0; i < monsterCount; i++)
                 {
                     // 각 개체가 한 곳에 스폰되지 않도록 조정해준다
-                    float posX = Random.Range(-2.0f, 2.0f);
-                    float posY = Random.Range(-2.0f, 2.0f);
+                    float posX = Random.Range(-3.0f, 3.0f);
+                    float posY = Random.Range(-3.0f, 3.0f);
                     spawnLocation.x += posX; spawnLocation.y += posY;
 
                     spawnMonster = SpawnMonster(monsterPrefabs[0], spawnLocation);
@@ -1056,8 +1056,8 @@ public class SpawnManager : MonoBehaviour
                 for (int i = 0; i < monsterCount; i++)
                 {
                     // 각 개체가 한 곳에 스폰되지 않도록 조정해준다
-                    float posX = Random.Range(-2.0f, 2.0f);
-                    float posY = Random.Range(-2.0f, 2.0f);
+                    float posX = Random.Range(-3.0f, 3.0f);
+                    float posY = Random.Range(-3.0f, 3.0f);
                     spawnLocation.x += posX; spawnLocation.y += posY;
 
                     spawnMonster = SpawnMonster(monsterPrefabs[1], spawnLocation);
@@ -1103,8 +1103,8 @@ public class SpawnManager : MonoBehaviour
                 for (int i = 0; i < monsterCount; i++)
                 {
                     // 각 개체가 한 곳에 스폰되지 않도록 조정해준다
-                    float posX = Random.Range(-2.0f, 2.0f);
-                    float posY = Random.Range(-2.0f, 2.0f);
+                    float posX = Random.Range(-3.0f, 3.0f);
+                    float posY = Random.Range(-3.0f, 3.0f);
                     spawnLocation.x += posX; spawnLocation.y += posY;
 
                     spawnMonster = SpawnMonster(monsterPrefabs[2], spawnLocation);
@@ -1150,8 +1150,8 @@ public class SpawnManager : MonoBehaviour
                 for (int i = 0; i < monsterCount; i++)
                 {
                     // 각 개체가 한 곳에 스폰되지 않도록 조정해준다
-                    float posX = Random.Range(-2.0f, 2.0f);
-                    float posY = Random.Range(-2.0f, 2.0f);
+                    float posX = Random.Range(-3.0f, 3.0f);
+                    float posY = Random.Range(-3.0f, 3.0f);
                     spawnLocation.x += posX; spawnLocation.y += posY;
 
                     spawnMonster = SpawnMonster(monsterPrefabs[3], spawnLocation);

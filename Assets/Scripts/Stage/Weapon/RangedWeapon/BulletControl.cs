@@ -57,19 +57,7 @@ public class BulletControl : MonoBehaviour
                 isCritical = true;
 
             // 생명력 흡수 적용
-            random = Random.Range(0f, 100f);
-            if (random < RealtimeInfoManager.Instance.GetHPDrain()
-                && RealtimeInfoManager.Instance.GetCurrentHP() < RealtimeInfoManager.Instance.GetHP())
-            {
-                Debug.Log("생명력 흡수");
-                float currentHP = RealtimeInfoManager.Instance.GetCurrentHP();
-                currentHP += 1f;
-                RealtimeInfoManager.Instance.SetCurrentHP(currentHP);
-
-                Color color;
-                ColorUtility.TryParseHtmlString("#1FDE38", out color);
-                PrintText(PlayerControl.Instance.transform.position, 1, color);
-            }
+            TryHPDrain();
 
             float finalDamage = damage;
             // EpicItem32 보유 시, 공격을 맞은 적이 보스나 엘리트라면 +25% 추가 대미지
@@ -272,7 +260,7 @@ public class BulletControl : MonoBehaviour
             if (random < 33f * count)
             {
                 int waffleDropCount = monsterInfo.GetWaffleDropCount();
-                monsterInfo.SetMonsterWaffleDropCount(waffleDropCount);
+                monsterInfo.SetMonsterWaffleDropCount(waffleDropCount + 1);
             }
         }
     }
@@ -322,9 +310,14 @@ public class BulletControl : MonoBehaviour
         // 대미지 텍스트 출력
         GameObject textObject = Resources.Load<GameObject>("Prefabs/DamageText");
         TextMeshPro tmPro = textObject.GetComponent<TextMeshPro>();
+        tmPro.text = "";
+
+        Color green = Color.white; ColorUtility.TryParseHtmlString("#1FDE38", out green);
 
         // 텍스트 및 색상 결정
-        tmPro.text = damage.ToString();
+        if (color.Equals(green))
+            tmPro.text += "+";
+        tmPro.text += damage.ToString();
         tmPro.color = color;
 
         GameObject copy = Instantiate(textObject);
@@ -336,14 +329,14 @@ public class BulletControl : MonoBehaviour
     {
         float random = Random.Range(0f, 100f);
 
-        if (random < RealtimeInfoManager.Instance.GetCritical())
+        if (random < RealtimeInfoManager.Instance.GetHPDrain())
         {
             float currentHP = RealtimeInfoManager.Instance.GetCurrentHP();
-            if (currentHP < RealtimeInfoManager.Instance.GetHP())
-            {
-                currentHP += 1f;
-
-            }
+            currentHP += 1f;
+            RealtimeInfoManager.Instance.SetCurrentHP(currentHP);
+            Color color = Color.white;
+            ColorUtility.TryParseHtmlString("#1FDE38", out color);
+            PrintText(PlayerControl.Instance.transform.position, 1, color);
         }
     }
 

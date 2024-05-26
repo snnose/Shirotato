@@ -130,8 +130,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94b2362cbbf86214ab13e6d3a7aeb66b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: LegendItem
-  itemNumber: 0
+  itemName: LegendItem14
+  itemNumber: 14
   rarity: 3
   positiveSpecial: 
   negativeSpecial: 
@@ -147,7 +147,7 @@ MonoBehaviour:
   Evasion: 0
   MovementSpeedPercent: 0
   RootingRange: 0
-  Luck: 20
+  Luck: 30
   Harvest: 0
   ExpGain: 0
   price: 90

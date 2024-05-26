@@ -203,7 +203,7 @@ public class FindItemUI : MonoBehaviour
 
     private void StackItem(GameObject item)
     {
-        // 구매한 아이템을 기억한다.
+        // 획득한 아이템을 기억한다.
         switch (item.GetComponent<ItemInfo>().rarity)
         {
             case 0:
@@ -343,6 +343,8 @@ public class FindItemUI : MonoBehaviour
             {
                 case 0:
                     // 아이템 리스트와 보유 아이템 리스트의 번호가 다르기 때문에 주의
+                    if (tmp == 7 && ItemManager.Instance.GetOwnNormalItemList()[8] >= 0)  // 빈 공간
+                        isLimit = true;
                     if (tmp == 35 && ItemManager.Instance.GetOwnNormalItemList()[36] == 5)
                         isLimit = true;
                     if (tmp == 36 && ItemManager.Instance.GetOwnNormalItemList()[37] == 3)
@@ -380,9 +382,6 @@ public class FindItemUI : MonoBehaviour
                         isLimit = true;
                     if (tmp == 28 && ItemManager.Instance.GetOwnRareItemList()[29] == 20)
                         isLimit = true;
-                    // 미구현 33
-                    if (tmp == 29 && ItemManager.Instance.GetOwnRareItemList()[30] == 0)
-                        isLimit = true;
                     if (tmp == 31 && ItemManager.Instance.GetOwnRareItemList()[32] == 1)
                         isLimit = true;
                     if (tmp == 32 && ItemManager.Instance.GetOwnRareItemList()[33] == 1)
@@ -406,6 +405,9 @@ public class FindItemUI : MonoBehaviour
                     break;
                 case 2:
                     if (tmp == 15 && ItemManager.Instance.GetOwnEpicItemList()[16] == 1)
+                        isLimit = true;
+                    // 임시 미구현
+                    if (tmp == 20 && ItemManager.Instance.GetOwnEpicItemList()[21] == 0)
                         isLimit = true;
                     if (tmp == 22 && ItemManager.Instance.GetOwnEpicItemList()[23] == 1)
                         isLimit = true;
@@ -435,6 +437,9 @@ public class FindItemUI : MonoBehaviour
                     }
                     break;
                 case 3:
+                    // 이미지 X
+                    if (tmp == 13 && ItemManager.Instance.GetOwnLegendItemList()[14] == 0)
+                        isLimit = true;
                     if (tmp == 14 && ItemManager.Instance.GetOwnLegendItemList()[15] == 1)
                         isLimit = true;
                     if (tmp == 15 && ItemManager.Instance.GetOwnLegendItemList()[16] == 1)
@@ -447,11 +452,13 @@ public class FindItemUI : MonoBehaviour
                         isLimit = true;
                     if (tmp == 21 && ItemManager.Instance.GetOwnLegendItemList()[22] == 1)
                         isLimit = true;
-                    if (tmp == 22 && ItemManager.Instance.GetOwnLegendItemList()[23] == 1)
+                    // 이미지 X
+                    if (tmp == 22 && ItemManager.Instance.GetOwnLegendItemList()[23] == 0)
                         isLimit = true;
                     if (tmp == 24 && ItemManager.Instance.GetOwnLegendItemList()[25] == 1)
                         isLimit = true;
-                    if (tmp == 25 && ItemManager.Instance.GetOwnLegendItemList()[26] == 1)
+                    // 이미지 X
+                    if (tmp == 25 && ItemManager.Instance.GetOwnLegendItemList()[26] == 0)
                         isLimit = true;
 
                     if (isLimit)

@@ -108,6 +108,11 @@ public class MonsterControl : MonoBehaviour
     // 처치당할 때 부착된 컴포넌트를 제거
     private void RemoveComponent()
     {
+        // Rigidbody2D 제거
+        if (this.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb2D))
+        {
+            Destroy(GetComponent<Rigidbody2D>());
+        }
         // CapsuleCollider2D 제거
         if (this.TryGetComponent<CapsuleCollider2D>(out CapsuleCollider2D capsuleCollider2D))
             Destroy(GetComponent<CapsuleCollider2D>());

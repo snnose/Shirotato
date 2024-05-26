@@ -36,7 +36,7 @@ public class ShopNextRoundButton : MonoBehaviour, IPointerEnterHandler
     {
         // 버튼 클릭 시 사운드 출력
         ButtonSoundManager.Instance.PlayOnClickButtonSound1();
-
+        Debug.Log("다음 라운드 버튼 클릭");
         StartCoroutine(RoundInit.Instance.InitRound());
     }
 

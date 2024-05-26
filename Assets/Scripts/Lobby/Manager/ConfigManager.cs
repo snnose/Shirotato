@@ -21,6 +21,9 @@ public class ConfigManager : MonoBehaviour
     public float bgmVolume;
     public float effectVolume;
 
+    public bool isMasterVolumeChanged = false;
+    public bool isBgmVolumeChanged = false;
+
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);

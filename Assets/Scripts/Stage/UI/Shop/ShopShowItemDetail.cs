@@ -8,11 +8,9 @@ using UnityEngine.EventSystems;
 // 마우스 포인터를 올린 아이템의 스탯을 보여주도록 하는 스크립트
 public class ShopShowItemDetail : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    private ShopItemDetailUI shopItemDetailUI;
-
     private void Awake()
     {
-        shopItemDetailUI = ShopItemDetailUI.Instance;
+     
     }
 
     // PointerEnter 이벤트 함수
@@ -26,18 +24,21 @@ public class ShopShowItemDetail : MonoBehaviour, IPointerEnterHandler, IPointerE
         // 부모 오브젝트에 ItemInfo 컴포넌트 부착 여부로 확인한다.
         if (this.gameObject.transform.parent.gameObject.TryGetComponent<ItemInfo>(out itemInfo))
         {
+            // DetailUI를 활성화한다.
+            ShopItemDetailUI.Instance.gameObject.SetActive(true);
+
             // DetailUI를 현재 마우스가 올라간 아이템 칸 위로 이동시킨다.
             Vector2 UIPos = CalDetailUIPos();
-            shopItemDetailUI.SetUIPosition(UIPos);
+            ShopItemDetailUI.Instance.SetUIPosition(UIPos);
 
-            // DetailUI의 이미지를 변경한다.
-            shopItemDetailUI.SetItemImage(this.gameObject.GetComponent<Image>());
+            // DetailUI의 아이템 이미지를 변경한다.
+            ShopItemDetailUI.Instance.SetItemImage(this.gameObject.GetComponent<Image>());
+
+            // DetailUI의 등급 이미지를 변경한다.
+            ShopItemDetailUI.Instance.SetItemGradeImage(this.gameObject.transform.parent.GetChild(0).GetComponent<Image>());
 
             // DetailUI의 스테이터스 텍스트를 변경한다.
-            shopItemDetailUI.SetItemStatusText(itemInfo);
-
-            // DetailUI를 활성화한다.
-            shopItemDetailUI.GetDetailUI().SetActive(true);
+            ShopItemDetailUI.Instance.SetItemStatusText(itemInfo);
         }
     }
     // PointerExit 이벤트 함수
@@ -45,7 +46,7 @@ public class ShopShowItemDetail : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         // DetailUI를 비활성화한다.
         if (this.gameObject.transform.parent.gameObject.TryGetComponent<ItemInfo>(out ItemInfo itemInfo))
-            shopItemDetailUI.GetDetailUI().SetActive(false);
+            ShopItemDetailUI.Instance.gameObject.SetActive(false);
     }
 
     // DetailUI를 아이템 슬롯 위로 조정하는 함수
@@ -55,7 +56,7 @@ public class ShopShowItemDetail : MonoBehaviour, IPointerEnterHandler, IPointerE
         Vector2 itemSlotSize = this.gameObject.GetComponent<RectTransform>().rect.size;
 
         // UI의 Size를 가져온다.
-        RectTransform UIRectTransform = shopItemDetailUI.GetDetailUI().GetComponent<RectTransform>();
+        RectTransform UIRectTransform = ShopItemDetailUI.Instance.GetComponent<RectTransform>();
         Vector2 UISize = UIRectTransform.rect.size;
 
         // 이동할 x 좌표값은 UI 크기 - 아이템 슬롯 크기를 2로 나눈 값

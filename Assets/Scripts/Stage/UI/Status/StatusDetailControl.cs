@@ -108,6 +108,18 @@ public class StatusDetailControl : MonoBehaviour
             case "Recovery":
                 detail = "매 10초마다 체력 " + playerInfo.GetRecovery() + "을 회복합니다. \n" +
                          "(체력 " + playerInfo.GetRecovery() / 10 + "/s)";
+                // 회복력 -4 ~ 0일 때
+                if (playerInfo.GetRecovery() <= 0 && playerInfo.GetRecovery() > -5f)
+                {
+                    detail = "매 10초마다 체력 " + 0 + "을 회복합니다. \n" +
+                         "(체력 " + 0 + "/s)";
+                }
+                // 회복력 -5 이하일 때
+                if (playerInfo.GetRecovery() <= -5f)
+                {
+                    detail = "매 10초마다 체력 " + -5 + " 감소합니다. \n" +
+                         "(체력 " + 0.5 + "/s)";
+                }
                 break;
             case "HPDrain":
                 detail = "공격 시 " + playerInfo.GetHPDrain() + "% 확률로 체력 1을 회복합니다.";

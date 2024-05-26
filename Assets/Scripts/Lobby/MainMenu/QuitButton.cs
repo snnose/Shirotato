@@ -28,6 +28,12 @@ public class QuitButton : MonoBehaviour, IPointerEnterHandler
     {
         // 음성 출력
         ButtonSoundManager.Instance.PlayOnClickButtonSound1();
+        // 게임 종료 버튼 클릭 시 게임 종료
+#if UNITY_EDITOR
+    UnityEditor.EditorApplication.isPlaying = false;
+#else
+    Application.Quit();
+#endif
     }
 
     public void OnPointerEnter(PointerEventData eventData)

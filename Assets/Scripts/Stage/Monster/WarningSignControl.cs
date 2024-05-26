@@ -10,6 +10,7 @@ public class WarningSignControl : MonoBehaviour
     private void Awake()
     {
         spawnWarningSound = this.GetComponent<AudioSource>();
+        //spawnWarningSound.pitch = Random.Range(0.95f, 1.05f);
     }
 
     void Start()

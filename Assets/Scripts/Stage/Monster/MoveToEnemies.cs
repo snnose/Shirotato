@@ -81,6 +81,8 @@ public class MoveToEnemies : MonoBehaviour
         monsterRb2D.velocity = movement * monsterInfo.GetMonsterMovementSpeed();
 
         yield return new WaitForSeconds(Random.Range(0.2f, 0.3f));
+
+        chooseNextMoving = ChooseNextMoving();
     }
 
     Vector2 VectorCorrection(Vector2 movement)

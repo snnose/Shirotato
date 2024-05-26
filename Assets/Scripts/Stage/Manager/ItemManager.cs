@@ -131,22 +131,35 @@ public class ItemManager : MonoBehaviour
                 // 난수 값이 35미만일 때 같은 무기 보정 적용
                 if (weaponRan < 35)
                 {
-                    // 현재 갖고 있는 무기 중에서 하나를 골라 상점 리스트에 넣는다.
-                    int random = UnityEngine.Random.Range(0, currentWeaponList.Count - 1);
-
-                    for (int j = 0; j < weaponList.Count; j++)
+                    if (currentWeaponList.Count > 0)
                     {
-                        if (weaponList[j].name == currentWeaponList[random].name)
-                        {
-                            // 무기와 아이템을 설정
-                            GameObject tmp = weaponList[j];
-                            WeaponInfo tmpInfo = new WeaponInfo(weaponList[j].name);
-                            tmpInfo.SetWeaponStatus(weaponList[j].name, rarity);
-                            shopItemList[i] = tmp;                            
-                            shopWeaponInfoList[i] = tmpInfo;
+                        // 현재 갖고 있는 무기 중에서 하나를 골라 상점 리스트에 넣는다.
+                        int random = UnityEngine.Random.Range(0, currentWeaponList.Count);
 
-                            break;
+                        for (int j = 0; j < weaponList.Count; j++)
+                        {
+                            if (weaponList[j].name == currentWeaponList[random].name)
+                            {
+                                // 무기와 아이템을 설정
+                                GameObject tmp = weaponList[j];
+                                WeaponInfo tmpInfo = new WeaponInfo(weaponList[j].name);
+                                tmpInfo.SetWeaponStatus(weaponList[j].name, rarity);
+                                shopItemList[i] = tmp;
+                                shopWeaponInfoList[i] = tmpInfo;
+
+                                break;
+                            }
                         }
+                    }
+                    else
+                    {
+                        // 무기 리스트 중에 하나를 골라 상점 리스트에 넣는다.
+                        int random = UnityEngine.Random.Range(0, weaponList.Count);
+                        GameObject tmp = weaponList[random];
+                        WeaponInfo tmpInfo = new WeaponInfo(weaponList[random].name);
+                        tmpInfo.SetWeaponStatus(weaponList[random].name, rarity);
+                        shopItemList[i] = tmp;
+                        shopWeaponInfoList[i] = tmpInfo;
                     }
                 }
                 // 난수 값이 35 이상일 때
@@ -191,10 +204,7 @@ public class ItemManager : MonoBehaviour
                     default:
                         break;
                 }
-            }
-            // 디버그
-            Debug.Log(i + "번째 품목 : " +shopItemList[i]);
-            Debug.Log(i + "번째 무기 정보 : " + shopWeaponInfoList[i]);
+            }        
         }
     }
 
@@ -210,21 +220,23 @@ public class ItemManager : MonoBehaviour
             {
                 case 0:
                     // 아이템 리스트와 보유 아이템 리스트의 번호가 다르기 때문에 주의
-                    if (tmp == 35 && ownNormalItemList[36] == 5)
+                    if (tmp == 7 && ownNormalItemList[8] >= 0)  // 빈 공간
                         isLimit = true;
-                    if (tmp == 36 && ownNormalItemList[37] == 3)
+                    if (tmp == 35 && ownNormalItemList[36] >= 5)
                         isLimit = true;
-                    if (tmp == 37 && ownNormalItemList[38] == 13)
+                    if (tmp == 36 && ownNormalItemList[37] >= 3)
                         isLimit = true;
-                    if (tmp == 38 && ownNormalItemList[39] == 5)
+                    if (tmp == 37 && ownNormalItemList[38] >= 13)
                         isLimit = true;
-                    if (tmp == 39 && ownNormalItemList[40] == 10)
+                    if (tmp == 38 && ownNormalItemList[39] >= 5)
                         isLimit = true;
-                    if (tmp == 41 && ownNormalItemList[42] == 4)
+                    if (tmp == 39 && ownNormalItemList[40] >= 10)
                         isLimit = true;
-                    if (tmp == 42 && ownNormalItemList[43] == 1)
+                    if (tmp == 41 && ownNormalItemList[42] >= 4)
                         isLimit = true;
-                    if (tmp == 43 && ownNormalItemList[44] == 1)
+                    if (tmp == 42 && ownNormalItemList[43] >= 1)
+                        isLimit = true;
+                    if (tmp == 43 && ownNormalItemList[44] >= 1)
                         isLimit = true;
 
                     // 현재 아이템이 보유 제한이라면 다른 아이템으로 변경한다
@@ -243,24 +255,23 @@ public class ItemManager : MonoBehaviour
                     // 미구현 22
                     if (tmp == 25 && ownRareItemList[26] == 0)
                         isLimit = true;
-                    if (tmp == 27 && ownRareItemList[28] == 3)
+                    if (tmp == 27 && ownRareItemList[28] >= 3)
                         isLimit = true;
-                    if (tmp == 28 && ownRareItemList[29] == 20)
+                    if (tmp == 28 && ownRareItemList[29] >= 20)
                         isLimit = true;
-                    // 미구현 33
-                    if (tmp == 29 && ownRareItemList[30] == 0)
+                    if (tmp == 29 && ownRareItemList[30] >= 1)
                         isLimit = true;
-                    if (tmp == 31 && ownRareItemList[32] == 1)
+                    if (tmp == 31 && ownRareItemList[32] >= 1)
                         isLimit = true;
-                    if (tmp == 32 && ownRareItemList[33] == 1)
+                    if (tmp == 32 && ownRareItemList[33] >= 1)
                         isLimit = true;
-                    if (tmp == 33 && ownRareItemList[34] == 1)
+                    if (tmp == 33 && ownRareItemList[34] >= 1)
                         isLimit = true;
-                    if (tmp == 34 && ownRareItemList[35] == 4)
+                    if (tmp == 34 && ownRareItemList[35] >= 4)
                         isLimit = true;
-                    if (tmp == 35 && ownRareItemList[36] == 5)
+                    if (tmp == 35 && ownRareItemList[36] >= 5)
                         isLimit = true;
-                    if (tmp == 36 && ownRareItemList[37] == 1)
+                    if (tmp == 36 && ownRareItemList[37] >= 1)
                         isLimit = true;
 
                     if (isLimit)
@@ -272,25 +283,28 @@ public class ItemManager : MonoBehaviour
                     }
                     break;
                 case 2:
-                    if (tmp == 15 && ownEpicItemList[16] == 1)
+                    if (tmp == 15 && ownEpicItemList[16] >= 1)
                         isLimit = true;
-                    if (tmp == 22 && ownEpicItemList[23] == 1)
+                    // 임시 미구현
+                    if (tmp == 20 && ownEpicItemList[21] == 0)
                         isLimit = true;
-                    if (tmp == 23 && ownEpicItemList[24] == 1)
+                    if (tmp == 22 && ownEpicItemList[23] >= 1)
                         isLimit = true;
-                    if (tmp == 25 && ownEpicItemList[26] == 1)
+                    if (tmp == 23 && ownEpicItemList[24] >= 1)
                         isLimit = true;
-                    if (tmp == 26 && ownEpicItemList[27] == 3)
+                    if (tmp == 25 && ownEpicItemList[26] >= 1)
                         isLimit = true;
-                    if (tmp == 27 && ownEpicItemList[28] == 5)
+                    if (tmp == 26 && ownEpicItemList[27] >= 3)
                         isLimit = true;
-                    if (tmp == 28 && ownEpicItemList[29] == 1)
+                    if (tmp == 27 && ownEpicItemList[28] >= 5)
                         isLimit = true;
-                    if (tmp == 29 && ownEpicItemList[30] == 1)
+                    if (tmp == 28 && ownEpicItemList[29] >= 1)
                         isLimit = true;
-                    if (tmp == 30 && ownEpicItemList[31] == 1)
+                    if (tmp == 29 && ownEpicItemList[30] >= 1)
                         isLimit = true;
-                    if (tmp == 35 && ownEpicItemList[36] == 1)
+                    if (tmp == 30 && ownEpicItemList[31] >= 1)
+                        isLimit = true;
+                    if (tmp == 35 && ownEpicItemList[36] >= 1)
                         isLimit = true;
 
                     if (isLimit)
@@ -302,23 +316,28 @@ public class ItemManager : MonoBehaviour
                     }
                     break;
                 case 3:
-                    if (tmp == 14 && ownLegendItemList[15] == 1)
+                    // 이미지 X
+                    if (tmp == 13 && ownLegendItemList[14] == 0)
                         isLimit = true;
-                    if (tmp == 15 && ownLegendItemList[16] == 1)
+                    if (tmp == 14 && ownLegendItemList[15] >= 1)
                         isLimit = true;
-                    if (tmp == 16 && ownLegendItemList[17] == 1)
+                    if (tmp == 15 && ownLegendItemList[16] >= 1)
                         isLimit = true;
-                    if (tmp == 17 && ownLegendItemList[18] == 1)
+                    if (tmp == 16 && ownLegendItemList[17] >= 1)
                         isLimit = true;
-                    if (tmp == 19 && ownLegendItemList[20] == 1)
+                    if (tmp == 17 && ownLegendItemList[18] >= 1)
                         isLimit = true;
-                    if (tmp == 21 && ownLegendItemList[22] == 1)
+                    if (tmp == 19 && ownLegendItemList[20] >= 1)
                         isLimit = true;
-                    if (tmp == 22 && ownLegendItemList[23] == 1)
+                    if (tmp == 21 && ownLegendItemList[22] >= 1)
                         isLimit = true;
-                    if (tmp == 24 && ownLegendItemList[25] == 1)
+                    // 이미지 X
+                    if (tmp == 22 && ownLegendItemList[23] == 0)
                         isLimit = true;
-                    if (tmp == 25 && ownLegendItemList[26] == 1)
+                    if (tmp == 24 && ownLegendItemList[25] >= 1)
+                        isLimit = true;
+                    // 이미지 X
+                    if (tmp == 25 && ownLegendItemList[26] == 0)
                         isLimit = true;
 
                     if (isLimit)

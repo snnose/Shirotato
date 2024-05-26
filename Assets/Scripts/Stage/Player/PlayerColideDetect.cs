@@ -129,6 +129,9 @@ public class PlayerColideDetect : MonoBehaviour
                 // 플레이어의 체력이 0 이하로 떨어지면 
                 if (currentHP <= 0)
                 {
+                    //플레이어 사망으로 게임 오버
+                    GameRoot.Instance.SetIsGameOver(true);
+
                     currentHP = 0;
                     // Player를 죽음 상태로 변경
                     PlayerControl.Instance.currState = PlayerControl.state.DEAD;

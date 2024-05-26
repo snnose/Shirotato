@@ -177,7 +177,7 @@ public class GameRoot : MonoBehaviour
 
     private IEnumerator Sleep(float time)
     {
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSecondsRealtime(time);
     }
 
     public IEnumerator StopRound()
@@ -203,13 +203,15 @@ public class GameRoot : MonoBehaviour
         floatingUpgradeUI = FloatingUpgradeUI();
         floatingShopUI = FloatingShopUI();
 
+        Time.timeScale = 0f;
+
         yield return null;
     }
 
     private void Harvest()
     {
         float currExp = ExpManager.Instance.GetCurrentExp();
-        currExp += playerInfo.GetHarvest();
+        currExp += playerInfo.GetHarvest() * playerInfo.GetExpGain();
         ExpManager.Instance.SetCurrentExp(currExp);
         ExpManager.Instance.levelUp = ExpManager.Instance.LevelUp();
 

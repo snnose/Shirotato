@@ -12,7 +12,7 @@ public class BossHPBar : MonoBehaviour
 
     private void Awake()
     {
-        HPBar = this.transform.GetChild(0).GetComponent<Image>();
+        HPBar = this.transform.GetChild(1).GetComponent<Image>();
         monsterControl = this.transform.parent.parent.GetComponent<MonsterControl>();
     }
 
@@ -30,17 +30,19 @@ public class BossHPBar : MonoBehaviour
         this.transform.position = bossHPBarPos;
 
         ChangeHPGageAmount(monsterControl.GetMonsterCurrentHP() / maxHP);
+
+        if (GameRoot.Instance.GetIsRoundClear() || GameRoot.Instance.GetIsGameOver())
+            Destroy(this.gameObject);
     }
 
     // 현재 체력 비율에 따라 체력 막대 조정
     private void ChangeHPGageAmount(float amount)
     {
+        if (amount <= 0f)
+            amount = 0f;
+        else if (amount >= 1f)
+            amount = 1f;
+
         HPBar.fillAmount = amount;
-
-        if (HPBar.fillAmount <= 0f)
-            HPBar.fillAmount = 0f;
-
-        if (HPBar.fillAmount >= 1f)
-            HPBar.fillAmount = 1f;
     }
 }

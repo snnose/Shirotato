@@ -134,7 +134,7 @@ public class HammerControl : MonoBehaviour, IMeleeWeaponControl
         // 가까운 몬스터에게 휘두른다
         Vector2 direction = closetMonster.transform.position - this.transform.position;
         yield return StartCoroutine(this.GetComponent<Swing>().
-                        SwingMovement(direction.normalized, weaponInfo.range * 0.75f, Mathf.FloorToInt(this.coolDown * 60f)));
+                        SwingMovement(direction.normalized, weaponInfo.range * 0.6f, Mathf.FloorToInt(this.coolDown * 60f)));
         // 공격 판정 off
         isAttackPossible = false;
 
@@ -315,16 +315,22 @@ public class HammerControl : MonoBehaviour, IMeleeWeaponControl
         return tmp;
     }
 
-    void PrintText(Vector3 position, float num, Color color)
+    void PrintText(Vector3 position, float damage, Color color)
     {
         // 대미지 텍스트 출력
         GameObject textObject = Resources.Load<GameObject>("Prefabs/DamageText");
         TextMeshPro tmPro = textObject.GetComponent<TextMeshPro>();
+        tmPro.text = "";
 
-        GameObject copy = Instantiate(textObject);
-        tmPro.text = num.ToString();
+        Color green = Color.white; ColorUtility.TryParseHtmlString("#1FDE38", out green);
+
+        // 텍스트 및 색상 결정
+        if (color.Equals(green))
+            tmPro.text += "+";
+        tmPro.text += damage.ToString();
         tmPro.color = color;
 
+        GameObject copy = Instantiate(textObject);
         Vector3 randomPos = new Vector3(Random.Range(-0.4f, 0.4f), Random.Range(0.4f, 0.6f), 0f);
         copy.transform.position = position + randomPos;
     }

@@ -68,10 +68,19 @@ public class FinalListControl : MonoBehaviour
             case "우다다다":
                 advantage.Add("공격속도 +100%");
                 advantage.Add("이동속도 +10%");
-                advantage.Add("대미지 증감폭 1.4배");
+                advantage.Add("대미지 증감폭 1.5배");
 
-                disadvantage.Add("대미지 -45%");
+                disadvantage.Add("대미지 -40%");
                 disadvantage.Add("방어력 -5");
+                break;
+            case "행운냥이":
+                advantage.Add("와플 획득 시 75% 확률로 랜덤 적에게 행운의 25% 피해");
+                advantage.Add("행운 +100");
+                advantage.Add("수확 +10");
+                advantage.Add("행운 증감폭 1.25배");
+
+                disadvantage.Add("공격속도 -60%");
+                disadvantage.Add("경험치 획득 -50%");
                 break;
             default:
                 break;

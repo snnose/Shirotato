@@ -101,7 +101,7 @@ public class ShopLockButtonControl : MonoBehaviour, IPointerEnterHandler, IPoint
     }
 
     public void OnPointerExit(PointerEventData eventData)
-    {
+    { 
         text.color = Color.white;
         background.color = Color.black;
     }

@@ -13,7 +13,6 @@ public class ShopOwnItemListControl : MonoBehaviour
 
     public IEnumerator renewOwnItemList;
 
-    // Start is called before the first frame update
     private void Awake()
     {
         ownItemListContent = this.gameObject.transform.GetChild(1).GetChild(0).GetChild(0).gameObject;
@@ -24,7 +23,6 @@ public class ShopOwnItemListControl : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (renewOwnItemList != null)

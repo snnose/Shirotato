@@ -30,6 +30,7 @@ public class MasterVolumeControl : MonoBehaviour
         value = Mathf.Round(value * 100) / 100;
 
         ConfigManager.Instance.masterVolume = value;
+        ConfigManager.Instance.isMasterVolumeChanged = true;
         masterPercentage.text = (value * 100).ToString() + "%";
     }
 }

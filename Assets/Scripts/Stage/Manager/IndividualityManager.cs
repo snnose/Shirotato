@@ -68,21 +68,21 @@ public class IndividualityManager : MonoBehaviour
                 this.gameObject.GetComponent<PlayerInfo>().SetRange(10f * this.RangeCoeff);
                 break;
             case "우다다다":
-                // 대미지 계수 1.4
-                this.DMGPercentCoeff = 1.4f;
-                // 공격속도 +100%, 이동속도 +5%, 대미지 -45%, 방어력 -5
+                // 대미지 계수 1.5
+                this.DMGPercentCoeff = 1.5f;
+                // 공격속도 +100%, 이동속도 +10%, 대미지 -40%, 방어력 -5
                 this.gameObject.GetComponent<PlayerInfo>().SetATKSpeed(100f * this.ATKSpeedCoeff);
                 this.gameObject.GetComponent<PlayerInfo>().SetMovementSpeedPercent(10f * this.MovementSpeedPercentCoeff);
-                this.gameObject.GetComponent<PlayerInfo>().SetDMGPercent(-45f * this.DMGPercentCoeff);
+                this.gameObject.GetComponent<PlayerInfo>().SetDMGPercent(-40f * this.DMGPercentCoeff);
                 this.gameObject.GetComponent<PlayerInfo>().SetArmor(-5);
                 break;
             case "행운냥이":
                 // 행운 계수 1.25
                 this.LuckCoeff = 1.25f;
-                // 행운 +100, 수확 +10, 대미지 -50%, 경험치 획득 -50%
+                // 행운 +100, 수확 +10, 공격속도 -60%, 경험치 획득 -50%
                 this.gameObject.GetComponent<PlayerInfo>().SetLuck(100f * this.LuckCoeff);
                 this.gameObject.GetComponent<PlayerInfo>().SetHarvest(10f);
-                this.gameObject.GetComponent<PlayerInfo>().SetDMGPercent(-50f * this.DMGPercentCoeff);
+                this.gameObject.GetComponent<PlayerInfo>().SetATKSpeed(-60f * this.DMGPercentCoeff);
                 this.gameObject.GetComponent<PlayerInfo>().SetExpGain(-50f);
                 break;
             default:

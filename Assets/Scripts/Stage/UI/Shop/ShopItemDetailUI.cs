@@ -18,11 +18,12 @@ public class ShopItemDetailUI : MonoBehaviour
         }
     }
 
-    private GameObject itemImage;
+    private GameObject item;
     private GameObject itemName;
     private GameObject itemStatus;
 
-    private Image image;
+    private Image itemImage;
+    private Image itemGrade;
     private TextMeshProUGUI itemNameText;
     private TextMeshProUGUI itemStatusText;
 
@@ -33,11 +34,12 @@ public class ShopItemDetailUI : MonoBehaviour
         else
             Destroy(this.gameObject);
 
-        itemImage = this.gameObject.transform.GetChild(1).gameObject;
+        item = this.gameObject.transform.GetChild(1).gameObject;
         itemName = this.gameObject.transform.GetChild(2).gameObject;
         itemStatus = this.gameObject.transform.GetChild(3).gameObject;
 
-        image = itemImage.GetComponent<Image>();
+        itemGrade = item.transform.GetChild(0).GetComponent<Image>();
+        itemImage = item.transform.GetChild(1).GetComponent<Image>();
         itemNameText = itemName.GetComponent<TextMeshProUGUI>();
         itemStatusText = itemStatus.GetComponent<TextMeshProUGUI>();
     }
@@ -54,9 +56,14 @@ public class ShopItemDetailUI : MonoBehaviour
 
     public void SetItemImage(Image image)
     {
-        this.image = image;
+        this.itemImage.sprite = image.sprite;
     }
-    
+
+    public void SetItemGradeImage(Image image)
+    {
+        this.itemGrade.color = image.color;
+    }
+
     public void SetItemStatusText(ItemInfo itemInfo)
     {
         // 아이템 이름 변경

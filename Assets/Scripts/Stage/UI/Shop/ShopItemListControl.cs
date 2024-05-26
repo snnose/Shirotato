@@ -26,7 +26,7 @@ public class ShopItemListControl : MonoBehaviour
     public void RenewItemInfo()
     {
         // 상점 아이템 리스트가 갱신 됐다면
-        if (ItemManager.Instance.GetIsRenewItem() && !isRenewItemInfo)
+        if (ItemManager.Instance.GetIsRenewItem())
         {
             // 각 슬롯에 아이템 정보를 기록한다.
             for (int i = 0; i < 4; i++)
@@ -37,11 +37,11 @@ public class ShopItemListControl : MonoBehaviour
                 if (currentThing.TryGetComponent<ItemInfo>(out ItemInfo itemInfo))
                 {
                     // 아이템 등급 이미지 변경
-                    itemList[i].transform.GetChild(0).GetComponent<Image>().color =
+                    itemList[i].transform.GetChild(1).GetChild(0).GetComponent<Image>().color =
                     currentThing.transform.GetChild(0).GetComponent<SpriteRenderer>().color;
 
                     // 아이템 이미지 변경
-                    itemList[i].transform.GetChild(1).GetComponent<Image>().sprite =
+                    itemList[i].transform.GetChild(1).GetChild(1).GetComponent<Image>().sprite =
                         currentThing.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite;
                     // 아이템 이름 변경
                     itemList[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
@@ -54,10 +54,10 @@ public class ShopItemListControl : MonoBehaviour
                 {
                     WeaponInfo weaponInfo = ItemManager.Instance.GetShopWeaponInfoList()[i];
                     // 무기 등급 이미지 변경
-                    itemList[i].transform.GetChild(0).GetComponent<Image>().color =
+                    itemList[i].transform.GetChild(1).GetChild(0).GetComponent<Image>().color =
                         DecideGradeColor(weaponInfo.GetWeaponGrade());
                     // 무기 이미지 변경
-                    itemList[i].transform.GetChild(1).GetComponent<Image>().sprite =
+                    itemList[i].transform.GetChild(1).GetChild(1).GetComponent<Image>().sprite =
                         currentThing.GetComponent<SpriteRenderer>().sprite;
                     // 이름 텍스트 변경
                     itemList[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
@@ -92,7 +92,7 @@ public class ShopItemListControl : MonoBehaviour
         // 무기 특이사항 수정
         if (weaponInfo.weaponName == "Revolver")
         {
-            float reloadingCoolDown = Mathf.FloorToInt(coolDown * 5f * 100) / 100;
+            float reloadingCoolDown = Mathf.FloorToInt(coolDown * 5f * 100) / 100f;
             specialNote = "6발 사격 후 " + reloadingCoolDown + "초 간 재장전";
         }
 

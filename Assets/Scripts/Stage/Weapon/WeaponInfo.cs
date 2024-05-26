@@ -52,7 +52,7 @@ public class WeaponInfo
         {
             // Ranged Weapon
             case "Pistol":
-                this.weaponName = weaponName;
+                this.weaponName = "±ÇÃÑ";
                 this.weaponNumber = weaponNumber;
                 this.grade = 0;
 
@@ -68,7 +68,7 @@ public class WeaponInfo
                 this.price = 10;
                 break;
             case "Revolver":
-                this.weaponName = weaponName;
+                this.weaponName = "¸®º¼¹ö";
                 this.weaponNumber = weaponNumber;
                 this.grade = 0;
 
@@ -85,7 +85,7 @@ public class WeaponInfo
                 this.price = 20;
                 break;
             case "SMG":
-                this.weaponName = weaponName;
+                this.weaponName = "SMG";
                 this.weaponNumber = weaponNumber;
                 this.grade = 0;
                 this.damage = 3;
@@ -98,7 +98,7 @@ public class WeaponInfo
                 break;
 
             case "Shotgun":
-                this.weaponName = weaponName;
+                this.weaponName = "»êÅºÃÑ";
                 this.weaponNumber = weaponNumber;
                 this.grade = 0;
 
@@ -117,7 +117,7 @@ public class WeaponInfo
                 break;
 
             case "Bow":
-                this.weaponName = weaponName;
+                this.weaponName = "È°";
                 this.weaponNumber = weaponNumber;
                 this.grade = 0;
 
@@ -138,7 +138,7 @@ public class WeaponInfo
 
             // Melee Weapon
             case "Nekohand":
-                this.weaponName = weaponName;
+                this.weaponName = "°í¾çÀÌ¼Õ";
                 this.weaponNumber = weaponNumber;
                 this.grade = 0;
 
@@ -153,7 +153,7 @@ public class WeaponInfo
                 break;
 
             case "Hammer":
-                this.weaponName = weaponName;
+                this.weaponName = "¸ÁÄ¡";
                 this.weaponNumber = weaponNumber;
                 this.grade = 0;
 

@@ -19,7 +19,7 @@ public class RevolverControl : MonoBehaviour, IRangedWeaponControl
     private int bulletCount = 6;
     void Start()
     {
-        shootSound.volume = 0.1f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.effectVolume;
+        shootSound.volume = 0.05f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.effectVolume;
         weaponNumber = this.GetComponent<StoredWeaponNumber>().GetWeaponNumber();
         weaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[weaponNumber];
     }

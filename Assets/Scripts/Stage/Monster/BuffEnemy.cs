@@ -6,12 +6,11 @@ public class BuffEnemy : MonoBehaviour
 {
     void Start()
     {
-        
+        StartCoroutine(Action());
     }
 
     void Update()
     {
-        StartCoroutine(Action());
     }
 
     IEnumerator Action()
@@ -20,11 +19,10 @@ public class BuffEnemy : MonoBehaviour
     }
 
     IEnumerator BuffToEnemy()
-    {
-        yield return new WaitForSeconds(3.5f);
-
+    { 
         while (true)
         {
+            yield return new WaitForSeconds(3.0f);
             // 현재 생존한 몬스터 목록을 불러온다
             List<GameObject> monsters = SpawnManager.Instance.GetCurrentMonsters();
             int count = monsters.Count;
@@ -36,7 +34,7 @@ public class BuffEnemy : MonoBehaviour
             // 랜덤한 몬스터를 선택한다
             int ranNum = Random.Range(0, count);
             // 선택된 몬스터가 일반 몹이 아니라면 다시 선택
-            if (monsters[ranNum].GetComponent<MonsterInfo>().type != "General")
+            if (monsters[ranNum].GetComponent<MonsterInfo>().type == "Boss")
                 continue;
             // 선택된 몬스터가 버프된 상태라면 다시 선택
             if (monsters[ranNum].GetComponent<MonsterInfo>().isBuffed)
@@ -55,9 +53,6 @@ public class BuffEnemy : MonoBehaviour
             // 테두리에 붉은 색을 띄우게 한다
             SpriteOutline spriteOutline = monsters[ranNum].GetComponent<SpriteOutline>();
             spriteOutline.outlineSize = 8;
-
-            // 버프를 성공적으로 부여했다면 루프 탈출
-            break;
         }
 
         yield return null;

@@ -30,6 +30,7 @@ public class BgmVolumeControl : MonoBehaviour
         value = Mathf.Round(value * 100) / 100;
 
         ConfigManager.Instance.bgmVolume = value;
+        ConfigManager.Instance.isBgmVolumeChanged = true;
         bgmPercentage.text = (value * 100).ToString() + "%";
     }
 }

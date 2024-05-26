@@ -47,6 +47,12 @@ public class WaffleControl : MonoBehaviour
         if (collision.gameObject == GameObject.FindGameObjectWithTag("Player")
             && !GameRoot.Instance.GetIsRoundClear())
         {
+            // 특성이 행운냥이라면
+            if (RoundSetting.Instance.GetIndividuality() == "행운냥이")
+            {
+                ActivateLuckyIndividuality();
+            }
+
             // 보유 와플 개수 + 1
             PlayerInfo.Instance.SetCurrentWaffle(++currentWaffle);
             // RareItem29 보유 시 확률에 따라 추가 와플 획득
@@ -61,6 +67,8 @@ public class WaffleControl : MonoBehaviour
             {
                 PlayerInfo.Instance.SetCurrentWaffle(++currentWaffle);
                 PlayerInfo.Instance.SetStoredWaffle(--storedWaffle);
+
+                FloatAdditionalWaffleImage();
 
                 RenewWaffleAmount.Instance.renewStoredWaffleAmount = RenewWaffleAmount.Instance.RenewStoredWaffleAmount();
             }
@@ -117,7 +125,7 @@ public class WaffleControl : MonoBehaviour
                 monsterInfo.SetMonsterHP(monsterInfo.GetMonsterHP() - damage);
 
                 // 텍스트 출력
-                PrintText(monsterInfo.transform, damage, Color.white);
+                PrintText(monsterInfo.transform, damage, Color.cyan);
             }
         }
     }
@@ -161,6 +169,8 @@ public class WaffleControl : MonoBehaviour
         // RareItem29 보유 시, 와플 획득 시 확률에 따라 2배로 획득
         if (random < 5f * ItemManager.Instance.GetOwnRareItemList()[29])
         {
+            // 보너스 와플 획득 이미지 출력
+            FloatAdditionalWaffleImage();
             PlayerInfo.Instance.SetCurrentWaffle(++currentWaffle);
         }
     }
@@ -171,6 +181,30 @@ public class WaffleControl : MonoBehaviour
         if (ItemManager.Instance.GetOwnLegendItemList()[27] > 0)
         {
             isAttractImmediatly = true;
+        }
+    }
+
+    // 행운냥이 특성 발동
+    private void ActivateLuckyIndividuality()
+    {
+        float random = Random.Range(0f, 100f);
+
+        // 75% 확률로 랜덤 적에게 행운의 25% 피해
+        if (random < 75f)
+        {
+            // 대미지 계산
+            int damage = Mathf.FloorToInt(RealtimeInfoManager.Instance.GetLuck() * 0.25f);
+            if (damage <= 0)
+                damage = 1;
+
+            // 현재 스폰된 적 중에서 하나를 골라 대미지를 입힌다
+            int ran = Random.Range(0, SpawnManager.Instance.GetCurrentMonsters().Count);
+            MonsterControl monsterControl = SpawnManager.Instance.GetCurrentMonsters()[ran].GetComponent<MonsterControl>();
+
+            monsterControl.SetMonsterCurrentHP(monsterControl.GetMonsterCurrentHP() - damage);
+
+            // 텍스트 출력
+            PrintText(monsterControl.transform, damage, Color.cyan);
         }
     }
 
@@ -202,6 +236,16 @@ public class WaffleControl : MonoBehaviour
             this.transform.position =
                 Vector2.Lerp(this.transform.position, playerPos, 0.02f);
         }
+    }
+
+    void FloatAdditionalWaffleImage()
+    {
+        // 보너스 와플 이미지 출력
+        GameObject additWaffleImage = Resources.Load<GameObject>("Prefabs/Drops/AdditionalWaffle");
+
+        GameObject copy = Instantiate(additWaffleImage);
+        //Vector3 randomPos = new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(0.2f, 0.4f), 0f);
+        copy.transform.position = this.gameObject.transform.position;
     }
 
     void PrintHealingText(Transform transform, int num)

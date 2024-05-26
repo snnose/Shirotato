@@ -235,7 +235,7 @@ public class ShopWeaponDetailUI : MonoBehaviour
         // 무기 특이사항 수정
         if (weaponInfo.weaponName == "Revolver")
         {
-            specialNote = "6발 사격 후 " + Mathf.FloorToInt(coolDown * 5f * 100) / 100 + "초 간 재장전";
+            specialNote = "6발 사격 후 " + Mathf.FloorToInt(coolDown * 5f * 100) / 100f + "초 간 재장전";
         }
 
         weaponStatusText.text = "대미지 : " + damage + " (+" + damageCoeff + "%)\n" +

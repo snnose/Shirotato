@@ -136,8 +136,7 @@ public class UpgradeButton : MonoBehaviour, IPointerEnterHandler
                                                 5 * (1 + rarity) * individualityManager.GetLuckCoeff());
                 break;
             case 12:
-                PlayerInfo.Instance.SetHarvest(PlayerInfo.Instance.GetHarvest() + 5 + 
-                                                (3 * rarity) * individualityManager.GetHarvestCoeff());
+                PlayerInfo.Instance.SetHarvest(PlayerInfo.Instance.GetHarvest() + (5 + (3 * rarity)) * individualityManager.GetHarvestCoeff());
                 break;
             default:
                 break;

@@ -61,7 +61,7 @@ public class ShopItemListControl : MonoBehaviour
                         currentThing.GetComponent<SpriteRenderer>().sprite;
                     // 이름 텍스트 변경
                     itemList[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
-                        TranslateWeaponName(weaponInfo.weaponName);
+                       weaponInfo.weaponName;
 
                     SetWeaponInfoText(i);
                 }
@@ -90,7 +90,7 @@ public class ShopItemListControl : MonoBehaviour
         string specialNote = weaponInfo.GetSpecialNote();
 
         // 무기 특이사항 수정
-        if (weaponInfo.weaponName == "Revolver")
+        if (weaponInfo.weaponName == "리볼버")
         {
             float reloadingCoolDown = Mathf.FloorToInt(coolDown * 5f * 100) / 100f;
             specialNote = "6발 사격 후 " + reloadingCoolDown + "초 간 재장전";
@@ -386,6 +386,7 @@ public class ShopItemListControl : MonoBehaviour
         return color;
     }
 
+    /*
     private string TranslateWeaponName(string weaponName)
     {
         string tmp = "";
@@ -421,6 +422,7 @@ public class ShopItemListControl : MonoBehaviour
 
         return tmp;
     }
+    */
 
     public void SetItemListActive()
     {

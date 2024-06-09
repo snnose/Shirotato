@@ -40,13 +40,16 @@ public class RealtimeStatusControl : MonoBehaviour
             RealtimeInfoManager.Instance.GetATKSpeed().ToString();
         // 치명타 확률
         statInfo.transform.GetChild(6).GetChild(2).GetComponent<TextMeshProUGUI>().text =
-            RealtimeInfoManager.Instance.GetCritical().ToString();
+            Mathf.FloorToInt(RealtimeInfoManager.Instance.GetCritical()).ToString();
         // 범위
         statInfo.transform.GetChild(7).GetChild(2).GetComponent<TextMeshProUGUI>().text =
             RealtimeInfoManager.Instance.GetRange().ToString();
         // 회피 확률
+        int evade = RealtimeInfoManager.Instance.GetEvasion();
+        if (evade >= 60)
+            evade = 60;
         statInfo.transform.GetChild(8).GetChild(2).GetComponent<TextMeshProUGUI>().text =
-            RealtimeInfoManager.Instance.GetEvasion().ToString();
+            evade.ToString();
         // 방어력
         statInfo.transform.GetChild(9).GetChild(2).GetComponent<TextMeshProUGUI>().text =
             RealtimeInfoManager.Instance.GetArmor().ToString();
@@ -55,7 +58,7 @@ public class RealtimeStatusControl : MonoBehaviour
             RealtimeInfoManager.Instance.GetMovementSpeedPercent().ToString();
         // 행운
         statInfo.transform.GetChild(11).GetChild(2).GetComponent<TextMeshProUGUI>().text =
-            RealtimeInfoManager.Instance.GetLuck().ToString();
+            Mathf.FloorToInt(RealtimeInfoManager.Instance.GetLuck()).ToString();
         // 수확
         statInfo.transform.GetChild(12).GetChild(2).GetComponent<TextMeshProUGUI>().text =
             RealtimeInfoManager.Instance.GetHarvest().ToString();

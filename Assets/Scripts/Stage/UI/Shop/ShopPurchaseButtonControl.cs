@@ -100,6 +100,8 @@ public class ShopPurchaseButtonControl : MonoBehaviour, IPointerEnterHandler
             if (currentWaffle >= price)
             {
                 // 특정 스탯에 비례해서 스탯이 오르는 아이템들 처리
+                // EpicItem25 비활성화
+                PlayerInfo.Instance.InActivateEpicItem25();
                 // EpicItem29 비활성화
                 PlayerInfo.Instance.InActivateEpicItem29();
                 // LegendItem16 비활성화

@@ -18,6 +18,9 @@ public class BgmManager : MonoBehaviour
     }
 
     public AudioSource pale;
+    public AudioSource flowerThief;
+    public AudioSource question;
+    public AudioSource astronautSong;
 
     private void Awake()
     {
@@ -30,7 +33,7 @@ public class BgmManager : MonoBehaviour
 
         if (!pale.isPlaying)
         {
-            pale.Play();
+            StartCoroutine(PlayPale());
         }
     }
 
@@ -46,6 +49,49 @@ public class BgmManager : MonoBehaviour
             ConfigManager.Instance.isMasterVolumeChanged)
         {
             pale.volume = 0.1f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.bgmVolume;
+            flowerThief.volume = 0.1f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.bgmVolume;
+            question.volume = 0.1f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.bgmVolume;
+            astronautSong.volume = 0.1f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.bgmVolume;
         }
+    }
+
+    public IEnumerator PlayPale()
+    {
+        pale.Play();
+        float length = pale.clip.length;
+        
+        yield return new WaitForSecondsRealtime(length);
+
+        StartCoroutine(PlayFlowerThief());
+    }
+
+    public IEnumerator PlayFlowerThief()
+    {
+        flowerThief.Play();
+        float length = flowerThief.clip.length;
+
+        yield return new WaitForSecondsRealtime(length);
+
+        StartCoroutine(PlayQuestion());
+    }
+
+    public IEnumerator PlayQuestion()
+    {
+        question.Play();
+        float length = question.clip.length;
+
+        yield return new WaitForSecondsRealtime(length);
+
+        StartCoroutine(PlayAstronaut());
+    }
+
+    public IEnumerator PlayAstronaut()
+    {
+        astronautSong.Play();
+        float length = astronautSong.clip.length;
+
+        yield return new WaitForSecondsRealtime(length);
+
+        StartCoroutine(PlayPale());
     }
 }

@@ -259,12 +259,13 @@ public class BulletControl : MonoBehaviour
             float random = Random.Range(0f, 100f);
             if (random < 33f * count)
             {
-                int waffleDropCount = monsterInfo.GetWaffleDropCount();
-                monsterInfo.SetMonsterWaffleDropCount(waffleDropCount + 1);
+                int waffleDropCount = monsterInfo.GetWaffleDropCount() + 1;
+                monsterInfo.SetMonsterWaffleDropCount(waffleDropCount);
             }
         }
     }
 
+    // 엘리트, 보스 몹 공격 시 25% 추가 대미지
     float ActivateEpicItem32(float damage, MonsterInfo monsterInfo)
     {
         float tmp = damage;
@@ -272,7 +273,9 @@ public class BulletControl : MonoBehaviour
 
         if (count > 0)
         {
-            tmp = Mathf.FloorToInt(damage * 1.25f * count);
+            // 일반 몹이 아닐 경우
+            if (monsterInfo.type != "General")
+                tmp = Mathf.FloorToInt(damage * 1.25f * count);
         }
 
         return tmp;
@@ -288,7 +291,10 @@ public class BulletControl : MonoBehaviour
             float monsterCurrentHP = monsterControl.GetMonsterCurrentHP();
 
             // 몬스터 타입에 따라 추가 대미지가 변동되도록 조정해야함
-            tmp += 0.1f * monsterCurrentHP;
+            if (monsterControl.gameObject.GetComponent<MonsterInfo>().type != "Boss")
+                tmp += 0.1f * monsterCurrentHP;
+            else
+                tmp += 0.01f * monsterCurrentHP;
         }
 
         return tmp;

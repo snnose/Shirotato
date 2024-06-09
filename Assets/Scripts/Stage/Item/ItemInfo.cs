@@ -55,6 +55,7 @@ public class ItemInfo : MonoBehaviour
 
         this.HP = item.GetComponent<ItemInfo>().HP;
         this.Recovery = item.GetComponent<ItemInfo>().Recovery;
+        this.HPDrain = item.GetComponent<ItemInfo>().HPDrain;
         this.Armor = item.GetComponent<ItemInfo>().Armor;
         this.Evasion = item.GetComponent<ItemInfo>().Evasion;
 

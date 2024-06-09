@@ -48,6 +48,11 @@ public class HealEnemy : MonoBehaviour
                 monsterControl.SetMonsterCurrentHP(monsterControl.GetMonsterCurrentHP() + healingAmount);
 
                 // Èú¸µ ÀÌÆåÆ®¸¦ È­¸é¿¡ ¶ç¿î´Ù
+                GameObject healEffect = Resources.Load<GameObject>("Prefabs/Effect/ÈúÀÌÆåÆ®");
+                GameObject copy = Instantiate(healEffect);
+
+                copy.transform.parent = monsters[i].transform;
+                copy.transform.localPosition = new Vector3(0f, 0f, -1);
             }
         }
 

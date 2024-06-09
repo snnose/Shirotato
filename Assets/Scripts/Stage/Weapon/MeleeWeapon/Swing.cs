@@ -8,7 +8,7 @@ public class Swing : MonoBehaviour
     {
         Quaternion initRotation = this.transform.localRotation;
         Vector3 initPosition = this.transform.localPosition;
-        float waitSeconds = 0.01f;
+        float waitSeconds = 0.005f;
 
         float playerRotationY = this.transform.parent.rotation.y;
 
@@ -26,9 +26,9 @@ public class Swing : MonoBehaviour
             attackStartPosition = DegToVec2(rotateZ + 90f, range);
 
             // 무기가 공격 시작 위치로 이동하면서 천천히 회전한다
-            for (int i = 0; i < frame / 12; i++)
+            for (int i = 0; i < frame / 6; i++)
             {
-                rotateZ += 90f / (frame / 12f);
+                rotateZ += 90f / (frame / 6f);
 
                 this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, attackStartPosition, moveSpeed);
                 this.transform.localRotation = Quaternion.Euler(0f, initRotation.y, rotateZ);
@@ -37,9 +37,9 @@ public class Swing : MonoBehaviour
             }
 
             // 공격 시작 위치로 이동했다면 반대 방향으로 반원을 그리면서 회전한다
-            for (int i = 0; i < frame / 6; i++)
+            for (int i = 0; i < frame / 3; i++)
             {
-                rotateZ -= 180f / (frame / 6f);
+                rotateZ -= 180f / (frame / 3f);
 
                 this.transform.localPosition = Vector2.Lerp(this.transform.localPosition, DegToVec2(rotateZ, range), moveSpeed);
                 this.transform.localRotation = Quaternion.Euler(0f, initRotation.y, rotateZ);

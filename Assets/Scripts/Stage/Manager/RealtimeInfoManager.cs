@@ -71,12 +71,17 @@ public class RealtimeInfoManager : MonoBehaviour
         currentHP = HP;
         startAllCoroutine = StartCoroutine(StartAllCoroutine());
         StartCoroutine(Bleeding());
+        // 불굴 특성을 선택했다면 특성 효과 발동
+        if (RoundSetting.Instance.GetIndividuality() == "불굴")
+            StartCoroutine(Indomitability());
+
         StartCoroutine(ActivateEpicItem36());
         StartCoroutine(ActivateLegendItem24());
         activateLegendItem25 = ActivateLegendItem25();
 
         // test
         //ATKSpeed = 200f;
+        //Critical = 100f;
     }
 
     // Update is called once per frame
@@ -107,6 +112,10 @@ public class RealtimeInfoManager : MonoBehaviour
             // 회복 및 출혈 코루틴 종료
             StopCoroutine(HPRecovery());
             StopCoroutine(Bleeding());
+            // 특성 코루틴 종료
+            if (RoundSetting.Instance.GetIndividuality() == "불굴")
+                StopCoroutine(Indomitability());
+
             // 아이템 효과 코루틴 종료
             StopCoroutine(ActivateEpicItem36());
             StopCoroutine(ActivateLegendItem24());
@@ -184,6 +193,16 @@ public class RealtimeInfoManager : MonoBehaviour
                 this.currentHP = 0;
         }
         yield return null;
+    }
+
+    // 불굴 특성 발동
+    public IEnumerator Indomitability()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            this.DMGPercent += 3f;
+        }
     }
 
     // EpicItem23 보유 시 효과 발동
@@ -292,6 +311,7 @@ public class RealtimeInfoManager : MonoBehaviour
 
         this.HP = playerInfo.GetHP();
         this.Recovery = playerInfo.GetRecovery();
+        this.HPDrain = playerInfo.GetHPDrain();
         this.Armor = playerInfo.GetArmor();
         this.Evasion = playerInfo.GetEvasion();
 

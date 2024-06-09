@@ -280,13 +280,13 @@ public class MeleeWeaponControl : MonoBehaviour, IMeleeWeaponControl
             float random = Random.Range(0f, 100f);
             if (random < 33f * count)
             {
-                int waffleDropCount = monsterInfo.GetWaffleDropCount();
+                int waffleDropCount = monsterInfo.GetWaffleDropCount() + 1;
                 monsterInfo.SetMonsterWaffleDropCount(waffleDropCount);
             }
         }
     }
 
-    // 적이 엘리트, 보스일 시 대미지 25% 증가
+    // 엘리트, 보스 몹 공격 시 25% 추가 대미지
     float ActivateEpicItem32(float damage, MonsterInfo monsterInfo)
     {
         float tmp = damage;
@@ -294,7 +294,9 @@ public class MeleeWeaponControl : MonoBehaviour, IMeleeWeaponControl
 
         if (count > 0)
         {
-            tmp = Mathf.FloorToInt(damage * 1.25f * count);
+            // 일반 몹이 아닐 경우
+            if (monsterInfo.type != "General")
+                tmp = Mathf.FloorToInt(damage * 1.25f * count);
         }
 
         return tmp;
@@ -310,7 +312,10 @@ public class MeleeWeaponControl : MonoBehaviour, IMeleeWeaponControl
             float monsterCurrentHP = monsterControl.GetMonsterCurrentHP();
 
             // 몬스터 타입에 따라 추가 대미지가 변동되도록 조정해야함
-            tmp += 0.1f * monsterCurrentHP;
+            if (monsterControl.gameObject.GetComponent<MonsterInfo>().type != "Boss")
+                tmp += 0.1f * monsterCurrentHP;
+            else
+                tmp += 0.01f * monsterCurrentHP;
         }
 
         return tmp;
@@ -334,5 +339,10 @@ public class MeleeWeaponControl : MonoBehaviour, IMeleeWeaponControl
         GameObject copy = Instantiate(textObject);
         Vector3 randomPos = new Vector3(Random.Range(-0.4f, 0.4f), Random.Range(0.4f, 0.6f), 0f);
         copy.transform.position = position + randomPos;
+    }
+
+    public bool GetIsAttackPossible()
+    {
+        return this.isAttackPossible;
     }
 }

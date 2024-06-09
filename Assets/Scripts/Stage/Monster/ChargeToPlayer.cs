@@ -8,6 +8,7 @@ public class ChargeToPlayer : MonoBehaviour
     ChasePlayer chasePlayer;
 
     bool isCoolDown = true;
+    float initMass;
 
     IEnumerator charging;  
 
@@ -15,6 +16,7 @@ public class ChargeToPlayer : MonoBehaviour
     {
         chasePlayer = this.GetComponent<ChasePlayer>();
         monsterRb2D = this.GetComponent<Rigidbody2D>();
+        initMass = this.monsterRb2D.mass;
         // 스폰 시 돌진은 쿨타임
         StartCoroutine(CoolDown());
     }
@@ -54,7 +56,7 @@ public class ChargeToPlayer : MonoBehaviour
             // 플레이어 추격을 멈춘다
             chasePlayer.StopChasing();
             monsterRb2D.velocity = new Vector2(0, 0);
-            // 0.5초 동안 서서히 빨개지면서 대기한 후 시전한다
+            // 0.4초 동안 서서히 빨개지면서 대기한 후 시전한다
             // 돌진 시전 중에는 넉백되지 않는다.
             yield return StartCoroutine(WaitToCharge());
 
@@ -66,7 +68,7 @@ public class ChargeToPlayer : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
 
             this.GetComponent<Collider2D>().isTrigger = false;
-            this.GetComponent<Rigidbody2D>().mass = 1;
+            this.GetComponent<Rigidbody2D>().mass = initMass;
 
             chasePlayer.StartChasing();
 
@@ -87,7 +89,7 @@ public class ChargeToPlayer : MonoBehaviour
         Color color = this.GetComponent<SpriteRenderer>().color;
         Color originColor = color;
 
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < 40; i++)
         {
             color.g = 1f - (i * 0.015f);
             color.b = 1f - (i * 0.015f);

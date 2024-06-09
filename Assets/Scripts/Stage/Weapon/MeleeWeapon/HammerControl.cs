@@ -102,7 +102,10 @@ public class HammerControl : MonoBehaviour, IMeleeWeaponControl
             }
 
             // 입힌 대미지 출력
-            PrintText(hitedMonster.transform.position, finalDamage, Color.white);
+            if (isCritical)
+                PrintText(hitedMonster.transform.position, finalDamage, Color.yellow);
+            else
+                PrintText(hitedMonster.transform.position, finalDamage, Color.white);
 
             // 넉백 적용
             Rigidbody2D hitedMonsterRb2D = hitedMonster.GetComponent<Rigidbody2D>();
@@ -134,7 +137,7 @@ public class HammerControl : MonoBehaviour, IMeleeWeaponControl
         // 가까운 몬스터에게 휘두른다
         Vector2 direction = closetMonster.transform.position - this.transform.position;
         yield return StartCoroutine(this.GetComponent<Swing>().
-                        SwingMovement(direction.normalized, weaponInfo.range * 0.6f, Mathf.FloorToInt(this.coolDown * 60f)));
+                        SwingMovement(direction.normalized, weaponInfo.range * 0.7f, Mathf.FloorToInt(this.coolDown * 60f)));
         // 공격 판정 off
         isAttackPossible = false;
 
@@ -279,13 +282,13 @@ public class HammerControl : MonoBehaviour, IMeleeWeaponControl
             float random = Random.Range(0f, 100f);
             if (random < 33f * count)
             {
-                int waffleDropCount = monsterInfo.GetWaffleDropCount();
+                int waffleDropCount = monsterInfo.GetWaffleDropCount() + 1;
                 monsterInfo.SetMonsterWaffleDropCount(waffleDropCount);
             }
         }
     }
 
-    // 적이 엘리트, 보스일 시 대미지 25% 증가
+    // 엘리트, 보스 몹 공격 시 25% 추가 대미지
     float ActivateEpicItem32(float damage, MonsterInfo monsterInfo)
     {
         float tmp = damage;
@@ -293,7 +296,9 @@ public class HammerControl : MonoBehaviour, IMeleeWeaponControl
 
         if (count > 0)
         {
-            tmp = Mathf.FloorToInt(damage * 1.25f * count);
+            // 일반 몹이 아닐 경우
+            if (monsterInfo.type != "General")
+                tmp = Mathf.FloorToInt(damage * 1.25f * count);
         }
 
         return tmp;
@@ -309,7 +314,10 @@ public class HammerControl : MonoBehaviour, IMeleeWeaponControl
             float monsterCurrentHP = monsterControl.GetMonsterCurrentHP();
 
             // 몬스터 타입에 따라 추가 대미지가 변동되도록 조정해야함
-            tmp += 0.1f * monsterCurrentHP;
+            if (monsterControl.gameObject.GetComponent<MonsterInfo>().type != "Boss")
+                tmp += 0.1f * monsterCurrentHP;
+            else
+                tmp += 0.01f * monsterCurrentHP;
         }
 
         return tmp;
@@ -333,5 +341,10 @@ public class HammerControl : MonoBehaviour, IMeleeWeaponControl
         GameObject copy = Instantiate(textObject);
         Vector3 randomPos = new Vector3(Random.Range(-0.4f, 0.4f), Random.Range(0.4f, 0.6f), 0f);
         copy.transform.position = position + randomPos;
+    }
+
+    public bool GetIsAttackPossible()
+    {
+        return this.isAttackPossible;
     }
 }

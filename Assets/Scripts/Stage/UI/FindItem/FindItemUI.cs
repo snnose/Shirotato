@@ -23,8 +23,8 @@ public class FindItemUI : MonoBehaviour
 
     private void Awake()
     {
-        itemGrade = this.gameObject.transform.GetChild(1).GetChild(0).GetComponent<Image>();
-        itemImage = this.gameObject.transform.GetChild(1).GetChild(1).GetComponent<Image>();
+        itemGrade = this.gameObject.transform.GetChild(1).GetChild(1).GetChild(0).GetComponent<Image>();
+        itemImage = this.gameObject.transform.GetChild(1).GetChild(1).GetChild(1).GetComponent<Image>();
         itemName = this.gameObject.transform.GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>();
         itemStatus = this.gameObject.transform.GetChild(1).GetChild(3).GetComponent<TextMeshProUGUI>();
         useButton = this.gameObject.transform.GetChild(1).GetChild(4).GetComponent<Button>();
@@ -78,6 +78,8 @@ public class FindItemUI : MonoBehaviour
         ButtonSoundManager.Instance.PlayOnClickButtonSound1();
 
         // 특정 스탯에 비례해서 스탯이 오르는 아이템들 처리
+        // EpicItem25 비활성화
+        PlayerInfo.Instance.InActivateEpicItem25();
         // EpicItem29 비활성화
         PlayerInfo.Instance.InActivateEpicItem29();
         // LegendItem16 비활성화
@@ -96,6 +98,8 @@ public class FindItemUI : MonoBehaviour
 
 
         // 특정 스탯에 비례해서 스탯이 오르는 아이템들 처리
+        // EpicItem25 활성화
+        PlayerInfo.Instance.ActivateEpicItem25();
         // EpicItem29 활성화
         PlayerInfo.Instance.ActivateEpicItem29();
         // LegendItem16 활성화
@@ -208,13 +212,9 @@ public class FindItemUI : MonoBehaviour
         {
             case 0:
                 ++ItemManager.Instance.GetOwnNormalItemList()[item.GetComponent<ItemInfo>().itemNumber];
-                Debug.Log("Normal " + item.GetComponent<ItemInfo>().itemNumber + "번, "
-                            + ItemManager.Instance.GetOwnNormalItemList()[item.GetComponent<ItemInfo>().itemNumber]);
                 break;
             case 1:
                 ++ItemManager.Instance.GetOwnRareItemList()[item.GetComponent<ItemInfo>().itemNumber];
-                Debug.Log("Rare " + item.GetComponent<ItemInfo>().itemNumber + "번, "
-                            + ItemManager.Instance.GetOwnRareItemList()[item.GetComponent<ItemInfo>().itemNumber]);
                 // 특정 아이템 획득 시 작동
                 // RareItem28 획득 시 구매 시점의 상점 초기화 비용을 0원으로 변경
                 if (item.GetComponent<ItemInfo>().itemNumber == 28)
@@ -227,8 +227,6 @@ public class FindItemUI : MonoBehaviour
                 break;
             case 2:
                 ++ItemManager.Instance.GetOwnEpicItemList()[item.GetComponent<ItemInfo>().itemNumber];
-                Debug.Log("Epic " + item.GetComponent<ItemInfo>().itemNumber + "번, "
-                            + ItemManager.Instance.GetOwnEpicItemList()[item.GetComponent<ItemInfo>().itemNumber]);
 
                 // 특정 아이템 획득 시 작동
                 // EpicItem26 획득 시 구매 시점의 최대 체력 이상으로 체력이 상승하지 않음
@@ -240,9 +238,6 @@ public class FindItemUI : MonoBehaviour
                 break;
             case 3:
                 ++ItemManager.Instance.GetOwnLegendItemList()[item.GetComponent<ItemInfo>().itemNumber];
-                Debug.Log("Legend " + item.GetComponent<ItemInfo>().itemNumber + "번, "
-                            + ItemManager.Instance.GetOwnLegendItemList()[item.GetComponent<ItemInfo>().itemNumber]);
-
                 // 특정 아이템 획득시 작동
                 // LegendItem19 획득 시 해당 아이템 활성화 (각기 다른 무기 보유할 때마다 공격속도 -3%)
                 if (item.GetComponent<ItemInfo>().itemNumber == 19)
@@ -381,6 +376,8 @@ public class FindItemUI : MonoBehaviour
                     if (tmp == 27 && ItemManager.Instance.GetOwnRareItemList()[28] == 3)
                         isLimit = true;
                     if (tmp == 28 && ItemManager.Instance.GetOwnRareItemList()[29] == 20)
+                        isLimit = true;
+                    if (tmp == 29 && ItemManager.Instance.GetOwnRareItemList()[29] == 1)
                         isLimit = true;
                     if (tmp == 31 && ItemManager.Instance.GetOwnRareItemList()[32] == 1)
                         isLimit = true;
@@ -758,7 +755,7 @@ public class FindItemUI : MonoBehaviour
         // 보유하지 않았다면 원가의 25%를 얻는다
         int itemPrice = Mathf.FloorToInt(itemInfo.price + GameRoot.Instance.GetCurrentRound() +
                                         (itemInfo.price * GameRoot.Instance.GetCurrentRound() / 10));
-        int sellPrice = ActivateRareItem32(itemInfo.price);
+        int sellPrice = ActivateRareItem32(itemPrice);
 
         sellButtonText.text = "판매 (+" + sellPrice.ToString() +")";
     }

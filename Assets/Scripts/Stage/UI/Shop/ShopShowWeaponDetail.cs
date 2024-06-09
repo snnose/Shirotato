@@ -113,6 +113,7 @@ public class ShopShowWeaponDetail : MonoBehaviour, IPointerEnterHandler, IPointe
     {
         // WeaponInfo 스크립트를 참조
         WeaponInfo weaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[currentPointWeaponRoomNumber];
+        ShopWeaponDetailUI.Instance.SetGradeColor(DecideGradeColor(weaponInfo.GetWeaponGrade()));
         ShopWeaponDetailUI.Instance.SetWeaponImage(weapon.GetComponent<Image>());
         ShopWeaponDetailUI.Instance.SetWeaponNameText(weaponInfo);
         ShopWeaponDetailUI.Instance.SetWeaponStatusText(weaponInfo);
@@ -138,5 +139,37 @@ public class ShopShowWeaponDetail : MonoBehaviour, IPointerEnterHandler, IPointe
         // 아이템 슬롯 위치에 이동할 좌표값 만큼 더한 후 반환
         Vector2 tmp = new Vector2(this.gameObject.transform.position.x + x, this.gameObject.transform.position.y + y);
         return tmp;
+    }
+
+    // rank에 따라 랭크 색깔을 반환하는 함수 (흰, 파, 보, 주)
+    private Color DecideGradeColor(int grade)
+    {
+        Color color = Color.white;
+        switch (grade)
+        {
+            case 0:
+                color = Color.white;
+                break;
+            // 파랑색
+            case 1:
+                color = new Color(120, 166, 214);
+                ColorUtility.TryParseHtmlString("#78A6D6", out color);
+                break;
+            // 보라색
+            case 2:
+                color = new Color(161, 120, 214);
+                ColorUtility.TryParseHtmlString("#A178D6", out color);
+                break;
+            // 주황색
+            case 3:
+                color = new Color(233, 137, 76);
+                ColorUtility.TryParseHtmlString("#E9894C", out color);
+                break;
+            default:
+                color = Color.black;
+                break;
+        }
+
+        return color;
     }
 }

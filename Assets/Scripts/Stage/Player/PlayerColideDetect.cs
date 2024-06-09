@@ -68,7 +68,7 @@ public class PlayerColideDetect : MonoBehaviour
                 evadeNum = 60;
 
             // 난수 값이 회피 수치보다 낮게 나왔다면 회피 성공
-            if (random < evadeNum)
+            if (random < evadeNum && collision.TryGetComponent<MonsterInfo>(out MonsterInfo monsterInfo))
             {
                 // RareItem33 보유 시 아이템 효과 발동
                 // 회피 성공 시 반격 대미지를 입힌다
@@ -81,7 +81,7 @@ public class PlayerColideDetect : MonoBehaviour
             }
 
             // 충돌한 오브젝트가 몬스터이고, 회피 실패 시 대미지를 받는다.
-            if (collision.TryGetComponent<MonsterInfo>(out MonsterInfo monsterInfo)
+            if (collision.TryGetComponent<MonsterInfo>(out monsterInfo)
                 && !isEvade)
             {
                 // 받는 대미지를 계산 후 현재 체력을 차감한다
@@ -251,7 +251,7 @@ public class PlayerColideDetect : MonoBehaviour
 
         if (count > 0)
         {
-            float DMGPercent = RealtimeInfoManager.Instance.GetDMGPercent() - 2f;
+            float DMGPercent = RealtimeInfoManager.Instance.GetDMGPercent() - 2f * count ;
             RealtimeInfoManager.Instance.SetDMGPercent(DMGPercent);
         }
     }

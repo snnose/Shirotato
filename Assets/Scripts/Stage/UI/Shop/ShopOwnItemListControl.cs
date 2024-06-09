@@ -9,13 +9,14 @@ public class ShopOwnItemListControl : MonoBehaviour
 {
     private GameObject ownItemListContent;
     // Item1 = æ∆¿Ã≈€
-    public static List<(GameObject, int)> ownItemList = new();
+    private List<(GameObject, int)> ownItemList = new();
 
     public IEnumerator renewOwnItemList;
 
     private void Awake()
     {
         ownItemListContent = this.gameObject.transform.GetChild(1).GetChild(0).GetChild(0).gameObject;
+        ownItemList = ItemManager.Instance.ownItemList;
     }
 
     void Start()

@@ -23,7 +23,6 @@ public class SpawnManager : MonoBehaviour
     public GameObject[] bossMonsterPrefabs;
     private GameObject warningSign;
     private GameObject greenSign;
-    private GameObject copy;
 
     public List<GameObject> currentMonsters = new();
 
@@ -125,6 +124,8 @@ public class SpawnManager : MonoBehaviour
                 StartCoroutine(spawnSandwich);
 
                 // 테스트
+                //spawnTakoyaki = SpawnTakoyaki(1.0f, takoyakiSpawnInterval, 2);
+                //StartCoroutine(spawnTakoyaki);
                 //spawnSalmonSushi = SpawnSalmonSushi(1.0f, 999f, 1);
                 //StartCoroutine(spawnSalmonSushi);
 
@@ -606,6 +607,13 @@ public class SpawnManager : MonoBehaviour
                 StartCoroutine(spawnSeaweedroll);
                 StartCoroutine(spawnStrongDaepe);
                 StartCoroutine(spawnSpaghetti);
+
+                if (difficulty >= 2)
+                {
+                    eggSpawnInterval = ActivateItemRelatedSpawnInterval(8f);
+                    spawnEgg = SpawnEgg(20f, eggSpawnInterval, 2);
+                    StartCoroutine(spawnEgg);
+                }
                 break;
             case 20:
                 sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(3f);
@@ -614,14 +622,32 @@ public class SpawnManager : MonoBehaviour
                 saladSpawnInterval = ActivateItemRelatedSpawnInterval(10f);
                 daepeSpawnInterval = ActivateItemRelatedSpawnInterval(10f);
                 spaghettiSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
+                eggSpawnInterval = ActivateItemRelatedSpawnInterval(10f);
 
                 spawnSandwich = SpawnSandwich(1.0f, sandwichSpawnInterval, 10);
-                spawnYogurt = SpawnYogurt(15f, yogurtSpawnInterval, 4);
+                spawnYogurt = SpawnYogurt(10f, yogurtSpawnInterval, 6);
                 spawnWatermelon = SpawnWatermelon(25f, watermelonSpawnInterval, 3);
                 spawnSalad = SpawnSalad(20f, saladSpawnInterval, 1);
                 spawnDaepe = SpawnDaepe(45f, daepeSpawnInterval, 3);
                 spawnSpaghetti = SpawnSpaghetti(55f, spaghettiSpawnInterval, 3);
+                spawnEgg = SpawnEgg(15f, eggSpawnInterval, 3);
 
+                StartCoroutine(spawnSandwich);
+                StartCoroutine(spawnYogurt);
+                StartCoroutine(spawnWatermelon);
+                StartCoroutine(spawnSalad);
+                StartCoroutine(spawnDaepe);
+                StartCoroutine(spawnSpaghetti);
+                StartCoroutine(spawnEgg);
+
+                if (difficulty >= 2)
+                {
+                    frenchFriesSpawnInterval = ActivateItemRelatedSpawnInterval(7f);
+
+                    spawnFrenchFries = SpawnFrenchFries(30f, frenchFriesSpawnInterval, 2);
+
+                    StartCoroutine(spawnFrenchFries);
+                }
 
                 // 보스 스폰
                 spawnSalmonSushi = SpawnSalmonSushi(1.0f, 999f, 1);
@@ -917,7 +943,7 @@ public class SpawnManager : MonoBehaviour
             // Boss
             case "SalmonSushi":
                 monsterInfo.type = "Boss";
-                monsterInfo.SetMonsterHP(29250);
+                monsterInfo.SetMonsterHP(29250f);
                 monsterInfo.SetMonsterDamage(30f);
                 monsterInfo.SetMonsterMovementSpeed(4.2f);
                 monsterInfo.SetMonsterWaffleDropCount(0);
@@ -926,6 +952,39 @@ public class SpawnManager : MonoBehaviour
                 break;
             default:
                 break;
+        }
+
+        // 매우 어려움 이상 난이도라면
+        if (RoundSetting.Instance.GetDifficulty() >= 3)
+        {
+            // 확률적으로 몬스터 강화
+            EnhanceMonster(monsterInfo);
+        }
+    }
+
+    // 매우 어려움 이상 난이도 때 확률적으로 더 강한 몬스터 스폰
+    void EnhanceMonster(MonsterInfo monsterInfo)
+    {
+        float random = Random.Range(0f, 1f);
+
+        // 5% 확률로 강한 몬스터 스폰
+        if (random <= 0.05f && monsterInfo.type == "General")
+        {
+            // 체력, 와플 드랍 수, 드랍률 모두 2배, 대미지 1.3배
+            monsterInfo.SetMonsterHP(monsterInfo.GetMonsterHP() * 2);
+            monsterInfo.SetMonsterDamage(monsterInfo.damage * 1.3f);
+            monsterInfo.SetMonsterWaffleDropCount(monsterInfo.GetWaffleDropCount() * 2);
+            monsterInfo.SetMonsterConsumableDropRate(monsterInfo.GetMonsterConsumableDropRate() * 2);
+            monsterInfo.SetMonsterLootDropRate(monsterInfo.GetMonsterLootDropRate() * 2);
+            // 타입 Enhanced로 변경
+            monsterInfo.type = "enhanced";
+
+            // 강화 이펙트 칼 표시
+            GameObject enhance = Resources.Load<GameObject>("Prefabs/Effect/강화");
+            GameObject copy = Instantiate(enhance);
+
+            copy.transform.parent = monsterInfo.gameObject.transform;
+            copy.transform.localPosition = new Vector3(0, 1, -1);
         }
     }
 

@@ -28,6 +28,10 @@ public class IndividualityDetailControl : MonoBehaviour
 
         switch (individuality)
         {
+            case "0222":
+                advantage.Add("모든 스탯 +2");
+                advantage.Add("모든 스탯 +2");
+                break;
             case "명사수":
                 advantage.Add("치명타 확률 +10%");
                 advantage.Add("범위 +10%");
@@ -37,7 +41,7 @@ public class IndividualityDetailControl : MonoBehaviour
                 break;
             case "우다다다":
                 advantage.Add("공격속도 +100%");
-                advantage.Add("이동속도 +10%");
+                advantage.Add("이동속도 +15%");
                 advantage.Add("대미지 증감폭 1.5배");
 
                 disadvantage.Add("대미지 -40%");
@@ -46,15 +50,19 @@ public class IndividualityDetailControl : MonoBehaviour
             case "행운냥이":
                 advantage.Add("와플 획득 시 75% 확률로 랜덤 적에게 행운의 25% 피해");
                 advantage.Add("행운 +100");
-                advantage.Add("수확 +10");
+                advantage.Add("수확 +5");
                 advantage.Add("행운 증감폭 1.25배");
 
                 disadvantage.Add("공격속도 -60%");
                 disadvantage.Add("경험치 획득 -50%");
                 break;
-            case "0222":
-                advantage.Add("모든 스탯 +2");
-                advantage.Add("모든 스탯 +2");
+            case "불굴":
+                advantage.Add("라운드 중 매초 대미지가 3% 상승합니다");
+                advantage.Add("최대 체력 +15");
+                advantage.Add("회복력 +10");
+                advantage.Add("방어력 +5");
+
+                disadvantage.Add("대미지 -100%");
                 break;
             default:
                 break;

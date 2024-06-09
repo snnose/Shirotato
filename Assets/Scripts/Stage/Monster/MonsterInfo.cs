@@ -5,6 +5,7 @@ using UnityEngine;
 public class MonsterInfo : MonoBehaviour
 {
     public string type = "";
+    public string monsterName;
     public int monsterNumber;
 
     public float HP;

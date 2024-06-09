@@ -223,7 +223,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0361d7058a29e7f44bac59b75e1689f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 
+  type: General
+  monsterName: "\uC2A4\uD30C\uAC8C\uD2F0"
   monsterNumber: 0
   HP: 0
   damage: 0

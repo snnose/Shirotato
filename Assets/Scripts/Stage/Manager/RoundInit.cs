@@ -79,6 +79,10 @@ public class RoundInit : MonoBehaviour
 
         StartCoroutine(RealtimeInfoManager.Instance.ActivateEpicItem36());
         StartCoroutine(RealtimeInfoManager.Instance.ActivateLegendItem24());
+        if (RoundSetting.Instance.GetIndividuality() == "ºÒ±¼")
+        {
+            //StartCoroutine(RealtimeInfoManager.Instance.Indomitability());
+        }
         RealtimeInfoManager.Instance.startAllCoroutine = StartCoroutine(RealtimeInfoManager.Instance.StartAllCoroutine());
         RealtimeInfoManager.Instance.activateLegendItem25 = RealtimeInfoManager.Instance.ActivateLegendItem25();
 

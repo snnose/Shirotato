@@ -42,42 +42,17 @@ public class WeaponInfo
 
     public WeaponInfo(string weaponName)
     {
-        switch (weaponName)
-        {
-            case "Pistol":
-                this.weaponName = "권총";
-                break;
-            case "Revolver":
-                this.weaponName = "리볼버";
-                break;
-            case "SMG":
-                this.weaponName = "서브머신건";
-                break;
-            case "Shotgun":
-                this.weaponName = "산탄총";
-                break;
-            case "Bow":
-                this.weaponName = "활";
-                break;
-            case "Nekohand":
-                this.weaponName = "고양이손";
-                break;
-            case "Hammer":
-                this.weaponName = "망치";
-                break;
-            default:
-                break;
-        }
-        
+        this.weaponName = weaponName;   
         this.weaponNumber = -1;
     }
-
+    
+    // 시작 무기 착용 전용
     public WeaponInfo(string weaponName, int weaponNumber)
     {
         switch(weaponName)
         {
             // Ranged Weapon
-            case "Pistol":
+            case "권총":
                 this.weaponName = "권총";
                 this.weaponNumber = weaponNumber;
                 this.grade = 0;
@@ -93,7 +68,7 @@ public class WeaponInfo
 
                 this.price = 10;
                 break;
-            case "Revolver":
+            case "리볼버":
                 this.weaponName = "리볼버";
                 this.weaponNumber = weaponNumber;
                 this.grade = 0;
@@ -110,7 +85,7 @@ public class WeaponInfo
                 this.specialNote = "6발 사격 후 " + this.coolDown * 5f + "초 간 재장전";
                 this.price = 20;
                 break;
-            case "SMG":
+            case "서브머신건":
                 this.weaponName = "서브머신건";
                 this.weaponNumber = weaponNumber;
                 this.grade = 0;
@@ -123,7 +98,7 @@ public class WeaponInfo
                 this.price = 20;
                 break;
 
-            case "Shotgun":
+            case "산탄총":
                 this.weaponName = "산탄총";
                 this.weaponNumber = weaponNumber;
                 this.grade = 0;
@@ -142,7 +117,7 @@ public class WeaponInfo
                 this.price = 20;
                 break;
 
-            case "Bow":
+            case "활":
                 this.weaponName = "활";
                 this.weaponNumber = weaponNumber;
                 this.grade = 0;
@@ -162,8 +137,28 @@ public class WeaponInfo
                 this.price = 15;
                 break;
 
+            case "수리검":
+                this.weaponName = "수리검";
+                this.weaponNumber = weaponNumber;
+                this.grade = 0;
+
+                this.damage = 7;
+                this.damageCoeff = 0.58f;
+                this.range = 7f;
+                this.coolDown = 0.87f;
+                this.knockback = 0;
+
+                this.pierceCount = 0;
+                this.pierceDamage = 0.5f;
+
+                this.bounceCount = 1;
+
+                this.specialNote = "치명타 발생 시 1회 튕깁니다";
+                this.price = 12;
+                break;
+
             // Melee Weapon
-            case "Nekohand":
+            case "고양이손":
                 this.weaponName = "고양이손";
                 this.weaponNumber = weaponNumber;
                 this.grade = 0;
@@ -178,7 +173,7 @@ public class WeaponInfo
                 this.price = 10;
                 break;
 
-            case "Hammer":
+            case "망치":
                 this.weaponName = "망치";
                 this.weaponNumber = weaponNumber;
                 this.grade = 0;
@@ -192,6 +187,67 @@ public class WeaponInfo
                 this.specialNote = "";
                 this.price = 25;
                 break;
+
+            case "솔":
+                this.weaponName = "솔";
+                this.weaponNumber = weaponNumber;
+                this.grade = 0;
+
+                this.damage = 1;
+                this.damageCoeff = 1.0f;
+                this.range = 3f;
+                this.coolDown = 1.01f;
+                this.knockback = 30;
+
+                this.specialNote = "적 공격 시 3% 확률로 와플 드랍";
+                this.price = 10;
+                break;
+
+            case "방망이":
+                this.weaponName = "방망이";
+                this.weaponNumber = weaponNumber;
+                this.grade = 0;
+
+                this.damage = 10;
+                this.damageCoeff = 1.0f;
+                this.range = 3.5f;
+                this.coolDown = 1.42f;
+                this.knockback = 10;
+
+                this.specialNote = "레벨의 75%만큼 추가 대미지";
+                this.price = 17;
+                break;
+
+            case "사탕칼":
+                this.weaponName = "사탕칼";
+                this.weaponNumber = weaponNumber;
+                this.grade = 0;
+
+                this.damage = 8;
+                this.damageCoeff = 2.0f;
+                this.range = 3.5f;
+                this.coolDown = 1.25f;
+                this.knockback = 0;
+
+                this.specialNote = "일정 횟수 공격하면 부러집니다";
+                this.price = 10;
+                break;
+
+            case "화도일문자":
+                this.weaponName = "화도일문자";
+                this.weaponNumber = weaponNumber;
+                this.grade = 0;
+
+                this.damage = 20;
+                this.damageCoeff = 2.0f;
+                this.range = 4f;
+                this.coolDown = 1.43f;
+                this.knockback = 5;
+
+                this.specialNote = "휘두르기와 찌르기를 반복합니다";
+                this.price = 25;
+                break;
+
             default:
                 break;
         }
@@ -239,7 +295,7 @@ public class WeaponInfo
         switch (weaponName)
         {
             // 권총
-            case "Pistol":
+            case "권총":
                 switch (weaponGrade)
                 {
                     case 0:
@@ -288,7 +344,7 @@ public class WeaponInfo
 
                 break;
             // 리볼버
-            case "Revolver":
+            case "리볼버":
                 switch (weaponGrade)
                 {
                     case 0:
@@ -341,7 +397,7 @@ public class WeaponInfo
 
                 break;
 
-            case "SMG":
+            case "서브머신건":
                 switch(weaponGrade)
                 {
                     case 0:
@@ -383,7 +439,7 @@ public class WeaponInfo
                 }
                 break;
 
-            case "Shotgun":
+            case "산탄총":
                 switch(weaponGrade)
                 {
                     case 0:
@@ -441,7 +497,7 @@ public class WeaponInfo
                 }
                 break;
 
-            case "Bow":
+            case "활":
                 switch (weaponGrade)
                 {
                     case 0:
@@ -506,8 +562,116 @@ public class WeaponInfo
                         break;
                 }
                 break;
+
+            case "수리검":
+                switch (weaponGrade)
+                {
+                    case 0:
+                        this.damage = 7;
+                        this.damageCoeff = 0.59f;
+                        this.range = 7f;
+                        this.coolDown = 0.87f;
+                        this.knockback = 0;
+
+                        this.pierceCount = 0;
+                        this.pierceDamage = 0.5f;
+
+                        this.bounceCount = 1;
+
+                        this.specialNote = "치명타 발생 시 1회 튕깁니다";
+                        this.price = 12;
+                        break;
+                    case 1:
+                        this.damage = 9;
+                        this.damageCoeff = 0.81f;
+                        this.range = 7f;
+                        this.coolDown = 0.83f;
+                        this.knockback = 0;
+
+                        this.pierceCount = 0;
+                        this.pierceDamage = 0.5f;
+
+                        this.bounceCount = 2;
+
+                        this.specialNote = "치명타 발생 시 2회 튕깁니다";
+                        this.price = 26;
+                        break;
+                    case 2:
+                        this.damage = 12;
+                        this.damageCoeff = 1.0f;
+                        this.range = 7f;
+                        this.coolDown = 0.8f;
+                        this.knockback = 0;
+
+                        this.pierceCount = 0;
+                        this.pierceDamage = 0.5f;
+
+                        this.bounceCount = 3;
+
+                        this.specialNote = "치명타 발생 시 3회 튕깁니다";
+                        this.price = 52;
+                        break;
+                    case 3:
+                        this.damage = 18;
+                        this.damageCoeff = 1.22f;
+                        this.range = 7f;
+                        this.coolDown = 0.7f;
+                        this.knockback = 0;
+
+                        this.pierceCount = 0;
+                        this.pierceDamage = 0.5f;
+
+                        this.bounceCount = 4;
+
+                        this.specialNote = "치명타 발생 시 4회 튕깁니다";
+                        this.price = 105;
+                        break;
+                }
+                break;
+
+            // 특수 무기
+            case "매그넘":
+                switch (weaponGrade)
+                {
+                    case 2:
+                        this.damage = 116;
+                        this.damageCoeff = 4.5f;
+                        this.range = 10f;
+                        this.coolDown = 1.5f;
+                        this.knockback = 10;
+
+                        this.pierceCount = 999;
+                        this.pierceDamage = 1f;
+
+                        this.bounceCount = 0;
+
+                        this.specialNote = "무조건 관통";
+                        this.price = 127;
+                        break;
+
+                    case 3:
+                        this.damage = 162;
+                        this.damageCoeff = 6.7f;
+                        this.range = 10f;
+                        this.coolDown = 1.5f;
+                        this.knockback = 10;
+
+                        this.pierceCount = 999;
+                        this.pierceDamage = 1f;
+
+                        this.bounceCount = 0;
+
+                        this.specialNote = "무조건 관통";
+                        this.price = 255;
+                        break;
+
+                    default:
+                        break;
+                }
+                break;
+
             // Melee Weapon
-            case "Nekohand":
+            case "고양이손":
                 switch (weaponGrade)
                 {
                     case 0:
@@ -555,7 +719,7 @@ public class WeaponInfo
                 }
                 break;
 
-            case "Hammer":
+            case "망치":
                 switch (weaponGrade)
                 {
                     case 0:
@@ -602,6 +766,226 @@ public class WeaponInfo
                         break;
                 }
                 break;
+
+            case "솔":
+                switch (weaponGrade)
+                {
+                    case 0:
+                        this.damage = 1;
+                        this.damageCoeff = 1.0f;
+                        this.range = 3f;
+                        this.coolDown = 1.01f;
+                        this.knockback = 30;
+
+                        this.specialNote = "적 공격 시 3% 확률로 와플 드랍";
+                        this.price = 10;
+                        break;
+                    case 1:
+                        this.damage = 1;
+                        this.damageCoeff = 1.0f;
+                        this.range = 3f;
+                        this.coolDown = 0.93f;
+                        this.knockback = 30;
+
+                        this.specialNote = "적 공격 시 6% 확률로 와플 드랍";
+                        this.price = 22;
+                        break;
+                    case 2:
+                        this.damage = 1;
+                        this.damageCoeff = 1.0f;
+                        this.range = 3f;
+                        this.coolDown = 0.86f;
+                        this.knockback = 30;
+
+                        this.specialNote = "적 공격 시 10% 확률로 와플 드랍";
+                        this.price = 45;
+                        break;
+                    case 3:
+                        this.damage = 1;
+                        this.damageCoeff = 1.0f;
+                        this.range = 3f;
+                        this.coolDown = 0.71f;
+                        this.knockback = 30;
+
+                        this.specialNote = "적 공격 시 15% 확률로 와플 드랍";
+                        this.price = 91;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "방망이":
+                switch (weaponGrade)
+                {
+                    case 0:
+                        this.damage = 10;
+                        this.damageCoeff = 1.0f;
+                        this.range = 3.5f;
+                        this.coolDown = 1.42f;
+                        this.knockback = 10;
+
+                        this.specialNote = "레벨의 75%만큼 추가 대미지";
+                        this.price = 17;
+                        break;
+                    case 1:
+                        this.damage = 15;
+                        this.damageCoeff = 1.3f;
+                        this.range = 3.5f;
+                        this.coolDown = 1.25f;
+                        this.knockback = 10;
+
+                        this.specialNote = "레벨의 85%만큼 추가 대미지";
+                        this.price = 34;
+                        break;
+                    case 2:
+                        this.damage = 20;
+                        this.damageCoeff = 1.7f;
+                        this.range = 3.5f;
+                        this.coolDown = 1.09f;
+                        this.knockback = 10;
+
+                        this.specialNote = "레벨의 100%만큼 추가 대미지";
+                        this.price = 66;
+                        break;
+                    case 3:
+                        this.damage = 30;
+                        this.damageCoeff = 2.0f;
+                        this.range = 3.5f;
+                        this.coolDown = 0.92f;
+                        this.knockback = 10;
+
+                        this.specialNote = "레벨의 125%만큼 추가 대미지";
+                        this.price = 130;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+
+            case "사탕칼":
+                switch (weaponGrade)
+                {
+                    case 0:
+                        this.damage = 8;
+                        this.damageCoeff = 2.0f;
+                        this.range = 3.5f;
+                        this.coolDown = 1.25f;
+                        this.knockback = 0;
+
+                        this.specialNote = "일정 횟수 공격하면 부러집니다";
+                        this.price = 10;
+                        break;
+                    case 1:
+                        this.damage = 16;
+                        this.damageCoeff = 2.25f;
+                        this.range = 3.5f;
+                        this.coolDown = 1.17f;
+                        this.knockback = 0;
+
+                        this.specialNote = "일정 횟수 공격하면 부러집니다";
+                        this.price = 22;
+                        break;
+                    case 2:
+                        this.damage = 24;
+                        this.damageCoeff = 2.5f;
+                        this.range = 3.5f;
+                        this.coolDown = 1.1f;
+                        this.knockback = 0;
+
+                        this.specialNote = "일정 횟수 공격하면 부러집니다";
+                        this.price = 45;
+                        break;
+                    case 3:
+                        this.damage = 40;
+                        this.damageCoeff = 3.0f;
+                        this.range = 3.5f;
+                        this.coolDown = 1.03f;
+                        this.knockback = 0;
+
+                        this.specialNote = "일정 횟수 공격하면 부러집니다";
+                        this.price = 91;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "화도일문자":
+                switch (weaponGrade)
+                {
+                    case 0:
+                        this.damage = 20;
+                        this.damageCoeff = 2.0f;
+                        this.range = 4f;
+                        this.coolDown = 1.43f;
+                        this.knockback = 5;
+
+                        this.specialNote = "휘두르기와 찌르기를 반복합니다";
+                        this.price = 25;
+                        break;
+                    case 1:
+                        this.damage = 25;
+                        this.damageCoeff = 2.0f;
+                        this.range = 4f;
+                        this.coolDown = 1.28f;
+                        this.knockback = 5;
+
+                        this.specialNote = "휘두르기와 찌르기를 반복합니다";
+                        this.price = 51;
+                        break;
+                    case 2:
+                        this.damage = 40;
+                        this.damageCoeff = 2.0f;
+                        this.range = 4f;
+                        this.coolDown = 1.13f;
+                        this.knockback = 5;
+
+                        this.specialNote = "휘두르기와 찌르기를 반복합니다";
+                        this.price = 95;
+                        break;
+                    case 3:
+                        this.damage = 60;
+                        this.damageCoeff = 2.0f;
+                        this.range = 4f;
+                        this.coolDown = 0.98f;
+                        this.knockback = 5;
+
+                        this.specialNote = "휘두르기와 찌르기를 반복합니다";
+                        this.price = 190;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+
+            // 근접 특수
+            case "철쇄아":
+                switch (weaponGrade)
+                {
+                    case 2:
+                        this.damage = 30;
+                        this.damageCoeff = 2.4f;
+                        this.range = 4f;
+                        this.coolDown = 1.43f;
+                        this.knockback = 0;
+
+                        this.specialNote = "바람의 상처!";
+                        this.price = 141;
+                        break;
+                    case 3:
+                        this.damage = 55;
+                        this.damageCoeff = 2.7f;
+                        this.range = 4f;
+                        this.coolDown = 1.3f;
+                        this.knockback = 0;
+
+                        this.specialNote = "바람의 상처!";
+                        this.price = 280;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+
             default:
                 break;
         }

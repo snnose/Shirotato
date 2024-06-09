@@ -149,6 +149,34 @@ public class PlayerInfo : MonoBehaviour
         }
     }
 
+    // EpicItem25를 적용시키지 않은 원래의 회복력으로 복귀
+    public void InActivateEpicItem25()
+    {
+        int count = ItemManager.Instance.GetOwnEpicItemList()[25];
+
+        // 보유한 노말 등급 아이템 개당 회복력 +1
+        // 보유한 전설 등급 아이템 개당 회복력 -2
+        // 상점에서 아이템 구매 시 마다 호출
+        if (count > 0)
+        {
+            int normalItemCount = 0;
+            int legendItemCount = 0;
+
+            for (int i = 0; i < 50; i++)
+            {
+                normalItemCount += ItemManager.Instance.GetOwnNormalItemList()[i];
+            }
+
+            for (int i = 0; i < 50; i++)
+            {
+                legendItemCount += ItemManager.Instance.GetOwnLegendItemList()[i];
+            }
+
+            this.Recovery -= normalItemCount * count;
+            this.Recovery += 2 * legendItemCount * count;
+        }
+    }
+
     // EpicItem29를 적용시키지 않은 원래의 대미지%를 돌려받음
     public void InActivateEpicItem29()
     {

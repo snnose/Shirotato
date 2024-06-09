@@ -24,7 +24,7 @@ public class SpawnEggFry : MonoBehaviour
     IEnumerator SpawnEggFryTimer()
     {
         // 5초에 걸쳐 부화한다
-        // 점점 붉어진다 (최대 붉기 75%)
+        // 점점 붉어진다 (최대 붉기 65%)
         yield return StartCoroutine(Hatching());
 
         // 5초가 지났다면 EggFry 스폰
@@ -40,8 +40,8 @@ public class SpawnEggFry : MonoBehaviour
         for (int i = 0; i < 100; i++)
         {
             Color color = this.GetComponent<SpriteRenderer>().color;
-            color.g = 1f - (i * 0.0075f);
-            color.b = 1f - (i * 0.0075f);
+            color.g = 1f - (i * 0.0065f);
+            color.b = 1f - (i * 0.0065f);
             this.GetComponent<SpriteRenderer>().color = color;
 
             yield return new WaitForSeconds(0.05f);

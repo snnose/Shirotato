@@ -32,15 +32,17 @@ public class MonsterControl : MonoBehaviour
     
     void Start()
     {
-        monsterBeHitedSound.volume = 0.1f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.effectVolume;
+        monsterBeHitedSound.volume = 0.15f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.effectVolume;
         currentHP = monsterInfo.GetMonsterHP();
         vanishing = Vanishing();
     }
 
     void Update()
     {
+        // 감자 이외 모든 몬스터
         // 근처에 플레이어가 있으면 충돌 무시 상태가 된다
-        DetectNearbyPlayer();
+        if (monsterInfo.type != "Potato" && currentHP > 0)
+            DetectNearbyPlayer();
 
         // 몬스터가 죽을 때의 처리
         if (currentHP <= 0 && vanishing != null)
@@ -81,11 +83,64 @@ public class MonsterControl : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == GameObject.FindGameObjectWithTag("Weapon"))
+        // 탄에 피격된다면
+        if (collision.gameObject == GameObject.FindGameObjectWithTag("Bullet"))
         {
             // 피격되면 피격 사운드 출력
             monsterBeHitedSound.pitch = Random.Range(0.95f, 1.05f);
             monsterBeHitedSound.Play();
+        }
+
+        // 무기에 피격 될 경우
+        if (collision.gameObject == GameObject.FindGameObjectWithTag("Weapon"))
+        {
+            // 해당 무기의 공격 판정 여부에 따라 사운드 출력이 결정된다
+            // 충돌 감지된 무기마다 부착된 스크립트가 다르므로
+            // 각 무기의 스크립트에서 공격 판정 여부를 검사한다
+            bool ret = false;
+
+            switch (collision.gameObject.GetComponent<SpriteRenderer>().sprite.name)
+            {
+                case "고양이손":
+                    ret = collision.gameObject.GetComponent<MeleeWeaponControl>().GetIsAttackPossible();
+                    break;
+
+                case "망치":
+                    ret = collision.gameObject.GetComponent<HammerControl>().GetIsAttackPossible();
+                    break;
+
+                case "솔":
+                    ret = collision.gameObject.GetComponent<BrushControl>().GetIsAttackPossible();
+                    break;
+
+                case "방망이":
+                    ret = collision.gameObject.GetComponent<BatControl>().GetIsAttackPossible();
+                    break;
+
+                case "사탕칼":
+                    ret = collision.gameObject.GetComponent<CandyKnifeControl>().GetIsAttackPossible();
+                    break;
+
+                case "화도일문자":
+                    ret = collision.gameObject.GetComponent<SwordControl>().GetIsAttackPossible();
+                    break;
+
+                case "철쇄아":
+                    ret = collision.gameObject.GetComponent<TetsusaigaControl>().GetIsAttackPossible();
+                    break;
+
+                default:
+                    ret = false;
+                    break;
+            }
+
+            // 공격 판정이 true일 때 피격되면 사운드 출력
+            if (ret)
+            {
+                monsterBeHitedSound.pitch = Random.Range(0.95f, 1.05f);
+                monsterBeHitedSound.Play();
+            }
+            
         }
     }
 
@@ -96,7 +151,7 @@ public class MonsterControl : MonoBehaviour
         GameObject player = PlayerControl.Instance.gameObject;
 
         float closetDistance = float.MaxValue;
-        float range = 1.6f;
+        float range = 2f;
 
         float dis = Vector2.Distance(this.transform.position, player.transform.position);
 
@@ -283,7 +338,7 @@ public class MonsterControl : MonoBehaviour
         copy.GetComponent<BulletControl>().SetPierceCount(0);
 
         // 랜덤 방향으로 발사
-        Vector2 direction = new Vector2(Random.Range(0f, 1f), Random.Range(0f, 1f));
+        Vector2 direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         copy.GetComponent<Rigidbody2D>().AddForce(direction.normalized * 50f, ForceMode2D.Impulse);
         // 발사된 방향으로 총알이 향하도록 회전값 조정
         copy.transform.rotation = Quaternion.Euler(copy.transform.rotation.x, 

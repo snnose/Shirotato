@@ -122,8 +122,9 @@ public class ShopRerollButton : MonoBehaviour, IPointerEnterHandler
         // 아이템 리스트 UI를 활성화하고 갱신
         shopItemListControl.SetItemListActive();
         // 갱신 트리거 false로 설정
-        shopItemListControl.SetIsRenewInfo(false);
+        //shopItemListControl.SetIsRenewInfo(false);
         ItemManager.Instance.SetIsRenewItem(false);
+        shopItemListControl.SetIsRenewInfo(false);
     }
 
     void ActivateRareItem28()

@@ -211,7 +211,7 @@ public class GameRoot : MonoBehaviour
     private void Harvest()
     {
         float currExp = ExpManager.Instance.GetCurrentExp();
-        currExp += playerInfo.GetHarvest() * playerInfo.GetExpGain();
+        currExp += playerInfo.GetHarvest() * (100f + playerInfo.GetExpGain()) / 100;
         ExpManager.Instance.SetCurrentExp(currExp);
         ExpManager.Instance.levelUp = ExpManager.Instance.LevelUp();
 

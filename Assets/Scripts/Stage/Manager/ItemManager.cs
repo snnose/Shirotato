@@ -41,6 +41,9 @@ public class ItemManager : MonoBehaviour
     // 현재 보유 무기 리스트
     List<GameObject> currentWeaponList;
 
+    // 현재 보유 아이템 리스트
+    public List<(GameObject, int)> ownItemList = new();
+
     // 아이템 구매 횟수
     // 새로고침 시 0으로 초기화된다
     public int itemPurchaseCount = 0;
@@ -48,12 +51,27 @@ public class ItemManager : MonoBehaviour
     // 아이템 새로고침 시 true로 전환.
     public bool isRenewItem = true;
 
+    private int rerollCount = 0;
+
     private void Awake()
     {
         if (instance == null)
             instance = this;
         else
             Destroy(this.gameObject);
+
+        ownItemList.Clear();
+
+        // 리스트 초기화
+        //ownNormalItemList.Clear();
+        //ownRareItemList.Clear();
+        //ownEpicItemList.Clear();
+        //ownLegendItemList.Clear();
+
+        //shopItemList.Clear();
+        //shopWeaponInfoList.Clear();
+        //currentItemList.Clear();
+        //currentWeaponList.Clear();
 
         for (int i = 0; i < 4; i++)
         {
@@ -126,6 +144,14 @@ public class ItemManager : MonoBehaviour
             if (ran < 35)
             {
                 currentWeaponList = WeaponManager.Instance.GetCurrentWeaponList();
+                // 결정된 레어도에 따라서 나오는 무기 개수가 달라진다
+                // 0 ~ 11 = 일반 12 ~ 특수
+                int weaponListCount = 12;
+                if (rarity >= 2)
+                {
+                    weaponListCount = weaponList.Count;
+                }
+
                 // 한번 더 난수를 사용해 같은 무기가 나오도록 보정
                 int weaponRan = UnityEngine.Random.Range(0, 100);
                 // 난수 값이 35미만일 때 같은 무기 보정 적용
@@ -135,6 +161,15 @@ public class ItemManager : MonoBehaviour
                     {
                         // 현재 갖고 있는 무기 중에서 하나를 골라 상점 리스트에 넣는다.
                         int random = UnityEngine.Random.Range(0, currentWeaponList.Count);
+
+                        // 결정된 레어도가 2보다 작은 상황에서 보유 무기 중 특수무기가 선택되면
+                        if ((currentWeaponList[random].name == "매그넘" || currentWeaponList[random].name == "철쇄아")
+                            && rarity < 2)
+                        {
+                            // 처음부터 다시
+                            i--;
+                            continue;
+                        }
 
                         for (int j = 0; j < weaponList.Count; j++)
                         {
@@ -154,7 +189,7 @@ public class ItemManager : MonoBehaviour
                     else
                     {
                         // 무기 리스트 중에 하나를 골라 상점 리스트에 넣는다.
-                        int random = UnityEngine.Random.Range(0, weaponList.Count);
+                        int random = UnityEngine.Random.Range(0, weaponListCount);
                         GameObject tmp = weaponList[random];
                         WeaponInfo tmpInfo = new WeaponInfo(weaponList[random].name);
                         tmpInfo.SetWeaponStatus(weaponList[random].name, rarity);
@@ -166,7 +201,7 @@ public class ItemManager : MonoBehaviour
                 else
                 {
                     // 무기 리스트 중에 하나를 골라 상점 리스트에 넣는다.
-                    int random = UnityEngine.Random.Range(0, weaponList.Count);
+                    int random = UnityEngine.Random.Range(0, weaponListCount);
                     GameObject tmp = weaponList[random];
                     WeaponInfo tmpInfo = new WeaponInfo(weaponList[random].name);
                     tmpInfo.SetWeaponStatus(weaponList[random].name, rarity);
@@ -204,8 +239,12 @@ public class ItemManager : MonoBehaviour
                     default:
                         break;
                 }
-            }        
+            }
+
+            Debug.Log("새로고침 횟수 : " + rerollCount + "/ 레어도 : " + rarity + "/ 아이템 이름 : " + shopItemList[i].name);
         }
+
+        rerollCount++;
     }
 
     // 보유 제한을 초과하는 아이템은 뽑지 않도록 조정하는 함수

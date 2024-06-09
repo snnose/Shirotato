@@ -45,10 +45,10 @@ public class StatusControl : MonoBehaviour
             PlayerInfo.Instance.GetFixedDMG().ToString();
         // 공격속도
         statInfo.transform.GetChild(5).GetChild(2).GetComponent<TextMeshProUGUI>().text =
-            PlayerInfo.Instance.GetATKSpeed().ToString();
+            (Mathf.FloorToInt(PlayerInfo.Instance.GetATKSpeed() * 10f) / 10).ToString();
         // 치명타 확률
         statInfo.transform.GetChild(6).GetChild(2).GetComponent<TextMeshProUGUI>().text =
-            PlayerInfo.Instance.GetCritical().ToString();
+            (Mathf.FloorToInt(PlayerInfo.Instance.GetCritical() * 10f) / 10).ToString();
         // 범위
         statInfo.transform.GetChild(7).GetChild(2).GetComponent<TextMeshProUGUI>().text =
             PlayerInfo.Instance.GetRange().ToString();

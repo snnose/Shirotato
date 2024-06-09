@@ -26,6 +26,7 @@ public class ShopWeaponDetailUI : MonoBehaviour
     private GameObject closeButton;
 
     private Image image;
+    private Image gradeImage;
     private TextMeshProUGUI weaponNameText;
     private TextMeshProUGUI weaponStatusText;
     private TextMeshProUGUI weaponSellButtonText;
@@ -47,7 +48,8 @@ public class ShopWeaponDetailUI : MonoBehaviour
         sellButton = this.gameObject.transform.GetChild(5).gameObject;
         closeButton = this.gameObject.transform.GetChild(6).gameObject;
 
-        image = weaponImage.GetComponent<Image>();
+        gradeImage = weaponImage.transform.GetChild(0).GetComponent<Image>();
+        image = weaponImage.transform.GetChild(1).GetComponent<Image>();
         weaponNameText = weaponName.GetComponent<TextMeshProUGUI>();
         weaponStatusText = weaponStatus.GetComponent<TextMeshProUGUI>();
         weaponSellButtonText = sellButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
@@ -203,6 +205,12 @@ public class ShopWeaponDetailUI : MonoBehaviour
         this.gameObject.transform.position = pos;
     }
 
+    // 등급 색깔 설정
+    public void SetGradeColor(Color color)
+    {
+        gradeImage.color = color;
+    }
+
     // 무기 이미지 설정
     public void SetWeaponImage(Image weaponImage)
     {
@@ -233,7 +241,7 @@ public class ShopWeaponDetailUI : MonoBehaviour
         string specialNote = weaponInfo.GetSpecialNote();
 
         // 무기 특이사항 수정
-        if (weaponInfo.weaponName == "Revolver")
+        if (weaponInfo.weaponName == "리볼버")
         {
             specialNote = "6발 사격 후 " + Mathf.FloorToInt(coolDown * 5f * 100) / 100f + "초 간 재장전";
         }

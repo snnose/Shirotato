@@ -120,12 +120,15 @@ public class WaffleControl : MonoBehaviour
                     damage = 1;
 
                 // 현재 스폰된 적 중에서 하나를 골라 대미지를 입힌다
-                int ran = Random.Range(0, SpawnManager.Instance.GetCurrentMonsters().Count);
-                MonsterInfo monsterInfo = SpawnManager.Instance.GetCurrentMonsters()[ran].GetComponent<MonsterInfo>();
-                monsterInfo.SetMonsterHP(monsterInfo.GetMonsterHP() - damage);
+                if (SpawnManager.Instance.GetCurrentMonsters().Count > 0)
+                {
+                    int ran = Random.Range(0, SpawnManager.Instance.GetCurrentMonsters().Count);
+                    MonsterInfo monsterInfo = SpawnManager.Instance.GetCurrentMonsters()[ran].GetComponent<MonsterInfo>();
+                    monsterInfo.SetMonsterHP(monsterInfo.GetMonsterHP() - damage);
 
-                // 텍스트 출력
-                PrintText(monsterInfo.transform, damage, Color.cyan);
+                    // 텍스트 출력
+                    PrintText(monsterInfo.transform, damage, Color.cyan);
+                }
             }
         }
     }
@@ -197,14 +200,21 @@ public class WaffleControl : MonoBehaviour
             if (damage <= 0)
                 damage = 1;
 
+            
+            int monsterCount = SpawnManager.Instance.GetCurrentMonsters().Count;
+
+            // 몬스터가 하나 이상 존재하면
             // 현재 스폰된 적 중에서 하나를 골라 대미지를 입힌다
-            int ran = Random.Range(0, SpawnManager.Instance.GetCurrentMonsters().Count);
-            MonsterControl monsterControl = SpawnManager.Instance.GetCurrentMonsters()[ran].GetComponent<MonsterControl>();
+            if (monsterCount > 0)
+            {
+                int ran = Random.Range(0, SpawnManager.Instance.GetCurrentMonsters().Count);
+                MonsterControl monsterControl = SpawnManager.Instance.GetCurrentMonsters()[ran].GetComponent<MonsterControl>();
 
-            monsterControl.SetMonsterCurrentHP(monsterControl.GetMonsterCurrentHP() - damage);
+                monsterControl.SetMonsterCurrentHP(monsterControl.GetMonsterCurrentHP() - damage);
 
-            // 텍스트 출력
-            PrintText(monsterControl.transform, damage, Color.cyan);
+                // 텍스트 출력
+                PrintText(monsterControl.transform, damage, Color.cyan);
+            }
         }
     }
 

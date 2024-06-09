@@ -39,6 +39,10 @@ public class WeaponManager : MonoBehaviour
         else
             Destroy(this.gameObject);
 
+        // ¹«±â ¸®½ºÆ® ÃÊ±âÈ­
+        currentWeaponList.Clear();
+        currentWeaponInfoList.Clear();
+
         // weaponPos ¼³Á¤
         SettingWeaponPos();
 
@@ -50,6 +54,16 @@ public class WeaponManager : MonoBehaviour
         currentWeaponList.Add(startWeapon);
         currentWeaponInfoList.Add(new WeaponInfo(startWeapon.name, 0));
         currentWeaponList[0].GetComponent<StoredWeaponNumber>().SetWeaponNumber(currentWeaponInfoList[0].GetWeaponNumber());
+        
+
+        /*
+        // Å×½ºÆ®¿ë
+        currentWeaponList.Add(Resources.Load<GameObject>("Prefabs/Weapons/Ã¶¼â¾Æ"));
+        currentWeaponInfoList.Add(new WeaponInfo("Ã¶¼â¾Æ"));
+        currentWeaponInfoList[0].SetWeaponNumber(0);
+        currentWeaponInfoList[0].SetWeaponStatus("Ã¶¼â¾Æ", 2);
+        currentWeaponList[0].GetComponent<StoredWeaponNumber>().SetWeaponNumber(currentWeaponInfoList[0].GetWeaponNumber());
+        */
     }
 
     // Start is called before the first frame update

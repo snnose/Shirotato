@@ -478,13 +478,13 @@ public class SpawnManager : MonoBehaviour
             case 15:
                 // 리스폰 시간 설정
                 tofuLargeSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
-                sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
+                sandwichSpawnInterval = ActivateItemRelatedSpawnInterval(4f);
                 seaweedrollSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
                 saladSpawnInterval = ActivateItemRelatedSpawnInterval(10f);
                 strongYogurtSpawnInterval = ActivateItemRelatedSpawnInterval(5f);
 
                 spawnTofuLarge = SpawnTofuLarge(1.0f, tofuLargeSpawnInterval, 3);
-                spawnSandwich = SpawnSandwich(1.0f, sandwichSpawnInterval, 10);
+                spawnSandwich = SpawnSandwich(1.0f, sandwichSpawnInterval, 9);
                 spawnSeaweedroll = SpawnSeaweedroll(1.0f, seaweedrollSpawnInterval, 5);
                 spawnSalad = SpawnSalad(9.0f, saladSpawnInterval, 3);
                 spawnStrongYogurt = SpawnStrongYogurt(20.0f, strongYogurtSpawnInterval, 2);
@@ -766,13 +766,13 @@ public class SpawnManager : MonoBehaviour
         // 스폰 방식 변경 필요
         // 플레이어의 위치 기준으로 등장하지 않도록
 
-        // x값 -8 ~ 8, y값 -7 ~ 7 사이 범위가 나오지 않도록 조정
+        // x값 -7 ~ 7, y값 -5.5 ~ 5.5 사이 범위가 나오지 않도록 조정
         // 맵의 중앙부근에 스폰되면 불쾌한 경험이 많을 것 같음
-        while(-8.0f <= spawnPosX && spawnPosX <= 8.0f
-           && -7.0f <= spawnPosY && spawnPosY <= 7.0f)
+        while(-7.0f <= spawnPosX && spawnPosX <= 7.0f
+           && -5.5f <= spawnPosY && spawnPosY <= 5.5f)
         {
-            spawnPosX = UnityEngine.Random.Range(-16f, 16f);
-            spawnPosY = UnityEngine.Random.Range(-13f, 13f);
+            spawnPosX = UnityEngine.Random.Range(-14f, 14f);
+            spawnPosY = UnityEngine.Random.Range(-11f, 11f);
         }
 
         Vector2 tmp = new Vector2(spawnPosX, spawnPosY);
@@ -1057,7 +1057,7 @@ public class SpawnManager : MonoBehaviour
                     // 몬스터 스폰
                     spawnMonster = SpawnMonster(monsterPrefabs[0], spawnLocation);
                     StartCoroutine(spawnMonster);
-                    yield return null;
+                    yield return new WaitForSeconds(0.075f);
                 }
             }
             // 뭉침 스폰
@@ -1074,7 +1074,7 @@ public class SpawnManager : MonoBehaviour
 
                     spawnMonster = SpawnMonster(monsterPrefabs[0], spawnLocation);
                     StartCoroutine(spawnMonster);
-                    yield return null;
+                    yield return new WaitForSeconds(0.075f);
                 }
             }
 
@@ -1104,7 +1104,7 @@ public class SpawnManager : MonoBehaviour
                     // 몬스터 스폰
                     spawnMonster = SpawnMonster(monsterPrefabs[1], spawnLocation);
                     StartCoroutine(spawnMonster);
-                    yield return null;
+                    yield return new WaitForSeconds(0.075f);
                 }
             }
             // 뭉침 스폰
@@ -1121,7 +1121,7 @@ public class SpawnManager : MonoBehaviour
 
                     spawnMonster = SpawnMonster(monsterPrefabs[1], spawnLocation);
                     StartCoroutine(spawnMonster);
-                    yield return null;
+                    yield return new WaitForSeconds(0.075f);
                 }
             }
 
@@ -1151,7 +1151,7 @@ public class SpawnManager : MonoBehaviour
                     // 몬스터 스폰
                     spawnMonster = SpawnMonster(monsterPrefabs[2], spawnLocation);
                     StartCoroutine(spawnMonster);
-                    yield return null;
+                    yield return new WaitForSeconds(0.075f);
                 }
             }
             // 뭉침 스폰
@@ -1168,7 +1168,7 @@ public class SpawnManager : MonoBehaviour
 
                     spawnMonster = SpawnMonster(monsterPrefabs[2], spawnLocation);
                     StartCoroutine(spawnMonster);
-                    yield return null;
+                    yield return new WaitForSeconds(0.075f);
                 }
             }
 
@@ -1198,7 +1198,7 @@ public class SpawnManager : MonoBehaviour
                     // 몬스터 스폰
                     spawnMonster = SpawnMonster(monsterPrefabs[3], spawnLocation);
                     StartCoroutine(spawnMonster);
-                    yield return null;
+                    yield return new WaitForSeconds(0.075f);
                 }
             }
             // 뭉침 스폰
@@ -1215,7 +1215,7 @@ public class SpawnManager : MonoBehaviour
 
                     spawnMonster = SpawnMonster(monsterPrefabs[3], spawnLocation);
                     StartCoroutine(spawnMonster);
-                    yield return null;
+                    yield return new WaitForSeconds(0.075f);
                 }
             }
 
@@ -1245,7 +1245,7 @@ public class SpawnManager : MonoBehaviour
                     // 몬스터 스폰
                     spawnMonster = SpawnMonster(monsterPrefabs[4], spawnLocation);
                     StartCoroutine(spawnMonster);
-                    yield return null;
+                    yield return new WaitForSeconds(0.075f);
                 }
             }
 
@@ -1275,7 +1275,7 @@ public class SpawnManager : MonoBehaviour
                     // 몬스터 스폰
                     spawnMonster = SpawnMonster(monsterPrefabs[5], spawnLocation);
                     StartCoroutine(spawnMonster);
-                    yield return null;
+                    yield return new WaitForSeconds(0.075f);
                 }
             }
 
@@ -1305,7 +1305,7 @@ public class SpawnManager : MonoBehaviour
                     // 몬스터 스폰
                     spawnMonster = SpawnMonster(monsterPrefabs[6], spawnLocation);
                     StartCoroutine(spawnMonster);
-                    yield return null;
+                    yield return new WaitForSeconds(0.075f);
                 }
             }
 
@@ -1335,7 +1335,7 @@ public class SpawnManager : MonoBehaviour
                     // 몬스터 스폰
                     spawnMonster = SpawnMonster(monsterPrefabs[7], spawnLocation);
                     StartCoroutine(spawnMonster);
-                    yield return null;
+                    yield return new WaitForSeconds(0.075f);
                 }
             }
 
@@ -1365,7 +1365,7 @@ public class SpawnManager : MonoBehaviour
                     // 몬스터 스폰
                     spawnMonster = SpawnMonster(monsterPrefabs[8], spawnLocation);
                     StartCoroutine(spawnMonster);
-                    yield return null;
+                    yield return new WaitForSeconds(0.075f);
                 }
             }
 
@@ -1395,7 +1395,7 @@ public class SpawnManager : MonoBehaviour
                     // 몬스터 스폰
                     spawnMonster = SpawnMonster(monsterPrefabs[9], spawnLocation);
                     StartCoroutine(spawnMonster);
-                    yield return null;
+                    yield return new WaitForSeconds(0.075f);
                 }
             }
 
@@ -1423,7 +1423,7 @@ public class SpawnManager : MonoBehaviour
             // 몬스터 스폰
             spawnMonster = SpawnMonster(tofuSmall, spawnLocation);
             StartCoroutine(spawnMonster);
-            yield return null;
+            yield return new WaitForSeconds(0.075f);
         }
     }
 
@@ -1447,7 +1447,7 @@ public class SpawnManager : MonoBehaviour
                     // 몬스터 스폰
                     spawnMonster = SpawnMonster(monsterPrefabs[10], spawnLocation);
                     StartCoroutine(spawnMonster);
-                    yield return null;
+                    yield return new WaitForSeconds(0.075f);
                 }
             }
 
@@ -1477,7 +1477,7 @@ public class SpawnManager : MonoBehaviour
                     // 몬스터 스폰
                     spawnMonster = SpawnMonster(monsterPrefabs[11], spawnLocation);
                     StartCoroutine(spawnMonster);
-                    yield return null;
+                    yield return new WaitForSeconds(0.075f);
                 }
             }
 
@@ -1507,7 +1507,7 @@ public class SpawnManager : MonoBehaviour
                     // 몬스터 스폰
                     spawnMonster = SpawnMonster(monsterPrefabs[12], spawnLocation);
                     StartCoroutine(spawnMonster);
-                    yield return null;
+                    yield return new WaitForSeconds(0.075f);
                 }
             }
 
@@ -1538,7 +1538,7 @@ public class SpawnManager : MonoBehaviour
                     // 몬스터 스폰
                     spawnMonster = SpawnMonster(monsterPrefabs[13], spawnLocation);
                     StartCoroutine(spawnMonster);
-                    yield return null;
+                    yield return new WaitForSeconds(0.075f);
                 }
             }
 
@@ -1566,7 +1566,7 @@ public class SpawnManager : MonoBehaviour
             // 몬스터 스폰
             spawnMonster = SpawnMonster(eggFry, spawnLocation);
             StartCoroutine(spawnMonster);
-            yield return null;
+            yield return new WaitForSeconds(0.075f);
         }
     }
 
@@ -1590,7 +1590,7 @@ public class SpawnManager : MonoBehaviour
                     // 몬스터 스폰
                     spawnMonster = SpawnMonster(bossMonsterPrefabs[0], spawnLocation);
                     StartCoroutine(spawnMonster);
-                    yield return null;
+                    yield return new WaitForSeconds(0.075f);
                 }
             }
 

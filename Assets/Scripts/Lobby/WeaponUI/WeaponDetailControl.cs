@@ -58,7 +58,7 @@ public class WeaponDetailControl : MonoBehaviour
                 break;
             case "ªÍ≈∫√—":
                 weaponImage.sprite = Resources.Load<Sprite>("Sprites/Weapons/ªÍ≈∫√—");
-                weaponNamePro.text = "º¶∞«";
+                weaponNamePro.text = "ªÍ≈∫√—";
                 weaponDetailPro.text = "¥ÎπÃ¡ˆ : " + 3 + " (+80%)\n" +
                                        "∞¯∞›º”µµ : " + 0.73 + "/s \n" +
                                        "≥ÀπÈ : " + 8 + '\n' +

@@ -42,7 +42,7 @@ public class RealtimeInfoManager : MonoBehaviour
     private float expGain = 0f;
 
     // 라운드 중 관리할 스탯
-    private float currentHP = 1f;
+    private float currentHP = 10f;
 
     // 아이템 관련
     private float cappedHP = 999f;
@@ -82,6 +82,7 @@ public class RealtimeInfoManager : MonoBehaviour
         // test
         //ATKSpeed = 200f;
         //Critical = 100f;
+        //currentHP = 1f;
     }
 
     // Update is called once per frame
@@ -151,6 +152,9 @@ public class RealtimeInfoManager : MonoBehaviour
                 if (this.currentHP < this.HP)
                 {
                     this.currentHP += 1;
+                    // 그럼에도 최대 체력 이상이 될 수도 있으니 예외처리
+                    if (this.currentHP >= this.HP)
+                        this.currentHP = this.HP;
                     // HP 회복 텍스트 출력
                     PrintText(1);
                 }
@@ -298,7 +302,7 @@ public class RealtimeInfoManager : MonoBehaviour
         this.currentHP = currentHP;
 
         if (currentHP >= HP)
-            currentHP = HP;
+            this.currentHP = HP;
     }
 
     public void SetAllStatus(PlayerInfo playerInfo)

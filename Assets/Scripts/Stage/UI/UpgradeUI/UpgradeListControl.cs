@@ -102,7 +102,7 @@ public class UpgradeListControl : MonoBehaviour
             case 3:
                 //upgradeImage = Resources.Load("");
                 upgradeName.text = "팔";
-                upgradeStatus.text = "대미지% +" + 5 * (1 + rarity);
+                upgradeStatus.text = "대미지% +" + (5 + 3 * rarity);
                 break;
             case 4:
                 //upgradeImage = Resources.Load("");

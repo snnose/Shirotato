@@ -21,6 +21,9 @@ public class RoundSetting : MonoBehaviour
     private string startWeapon = "";
     private int difficulty = 0;
 
+    // ∞™¿Ã 0¿œ ∂ß ≥∑, 1¿œ ∂ß π„
+    private int mapMode = 0;
+
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -48,6 +51,11 @@ public class RoundSetting : MonoBehaviour
         this.difficulty = difficulty;
     }
 
+    public void SetMapMode(int num)
+    {
+        this.mapMode = num;
+    }
+
     public string GetIndividuality()
     {
         return this.individuality;
@@ -61,5 +69,10 @@ public class RoundSetting : MonoBehaviour
     public int GetDifficulty()
     {
         return this.difficulty;
+    }
+
+    public int GetMapMode()
+    {
+        return this.mapMode;
     }
 }

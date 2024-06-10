@@ -31,7 +31,7 @@ public class RealtimeStatusControl : MonoBehaviour
             RealtimeInfoManager.Instance.GetHPDrain().ToString();
         // 대미지%
         statInfo.transform.GetChild(3).GetChild(2).GetComponent<TextMeshProUGUI>().text =
-            RealtimeInfoManager.Instance.GetDMGPercent().ToString();
+            Mathf.FloorToInt(RealtimeInfoManager.Instance.GetDMGPercent()).ToString();
         // 고정 대미지
         statInfo.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text =
             RealtimeInfoManager.Instance.GetFixedDMG().ToString();

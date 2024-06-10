@@ -145,7 +145,7 @@ public class SwordControl : MonoBehaviour, IMeleeWeaponControl
         if (!attackMode)
         {
             yield return StartCoroutine(this.GetComponent<Swing>().
-                            SwingMovement(direction.normalized, weaponInfo.range * 0.65f, Mathf.FloorToInt(this.coolDown * 60f)));
+                            SwingMovement(direction.normalized, weaponInfo.range * 0.7f, Mathf.FloorToInt(this.coolDown * 60f)));
             // 찌르기로 전환
             attackMode = true;
         }
@@ -209,6 +209,7 @@ public class SwordControl : MonoBehaviour, IMeleeWeaponControl
         float closetDistance = float.MaxValue;
 
         float range = Mathf.Floor(weaponInfo.range * ((RealtimeInfoManager.Instance.GetRange() + 100) / 100) * 100) / 100;
+        range *= 0.85f;
 
         foreach (GameObject monster in Monsters)
         {

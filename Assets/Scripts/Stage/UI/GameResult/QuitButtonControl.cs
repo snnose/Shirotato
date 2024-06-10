@@ -35,6 +35,10 @@ public class QuitButtonControl : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
         // timeScale 정상화
         Time.timeScale = 1.0f;
+
+        // 원래 색으로 다시 변경
+        text.color = Color.white;
+        background.color = Color.black;
     }
 
     public void OnPointerEnter(PointerEventData eventData)

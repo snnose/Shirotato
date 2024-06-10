@@ -29,9 +29,8 @@ public class FireProjectile : MonoBehaviour
 
     IEnumerator FireProjectileToPlayer()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(1.0f);
         yield return StartCoroutine(WaitToFire());
-
         // 플레이어와 몬스터의 위치를 바탕으로 발사 방향 계산
         Vector2 playerPos = PlayerControl.Instance.transform.position;
         Vector2 monsterPos = this.transform.position;
@@ -51,7 +50,7 @@ public class FireProjectile : MonoBehaviour
         // 코루틴 재장전
         fire = Fire();
 
-        yield return null;
+        yield return new WaitForSeconds(2.0f);
     }
 
     // 조준 오차를 적용한다

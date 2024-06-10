@@ -25,7 +25,8 @@ public class FrenchFriesInherentAbility : MonoBehaviour
     {
         // 총알 혹은 화살에 피격됐다면
         if (collision.TryGetComponent<BulletControl>(out BulletControl bulletControl) ||
-            collision.TryGetComponent<ArrowControl>(out ArrowControl arrowControl))
+            collision.TryGetComponent<ArrowControl>(out ArrowControl arrowControl) ||
+            collision.TryGetComponent<KunaiBulletControl>(out KunaiBulletControl kunaiBullet))
         {
             // 피격되고 죽지 않았다면 랜덤한 방향으로 투사체 발사
             if (this.GetComponent<MonsterControl>().GetMonsterCurrentHP() >= 0)

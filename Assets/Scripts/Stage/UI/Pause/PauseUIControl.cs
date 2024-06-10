@@ -29,13 +29,11 @@ public class PauseUIControl : MonoBehaviour
 
         shopOwnWeaponListControl = this.transform.GetChild(4).GetComponent<ShopOwnWeaponListControl>();
         shopOwnItemListControl = this.transform.GetChild(5).GetComponent<ShopOwnItemListControl>();
-
-        SetActive(false);
     }
 
     void Start()
     {
-        
+        SetActive(false);
     }
 
     void Update()
@@ -59,7 +57,10 @@ public class PauseUIControl : MonoBehaviour
         {
             this.transform.position = new Vector2(0, -Screen.height - 100);
             this.gameObject.SetActive(ret);
-            Time.timeScale = 1.0f;
+            
+            // 게임 오버 상태가 아닐 때만 시간이 가도록 한다
+            if (!GameRoot.Instance.GetIsGameOver() || GameRoot.Instance.GetGameClear() != null)
+                Time.timeScale = 1.0f;
         }
     }
 }

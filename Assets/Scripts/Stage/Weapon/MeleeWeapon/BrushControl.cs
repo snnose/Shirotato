@@ -205,6 +205,7 @@ public class BrushControl : MonoBehaviour, IMeleeWeaponControl
         float closetDistance = float.MaxValue;
 
         float range = Mathf.Floor(weaponInfo.range * ((RealtimeInfoManager.Instance.GetRange() + 100) / 100) * 100) / 100;
+        range *= 0.75f;
 
         foreach (GameObject monster in Monsters)
         {

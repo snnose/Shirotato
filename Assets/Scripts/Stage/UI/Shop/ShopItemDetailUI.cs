@@ -116,7 +116,7 @@ public class ShopItemDetailUI : MonoBehaviour
         }
         if (itemInfo.HPDrain > 0)
         {
-            tmpText += "»ý¸í·Â Èí¼ö% +" + itemInfo.HPDrain + '\n';
+            tmpText += "»ý¸í·Â Èí¼ö +" + itemInfo.HPDrain + "%\n";
             plusCount++;
         }
         if (itemInfo.Armor > 0)
@@ -204,7 +204,7 @@ public class ShopItemDetailUI : MonoBehaviour
         }
         if (itemInfo.HPDrain < 0)
         {
-            tmpText += "»ý¸í·Â Èí¼ö% " + itemInfo.HPDrain + '\n';
+            tmpText += "»ý¸í·Â Èí¼ö " + itemInfo.HPDrain + "%\n";
             minusCount++;
         }
         if (itemInfo.Armor < 0)

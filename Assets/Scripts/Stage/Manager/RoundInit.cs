@@ -18,6 +18,8 @@ public class RoundInit : MonoBehaviour
         }
     }
 
+    public RoundControl roundControl;
+
     private void Awake()
     {
         if (instance == null)
@@ -45,6 +47,10 @@ public class RoundInit : MonoBehaviour
         // GameRoot 초기화
         GameRoot.Instance.SetIsRoundClear(false);
         GameRoot.Instance.SetCurrentRound(GameRoot.Instance.GetCurrentRound() + 1);
+
+        // RoundControl 재설정
+        roundControl.SetRoundText(GameRoot.Instance.GetCurrentRound());
+
         // 코루틴 재장전
         GameRoot.Instance.stopRound = GameRoot.Instance.StopRound();
 

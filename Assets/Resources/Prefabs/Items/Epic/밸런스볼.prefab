@@ -217,7 +217,7 @@ MonoBehaviour:
   itemName: "\uBC38\uB7F0\uC2A4\uBCFC"
   itemNumber: 35
   rarity: 2
-  positiveSpecial: "\uB77C\uC6B4\uB4DC \uC885\uB8CC \uD6C4 \uB300\uBBF8\uC9C0% +3%"
+  positiveSpecial: "\uB77C\uC6B4\uB4DC \uC885\uB8CC \uD6C4 \uB300\uBBF8\uC9C0 +3%"
   negativeSpecial: 
   DMGPercent: 0
   ATKSpeed: 0

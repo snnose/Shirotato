@@ -15,6 +15,7 @@ public class WarningSignControl : MonoBehaviour
 
     void Start()
     {
+        spawnWarningSound.volume = 0.1f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.effectVolume;
         StartCoroutine(BlinkWarningSign());
     }
 

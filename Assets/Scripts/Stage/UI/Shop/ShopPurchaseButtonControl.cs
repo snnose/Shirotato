@@ -161,6 +161,9 @@ public class ShopPurchaseButtonControl : MonoBehaviour, IPointerEnterHandler
                 // 경험치 획득량
                 PlayerInfo.Instance.SetExpGain(PlayerInfo.Instance.GetExpGain() + item.GetComponent<ItemInfo>().ExpGain);
 
+                // 실시간 스탯 관리자 초기화
+                RealtimeInfoManager.Instance.SetAllStatus(PlayerInfo.Instance);
+
                 // 구매한 아이템을 기억한다.
                 switch (item.GetComponent<ItemInfo>().rarity)
                 {
@@ -279,7 +282,11 @@ public class ShopPurchaseButtonControl : MonoBehaviour, IPointerEnterHandler
             // 보유 와플이 가격보다 많고, 보유 무기 수가 6개라면
             else if (currentWaffle >= price && WeaponManager.Instance.GetCurrentWeaponList().Count == 6)
             {
+                // 전설 무기 등급을 구매했다면 결합이 안되므로 반환
+                if (weaponInfo.GetWeaponGrade() >= 3)
+                    return;
                 WeaponInfo mainWeaponInfo = null;
+
                 // 보유 무기 중 같은 등급의 같은 무기를 찾는다
                 for (int i = 0; i < WeaponManager.Instance.GetCurrentWeaponList().Count; i++)
                 {

@@ -100,12 +100,7 @@ public class GameRoot : MonoBehaviour
         // 20라운드 진행 중일 때
         if (currentRound == 20)
         {
-            // 보스를 처치했다면 게임 클리어
-            if (RoundSetting.Instance.GetDifficulty() == 4 &&
-                bossKilledCount >= 2)
-                isRoundClear = true;
-
-            if (RoundSetting.Instance.GetDifficulty() < 4 &&
+            if (RoundSetting.Instance.GetDifficulty() <= 4 &&
                 bossKilledCount == 1)
                 isRoundClear = true;
             
@@ -425,6 +420,11 @@ public class GameRoot : MonoBehaviour
     public bool GetIsGameOver()
     {
         return this.isGameOver;
+    }
+
+    public IEnumerator GetGameClear()
+    {
+        return this.gameClear;
     }
 
     public bool GetIsRoundClear()

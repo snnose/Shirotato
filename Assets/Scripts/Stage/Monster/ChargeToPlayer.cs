@@ -62,8 +62,8 @@ public class ChargeToPlayer : MonoBehaviour
 
             // 0.5초 동안 돌진
             this.GetComponent<Collider2D>().isTrigger = true;
-            this.GetComponent<Rigidbody2D>().mass = 10;
-            monsterRb2D.AddForce(chargeVector.normalized * 250f, ForceMode2D.Impulse);
+            this.GetComponent<Rigidbody2D>().mass = 50;
+            monsterRb2D.AddForce(chargeVector.normalized * 1250f, ForceMode2D.Impulse);
 
             yield return new WaitForSeconds(0.5f);
 

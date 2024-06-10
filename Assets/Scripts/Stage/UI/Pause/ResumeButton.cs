@@ -32,6 +32,10 @@ public class ResumeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         // 일시 정지 UI를 종료한다
         PauseUIControl.Instance.SetActive(false);
+
+        // 원래 색으로 다시 변경
+        text.color = Color.white;
+        background.color = Color.black;
     }
 
     public void OnPointerEnter(PointerEventData eventData)

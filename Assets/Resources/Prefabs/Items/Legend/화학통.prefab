@@ -49,7 +49,7 @@ MonoBehaviour:
   itemName: "\uD654\uD559\uD1B5"
   itemNumber: 17
   rarity: 3
-  positiveSpecial: "\uC774\uB3D9\uC18D\uB3C4% -1% \uB2F9 \uD68C\uBCF5\uB825 +2"
+  positiveSpecial: "\uC774\uB3D9\uC18D\uB3C4 -1% \uB2F9 \uD68C\uBCF5\uB825 +2"
   negativeSpecial: "\uBCF4\uC720 \uC81C\uD55C (1)"
   DMGPercent: 0
   ATKSpeed: 0

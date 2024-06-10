@@ -34,7 +34,7 @@ public class PreResultUIControl : MonoBehaviour
 
         hpControl = this.transform.parent.GetChild(0).GetComponent<HPControl>();
         expBarControl = this.transform.parent.GetChild(1).GetComponent<ExpBarControl>();
-        timerControl = this.transform.parent.GetChild(3).GetComponent<TimerControl>();
+        timerControl = this.transform.parent.GetChild(4).GetComponent<TimerControl>();
         resultText = this.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
 
         this.transform.position = new Vector2(Screen.width, Screen.height);

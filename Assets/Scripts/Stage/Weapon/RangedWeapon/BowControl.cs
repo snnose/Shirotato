@@ -17,7 +17,7 @@ public class BowControl : MonoBehaviour, IRangedWeaponControl
     {
         shootSound = this.GetComponent<AudioSource>();
         chargingBow = Resources.Load<Sprite>("Sprites/Weapons/ChargingBow");
-        emptyBow = Resources.Load<Sprite>("Sprites/Weapons/Bow");
+        emptyBow = Resources.Load<Sprite>("Sprites/Weapons/Ȱ");
     }
 
     void Start()

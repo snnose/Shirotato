@@ -9,17 +9,16 @@ public class KunaiControl : MonoBehaviour, IRangedWeaponControl
     public bool isCoolDown { get; set; }
 
     Vector2 direction;
-    //AudioSource shootSound;
+    AudioSource shootSound;
 
     private void Awake()
     {
-        //shootSound = this.GetComponent<AudioSource>();
-       
+        shootSound = this.GetComponent<AudioSource>();
     }
 
     void Start()
     {
-        //shootSound.volume = 0.05f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.effectVolume;
+        shootSound.volume = 0.1f * ConfigManager.Instance.masterVolume * ConfigManager.Instance.effectVolume;
         this.weaponNumber = this.GetComponent<StoredWeaponNumber>().GetWeaponNumber();
         weaponInfo = WeaponManager.Instance.GetCurrentWeaponInfoList()[weaponNumber];
 
@@ -82,7 +81,7 @@ public class KunaiControl : MonoBehaviour, IRangedWeaponControl
 
     public IEnumerator Attack(GameObject closetMonster)
     {
-        //PlayShootSound();
+        PlayShootSound();
         // 쿠나이를 던지면 이미지가 투명해지도록 해서 던진 것처럼 보이게 한다
         this.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 0);
 
@@ -149,10 +148,8 @@ public class KunaiControl : MonoBehaviour, IRangedWeaponControl
         return closetMonster;
     }
 
-    /*
     private void PlayShootSound()
     {
         shootSound.Play();
     }
-    */
 }

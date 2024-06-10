@@ -1,0 +1,35 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MapControl : MonoBehaviour
+{
+    GameObject mapSprite;
+
+    private void Awake()
+    {
+        mapSprite = this.transform.GetChild(0).gameObject;
+        //SetMapColor();
+    }
+
+    void Start()
+    {
+        // ¼³Á¤µÈ ¸Ê È¯°æ¿¡ µû¶ó ³·, ¹ãÀ¸·Î º¯°æ
+        SetMapColor();
+    }
+
+    void SetMapColor()
+    {
+        int mapMode = RoundSetting.Instance.GetMapMode();
+
+        Color color = Color.white;
+
+        // °ªÀÌ 1ÀÏ ¶§ ¹ã
+        if (mapMode == 1)
+        {
+            ColorUtility.TryParseHtmlString("#9096D9", out color);
+        }
+
+        mapSprite.GetComponent<SpriteRenderer>().color = color;
+    }
+}

@@ -73,7 +73,7 @@ public class ShopWeaponDetailUI : MonoBehaviour
         //Debug.Log("결합 전 등급 : " + currWeaponInfo.GetWeaponGrade());
 
         // 무기 등급이 3이면 (전설이면) return
-        if (currWeaponInfo.GetWeaponGrade() == 3)
+        if (currWeaponInfo.GetWeaponGrade() >= 3)
             return;
 
         int count = weaponList.Count;
